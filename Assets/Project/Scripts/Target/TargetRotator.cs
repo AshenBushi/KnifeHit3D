@@ -21,4 +21,9 @@ public class TargetRotator : MonoBehaviour
             Rotate();
         });
     }
+
+    public void Kill()
+    {
+        _rotator.Kill();
+    }
 }

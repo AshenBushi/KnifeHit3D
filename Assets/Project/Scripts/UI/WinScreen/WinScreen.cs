@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 [RequireComponent(typeof(CanvasGroup))]
-public class LoseScreen : MonoBehaviour
+public class WinScreen : MonoBehaviour
 {
     private CanvasGroup _canvasGroup;
 
@@ -11,7 +12,7 @@ public class LoseScreen : MonoBehaviour
         _canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    private IEnumerator LoseAnimation()
+    private IEnumerator WinAnimation()
     {
         _canvasGroup.blocksRaycasts = true;
         yield return new WaitForSeconds(1f);
@@ -22,9 +23,9 @@ public class LoseScreen : MonoBehaviour
         _canvasGroup.alpha = 1;
     }
 
-    public void Lose()
+    public void Win()
     {
-        StartCoroutine(LoseAnimation());
+        StartCoroutine(WinAnimation());
     }
     
     public void Restart()

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
@@ -10,7 +9,10 @@ public class Knife : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
-    public event UnityAction<bool> IsStuck;
+    public Rigidbody Rigidbody => _rigidbody;
+
+    public event UnityAction IsStuck;
+    public event UnityAction IsBounced;
 
     private void Awake()
     {
@@ -19,35 +21,30 @@ public class Knife : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.TryGetComponent(out Target target))
-        {
-            Stuck(target.transform);
-        }
-
         if (other.gameObject.TryGetComponent(out Knife knife))
         {
-            Stuck();
+            Bounced();
         }
     }
 
-    private void Stuck()
+    private void Bounced()
     {
         if (_rigidbody.isKinematic) return;
         Destroy(GetComponent<Collider>());
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.useGravity = true;
-        _rigidbody.AddForce(new Vector3(Random.Range(-1f, 1f), Random.Range(0f, 1f), -1f) * _bounceForce, ForceMode.Impulse);
-        IsStuck?.Invoke(false);
-    }    
-    
-    private void Stuck(Transform target)
+        _rigidbody.AddForce(Vector3.back * _bounceForce, ForceMode.Impulse);
+        IsBounced?.Invoke();
+    }
+
+    public void Stuck(Transform parent)
     {
         _rigidbody.isKinematic = true;
-        transform.SetParent(target);
-        IsStuck?.Invoke(true);
+        transform.SetParent(parent);
+        IsStuck?.Invoke();
     }
     
-    public void AllowMove()
+    public void Throw()
     {
         _rigidbody.isKinematic = false;
         _rigidbody.AddForce(Vector3.forward * _throwForce, ForceMode.Impulse);

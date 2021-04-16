@@ -1,41 +1,40 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
-
-public struct Level
-{
-    public int TargetCount;
-}
+﻿using UnityEngine;
 
 public class SessionManager : MonoBehaviour
 {
     [SerializeField] private KnifeSpawner _knifeSpawner;
     [SerializeField] private TargetSpawner _targetSpawner;
-    [SerializeField] private ScoreHandler _scoreHandler;
     [SerializeField] private LoseScreen _loseScreen;
+    [SerializeField] private WinScreen _winScreen;
 
     private readonly Level _currentLevel = new Level() {TargetCount = 5};
-
+    
     private void OnEnable()
     {
-        _knifeSpawner.IsStuck += OnStuck;
+        _targetSpawner.IsWin += OnWin;
         _knifeSpawner.IsLose += OnLose;
     }
 
     private void OnDisable()
     {
-        _knifeSpawner.IsStuck -= OnStuck;
+        _targetSpawner.IsWin -= OnWin;
         _knifeSpawner.IsLose -= OnLose;
     }
 
     private void Start()
     {
+        StartGame();
+    }
+
+    private void StartGame()
+    {
+        _knifeSpawner.SpawnKnife();
         _targetSpawner.SpawnLevel(_currentLevel);
     }
 
-    private void OnStuck()
+    private void OnWin()
     {
-        _scoreHandler.AddScore();
+        _winScreen.Win();
     }
     
     private void OnLose()

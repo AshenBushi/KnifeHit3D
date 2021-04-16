@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
     [SerializeField] private InputField _inputField;
     [SerializeField] private KnifeSpawner _knifeSpawner;
 
+    private bool _canThrow = true;
+
     private void OnEnable()
     {
         _inputField.OnPlayerTap += ThrowKnife;
@@ -18,6 +20,13 @@ public class Player : MonoBehaviour
 
     private void ThrowKnife()
     {
-        _knifeSpawner.CurrentKnife.AllowMove();
+        if (!_canThrow) return;
+        _knifeSpawner.CurrentKnife.Throw();
+        _canThrow = false;
+    }
+
+    public void AllowThrow()
+    {
+        _canThrow = true;
     }
 }

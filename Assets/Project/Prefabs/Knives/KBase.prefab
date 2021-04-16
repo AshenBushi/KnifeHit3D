@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2755488699555116574}
   - component: {fileID: 2203023841072426651}
   m_Layer: 0
-  m_Name: Knife_Base
+  m_Name: KBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _throwForce: 40
-  _bounceForce: 5
+  _bounceForce: 10
 --- !u!64 &2203023841072426651
 MeshCollider:
   m_ObjectHideFlags: 0
