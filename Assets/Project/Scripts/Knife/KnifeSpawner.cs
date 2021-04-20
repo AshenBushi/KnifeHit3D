@@ -10,6 +10,7 @@ public class KnifeSpawner : MonoBehaviour
     
     private Knife _currentKnife;
     public Knife CurrentKnife => _currentKnife;
+    public Knife CurrentTemplate => _knives[_knifeIndex];
 
     public event UnityAction IsLose;
 

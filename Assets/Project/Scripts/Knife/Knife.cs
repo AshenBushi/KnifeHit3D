@@ -23,17 +23,17 @@ public class Knife : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Knife knife))
         {
-            Bounced();
+            Bounced(knife.transform.position);
         }
     }
 
-    private void Bounced()
+    private void Bounced(Vector3 position)
     {
         if (_rigidbody.isKinematic) return;
         Destroy(GetComponent<Collider>());
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.useGravity = true;
-        _rigidbody.AddForce(Vector3.back * _bounceForce, ForceMode.Impulse);
+        _rigidbody.AddExplosionForce(_bounceForce, position, 5, 0, ForceMode.Impulse);
         IsBounced?.Invoke();
     }
 
@@ -48,5 +48,11 @@ public class Knife : MonoBehaviour
     {
         _rigidbody.isKinematic = false;
         _rigidbody.AddForce(Vector3.forward * _throwForce, ForceMode.Impulse);
+    }
+
+    public void MakeObstacle()
+    {
+        _rigidbody.isKinematic = true;
+        transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 }

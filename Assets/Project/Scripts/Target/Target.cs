@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(TargetRotator))]
 public class Target : MonoBehaviour
 {
     private TargetBase _targetBase;
     private TargetRotator _rotator;
-    private Collider _collider;
-    private int _health;
+    private int _hitToBreak;
     
-    public int Health => _health;
+    public int HitToBreak => _hitToBreak;
 
     public event UnityAction IsTakeHit;
     public event UnityAction<TargetBase> IsBreak;
@@ -18,7 +19,6 @@ public class Target : MonoBehaviour
     private void Awake()
     {
         _rotator = GetComponent<TargetRotator>();
-        _collider = GetComponent<Collider>();
     }
 
     private void OnCollisionEnter(Collision other)
@@ -30,9 +30,9 @@ public class Target : MonoBehaviour
 
     private void TakeHit()
     {
-        _health--;
+        _hitToBreak--;
         
-        if(_health <= 0)
+        if(_hitToBreak <= 0)
             Break();
         else
             IsTakeHit?.Invoke();
@@ -44,9 +44,12 @@ public class Target : MonoBehaviour
         Destroy(gameObject);
     }
     
-    public void SpawnAndSetup(TargetBase target, int health)
+    public void SpawnAndSetup(TargetConfig config, Knife obstacleTemplate)
     {
-        _targetBase = Instantiate(target, transform.position, Quaternion.Euler(0f, 180f, 0f), transform);
-        _health = health;
+        _targetBase = Instantiate(config.Base, transform.position, Quaternion.Euler(0f, 180f, 0f), transform);
+        _hitToBreak = config.HitToBreak;
+        _rotator.StartRotate(config.RotateDefinitions);
+        if (config.ObstacleCount <= 0) return;
+        _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
     }
 }

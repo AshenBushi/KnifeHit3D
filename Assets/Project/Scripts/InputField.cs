@@ -4,10 +4,19 @@ using UnityEngine.EventSystems;
 
 public class InputField : MonoBehaviour, IPointerDownHandler
 {
-    public event UnityAction OnPlayerTap;
+    private bool _isSessionStart = false;
+    
+    public event UnityAction InPlayerTap;
+    public event UnityAction IsSessionStart;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        OnPlayerTap?.Invoke();
+        if (!_isSessionStart)
+        {
+            IsSessionStart?.Invoke();
+            _isSessionStart = true;
+        }
+        
+        InPlayerTap?.Invoke();
     }
 }

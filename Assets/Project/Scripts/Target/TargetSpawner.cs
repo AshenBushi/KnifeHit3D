@@ -8,9 +8,10 @@ using UnityEngine.Events;
 public class TargetSpawner : MonoBehaviour
 {
     [SerializeField] private Player _player;
-    [SerializeField] private List<TargetBase> _targetBases = new List<TargetBase>();
-    [SerializeField] private ProgressBar _progressBar;
+    [SerializeField] private HitScoreDisplayer _hitScoreDisplayer;
+    [SerializeField] private LevelProgressDisplayer _levelProgressDisplayer;
     [SerializeField] private Target _targetTemplate;
+    [SerializeField] private float _spawnZ;
     [SerializeField] private float _spawnStep;
     [SerializeField] private float _spawnY;
     [SerializeField] private float _animationDuration;
@@ -25,30 +26,23 @@ public class TargetSpawner : MonoBehaviour
 
     private void OnDisable()
     {
+        if (_currentTarget == null) return;
         _currentTarget.IsBreak -= OnTargetBreak;
         _currentTarget.IsTakeHit -= OnTargetTakeHit;
-    }
-
-    private void SetCurrentTarget()
-    {
-        _currentTarget = _targets[0];
-        _currentTarget.IsBreak += OnTargetBreak;
-        _currentTarget.IsTakeHit += OnTargetTakeHit;
-        _progressBar.SpawnProgressBar(_currentTarget.Health);
     }
 
     private void OnTargetBreak(TargetBase targetBase)
     {
         _currentTarget.IsBreak -= OnTargetBreak;
         _currentTarget.IsTakeHit -= OnTargetTakeHit;
-        _progressBar.SubmitHit();
+        _hitScoreDisplayer.SubmitHit();
         StartCoroutine(TargetBreakAnimation(targetBase));
     }
 
     private void OnTargetTakeHit()
     {
         _player.AllowThrow();
-        _progressBar.SubmitHit();
+        _hitScoreDisplayer.SubmitHit();
     }
 
     private void Move()
@@ -73,6 +67,7 @@ public class TargetSpawner : MonoBehaviour
         
         if (_targets.Count > 0)
         {
+            _levelProgressDisplayer.NextPoint();
             SetCurrentTarget();
             Move();
         }
@@ -86,14 +81,20 @@ public class TargetSpawner : MonoBehaviour
         Destroy(targetBase.gameObject);
     }
     
-    public void SpawnLevel(Level level)
+    public void SetCurrentTarget()
     {
-        for (var i = 0; i < level.TargetCount; i++)
+        _currentTarget = _targets[0];
+        _currentTarget.IsBreak += OnTargetBreak;
+        _currentTarget.IsTakeHit += OnTargetTakeHit;
+        _hitScoreDisplayer.SpawnHitScores(_currentTarget.HitToBreak);
+    }
+    
+    public void SpawnLevel(Level level, Knife obstacleTemplate)
+    {
+        for (var i = 0; i < level.Targets.Count; i++)
         {
-            _targets.Add(Instantiate(_targetTemplate, new Vector3(0f, _spawnY, _spawnStep * (i + 1)), Quaternion.identity, transform));
-            _targets[i].SpawnAndSetup(_targetBases[1], 5);
+            _targets.Add(Instantiate(_targetTemplate, new Vector3(0f, _spawnY, _spawnZ + _spawnStep * i), Quaternion.identity, transform));
+            _targets[i].SpawnAndSetup(level.Targets[i], obstacleTemplate);
         }
-        
-        SetCurrentTarget();
     }
 }

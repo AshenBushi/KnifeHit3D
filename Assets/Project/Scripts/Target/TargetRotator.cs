@@ -1,29 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
 public class TargetRotator : MonoBehaviour
 {
-    [SerializeField] private float _duration;
-
     private Tween _rotator;
 
-    private void Start()
-    {
-        Rotate();
-    }
+    private List<RotateDefinition> _rotateDefinitions = new List<RotateDefinition>();
+
+    private int _currentIndex;
 
     private void Rotate()
     {
-        _rotator = transform.DORotate(new Vector3(0f, 0f, 360f), _duration, RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLink(gameObject);
+        var rotateEuler = new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle);
+        _rotator = transform.DORotate(transform.eulerAngles + rotateEuler, _rotateDefinitions[_currentIndex].Duration, RotateMode.FastBeyond360)
+            .SetEase(_rotateDefinitions[_currentIndex].EaseCurve).SetLink(gameObject);
         _rotator.OnComplete(() =>
         {
+            _currentIndex++;
+            
+            if (_currentIndex >= _rotateDefinitions.Count)
+                _currentIndex = 0;
+
             Rotate();
         });
     }
 
-    public void Kill()
+    public void StartRotate(List<RotateDefinition> definitions)
     {
-        _rotator.Kill();
+        _rotateDefinitions = definitions;
+        _currentIndex = 0;
+        if (_rotateDefinitions.Count <= 0) return;
+        Rotate();
     }
 }
