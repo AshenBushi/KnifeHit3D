@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class LevelProgressDisplayer : MonoBehaviour
 {
-    [SerializeField] private LevelManager _levelManager;
-    [SerializeField] private TMP_Text _level;
+    [SerializeField] private TMP_Text _levelText;
     [SerializeField] private List<Image> _points;
     [SerializeField] private Color _enabledColor;
 
@@ -14,7 +13,7 @@ public class LevelProgressDisplayer : MonoBehaviour
 
     private void Start()
     {
-        _level.text = (_levelManager.CurrentIndex + 1).ToString();
+        _levelText.text = (DataManager.GameData.Progress.CurrentLevel + 1).ToString();
         NextPoint();
     }
 

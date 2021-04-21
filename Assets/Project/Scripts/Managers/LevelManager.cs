@@ -7,21 +7,32 @@ using UnityEngine;
 public struct Level
 {
     public List<TargetConfig> Targets;
+    public int Reward;
 }
 
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private List<Level> _levels;
 
-    private Level _currentLevel;
-    private int _currentIndex = 0;
-    
-    public Level CurrentLevel => _currentLevel;
+    private static int _levelCount;
 
-    public int CurrentIndex => _currentIndex;
+    public static Level CurrentLevel { get; private set; }
 
     private void Awake()
     {
-        _currentLevel = _levels[_currentIndex];
+        LoadLevel();
+        _levelCount = _levels.Count;
+    }
+
+    private void LoadLevel()
+    {
+        CurrentLevel = _levels[DataManager.GameData.Progress.CurrentLevel];
+    }
+    
+    public static void NextLevel()
+    {
+        if (DataManager.GameData.Progress.CurrentLevel == _levelCount - 1) return;
+        DataManager.GameData.Progress.CurrentLevel++;
+        DataManager.Save();
     }
 }
