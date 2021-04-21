@@ -6,8 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public struct Level
 {
-    public List<TargetConfig> Targets;
     public int Reward;
+    public List<TargetConfig> Targets;
 }
 
 public class LevelManager : MonoBehaviour
@@ -26,13 +26,13 @@ public class LevelManager : MonoBehaviour
 
     private void LoadLevel()
     {
-        CurrentLevel = _levels[DataManager.GameData.Progress.CurrentLevel];
+        CurrentLevel = _levels[DataManager.GameData._progressData.CurrentLevel];
     }
     
     public static void NextLevel()
     {
-        if (DataManager.GameData.Progress.CurrentLevel == _levelCount - 1) return;
-        DataManager.GameData.Progress.CurrentLevel++;
+        if (DataManager.GameData._progressData.CurrentLevel == _levelCount - 1) return;
+        DataManager.GameData._progressData.CurrentLevel++;
         DataManager.Save();
     }
 }

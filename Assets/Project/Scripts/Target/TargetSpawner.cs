@@ -20,8 +20,6 @@ public class TargetSpawner : MonoBehaviour
     private Target _currentTarget;
     private Tween _tween;
 
-    public Target CurrentTarget => _currentTarget;
-    
     public event UnityAction IsWin;
 
     private void OnDisable()

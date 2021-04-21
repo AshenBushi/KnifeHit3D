@@ -9,7 +9,7 @@ public class Knife : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
-    public Rigidbody Rigidbody => _rigidbody;
+    private bool _isBounced = false;
 
     public event UnityAction IsStuck;
     public event UnityAction IsBounced;
@@ -30,6 +30,7 @@ public class Knife : MonoBehaviour
     private void Bounced(Vector3 position)
     {
         if (_rigidbody.isKinematic) return;
+        _isBounced = true;
         Destroy(GetComponent<Collider>());
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.useGravity = true;
@@ -39,6 +40,7 @@ public class Knife : MonoBehaviour
 
     public void Stuck(Transform parent)
     {
+        if (_isBounced) return;
         _rigidbody.isKinematic = true;
         transform.SetParent(parent);
         IsStuck?.Invoke();

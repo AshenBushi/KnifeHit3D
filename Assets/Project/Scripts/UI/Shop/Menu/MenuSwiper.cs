@@ -10,13 +10,12 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     [SerializeField] private float _duration;
     [SerializeField] private RectTransform _content;
-    [SerializeField] private ItemShop _itemShop;
 
     private HorizontalLayoutGroup _layoutGroup;
     private MItem[] _menuItems;
     private PageIndicator[] _navigationPoints;
     private List<RectTransform> _menuItemTransforms = new List<RectTransform>();
-    private Tween _tween;
+    private int _currentPage = 0;
     private int _fastScrollIndex = 0;
     private bool _isFastScroll = false;
 
@@ -40,9 +39,9 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         if (_isFastScroll)
         {
-            if ((_itemShop.CurrentPage + _fastScrollIndex) >= 0 && (_itemShop.CurrentPage + _fastScrollIndex) < _menuItems.Length)
+            if ((_currentPage + _fastScrollIndex) >= 0 && (_currentPage + _fastScrollIndex) < _menuItems.Length)
             {
-                _itemShop.CurrentPage += _fastScrollIndex;
+                _currentPage += _fastScrollIndex;
             }
         }
         else
@@ -53,7 +52,7 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
             {
                 if (!(Mathf.Abs(_menuItemTransforms[i].position.x) < currentX)) continue;
                 currentX = Mathf.Abs(_menuItemTransforms[i].position.x);
-                _itemShop.CurrentPage = i;
+                _currentPage = i;
             }
         }
 
@@ -78,7 +77,7 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         for (var i = 0; i < _navigationPoints.Length; i++)
         {
-            if (_itemShop.CurrentPage == i)
+            if (_currentPage == i)
             {
                 _navigationPoints[i].EnablePoint();
             }
@@ -88,9 +87,8 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
             }
         }
         
-        _tween = _content
-            .DOLocalMove(new Vector3(-_menuItemTransforms[_itemShop.CurrentPage].localPosition.x +
-                                     (_menuItemTransforms[_itemShop.CurrentPage].sizeDelta.x + 
-                                      _layoutGroup.spacing) / 2, _content.position.y, _content.position.z), duration);
+        _content.DOLocalMove(new Vector3(-_menuItemTransforms[_currentPage].localPosition.x +
+                                         (_menuItemTransforms[_currentPage].sizeDelta.x + 
+                                          _layoutGroup.spacing) / 2, _content.position.y, _content.position.z), duration);
     }
 }
