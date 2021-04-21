@@ -6,8 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public struct Level
 {
-    public List<TargetConfig> Targets;
     public int Reward;
+    public List<TargetConfig> Targets;
 }
 
 public class LevelManager : MonoBehaviour
