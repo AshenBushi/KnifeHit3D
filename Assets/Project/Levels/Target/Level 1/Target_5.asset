@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Target_5
   m_EditorClassIdentifier: 
   _base: {fileID: 7082160985325631047, guid: dff49e7447340e8438c475eaa8523e0d, type: 3}
-  _obstacleCount: 3
-  _hitToBreak: 5
+  _obstacleCount: 0
+  _hitToBreak: 7
   _rotateDefinitions:
   - Angle: 360
-    Duration: 2.5
+    Duration: 3
     EaseCurve:
       serializedVersion: 2
       m_Curve:
