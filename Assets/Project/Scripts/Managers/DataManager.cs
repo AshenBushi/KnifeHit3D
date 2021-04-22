@@ -52,11 +52,10 @@ public class DataManager : MonoBehaviour
     {
         GameData.PlayerData.Money = 0;
 
-        GameData.Shop.CurrentKnifeIndex = 0;
-        GameData.Shop.CurrentKnifePage = 0;
-        GameData.Shop.OpenedKnives = new List<int> {0};
+        GameData._shopData.CurrentKnifeIndex = 0;
+        GameData._shopData.OpenedKnives = new List<int> {0};
 
-        GameData.Progress.CurrentLevel = 0;
+        GameData._progressData.CurrentLevel = 0;
     }
     
     public static void Save()
@@ -74,17 +73,15 @@ public class DataManager : MonoBehaviour
 
 public class GameData
 {
-    public Shop Shop;
+    public ShopData _shopData;
     public PlayerData PlayerData;
-    public Progress Progress;
+    public ProgressData _progressData;
 }
 
 [Serializable]
-public struct Shop
+public struct ShopData
 {
-    //Knife Data
     public int CurrentKnifeIndex;
-    public int CurrentKnifePage;
     public List<int> OpenedKnives;
 }
 
@@ -95,7 +92,7 @@ public struct PlayerData
 }
 
 [Serializable]
-public struct Progress
+public struct ProgressData
 {
     public int CurrentLevel;
 }
