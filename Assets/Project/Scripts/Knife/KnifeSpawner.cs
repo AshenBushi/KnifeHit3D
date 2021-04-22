@@ -9,7 +9,7 @@ public class KnifeSpawner : MonoBehaviour
 
     private Knife _currentKnife;
     public Knife CurrentKnife => _currentKnife;
-    public Knife CurrentTemplate => _knives[DataManager.GameData._shopData.CurrentKnifeIndex];
+    public Knife CurrentTemplate => _knives[DataManager.GameData.ShopData.CurrentKnifeIndex];
 
     public event UnityAction IsLose;
 
@@ -31,7 +31,7 @@ public class KnifeSpawner : MonoBehaviour
             _currentKnife.IsStuck -= SpawnKnife;
             _currentKnife.IsBounced -= OnKnifeBounced;
         }
-        _currentKnife = Instantiate(_knives[DataManager.GameData._shopData.CurrentKnifeIndex], _player.transform);
+        _currentKnife = Instantiate(_knives[DataManager.GameData.ShopData.CurrentKnifeIndex], _player.transform);
         _currentKnife.IsStuck += SpawnKnife;
         _currentKnife.IsBounced += OnKnifeBounced;
     }

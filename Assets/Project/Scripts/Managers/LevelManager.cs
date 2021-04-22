@@ -26,13 +26,13 @@ public class LevelManager : MonoBehaviour
 
     private void LoadLevel()
     {
-        CurrentLevel = _levels[DataManager.GameData._progressData.CurrentLevel];
+        CurrentLevel = _levels[DataManager.GameData.ProgressData.CurrentLevel];
     }
     
     public static void NextLevel()
     {
-        if (DataManager.GameData._progressData.CurrentLevel == _levelCount - 1) return;
-        DataManager.GameData._progressData.CurrentLevel++;
+        if (DataManager.GameData.ProgressData.CurrentLevel == _levelCount - 1) return;
+        DataManager.GameData.ProgressData.CurrentLevel++;
         DataManager.Save();
     }
 }

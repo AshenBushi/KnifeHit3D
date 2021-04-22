@@ -52,10 +52,10 @@ public class DataManager : MonoBehaviour
     {
         GameData.PlayerData.Money = 0;
 
-        GameData._shopData.CurrentKnifeIndex = 0;
-        GameData._shopData.OpenedKnives = new List<int> {0};
+        GameData.ShopData.CurrentKnifeIndex = 0;
+        GameData.ShopData.OpenedKnives = new List<int> {0};
 
-        GameData._progressData.CurrentLevel = 0;
+        GameData.ProgressData.CurrentLevel = 0;
     }
     
     public static void Save()
@@ -73,9 +73,9 @@ public class DataManager : MonoBehaviour
 
 public class GameData
 {
-    public ShopData _shopData;
+    public ShopData ShopData;
     public PlayerData PlayerData;
-    public ProgressData _progressData;
+    public ProgressData ProgressData;
 }
 
 [Serializable]
