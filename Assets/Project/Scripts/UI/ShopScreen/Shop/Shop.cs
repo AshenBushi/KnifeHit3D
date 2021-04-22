@@ -7,6 +7,7 @@ using UnityEngine;
 public class Shop : MonoBehaviour
 {
     [SerializeField] private List<ShopSection> _shopSections;
+    [SerializeField] private ItemPreview _itemPreview;
     
     private List<ShopItem> _shopItems;
     private ShopItem _currentItem;
@@ -37,21 +38,25 @@ public class Shop : MonoBehaviour
 
     private void Start()
     {
-        foreach (var item in _shopItems.Where(item => item.Index == DataManager.GameData._shopData.CurrentKnifeIndex))
+        foreach (var item in _shopItems.Where(item => DataManager.GameData.ShopData.OpenedKnives.Contains(item.Index)))
         {
-            _currentItem = item;
-            _currentItemIndex = DataManager.GameData._shopData.CurrentKnifeIndex;
-            _currentItem.EnableIndicator();
+            item.Unlock();
+            
+            if (item.Index != DataManager.GameData.ShopData.CurrentKnifeIndex) continue;
+            OnItemSelected(item, item.PreviewTemplate);
         }
     }
 
-    private void OnItemSelected(ShopItem item)
+    private void OnItemSelected(ShopItem item, GameObject previewTemplate)
     {
-        _currentItem.DisableIndicator();
+        if(_currentItem != null)
+            _currentItem.DisableIndicator();
+        
         _currentItem = item;
         _currentItemIndex = item.Index;
-        DataManager.GameData._shopData.CurrentKnifeIndex = _currentItemIndex;
+        DataManager.GameData.ShopData.CurrentKnifeIndex = _currentItemIndex;
         DataManager.Save();
+        _itemPreview.SpawnSelectedItem(previewTemplate);
         _currentItem.EnableIndicator();
     }
 

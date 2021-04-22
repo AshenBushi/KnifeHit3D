@@ -9,11 +9,17 @@ public class ShopItem : MonoBehaviour
 {
     [SerializeField] private int _index;
     [SerializeField] private Image _selectIndicator;
+    [SerializeField] private Image _lockIndicator;
+    [SerializeField] private GameObject _previewTemplate;
 
     private Button _button;
+    private bool _isUnlock = false;
     
     public int Index => _index;
-    public event UnityAction<ShopItem> IsKnifeSelected;
+
+    public GameObject PreviewTemplate => _previewTemplate;
+
+    public event UnityAction<ShopItem, GameObject> IsKnifeSelected;
 
     private void Awake()
     {
@@ -28,9 +34,16 @@ public class ShopItem : MonoBehaviour
 
     private void SelectKnife()
     {
-        IsKnifeSelected?.Invoke(this);
+        if (!_isUnlock) return;
+        IsKnifeSelected?.Invoke(this, _previewTemplate);
     }
 
+    public void Unlock()
+    {
+        _isUnlock = true;
+        _lockIndicator.gameObject.SetActive(false);
+    }
+    
     public void EnableIndicator()
     {
         _selectIndicator.gameObject.SetActive(true);
