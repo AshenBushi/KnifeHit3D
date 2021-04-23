@@ -10,6 +10,7 @@ public class ShopItem : MonoBehaviour
     [SerializeField] private int _index;
     [SerializeField] private Image _selectIndicator;
     [SerializeField] private Image _lockIndicator;
+    [SerializeField] private Transform _container;
     [SerializeField] private GameObject _previewTemplate;
 
     private Button _button;
@@ -24,7 +25,8 @@ public class ShopItem : MonoBehaviour
     private void Awake()
     {
         _button = GetComponent<Button>();
-        _selectIndicator.GetComponentInChildren<Image>();
+        if (_previewTemplate != null)
+            Instantiate(_previewTemplate, _container);
     }
 
     private void OnEnable()
