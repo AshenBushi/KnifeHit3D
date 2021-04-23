@@ -10,7 +10,6 @@ public class ShopItem : MonoBehaviour
     [SerializeField] private int _index;
     [SerializeField] private Image _selectIndicator;
     [SerializeField] private Image _lockIndicator;
-    [SerializeField] private Transform _container;
     [SerializeField] private GameObject _previewTemplate;
     [SerializeField] private Transform _container;
 
