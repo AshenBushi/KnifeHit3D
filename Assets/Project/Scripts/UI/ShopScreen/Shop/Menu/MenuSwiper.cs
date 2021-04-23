@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -19,6 +20,10 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
     private int _fastScrollIndex = 0;
     private bool _isFastScroll = false;
 
+    public int CurrentPage => _currentPage;
+
+    public event UnityAction IsPageChanged;
+    
     public void OnDrag(PointerEventData eventData)
     {
         if (Mathf.Abs(eventData.delta.x) > 2)
@@ -56,6 +61,8 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
             }
         }
 
+        IsPageChanged?.Invoke();
+        
         SelectCurrentPage(_duration);
     }
 
