@@ -35,9 +35,17 @@ public class Player : MonoBehaviour
         _canThrow = false;
     }
 
-    public void AddMoney(int money)
+    public void DepositMoney(int count)
     {
-        Money += money;
+        Money += count;
+        DataManager.GameData.PlayerData.Money = Money;
+        DataManager.Save();
+        IsMoneyChanged?.Invoke();
+    }
+
+    public void WithdrawMoney(int count)
+    {
+        Money -= count;
         DataManager.GameData.PlayerData.Money = Money;
         DataManager.Save();
         IsMoneyChanged?.Invoke();

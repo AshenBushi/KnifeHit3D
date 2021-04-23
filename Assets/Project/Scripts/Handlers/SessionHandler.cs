@@ -40,7 +40,7 @@ public class SessionHandler : MonoBehaviour
     private void OnWin()
     {
         LevelManager.NextLevel();
-        _player.AddMoney(LevelManager.CurrentLevel.Reward);
+        _player.DepositMoney(LevelManager.CurrentLevel.Reward);
         _winScreen.Win();
     }
     

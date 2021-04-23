@@ -14,6 +14,8 @@ public class Shop : MonoBehaviour
     private int _currentItemIndex;
     private int _startIndex = 1;
 
+    public ShopItem CurrentItem => _currentItem;
+
     private void Awake()
     {
         _shopItems = GetComponentsInChildren<ShopItem>().ToList();
@@ -56,7 +58,10 @@ public class Shop : MonoBehaviour
         _currentItemIndex = item.Index;
         DataManager.GameData.ShopData.CurrentKnifeIndex = _currentItemIndex;
         DataManager.Save();
-        _itemPreview.SpawnSelectedItem(previewTemplate);
+        
+        if(previewTemplate != null)
+            _itemPreview.SpawnSelectedItem(previewTemplate);
+        
         _currentItem.EnableIndicator();
     }
 
