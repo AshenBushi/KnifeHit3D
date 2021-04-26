@@ -12,5 +12,6 @@ public class ItemPreview : MonoBehaviour
     {
         Destroy(_item);
         _item = Instantiate(itemTemplate, _container);
+        _item.transform.localPosition = Vector3.zero;
     }
 }

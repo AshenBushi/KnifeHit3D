@@ -6,6 +6,7 @@ public class Knife : MonoBehaviour
 {
     [SerializeField] private float _throwForce;
     [SerializeField] private float _bounceForce;
+    [SerializeField] private Vector3 _obstacleRotation;
 
     private Rigidbody _rigidbody;
 
@@ -55,6 +56,6 @@ public class Knife : MonoBehaviour
     public void MakeObstacle()
     {
         _rigidbody.isKinematic = true;
-        transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        transform.localRotation = Quaternion.Euler(_obstacleRotation);
     }
 }
