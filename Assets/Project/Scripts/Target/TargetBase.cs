@@ -6,7 +6,7 @@ public class TargetBase : MonoBehaviour
     private const float UpForce = 0;
     private const float Radius = 20;
     
-    [SerializeField] private List<Obstacle> _obstacles;
+    [SerializeField] private List<TargetObstacle> _obstacles;
     [SerializeField] private float _explosionForce;
     [SerializeField] private Transform _explodePoint;
 

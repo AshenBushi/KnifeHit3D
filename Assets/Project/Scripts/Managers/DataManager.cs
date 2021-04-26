@@ -50,12 +50,19 @@ public class DataManager : MonoBehaviour
     
     private void FirstPlay()
     {
-        GameData.PlayerData.Money = 0;
+        GameData.PlayerData.Money = 5000;
 
         GameData.ShopData.CurrentKnifeIndex = 0;
-        GameData.ShopData.OpenedKnives = new List<int> {0};
+        GameData.ShopData.OpenedKnives = new List<int>
+        {
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+            29, 30, 31, 32, 33, 34, 35, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
+        };
 
-        GameData.ProgressData.CurrentLevel = 0;
+        GameData.ProgressData.CurrentTargetLevel = 0;
+        GameData.ProgressData.CurrentCubeLevel = 0;
+        GameData.ProgressData.CurrentCubeLevel = 0;
+        GameData.ProgressData.CurrentGamemod = 0;
     }
     
     public static void Save()
@@ -94,5 +101,8 @@ public struct PlayerData
 [Serializable]
 public struct ProgressData
 {
-    public int CurrentLevel;
+    public int CurrentGamemod;
+    public int CurrentTargetLevel;
+    public int CurrentCubeLevel;
+    public int CurrentFlatLevel;
 }

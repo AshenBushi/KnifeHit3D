@@ -52,4 +52,9 @@ public class Target : MonoBehaviour
         if (config.ObstacleCount <= 0) return;
         _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
     }
+
+    public void ReinitializeObstacle(TargetConfig config, Knife obstacleTemplate)
+    {
+        _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
+    }
 }

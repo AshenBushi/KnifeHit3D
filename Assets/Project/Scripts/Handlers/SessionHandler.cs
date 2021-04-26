@@ -10,10 +10,12 @@ public class SessionHandler : MonoBehaviour
     [SerializeField] private LoseScreen _loseScreen;
     [SerializeField] private WinScreen _winScreen;
     [SerializeField] private InputField _inputField;
+    [SerializeField] private ShopScreen _shopScreen;
 
     private void OnEnable()
     {
         _inputField.IsSessionStart += StartGame;
+        _shopScreen.IsKnifeChanged += ReloadGame;
         _targetSpawner.IsWin += OnWin;
         _knifeSpawner.IsLose += OnLose;
     }
@@ -21,13 +23,14 @@ public class SessionHandler : MonoBehaviour
     private void OnDisable()
     {
         _inputField.IsSessionStart -= StartGame;
+        _shopScreen.IsKnifeChanged -= ReloadGame;
         _targetSpawner.IsWin -= OnWin;
         _knifeSpawner.IsLose -= OnLose;
     }
 
     private void Start()
     {
-        _targetSpawner.SpawnLevel(LevelManager.CurrentLevel, _knifeSpawner.CurrentTemplate);
+        _targetSpawner.SpawnLevel(LevelManager.CurrentTargetLevel, _knifeSpawner.CurrentTemplate);
         _knifeSpawner.SpawnKnife();
     }
 
@@ -37,10 +40,16 @@ public class SessionHandler : MonoBehaviour
         _startScreen.StartSession();
     }
 
+    private void ReloadGame()
+    {
+        _targetSpawner.Reload(LevelManager.CurrentTargetLevel, _knifeSpawner.CurrentTemplate);
+        _knifeSpawner.Reload();
+    }
+
     private void OnWin()
     {
-        LevelManager.NextLevel();
-        _player.DepositMoney(LevelManager.CurrentLevel.Reward);
+        LevelManager.NextTargetLevel();
+        _player.DepositMoney(LevelManager.CurrentTargetLevel.Reward);
         _winScreen.Win();
     }
     

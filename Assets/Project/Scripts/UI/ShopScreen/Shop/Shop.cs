@@ -11,7 +11,6 @@ public class Shop : MonoBehaviour
     
     private List<ShopItem> _shopItems;
     private ShopItem _currentItem;
-    private int _currentItemIndex;
     private int _startIndex = 1;
 
     public ShopItem CurrentItem => _currentItem;
@@ -55,8 +54,7 @@ public class Shop : MonoBehaviour
             _currentItem.DisableIndicator();
         
         _currentItem = item;
-        _currentItemIndex = item.Index;
-        DataManager.GameData.ShopData.CurrentKnifeIndex = _currentItemIndex;
+        DataManager.GameData.ShopData.CurrentKnifeIndex = item.Index;
         DataManager.Save();
         
         if(previewTemplate != null)

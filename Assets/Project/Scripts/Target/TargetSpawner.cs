@@ -87,12 +87,20 @@ public class TargetSpawner : MonoBehaviour
         _hitScoreDisplayer.SpawnHitScores(_currentTarget.HitToBreak);
     }
     
-    public void SpawnLevel(Level level, Knife obstacleTemplate)
+    public void SpawnLevel(TargetLevel targetLevel, Knife obstacleTemplate)
     {
-        for (var i = 0; i < level.Targets.Count; i++)
+        for (var i = 0; i < targetLevel.Targets.Count; i++)
         {
             _targets.Add(Instantiate(_targetTemplate, new Vector3(0f, _spawnY, _spawnZ + _spawnStep * i), Quaternion.identity, transform));
-            _targets[i].SpawnAndSetup(level.Targets[i], obstacleTemplate);
+            _targets[i].SpawnAndSetup(targetLevel.Targets[i], obstacleTemplate);
+        }
+    }
+
+    public void Reload(TargetLevel targetLevel, Knife obstacleTemplate)
+    {
+        for (var i = 0; i < targetLevel.Targets.Count; i++)
+        {
+            _targets[i].ReinitializeObstacle(targetLevel.Targets[i], obstacleTemplate);
         }
     }
 }

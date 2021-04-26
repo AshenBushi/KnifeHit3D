@@ -13,7 +13,7 @@ public class LevelProgressDisplayer : MonoBehaviour
 
     private void Start()
     {
-        _levelText.text = (DataManager.GameData.ProgressData.CurrentLevel + 1).ToString();
+        _levelText.text = (DataManager.GameData.ProgressData.CurrentTargetLevel + 1).ToString();
         NextPoint();
     }
 

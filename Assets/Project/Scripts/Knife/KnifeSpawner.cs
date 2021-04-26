@@ -35,4 +35,12 @@ public class KnifeSpawner : MonoBehaviour
         _currentKnife.IsStuck += SpawnKnife;
         _currentKnife.IsBounced += OnKnifeBounced;
     }
+
+    public void Reload()
+    {
+        _currentKnife.IsStuck -= SpawnKnife;
+        _currentKnife.IsBounced -= OnKnifeBounced;
+        Destroy(_currentKnife.gameObject);
+        SpawnKnife();
+    }
 }
