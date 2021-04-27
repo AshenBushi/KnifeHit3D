@@ -52,8 +52,36 @@ public class Target : MonoBehaviour
         if (config.ObstacleCount <= 0) return;
         _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
     }
+    
+    /*public void SpawnAndSetup(CubeConfig config, Knife obstacleTemplate)
+    {
+        _targetBase = Instantiate(config.Base, transform.position, Quaternion.Euler(0f, 180f, 0f), transform);
+        _hitToBreak = config.HitToBreak;
+        _rotator.StartRotate(config.RotateDefinitions);
+        if (config.ObstacleCount <= 0) return;
+        _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
+    }*/
+    
+    public void SpawnAndSetup(FlatConfig config, Knife obstacleTemplate)
+    {
+        _targetBase = Instantiate(config.Base, transform.position, Quaternion.Euler(0f, 180f, 0f), transform);
+        _hitToBreak = config.HitToBreak;
+        _rotator.StartRotate(config.RotateDefinitions);
+        if (config.ObstacleCount <= 0) return;
+        _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
+    }
 
     public void ReinitializeObstacle(TargetConfig config, Knife obstacleTemplate)
+    {
+        _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
+    }
+    
+    /*public void ReinitializeObstacle(CubeConfig config, Knife obstacleTemplate)
+    {
+        _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
+    }*/
+    
+    public void ReinitializeObstacle(FlatConfig config, Knife obstacleTemplate)
     {
         _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
     }

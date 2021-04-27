@@ -18,6 +18,7 @@ public class SessionHandler : MonoBehaviour
         _shopScreen.IsKnifeChanged += ReloadGame;
         _targetSpawner.IsWin += OnWin;
         _knifeSpawner.IsLose += OnLose;
+        _startScreen.IsModChanged += SpawnLevel;
     }
 
     private void OnDisable()
@@ -26,11 +27,13 @@ public class SessionHandler : MonoBehaviour
         _shopScreen.IsKnifeChanged -= ReloadGame;
         _targetSpawner.IsWin -= OnWin;
         _knifeSpawner.IsLose -= OnLose;
+        _startScreen.IsModChanged -= SpawnLevel;
     }
 
     private void Start()
     {
-        _targetSpawner.SpawnLevel(LevelManager.CurrentTargetLevel, _knifeSpawner.CurrentTemplate);
+        SpawnLevel();
+        
         _knifeSpawner.SpawnKnife();
     }
 
@@ -40,16 +43,65 @@ public class SessionHandler : MonoBehaviour
         _startScreen.StartSession();
     }
 
+    private void SpawnLevel()
+    {
+        switch (DataManager.GameData.ProgressData.CurrentGamemod)
+        {
+            case 0:
+                _targetSpawner.SpawnLevel(LevelManager.CurrentTargetLevel, _knifeSpawner.CurrentTemplate);
+                break;
+            case 1:
+                //_targetSpawner.SpawnLevel(LevelManager.CurrentCubeLevel, _knifeSpawner.CurrentTemplate);
+                break;
+            case 2:
+                _targetSpawner.SpawnLevel(LevelManager.CurrentFlatLevel, _knifeSpawner.CurrentTemplate);
+                break;
+            default:
+                _targetSpawner.SpawnLevel(LevelManager.CurrentTargetLevel, _knifeSpawner.CurrentTemplate);
+                break;
+        }
+    }
+    
     private void ReloadGame()
     {
-        _targetSpawner.Reload(LevelManager.CurrentTargetLevel, _knifeSpawner.CurrentTemplate);
+        switch (DataManager.GameData.ProgressData.CurrentGamemod)
+        {
+            case 0:
+                _targetSpawner.Reload(LevelManager.CurrentTargetLevel, _knifeSpawner.CurrentTemplate);
+                break;
+            case 1:
+                //_targetSpawner.Reload(LevelManager.CurrentCubeLevel, _knifeSpawner.CurrentTemplate);
+                break;
+            case 2:
+                _targetSpawner.Reload(LevelManager.CurrentFlatLevel, _knifeSpawner.CurrentTemplate);
+                break;
+            default:
+                _targetSpawner.Reload(LevelManager.CurrentTargetLevel, _knifeSpawner.CurrentTemplate);
+                break;
+        }
         _knifeSpawner.Reload();
     }
 
     private void OnWin()
     {
-        LevelManager.NextTargetLevel();
-        _player.DepositMoney(LevelManager.CurrentTargetLevel.Reward);
+        switch (DataManager.GameData.ProgressData.CurrentGamemod)
+        {
+            case 0:
+                LevelManager.NextTargetLevel();
+                _player.DepositMoney(LevelManager.CurrentTargetLevel.Reward);
+                break;
+            case 1:
+                LevelManager.NextCubeLevel();
+                _player.DepositMoney(LevelManager.CurrentCubeLevel.Reward);
+                break;
+            case 2:
+                LevelManager.NextFlatLevel();
+                _player.DepositMoney(LevelManager.CurrentFlatLevel.Reward);
+                break;
+            default:
+                break;
+        }
+        
         _winScreen.Win();
     }
     

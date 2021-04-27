@@ -10,11 +10,19 @@ public class TargetSpawner : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private HitScoreDisplayer _hitScoreDisplayer;
     [SerializeField] private LevelProgressDisplayer _levelProgressDisplayer;
-    [SerializeField] private Target _targetTemplate;
     [SerializeField] private float _spawnZ;
     [SerializeField] private float _spawnStep;
-    [SerializeField] private float _spawnY;
     [SerializeField] private float _animationDuration;
+    [Header("Target Settings")]
+    [SerializeField] private Target _targetTemplate;
+    [SerializeField] private float _targetSpawnY;
+    [Header("Cube Settings")]
+    [SerializeField] private Target _cubeTemplate;
+    [SerializeField] private float _cubeSpawnY;
+    [Header("Flat Settings")]
+    [SerializeField] private Target _flatTemplate;
+    [SerializeField] private float _flatSpawnY;
+
     
     private List<Target> _targets = new List<Target>();
     private Target _currentTarget;
@@ -78,6 +86,17 @@ public class TargetSpawner : MonoBehaviour
         
         Destroy(targetBase.gameObject);
     }
+
+    private void TryClearTargets()
+    {
+        if (_targets.Count < 1) return;
+        foreach (var target in _targets)
+        {
+            Destroy(target.gameObject);
+        }
+
+        _targets.Clear();
+    }
     
     public void SetCurrentTarget()
     {
@@ -86,13 +105,45 @@ public class TargetSpawner : MonoBehaviour
         _currentTarget.IsTakeHit += OnTargetTakeHit;
         _hitScoreDisplayer.SpawnHitScores(_currentTarget.HitToBreak);
     }
-    
+
     public void SpawnLevel(TargetLevel targetLevel, Knife obstacleTemplate)
     {
+        TryClearTargets();
+        
         for (var i = 0; i < targetLevel.Targets.Count; i++)
         {
-            _targets.Add(Instantiate(_targetTemplate, new Vector3(0f, _spawnY, _spawnZ + _spawnStep * i), Quaternion.identity, transform));
+            _targets.Add(Instantiate(_targetTemplate, new Vector3(0f, _targetSpawnY, _spawnZ + _spawnStep * i), Quaternion.identity, transform));
             _targets[i].SpawnAndSetup(targetLevel.Targets[i], obstacleTemplate);
+        }
+    }
+    
+    /*public void SpawnLevel(CubeLevel cubeLevel, Knife obstacleTemplate)
+    {
+        if (_targets.Count > 1)
+        {
+            foreach (var target in _targets)
+            {
+                Destroy(target.gameObject);
+            }
+
+            _targets = new List<Target>();
+        }
+    
+        for (var i = 0; i < cubeLevel.Targets.Count; i++)
+        {
+            _targets.Add(Instantiate(_targetTemplate, new Vector3(0f, _spawnY, _spawnZ + _spawnStep * i), Quaternion.identity, transform));
+            _targets[i].SpawnAndSetup(cubeLevel.Targets[i], obstacleTemplate);
+        }
+    }*/
+    
+    public void SpawnLevel(FlatLevel flatLevel, Knife obstacleTemplate)
+    {
+        TryClearTargets();
+        
+        for (var i = 0; i < flatLevel.Flats.Count; i++)
+        {
+            _targets.Add(Instantiate(_flatTemplate, new Vector3(0f, _flatSpawnY, _spawnZ + _spawnStep * i), Quaternion.identity, transform));
+            _targets[i].SpawnAndSetup(flatLevel.Flats[i], obstacleTemplate);
         }
     }
 
@@ -101,6 +152,19 @@ public class TargetSpawner : MonoBehaviour
         for (var i = 0; i < targetLevel.Targets.Count; i++)
         {
             _targets[i].ReinitializeObstacle(targetLevel.Targets[i], obstacleTemplate);
+        }
+    }
+    
+    /*public void Reload(CubeLevel cubeLevel, Knife obstacleTemplate)
+    {
+        _targets[i].ReinitializeObstacle(cubeLevel.Targets[i], obstacleTemplate);
+    }*/
+    
+    public void Reload(FlatLevel flatLevel, Knife obstacleTemplate)
+    {
+        for (var i = 0; i < flatLevel.Flats.Count; i++)
+        {
+            _targets[i].ReinitializeObstacle(flatLevel.Flats[i], obstacleTemplate);
         }
     }
 }

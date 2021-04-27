@@ -31,7 +31,7 @@ public class StartScreen : MonoBehaviour
 
     private void OnModChanged()
     {
-        
+        IsModChanged?.Invoke();
     }
 
     public void EnableShopScreen()
