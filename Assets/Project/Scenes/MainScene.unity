@@ -1276,17 +1276,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetLevels:
-  - Reward: 0
+  - Reward: 30
     Targets:
     - {fileID: 11400000, guid: 43a39f551629e6640840ab698361eb9d, type: 2}
+    - {fileID: 11400000, guid: f1f982f81a9a4a94d9c01c9699965987, type: 2}
+    - {fileID: 11400000, guid: 825976a04cd997a4aac6af1a6e1b0a22, type: 2}
+    - {fileID: 11400000, guid: 6a6fd9916c29e1243aaac6d6afb30eaf, type: 2}
+    - {fileID: 11400000, guid: 1e7cecc5a41ac06419d77da90151a3fd, type: 2}
   _cubeLevels:
   - Reward: 0
     Base: {fileID: 3941740068826476237, guid: ed36dd55d848c2f4e8814e40147bcc93, type: 3}
     Cubes: []
   _flatLevels:
-  - Reward: 0
+  - Reward: 50
     Flats:
-    - {fileID: 0}
+    - {fileID: 11400000, guid: d9ea7659989b34848a1b25581a845d36, type: 2}
+    - {fileID: 11400000, guid: 0134f9820afc77e419ddd7b889ea589b, type: 2}
+    - {fileID: 11400000, guid: 5f6fd8c9d5cbb1c42a7c0442fdff1790, type: 2}
+    - {fileID: 11400000, guid: 360162b6bdc5ceb4b85d7f517ebf923a, type: 2}
+    - {fileID: 11400000, guid: 970391ab0d113a5499a89bc8dd5ac8c4, type: 2}
 --- !u!114 &82229549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4762,6 +4770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bd6b41fb081a064bbe305e9cee8e650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startScreen: {fileID: 1870943036}
   _levelText: {fileID: 583995525}
   _points:
   - {fileID: 1949245160}
@@ -12660,12 +12669,18 @@ MonoBehaviour:
   _player: {fileID: 218356942}
   _hitScoreDisplayer: {fileID: 436813292}
   _levelProgressDisplayer: {fileID: 595803960}
-  _targetTemplate: {fileID: 1975088861040267070, guid: 57e7ed7fc518f314e8cdc79157e65333,
-    type: 3}
   _spawnZ: 10
   _spawnStep: 25
-  _spawnY: 2.1
   _animationDuration: 1
+  _targetTemplate: {fileID: 1975088861040267070, guid: 57e7ed7fc518f314e8cdc79157e65333,
+    type: 3}
+  _targetSpawnY: 2.1
+  _cubeTemplate: {fileID: 1975088861040267070, guid: d277dd0cbefa916459e5f03a17935d78,
+    type: 3}
+  _cubeSpawnY: 0
+  _flatTemplate: {fileID: 1975088861040267070, guid: a6de872025b8f9f458ca4f317fc21a16,
+    type: 3}
+  _flatSpawnY: 0
 --- !u!114 &1572914403
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,7 +13,24 @@ public class TargetRotator : MonoBehaviour
 
     private void Rotate()
     {
-        var rotateEuler = new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle);
+        Vector3 rotateEuler;
+        
+        switch (DataManager.GameData.ProgressData.CurrentGamemod)
+        {
+            case 0:
+                rotateEuler = new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle);
+                break;
+            case 1:
+                rotateEuler = new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle);
+                break;
+            case 2:
+                rotateEuler = new Vector3(0f, _rotateDefinitions[_currentIndex].Angle, 0f);
+                break;
+            default:
+                rotateEuler = new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle);
+                break;
+        }
+        
         _rotator = transform.DORotate(transform.eulerAngles + rotateEuler, _rotateDefinitions[_currentIndex].Duration, RotateMode.FastBeyond360)
             .SetEase(_rotateDefinitions[_currentIndex].EaseCurve).SetLink(gameObject);
         _rotator.OnComplete(() =>
