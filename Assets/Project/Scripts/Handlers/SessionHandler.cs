@@ -51,7 +51,7 @@ public class SessionHandler : MonoBehaviour
                 _targetSpawner.SpawnLevel(LevelManager.CurrentTargetLevel, _knifeSpawner.CurrentTemplate);
                 break;
             case 1:
-                //_targetSpawner.SpawnLevel(LevelManager.CurrentCubeLevel, _knifeSpawner.CurrentTemplate);
+                _targetSpawner.SpawnLevel(LevelManager.CurrentCubeLevel, _knifeSpawner.CurrentTemplate);
                 break;
             case 2:
                 _targetSpawner.SpawnLevel(LevelManager.CurrentFlatLevel, _knifeSpawner.CurrentTemplate);
@@ -70,7 +70,7 @@ public class SessionHandler : MonoBehaviour
                 _targetSpawner.Reload(LevelManager.CurrentTargetLevel, _knifeSpawner.CurrentTemplate);
                 break;
             case 1:
-                //_targetSpawner.Reload(LevelManager.CurrentCubeLevel, _knifeSpawner.CurrentTemplate);
+                _targetSpawner.Reload(LevelManager.CurrentCubeLevel, _knifeSpawner.CurrentTemplate);
                 break;
             case 2:
                 _targetSpawner.Reload(LevelManager.CurrentFlatLevel, _knifeSpawner.CurrentTemplate);
@@ -99,6 +99,8 @@ public class SessionHandler : MonoBehaviour
                 _player.DepositMoney(LevelManager.CurrentFlatLevel.Reward);
                 break;
             default:
+                LevelManager.NextTargetLevel();
+                _player.DepositMoney(LevelManager.CurrentTargetLevel.Reward);
                 break;
         }
         

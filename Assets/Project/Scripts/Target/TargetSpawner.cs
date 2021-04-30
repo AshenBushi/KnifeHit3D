@@ -16,12 +16,15 @@ public class TargetSpawner : MonoBehaviour
     [Header("Target Settings")]
     [SerializeField] private Target _targetTemplate;
     [SerializeField] private float _targetSpawnY;
+    [SerializeField] private Vector3 _targetExplodePosition;
     [Header("Cube Settings")]
     [SerializeField] private Target _cubeTemplate;
     [SerializeField] private float _cubeSpawnY;
+    [SerializeField] private Vector3 _cubeExplodePosition;
     [Header("Flat Settings")]
     [SerializeField] private Target _flatTemplate;
     [SerializeField] private float _flatSpawnY;
+    [SerializeField] private Vector3 _flatExplodePosition;
 
     
     private List<Target> _targets = new List<Target>();
@@ -35,12 +38,14 @@ public class TargetSpawner : MonoBehaviour
         if (_currentTarget == null) return;
         _currentTarget.IsBreak -= OnTargetBreak;
         _currentTarget.IsTakeHit -= OnTargetTakeHit;
+        _currentTarget.IsEdgePass -= OnEdgePass;
     }
 
     private void OnTargetBreak(TargetBase targetBase)
     {
         _currentTarget.IsBreak -= OnTargetBreak;
         _currentTarget.IsTakeHit -= OnTargetTakeHit;
+        _currentTarget.IsEdgePass -= OnEdgePass;
         _hitScoreDisplayer.SubmitHit();
         StartCoroutine(TargetBreakAnimation(targetBase));
     }
@@ -51,6 +56,14 @@ public class TargetSpawner : MonoBehaviour
         _hitScoreDisplayer.SubmitHit();
     }
 
+    private void OnEdgePass()
+    {
+        _hitScoreDisplayer.SubmitHit();
+        _levelProgressDisplayer.NextPoint();
+        _hitScoreDisplayer.SpawnHitScores(_currentTarget.HitToBreak);
+        _player.AllowThrow();
+    }
+    
     private void Move()
     {
         foreach (var target in _targets)
@@ -67,7 +80,21 @@ public class TargetSpawner : MonoBehaviour
 
     private IEnumerator TargetBreakAnimation(TargetBase targetBase)
     {
-        targetBase.Detonate();
+        switch (DataManager.GameData.ProgressData.CurrentGamemod)
+        {
+            case 0:
+                targetBase.Detonate(_targetExplodePosition);
+                break;
+            case 1:
+                targetBase.Detonate(_cubeExplodePosition);
+                break;
+            case 2:
+                targetBase.Detonate(_flatExplodePosition);
+                break;
+            default:
+                targetBase.Detonate(_targetExplodePosition);
+                break;
+        }
         
         _targets.Remove(_currentTarget);
         
@@ -103,6 +130,7 @@ public class TargetSpawner : MonoBehaviour
         _currentTarget = _targets[0];
         _currentTarget.IsBreak += OnTargetBreak;
         _currentTarget.IsTakeHit += OnTargetTakeHit;
+        _currentTarget.IsEdgePass += OnEdgePass;
         _hitScoreDisplayer.SpawnHitScores(_currentTarget.HitToBreak);
     }
 
@@ -117,24 +145,14 @@ public class TargetSpawner : MonoBehaviour
         }
     }
     
-    /*public void SpawnLevel(CubeLevel cubeLevel, Knife obstacleTemplate)
+    public void SpawnLevel(CubeLevel cubeLevel, Knife obstacleTemplate)
     {
-        if (_targets.Count > 1)
-        {
-            foreach (var target in _targets)
-            {
-                Destroy(target.gameObject);
-            }
-
-            _targets = new List<Target>();
-        }
-    
-        for (var i = 0; i < cubeLevel.Targets.Count; i++)
-        {
-            _targets.Add(Instantiate(_targetTemplate, new Vector3(0f, _spawnY, _spawnZ + _spawnStep * i), Quaternion.identity, transform));
-            _targets[i].SpawnAndSetup(cubeLevel.Targets[i], obstacleTemplate);
-        }
-    }*/
+        TryClearTargets();
+        
+        _targets.Add(Instantiate(_cubeTemplate, new Vector3(0f, _cubeSpawnY, _spawnZ), Quaternion.identity,
+            transform));
+        _targets[0].SpawnAndSetup(cubeLevel, obstacleTemplate);
+    }
     
     public void SpawnLevel(FlatLevel flatLevel, Knife obstacleTemplate)
     {
@@ -151,20 +169,20 @@ public class TargetSpawner : MonoBehaviour
     {
         for (var i = 0; i < targetLevel.Targets.Count; i++)
         {
-            _targets[i].ReinitializeObstacle(targetLevel.Targets[i], obstacleTemplate);
+            _targets[i].ReinitializeObstacles(targetLevel.Targets[i], obstacleTemplate);
         }
     }
     
-    /*public void Reload(CubeLevel cubeLevel, Knife obstacleTemplate)
+    public void Reload(CubeLevel cubeLevel, Knife obstacleTemplate)
     {
-        _targets[i].ReinitializeObstacle(cubeLevel.Targets[i], obstacleTemplate);
-    }*/
+        _targets[0].ReinitializeObstacles(cubeLevel, obstacleTemplate);
+    }
     
     public void Reload(FlatLevel flatLevel, Knife obstacleTemplate)
     {
         for (var i = 0; i < flatLevel.Flats.Count; i++)
         {
-            _targets[i].ReinitializeObstacle(flatLevel.Flats[i], obstacleTemplate);
+            _targets[i].ReinitializeObstacles(flatLevel.Flats[i], obstacleTemplate);
         }
     }
 }

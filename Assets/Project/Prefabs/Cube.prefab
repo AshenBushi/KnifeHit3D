@@ -44,7 +44,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.3, y: 5.3, z: 5.3}
+  m_Size: {x: 5.1, y: 5.1, z: 5.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1975088861040267070
 MonoBehaviour:
@@ -58,6 +58,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7a8b5637202d0144a7937f919758e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cubeRotatePoints:
+  - {x: 0, y: 0, z: 0}
+  - {x: -90, y: 0, z: 0}
+  - {x: 0, y: 90, z: 0}
+  - {x: 0, y: 180, z: 0}
+  - {x: 0, y: -90, z: 0}
+  - {x: 90, y: 0, z: 0}
 --- !u!114 &1975088861040267069
 MonoBehaviour:
   m_ObjectHideFlags: 0

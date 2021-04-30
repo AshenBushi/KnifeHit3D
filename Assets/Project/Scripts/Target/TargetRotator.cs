@@ -13,24 +13,14 @@ public class TargetRotator : MonoBehaviour
 
     private void Rotate()
     {
-        Vector3 rotateEuler;
-        
-        switch (DataManager.GameData.ProgressData.CurrentGamemod)
+        var rotateEuler = DataManager.GameData.ProgressData.CurrentGamemod switch
         {
-            case 0:
-                rotateEuler = new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle);
-                break;
-            case 1:
-                rotateEuler = new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle);
-                break;
-            case 2:
-                rotateEuler = new Vector3(0f, _rotateDefinitions[_currentIndex].Angle, 0f);
-                break;
-            default:
-                rotateEuler = new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle);
-                break;
-        }
-        
+            0 => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle),
+            1 => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle),
+            2 => new Vector3(0f, _rotateDefinitions[_currentIndex].Angle, 0f),
+            _ => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle)
+        };
+
         _rotator = transform.DORotate(transform.eulerAngles + rotateEuler, _rotateDefinitions[_currentIndex].Duration, RotateMode.FastBeyond360)
             .SetEase(_rotateDefinitions[_currentIndex].EaseCurve).SetLink(gameObject);
         _rotator.OnComplete(() =>
@@ -46,6 +36,7 @@ public class TargetRotator : MonoBehaviour
 
     public void StartRotate(List<RotateDefinition> definitions)
     {
+        _rotator.Kill();
         _rotateDefinitions = definitions;
         _currentIndex = 0;
         if (_rotateDefinitions.Count <= 0) return;
