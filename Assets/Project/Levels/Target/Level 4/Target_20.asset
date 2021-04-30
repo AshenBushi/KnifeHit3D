@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27042b6d2a7a1ca49a43de97db3bb77b, type: 3}
   m_Name: Target_20
   m_EditorClassIdentifier: 
-  _base: {fileID: 2596697596179146738, guid: c2c1660a342639c4fbd3ebefe150cec0, type: 3}
+  _base: {fileID: 6917735119839695513, guid: 299c6746c35a31d4982c57863a577821, type: 3}
   _obstacleCount: 0
   _hitToBreak: 8
   _rotateDefinitions:
@@ -24,20 +24,20 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
+        inSlope: 1.4211661
+        outSlope: 1.4211661
+        tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.033112824
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2

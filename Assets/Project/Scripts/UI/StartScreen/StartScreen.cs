@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class StartScreen : MonoBehaviour
 {
     [SerializeField] private ShopScreen _shopScreen;
+    [SerializeField] private Slider _levelSelector;
 
     private GamemodHandler _gamemodHandler;
     private CanvasGroup _canvasGroup;

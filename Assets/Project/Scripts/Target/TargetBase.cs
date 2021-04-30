@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TargetBase : MonoBehaviour
@@ -6,19 +8,21 @@ public class TargetBase : MonoBehaviour
     private const float UpForce = 0;
     private const float Radius = 20;
     
-    [SerializeField] private List<TargetObstacle> _obstacles;
     [SerializeField] private float _explosionForce;
-    [SerializeField] private Transform _explodePoint;
+    
+    private List<ObstacleSpawner> _obstacleSpawners;
 
-    public void InitializeObstacles(int count, Knife obstacleTemplate)
+    private void Awake()
     {
-        for (var i = 0; i < count; i++)
-        {
-            _obstacles[i].Initialize(obstacleTemplate);
-        }
+        _obstacleSpawners = GetComponentsInChildren<ObstacleSpawner>().ToList();
+    }
+
+    public void InitializeObstacles(int spawnerIndex, int count, Knife obstacleTemplate)
+    {
+        _obstacleSpawners[spawnerIndex].SpawnObstacles(obstacleTemplate, count);
     }
     
-    public void Detonate()
+    public void Detonate(Vector3 explodePoint)
     {
         foreach (var item in GetComponentsInChildren<Collider>())
         {
@@ -28,7 +32,7 @@ public class TargetBase : MonoBehaviour
         foreach (var item in GetComponentsInChildren<Rigidbody>())
         {
             item.isKinematic = false;
-            item.AddExplosionForce(_explosionForce, _explodePoint.position, Radius, UpForce);
+            item.AddExplosionForce(_explosionForce, explodePoint, Radius, UpForce);
         }
     }
     

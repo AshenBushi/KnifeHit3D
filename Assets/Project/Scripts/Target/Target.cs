@@ -7,13 +7,20 @@ using UnityEngine.Events;
 [RequireComponent(typeof(TargetRotator))]
 public class Target : MonoBehaviour
 {
+    [SerializeField] private List<Vector3> _cubeRotatePoints;
+    
     private TargetBase _targetBase;
     private TargetRotator _rotator;
+    private int _edgeCount;
     private int _hitToBreak;
+    //Cube Fields
+    private Tween _tween;
+    private CubeLevel _cubeLevel;
     
     public int HitToBreak => _hitToBreak;
 
     public event UnityAction IsTakeHit;
+    public event UnityAction IsEdgePass;
     public event UnityAction<TargetBase> IsBreak;
 
     private void Awake()
@@ -31,11 +38,30 @@ public class Target : MonoBehaviour
     private void TakeHit()
     {
         _hitToBreak--;
-        
-        if(_hitToBreak <= 0)
-            Break();
+
+        if (_hitToBreak <= 0)
+        {
+            _edgeCount--;
+            
+            if(_edgeCount <= 0)
+            {
+                Break();
+            }
+            else
+            {
+                _tween = _targetBase.transform.DOLocalRotate(_cubeRotatePoints[_cubeLevel.Cubes.Count - _edgeCount], 1f);
+                _tween.OnComplete(() =>
+                {
+                    LoadCubeSettings();
+                    IsEdgePass?.Invoke();
+                });
+
+            }
+        }
         else
+        {
             IsTakeHit?.Invoke();
+        }
     }
 
     private void Break()
@@ -43,46 +69,62 @@ public class Target : MonoBehaviour
         IsBreak?.Invoke(Instantiate(_targetBase, _targetBase.transform.position, _targetBase.transform.rotation));
         Destroy(gameObject);
     }
+
+    private void LoadCubeSettings()
+    {
+        _hitToBreak = _cubeLevel.Cubes[_cubeLevel.Cubes.Count - _edgeCount].HitToBreak;
+        _rotator.StartRotate(_cubeLevel.Cubes[_cubeLevel.Cubes.Count - _edgeCount].RotateDefinitions);
+    }
     
     public void SpawnAndSetup(TargetConfig config, Knife obstacleTemplate)
     {
         _targetBase = Instantiate(config.Base, transform.position, Quaternion.Euler(0f, 180f, 0f), transform);
+        _edgeCount = 1;
         _hitToBreak = config.HitToBreak;
         _rotator.StartRotate(config.RotateDefinitions);
         if (config.ObstacleCount <= 0) return;
-        _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
+        _targetBase.InitializeObstacles(0, config.ObstacleCount, obstacleTemplate);
     }
     
-    /*public void SpawnAndSetup(CubeConfig config, Knife obstacleTemplate)
+    public void SpawnAndSetup(CubeLevel level, Knife obstacleTemplate)
     {
-        _targetBase = Instantiate(config.Base, transform.position, Quaternion.Euler(0f, 180f, 0f), transform);
-        _hitToBreak = config.HitToBreak;
-        _rotator.StartRotate(config.RotateDefinitions);
-        if (config.ObstacleCount <= 0) return;
-        _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
-    }*/
+        _cubeLevel = level;
+        _targetBase = Instantiate(_cubeLevel.Base, transform.position, Quaternion.Euler(0f, 0f, 0f), transform);
+        _edgeCount = _cubeLevel.Cubes.Count;
+
+        for (var i = 0; i < _cubeLevel.Cubes.Count; i++)
+        {
+            _targetBase.InitializeObstacles(i, _cubeLevel.Cubes[i].ObstacleCount, obstacleTemplate);
+        }
+        
+        LoadCubeSettings();
+    }
     
     public void SpawnAndSetup(FlatConfig config, Knife obstacleTemplate)
     {
         _targetBase = Instantiate(config.Base, transform.position, Quaternion.Euler(0f, 180f, 0f), transform);
+        _edgeCount = 1;
         _hitToBreak = config.HitToBreak;
         _rotator.StartRotate(config.RotateDefinitions);
         if (config.ObstacleCount <= 0) return;
-        _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
+        _targetBase.InitializeObstacles(0, config.ObstacleCount, obstacleTemplate);
     }
 
-    public void ReinitializeObstacle(TargetConfig config, Knife obstacleTemplate)
+    public void ReinitializeObstacles(TargetConfig config, Knife obstacleTemplate)
     {
-        _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
+        _targetBase.InitializeObstacles(0, config.ObstacleCount, obstacleTemplate);
     }
     
-    /*public void ReinitializeObstacle(CubeConfig config, Knife obstacleTemplate)
+    public void ReinitializeObstacles(CubeLevel level, Knife obstacleTemplate)
     {
-        _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
-    }*/
+        for (var i = 0; i < level.Cubes.Count; i++)
+        {
+            _targetBase.InitializeObstacles(i, level.Cubes[i].ObstacleCount, obstacleTemplate);
+        }
+    }
     
-    public void ReinitializeObstacle(FlatConfig config, Knife obstacleTemplate)
+    public void ReinitializeObstacles(FlatConfig config, Knife obstacleTemplate)
     {
-        _targetBase.InitializeObstacles(config.ObstacleCount, obstacleTemplate);
+        _targetBase.InitializeObstacles(0, config.ObstacleCount, obstacleTemplate);
     }
 }
