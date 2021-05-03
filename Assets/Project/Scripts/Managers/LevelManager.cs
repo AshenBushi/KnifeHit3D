@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -12,7 +13,7 @@ public struct TargetLevel
 public struct CubeLevel
 {
     public int Reward;
-    public TargetBase Base;
+    public TargetBase _base;
     public List<CubeConfig> Cubes;
 }
 
@@ -39,11 +40,19 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        LoadLevel();
         _targetLevelCount = _targetLevels.Count;
         _cubeLevelCount = _cubeLevels.Count;
         _flatLevelCount = _flatLevels.Count;
+    }
 
+    private void OnEnable()
+    {
+        LoadLevel();
+    }
+
+    private void Start()
+    {
+        LoadLevel();
     }
 
     private void LoadLevel()
@@ -51,7 +60,6 @@ public class LevelManager : MonoBehaviour
         CurrentTargetLevel = _targetLevels[DataManager.GameData.ProgressData.CurrentTargetLevel];
         CurrentCubeLevel = _cubeLevels[DataManager.GameData.ProgressData.CurrentCubeLevel];
         CurrentFlatLevel = _flatLevels[DataManager.GameData.ProgressData.CurrentFlatLevel];
-
     }
     
     public static void NextTargetLevel()

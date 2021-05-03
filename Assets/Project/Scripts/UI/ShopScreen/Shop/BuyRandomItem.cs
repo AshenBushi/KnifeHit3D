@@ -47,7 +47,8 @@ public class BuyRandomItem : MonoBehaviour
     private IEnumerator BuyAnimation()
     {
         var iterations = 0;
-        
+
+        _button.interactable = false;
         _itemIndex = Random.Range(0, _currentItems.Count);
 
         if (_currentItems.Count > 1)
@@ -74,7 +75,8 @@ public class BuyRandomItem : MonoBehaviour
         DataManager.Save();
         _currentItems[_itemIndex].Unlock();
         _currentItems[_itemIndex].SelectItem();
-        
+        _currentItems.Remove(_currentItems[_itemIndex]);
+        CheckPurchaseOpportunity();
     }
 
     private void FindLockedItemsOnPage()
@@ -89,7 +91,6 @@ public class BuyRandomItem : MonoBehaviour
         _player.WithdrawMoney(_price);
         _shop.CurrentItem.DisableIndicator();
         StartCoroutine(BuyAnimation());
-        CheckPurchaseOpportunity();
     }
 
     private void CheckPurchaseOpportunity()

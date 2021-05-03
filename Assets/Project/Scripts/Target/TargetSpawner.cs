@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -36,6 +35,7 @@ public class TargetSpawner : MonoBehaviour
     private void OnDisable()
     {
         if (_currentTarget == null) return;
+        _currentTarget.IsRotate -= OnRotate;
         _currentTarget.IsBreak -= OnTargetBreak;
         _currentTarget.IsTakeHit -= OnTargetTakeHit;
         _currentTarget.IsEdgePass -= OnEdgePass;
@@ -43,25 +43,28 @@ public class TargetSpawner : MonoBehaviour
 
     private void OnTargetBreak(TargetBase targetBase)
     {
+        _player.DisallowThrow();
         _currentTarget.IsBreak -= OnTargetBreak;
         _currentTarget.IsTakeHit -= OnTargetTakeHit;
         _currentTarget.IsEdgePass -= OnEdgePass;
-        _hitScoreDisplayer.SubmitHit();
         StartCoroutine(TargetBreakAnimation(targetBase));
     }
 
     private void OnTargetTakeHit()
     {
-        _player.AllowThrow();
         _hitScoreDisplayer.SubmitHit();
     }
 
     private void OnEdgePass()
     {
-        _hitScoreDisplayer.SubmitHit();
+        _player.AllowThrow();
         _levelProgressDisplayer.NextPoint();
         _hitScoreDisplayer.SpawnHitScores(_currentTarget.HitToBreak);
-        _player.AllowThrow();
+    }
+
+    private void OnRotate()
+    {
+        _player.DisallowThrow();
     }
     
     private void Move()
@@ -169,20 +172,20 @@ public class TargetSpawner : MonoBehaviour
     {
         for (var i = 0; i < targetLevel.Targets.Count; i++)
         {
-            _targets[i].ReinitializeObstacles(targetLevel.Targets[i], obstacleTemplate);
+            _targets[i].InitializeObstacles(targetLevel.Targets[i], obstacleTemplate);
         }
     }
     
     public void Reload(CubeLevel cubeLevel, Knife obstacleTemplate)
     {
-        _targets[0].ReinitializeObstacles(cubeLevel, obstacleTemplate);
+        _targets[0].InitializeObstacles(cubeLevel, obstacleTemplate);
     }
     
     public void Reload(FlatLevel flatLevel, Knife obstacleTemplate)
     {
         for (var i = 0; i < flatLevel.Flats.Count; i++)
         {
-            _targets[i].ReinitializeObstacles(flatLevel.Flats[i], obstacleTemplate);
+            _targets[i].InitializeObstacles(flatLevel.Flats[i], obstacleTemplate);
         }
     }
 }

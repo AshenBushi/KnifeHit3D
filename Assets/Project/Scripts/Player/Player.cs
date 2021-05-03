@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class Player : MonoBehaviour
@@ -31,8 +30,7 @@ public class Player : MonoBehaviour
     private void ThrowKnife()
     {
         if (!_canThrow) return;
-        _knifeSpawner.CurrentKnife.Throw();
-        _canThrow = false;
+        _knifeSpawner.ThrowKnife();
     }
 
     public void DepositMoney(int count)
@@ -54,5 +52,10 @@ public class Player : MonoBehaviour
     public void AllowThrow()
     {
         _canThrow = true;
+    }
+
+    public void DisallowThrow()
+    {
+        _canThrow = false;
     }
 }

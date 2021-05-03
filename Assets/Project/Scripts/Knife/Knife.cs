@@ -44,6 +44,7 @@ public class Knife : MonoBehaviour
         if (_isBounced) return;
         _rigidbody.isKinematic = true;
         transform.SetParent(parent);
+        gameObject.layer = LayerMask.NameToLayer("Obstacle");
         IsStuck?.Invoke();
     }
     
@@ -56,6 +57,7 @@ public class Knife : MonoBehaviour
     public void MakeObstacle()
     {
         _rigidbody.isKinematic = true;
+        gameObject.layer = LayerMask.NameToLayer("Obstacle");
         transform.localRotation = Quaternion.Euler(_obstacleRotation);
     }
 }
