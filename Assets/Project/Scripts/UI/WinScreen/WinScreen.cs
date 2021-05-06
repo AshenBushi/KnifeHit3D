@@ -30,6 +30,7 @@ public class WinScreen : MonoBehaviour
     
     public void Restart()
     {
+        SoundManager.PlaySound(SoundNames.ButtonClick);
         Time.timeScale = 1;
         SceneManager.LoadScene(sceneBuildIndex: 0);
     }

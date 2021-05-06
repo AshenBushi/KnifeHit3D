@@ -15,13 +15,14 @@ public class ShopScreen : MonoBehaviour
         _startKnifeIndex = DataManager.GameData.ShopData.CurrentKnifeIndex;
     }
 
-    public void EnableScreen()
+    public void EnableShop()
     {
         gameObject.SetActive(true);
     }
 
     public void DisableScreen()
     {
+        SoundManager.PlaySound(SoundNames.ButtonClick);
         if(DataManager.GameData.ShopData.CurrentKnifeIndex != _startKnifeIndex)
             IsKnifeChanged?.Invoke();
         

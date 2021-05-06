@@ -55,6 +55,7 @@ public class BuyRandomItem : MonoBehaviour
         {
             while (iterations != _iterationsCount)
             {
+                SoundManager.PlaySound(SoundNames.RandomBuy);
                 _currentItems[_itemIndex].EnableIndicator();
                 yield return new WaitForSeconds(_animationDuration / _iterationsCount);
                 _currentItems[_itemIndex].DisableIndicator();
@@ -73,6 +74,7 @@ public class BuyRandomItem : MonoBehaviour
 
         DataManager.GameData.ShopData.OpenedKnives.Add(_currentItems[_itemIndex].Index);
         DataManager.Save();
+        SoundManager.PlaySound(SoundNames.RandomBuy);
         _currentItems[_itemIndex].Unlock();
         _currentItems[_itemIndex].SelectItem();
         _currentItems.Remove(_currentItems[_itemIndex]);
@@ -87,6 +89,7 @@ public class BuyRandomItem : MonoBehaviour
     
     private void BuyItem()
     {
+        SoundManager.PlaySound(SoundNames.ButtonClick);
         FindLockedItemsOnPage();
         _player.WithdrawMoney(_price);
         _shop.CurrentItem.DisableIndicator();

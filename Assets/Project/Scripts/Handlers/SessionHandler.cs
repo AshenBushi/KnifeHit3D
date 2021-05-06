@@ -11,6 +11,7 @@ public class SessionHandler : MonoBehaviour
     [SerializeField] private WinScreen _winScreen;
     [SerializeField] private InputField _inputField;
     [SerializeField] private ShopScreen _shopScreen;
+    [SerializeField] private AppleCounter _appleCounter;
 
     private void OnEnable()
     {
@@ -41,6 +42,7 @@ public class SessionHandler : MonoBehaviour
     {
         _targetSpawner.SetCurrentTarget();
         _startScreen.StartSession();
+        _appleCounter.gameObject.SetActive(true);
     }
 
     private void SpawnLevel()

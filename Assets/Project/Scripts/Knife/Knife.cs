@@ -31,6 +31,7 @@ public class Knife : MonoBehaviour
     private void Bounced(Vector3 position)
     {
         if (_rigidbody.isKinematic) return;
+        SoundManager.PlaySound(SoundNames.ObstacleHit);
         _isBounced = true;
         Destroy(GetComponent<Collider>());
         _rigidbody.velocity = Vector3.zero;
@@ -52,6 +53,7 @@ public class Knife : MonoBehaviour
     {
         _rigidbody.isKinematic = false;
         _rigidbody.AddForce(Vector3.forward * _throwForce, ForceMode.Impulse);
+        SoundManager.PlaySound(SoundNames.KnifeThrow);
     }
 
     public void MakeObstacle()

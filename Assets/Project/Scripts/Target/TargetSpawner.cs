@@ -43,7 +43,7 @@ public class TargetSpawner : MonoBehaviour
 
     private void OnTargetBreak(TargetBase targetBase)
     {
-        _player.DisallowThrow();
+        _currentTarget.IsRotate -= OnRotate;
         _currentTarget.IsBreak -= OnTargetBreak;
         _currentTarget.IsTakeHit -= OnTargetTakeHit;
         _currentTarget.IsEdgePass -= OnEdgePass;
@@ -83,6 +83,8 @@ public class TargetSpawner : MonoBehaviour
 
     private IEnumerator TargetBreakAnimation(TargetBase targetBase)
     {
+        _player.DisallowThrow();
+        
         switch (DataManager.GameData.ProgressData.CurrentGamemod)
         {
             case 0:
@@ -131,6 +133,7 @@ public class TargetSpawner : MonoBehaviour
     public void SetCurrentTarget()
     {
         _currentTarget = _targets[0];
+        _currentTarget.IsRotate += OnRotate;
         _currentTarget.IsBreak += OnTargetBreak;
         _currentTarget.IsTakeHit += OnTargetTakeHit;
         _currentTarget.IsEdgePass += OnEdgePass;
@@ -172,20 +175,20 @@ public class TargetSpawner : MonoBehaviour
     {
         for (var i = 0; i < targetLevel.Targets.Count; i++)
         {
-            _targets[i].InitializeObstacles(targetLevel.Targets[i], obstacleTemplate);
+            _targets[i].InitializeObstaclesAndApples(targetLevel.Targets[i], obstacleTemplate);
         }
     }
     
     public void Reload(CubeLevel cubeLevel, Knife obstacleTemplate)
     {
-        _targets[0].InitializeObstacles(cubeLevel, obstacleTemplate);
+        _targets[0].InitializeObstaclesAndApples(cubeLevel, obstacleTemplate);
     }
     
     public void Reload(FlatLevel flatLevel, Knife obstacleTemplate)
     {
         for (var i = 0; i < flatLevel.Flats.Count; i++)
         {
-            _targets[i].InitializeObstacles(flatLevel.Flats[i], obstacleTemplate);
+            _targets[i].InitializeObstaclesAndApples(flatLevel.Flats[i], obstacleTemplate);
         }
     }
 }

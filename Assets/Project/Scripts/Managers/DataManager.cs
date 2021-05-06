@@ -63,6 +63,9 @@ public class DataManager : MonoBehaviour
         GameData.ProgressData.CurrentCubeLevel = 0;
         GameData.ProgressData.CurrentCubeLevel = 0;
         GameData.ProgressData.CurrentGamemod = 0;
+
+        GameData.SettingsData.SoundVolume = 1;
+        GameData.SettingsData.MusicVolume = 1;
     }
     
     public static void Save()
@@ -83,6 +86,7 @@ public class GameData
     public ShopData ShopData;
     public PlayerData PlayerData;
     public ProgressData ProgressData;
+    public SettingsData SettingsData;
 }
 
 [Serializable]
@@ -105,4 +109,11 @@ public struct ProgressData
     public int CurrentTargetLevel;
     public int CurrentCubeLevel;
     public int CurrentFlatLevel;
+}
+
+[Serializable]
+public struct SettingsData
+{
+    public float SoundVolume;
+    public float MusicVolume;
 }

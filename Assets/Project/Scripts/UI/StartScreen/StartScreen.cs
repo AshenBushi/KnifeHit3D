@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class StartScreen : MonoBehaviour
 {
     [SerializeField] private ShopScreen _shopScreen;
-    [SerializeField] private Slider _levelSelector;
+    [SerializeField] private SettingsScreen _settingsScreen;
 
     private GamemodHandler _gamemodHandler;
     private CanvasGroup _canvasGroup;
@@ -38,9 +38,16 @@ public class StartScreen : MonoBehaviour
         IsModChanged?.Invoke();
     }
 
+    public void EnableSettingsScreen()
+    {
+        SoundManager.PlaySound(SoundNames.ButtonClick);
+        _settingsScreen.EnableSettings();
+    }
+    
     public void EnableShopScreen()
     {
-        _shopScreen.EnableScreen();
+        SoundManager.PlaySound(SoundNames.ButtonClick);
+        _shopScreen.EnableShop();
     }
     
     public void StartSession()

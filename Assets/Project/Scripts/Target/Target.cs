@@ -7,6 +7,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(TargetRotator))]
 public class Target : MonoBehaviour
 {
+    [SerializeField] private Apple _appleTemplate;
     [SerializeField] private List<Vector3> _cubeRotatePoints;
     
     private TargetBase _targetBase;
@@ -32,6 +33,7 @@ public class Target : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         if (!other.gameObject.TryGetComponent(out Knife knife)) return;
+        SoundManager.PlaySound(SoundNames.TargetHit);
         knife.Stuck(_targetBase.transform);
         TakeHit();
     }
@@ -71,6 +73,7 @@ public class Target : MonoBehaviour
             
         if(_edgeCount <= 0)
         {
+            SoundManager.PlaySound(SoundNames.TargetBreak);
             IsBreak?.Invoke(Instantiate(_targetBase, _targetBase.transform.position, _targetBase.transform.rotation));
             Destroy(gameObject);
         }
@@ -91,41 +94,43 @@ public class Target : MonoBehaviour
     {
         SetupTarget(config.Base, config.HitToBreak, 1, config.RotateDefinitions);
         
-        _targetBase.InitializeObstacles(0, config.ObstacleCount, obstacleTemplate);
+        InitializeObstaclesAndApples(config, obstacleTemplate);
     }
     
     public void SpawnAndSetup(CubeLevel level, Knife obstacleTemplate)
     {
         SetupTarget(level, 6);
         
-        InitializeObstacles(level, obstacleTemplate);
+        InitializeObstaclesAndApples(level, obstacleTemplate);
     }
     
     public void SpawnAndSetup(FlatConfig config, Knife obstacleTemplate)
     {
         SetupTarget(config.Base, config.HitToBreak, 1, config.RotateDefinitions);
         
-        InitializeObstacles(config, obstacleTemplate);
+        InitializeObstaclesAndApples(config, obstacleTemplate);
     }
 
-    public void InitializeObstacles(TargetConfig config, Knife obstacleTemplate)
+    public void InitializeObstaclesAndApples(TargetConfig config, Knife obstacleTemplate)
     {
-        if (config.ObstacleCount == 0) return;
-        _targetBase.InitializeObstacles(0, config.ObstacleCount, obstacleTemplate);
+        if (config.ObstacleCount != 0) 
+            _targetBase.InitializeObstacles(0, config.ObstacleCount, obstacleTemplate);
+        if (config.HaveApple) 
+            _targetBase.InitializeApples(0, _appleTemplate);
     }
     
-    public void InitializeObstacles(CubeLevel level, Knife obstacleTemplate)
+    public void InitializeObstaclesAndApples(CubeLevel level, Knife obstacleTemplate)
     {
         for (var i = 0; i < level.Cubes.Count; i++)
         {
-            if (level.Cubes[i].ObstacleCount == 0) continue;
-            _targetBase.InitializeObstacles(i, level.Cubes[i].ObstacleCount, obstacleTemplate);
+            if (level.Cubes[i].ObstacleCount != 0) _targetBase.InitializeObstacles(i, level.Cubes[i].ObstacleCount, obstacleTemplate);
+            if (level.Cubes[i].IsApple) _targetBase.InitializeApples(i, _appleTemplate);
         }
     }
     
-    public void InitializeObstacles(FlatConfig config, Knife obstacleTemplate)
+    public void InitializeObstaclesAndApples(FlatConfig config, Knife obstacleTemplate)
     {
-        if (config.ObstacleCount == 0) return;
-        _targetBase.InitializeObstacles(0, config.ObstacleCount, obstacleTemplate);
+        if (config.ObstacleCount != 0) _targetBase.InitializeObstacles(0, config.ObstacleCount, obstacleTemplate);
+        if (config.IsApple) _targetBase.InitializeApples(0, _appleTemplate);
     }
 }
