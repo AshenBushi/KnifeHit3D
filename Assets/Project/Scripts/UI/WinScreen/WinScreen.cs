@@ -1,10 +1,16 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CanvasGroup))]
+
+
 public class WinScreen : MonoBehaviour
+
 {
+    [SerializeField] private GameObject _cup;
+    
     private CanvasGroup _canvasGroup;
 
     private void Awake()
@@ -16,21 +22,20 @@ public class WinScreen : MonoBehaviour
     {
         _canvasGroup.blocksRaycasts = true;
         yield return new WaitForSeconds(1f);
-
-        Time.timeScale = 0;
         
         _canvasGroup.interactable = true;
         _canvasGroup.alpha = 1;
+        
+        _cup.SetActive(true);
     }
 
     public void Win()
     {
         StartCoroutine(WinAnimation());
     }
-    
+
     public void Restart()
     {
-        Time.timeScale = 1;
         SceneManager.LoadScene(sceneBuildIndex: 0);
     }
 }
