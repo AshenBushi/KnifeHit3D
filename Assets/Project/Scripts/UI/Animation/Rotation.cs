@@ -24,7 +24,7 @@ public class Rotation : MonoBehaviour
 
     private void Rotate()
     {
-        _tween = transform.DORotate(_direction, _duration, RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLink(gameObject);
+        _tween = transform.DOLocalRotate(_direction, _duration, RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLink(gameObject);
         _tween.OnComplete(Rotate);
     }
 
