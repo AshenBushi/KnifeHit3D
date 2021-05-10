@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,16 +7,24 @@ using UnityEngine.Events;
 public class KnifeSpawner : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private TargetSpawner _targetSpawner;
     [SerializeField] private List<Knife> _knives;
-
+    
     private Knife _currentKnife;
-
+    private int _knifeAmount = 0;
+    
     public Knife CurrentTemplate => _knives[DataManager.GameData.ShopData.CurrentKnifeIndex];
 
     public event UnityAction IsLose;
 
+    private void OnEnable()
+    {
+        _targetSpawner.IsNewTargetSet += OnNewTargetSet;
+    }
+
     private void OnDisable()
     {
+        _targetSpawner.IsNewTargetSet -= OnNewTargetSet;
         if (_currentKnife == null) return;
         _currentKnife.IsStuck -= SpawnKnife;
         _currentKnife.IsBounced -= OnKnifeBounced;
@@ -26,6 +35,11 @@ public class KnifeSpawner : MonoBehaviour
         IsLose?.Invoke();
     }
 
+    private void OnNewTargetSet(int amount)
+    {
+        _knifeAmount = amount;
+    }
+    
     public void SpawnKnife()
     {
         if (_currentKnife != null) return;
@@ -40,9 +54,15 @@ public class KnifeSpawner : MonoBehaviour
         {
             SpawnKnife();
         }
-        
+
+        _knifeAmount--;
         _currentKnife.Throw();
         _currentKnife = null;
+
+        if (_knifeAmount < 1)
+        {
+            _player.DisallowThrow();
+        }
     }
     
     public void Reload()

@@ -4,8 +4,9 @@ using Random = UnityEngine.Random;
 
 public class Knife : MonoBehaviour
 {
-    [SerializeField] private float _throwForce;
-    [SerializeField] private float _bounceForce;
+    private const float ThrowForce = 40f;
+    private const float BounceForce = 10f;
+    
     [SerializeField] private Vector3 _obstacleRotation;
 
     private Rigidbody _rigidbody;
@@ -36,7 +37,7 @@ public class Knife : MonoBehaviour
         Destroy(GetComponent<Collider>());
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.useGravity = true;
-        _rigidbody.AddExplosionForce(_bounceForce, position, 5, 0, ForceMode.Impulse);
+        _rigidbody.AddExplosionForce(BounceForce, position, 5, 0, ForceMode.Impulse);
         IsBounced?.Invoke();
     }
 
@@ -52,7 +53,7 @@ public class Knife : MonoBehaviour
     public void Throw()
     {
         _rigidbody.isKinematic = false;
-        _rigidbody.AddForce(Vector3.forward * _throwForce, ForceMode.Impulse);
+        _rigidbody.AddForce(Vector3.forward * ThrowForce, ForceMode.Impulse);
         SoundManager.PlaySound(SoundNames.KnifeThrow);
     }
 

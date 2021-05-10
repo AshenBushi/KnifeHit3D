@@ -11,6 +11,13 @@ public class SettingsScreen : MonoBehaviour
     [SerializeField] private Sprite _buttonOn;
     [SerializeField] private Sprite _buttonOff;
 
+    private CanvasGroup _canvasGroup;
+
+    private void Awake()
+    {
+        _canvasGroup = GetComponent<CanvasGroup>();
+    }
+
     private void OnEnable()
     {
         _sound.onClick.AddListener(ChangeSoundVolume);
@@ -56,12 +63,16 @@ public class SettingsScreen : MonoBehaviour
 
     public void EnableSettings()
     {
-        gameObject.SetActive(true);
+        _canvasGroup.blocksRaycasts = true;
+        _canvasGroup.interactable = true;
+        _canvasGroup.alpha = 1;
     }
     
     public void DisableSettings()
     {
         SoundManager.PlaySound(SoundNames.ButtonClick);
-        gameObject.SetActive(false);
+        _canvasGroup.blocksRaycasts = false;
+        _canvasGroup.interactable = false;
+        _canvasGroup.alpha = 0;
     }
 }

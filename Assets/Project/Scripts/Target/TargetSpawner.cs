@@ -31,6 +31,7 @@ public class TargetSpawner : MonoBehaviour
     private Tween _tween;
 
     public event UnityAction IsWin;
+    public event UnityAction<int> IsNewTargetSet;
 
     private void OnDisable()
     {
@@ -59,7 +60,7 @@ public class TargetSpawner : MonoBehaviour
     {
         _player.AllowThrow();
         _levelProgressDisplayer.NextPoint();
-        _hitScoreDisplayer.SpawnHitScores(_currentTarget.HitToBreak);
+        SendHitCount();
     }
 
     private void OnRotate()
@@ -83,8 +84,6 @@ public class TargetSpawner : MonoBehaviour
 
     private IEnumerator TargetBreakAnimation(TargetBase targetBase)
     {
-        _player.DisallowThrow();
-        
         switch (DataManager.GameData.ProgressData.CurrentGamemod)
         {
             case 0:
@@ -137,6 +136,12 @@ public class TargetSpawner : MonoBehaviour
         _currentTarget.IsBreak += OnTargetBreak;
         _currentTarget.IsTakeHit += OnTargetTakeHit;
         _currentTarget.IsEdgePass += OnEdgePass;
+        SendHitCount();
+    }
+
+    private void SendHitCount()
+    {
+        IsNewTargetSet?.Invoke(_currentTarget.HitToBreak);
         _hitScoreDisplayer.SpawnHitScores(_currentTarget.HitToBreak);
     }
 
