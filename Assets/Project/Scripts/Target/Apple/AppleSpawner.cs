@@ -8,7 +8,7 @@ public class AppleSpawner : MonoBehaviour
 {
     private Apple _apple;
 
-    public bool IsAppleSpawn { get; private set; } = false;
+    public bool AppleSpawn { get; private set; } = false;
     public event UnityAction IsAppleSliced;
     
     private void OnDisable()
@@ -24,8 +24,14 @@ public class AppleSpawner : MonoBehaviour
     
     public void SpawnApple(Apple appleTemplate)
     {
+        if (_apple != null)
+        {
+            _apple.IsSliced -= OnAppleSliced;
+            Destroy(_apple.gameObject);
+        }
+
         _apple = Instantiate(appleTemplate, transform);
         _apple.IsSliced += OnAppleSliced;
-        IsAppleSpawn = true;
+        AppleSpawn = true;
     }
 }

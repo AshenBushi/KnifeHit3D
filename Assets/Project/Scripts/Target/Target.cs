@@ -21,7 +21,6 @@ public class Target : MonoBehaviour
     public int HitToBreak { get; private set; }
 
     public event UnityAction IsRotate;
-    public event UnityAction IsTakeHit;
     public event UnityAction IsEdgePass;
     public event UnityAction<TargetBase> IsBreak;
 
@@ -42,8 +41,6 @@ public class Target : MonoBehaviour
     {
         HitToBreak--;
 
-        IsTakeHit?.Invoke();
-        
         if (HitToBreak <= 0)
         {
             TryNextEdge();

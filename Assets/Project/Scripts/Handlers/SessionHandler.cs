@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SessionHandler : MonoBehaviour
@@ -6,12 +7,15 @@ public class SessionHandler : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private KnifeSpawner _knifeSpawner;
     [SerializeField] private TargetSpawner _targetSpawner;
+    [SerializeField] private LotterySpawner _lotterySpawner;
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private LoseScreen _loseScreen;
     [SerializeField] private WinScreen _winScreen;
-    [SerializeField] private InputField _inputField;
     [SerializeField] private ShopScreen _shopScreen;
+    [SerializeField] private LotteryScreen _lotteryScreen;
+    [SerializeField] private InputField _inputField;
     [SerializeField] private AppleCounter _appleCounter;
+    
 
     private void OnEnable()
     {
@@ -19,7 +23,10 @@ public class SessionHandler : MonoBehaviour
         _shopScreen.IsKnifeChanged += ReloadGame;
         _targetSpawner.IsWin += OnWin;
         _knifeSpawner.IsLose += OnLose;
+        _lotterySpawner.IsWin += OnLotteryWin;
+        _lotterySpawner.IsLose += OnLose;
         _startScreen.IsModChanged += SpawnLevel;
+        _winScreen.IsCanStartLottery += StartLottery;
     }
 
     private void OnDisable()
@@ -28,7 +35,10 @@ public class SessionHandler : MonoBehaviour
         _shopScreen.IsKnifeChanged -= ReloadGame;
         _targetSpawner.IsWin -= OnWin;
         _knifeSpawner.IsLose -= OnLose;
+        _lotterySpawner.IsWin -= OnLotteryWin;
+        _lotterySpawner.IsLose -= OnLose;
         _startScreen.IsModChanged -= SpawnLevel;
+        _winScreen.IsCanStartLottery -= StartLottery;
     }
 
     private void Start()
@@ -84,6 +94,12 @@ public class SessionHandler : MonoBehaviour
         _knifeSpawner.Reload();
     }
 
+    private void StartLottery()
+    {
+        _appleCounter.gameObject.SetActive(false);
+        _lotterySpawner.SpawnLottery();
+    }
+
     private void OnWin()
     {
         switch (DataManager.GameData.ProgressData.CurrentGamemod)
@@ -106,7 +122,12 @@ public class SessionHandler : MonoBehaviour
                 break;
         }
         
-        _winScreen.Win();
+        _winScreen.Win(_appleCounter.Count >= 3);
+    }
+
+    private void OnLotteryWin(List<RewardNames> rewards)
+    {
+        _lotteryScreen.Enable(rewards);
     }
     
     private void OnLose()

@@ -11,21 +11,29 @@ public class AppleCounter : MonoBehaviour
 
     private List<AppleSpawner> _spawners;
 
-    public int AppleCount { get; private set; } = 0;
+    public int Count { get; private set; } = 0;
 
     private void OnEnable()
     {
         _spawners = _container.GetComponentsInChildren<AppleSpawner>().ToList();
 
-        foreach (var spawner in _spawners.Where(spawner => spawner.IsAppleSpawn))
+        foreach (var spawner in _spawners.Where(spawner => spawner.AppleSpawn))
         {
             spawner.IsAppleSliced += OnAppleSliced;
         }
     }
 
+    private void OnDisable()
+    {
+        foreach (var spawner in _spawners.Where(spawner => spawner.AppleSpawn))
+        {
+            spawner.IsAppleSliced -= OnAppleSliced;
+        }
+    }
+
     private void OnAppleSliced()
     {
-        AppleCount++;
-        _countText.text = AppleCount.ToString();
+        Count++;
+        _countText.text = Count.ToString();
     }
 }

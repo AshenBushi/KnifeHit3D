@@ -76,4 +76,9 @@ public class LevelProgressDisplayer : MonoBehaviour
         _points[_currentPoint].color = _enabledColor;
         _currentPoint++;
     }
+
+    public void DisableDisplayer()
+    {
+        gameObject.SetActive(false);
+    }
 }

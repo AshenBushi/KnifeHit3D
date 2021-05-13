@@ -38,7 +38,6 @@ public class TargetSpawner : MonoBehaviour
         if (_currentTarget == null) return;
         _currentTarget.IsRotate -= OnRotate;
         _currentTarget.IsBreak -= OnTargetBreak;
-        _currentTarget.IsTakeHit -= OnTargetTakeHit;
         _currentTarget.IsEdgePass -= OnEdgePass;
     }
 
@@ -46,14 +45,8 @@ public class TargetSpawner : MonoBehaviour
     {
         _currentTarget.IsRotate -= OnRotate;
         _currentTarget.IsBreak -= OnTargetBreak;
-        _currentTarget.IsTakeHit -= OnTargetTakeHit;
         _currentTarget.IsEdgePass -= OnEdgePass;
         StartCoroutine(TargetBreakAnimation(targetBase));
-    }
-
-    private void OnTargetTakeHit()
-    {
-        _hitScoreDisplayer.SubmitHit();
     }
 
     private void OnEdgePass()
@@ -118,7 +111,7 @@ public class TargetSpawner : MonoBehaviour
         Destroy(targetBase.gameObject);
     }
 
-    private void TryClearTargets()
+    public void TryCleanTargets()
     {
         if (_targets.Count < 1) return;
         foreach (var target in _targets)
@@ -134,7 +127,6 @@ public class TargetSpawner : MonoBehaviour
         _currentTarget = _targets[0];
         _currentTarget.IsRotate += OnRotate;
         _currentTarget.IsBreak += OnTargetBreak;
-        _currentTarget.IsTakeHit += OnTargetTakeHit;
         _currentTarget.IsEdgePass += OnEdgePass;
         SendHitCount();
     }
@@ -145,9 +137,16 @@ public class TargetSpawner : MonoBehaviour
         _hitScoreDisplayer.SpawnHitScores(_currentTarget.HitToBreak);
     }
 
+    public void SetLotterySettings()
+    {
+        IsNewTargetSet?.Invoke(3);
+        _hitScoreDisplayer.SpawnHitScores(3);
+        _levelProgressDisplayer.gameObject.SetActive(false);
+    }
+
     public void SpawnLevel(TargetLevel targetLevel, Knife obstacleTemplate)
     {
-        TryClearTargets();
+        TryCleanTargets();
         
         for (var i = 0; i < targetLevel.Targets.Count; i++)
         {
@@ -158,7 +157,7 @@ public class TargetSpawner : MonoBehaviour
     
     public void SpawnLevel(CubeLevel cubeLevel, Knife obstacleTemplate)
     {
-        TryClearTargets();
+        TryCleanTargets();
         
         _targets.Add(Instantiate(_cubeTemplate, new Vector3(0f, _cubeSpawnY, _spawnZ), Quaternion.identity,
             transform));
@@ -167,7 +166,7 @@ public class TargetSpawner : MonoBehaviour
     
     public void SpawnLevel(FlatLevel flatLevel, Knife obstacleTemplate)
     {
-        TryClearTargets();
+        TryCleanTargets();
         
         for (var i = 0; i < flatLevel.Flats.Count; i++)
         {

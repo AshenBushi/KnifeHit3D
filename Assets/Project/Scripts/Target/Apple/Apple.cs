@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class Apple : MonoBehaviour
 {
     [SerializeField] private GameObject _slicedApple;
+    [SerializeField] private GameObject _sliceEffect;
 
     public event UnityAction IsSliced;
     
@@ -27,6 +28,8 @@ public class Apple : MonoBehaviour
     private IEnumerator Sliced()
     {
         var slicedApple = Instantiate(_slicedApple, transform.position, transform.rotation);
+
+        Instantiate(_sliceEffect, transform.position, Quaternion.identity);
         
         IsSliced?.Invoke();
         

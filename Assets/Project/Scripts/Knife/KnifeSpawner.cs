@@ -8,6 +8,8 @@ public class KnifeSpawner : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private TargetSpawner _targetSpawner;
+    [SerializeField] private LotterySpawner _lotterySpawner;
+    [SerializeField] private HitScoreDisplayer _hitScoreDisplayer;
     [SerializeField] private List<Knife> _knives;
     
     private Knife _currentKnife;
@@ -20,11 +22,13 @@ public class KnifeSpawner : MonoBehaviour
     private void OnEnable()
     {
         _targetSpawner.IsNewTargetSet += OnNewTargetSet;
+        _lotterySpawner.IsLotterySpawned += OnNewTargetSet;
     }
 
     private void OnDisable()
     {
         _targetSpawner.IsNewTargetSet -= OnNewTargetSet;
+        _lotterySpawner.IsLotterySpawned -= OnNewTargetSet;
         if (_currentKnife == null) return;
         _currentKnife.IsStuck -= SpawnKnife;
         _currentKnife.IsBounced -= OnKnifeBounced;
@@ -38,13 +42,20 @@ public class KnifeSpawner : MonoBehaviour
     private void OnNewTargetSet(int amount)
     {
         _knifeAmount = amount;
+        _hitScoreDisplayer.SpawnHitScores(amount);
+    }
+
+    private void OnKnifeStuck()
+    {
+        _hitScoreDisplayer.SubmitHit();
+        SpawnKnife();
     }
     
     public void SpawnKnife()
     {
         if (_currentKnife != null) return;
         _currentKnife = Instantiate(_knives[DataManager.GameData.ShopData.CurrentKnifeIndex], _player.transform);
-        _currentKnife.IsStuck += SpawnKnife;
+        _currentKnife.IsStuck += OnKnifeStuck;
         _currentKnife.IsBounced += OnKnifeBounced;
     }
 
@@ -67,7 +78,7 @@ public class KnifeSpawner : MonoBehaviour
     
     public void Reload()
     {
-        _currentKnife.IsStuck -= SpawnKnife;
+        _currentKnife.IsStuck -= OnKnifeStuck;
         _currentKnife.IsBounced -= OnKnifeBounced;
         Destroy(_currentKnife.gameObject);
         _currentKnife = null;

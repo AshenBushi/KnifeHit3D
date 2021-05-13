@@ -8,10 +8,12 @@ public class Knife : MonoBehaviour
     private const float BounceForce = 10f;
     
     [SerializeField] private Vector3 _obstacleRotation;
+    [SerializeField] private GameObject _stuckEffect;
 
     private Rigidbody _rigidbody;
 
     private bool _isBounced = false;
+    private bool _isStuck = false;
 
     public event UnityAction IsStuck;
     public event UnityAction IsBounced;
@@ -23,15 +25,19 @@ public class Knife : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.TryGetComponent(out Knife knife))
+        if (!other.gameObject.TryGetComponent(out Knife knife)) return;
+        
+        Bounced(knife.transform.position);
+            
+        foreach (var point in other.contacts)
         {
-            Bounced(knife.transform.position);
+            Instantiate(_stuckEffect, point.point, Quaternion.identity);
         }
     }
 
     private void Bounced(Vector3 position)
     {
-        if (_rigidbody.isKinematic) return;
+        if (_isStuck) return;
         SoundManager.PlaySound(SoundNames.ObstacleHit);
         _isBounced = true;
         Destroy(GetComponent<Collider>());
@@ -43,7 +49,8 @@ public class Knife : MonoBehaviour
 
     public void Stuck(Transform parent)
     {
-        if (_isBounced) return;
+        if (_isBounced || _isStuck) return;
+        _isStuck = true;
         _rigidbody.isKinematic = true;
         transform.SetParent(parent);
         gameObject.layer = LayerMask.NameToLayer("Obstacle");
