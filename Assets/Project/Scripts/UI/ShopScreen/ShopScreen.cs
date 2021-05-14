@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ShopScreen : MonoBehaviour
+public class ShopScreen : UIScreen
 {
     [SerializeField] private Shop _shop;
 
@@ -15,12 +15,12 @@ public class ShopScreen : MonoBehaviour
         _startKnifeIndex = DataManager.GameData.ShopData.CurrentKnifeIndex;
     }
 
-    public void EnableShop()
+    public override void Enable()
     {
         gameObject.SetActive(true);
     }
 
-    public void DisableScreen()
+    public override void Disable()
     {
         SoundManager.PlaySound(SoundNames.ButtonClick);
         if(DataManager.GameData.ShopData.CurrentKnifeIndex != _startKnifeIndex)

@@ -3,33 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-[RequireComponent(typeof(CanvasGroup))]
-public class LoseScreen : MonoBehaviour
+public class LoseScreen : UIScreen
 {
     [SerializeField] private GameObject _adPanel;
     [SerializeField] private GameObject _cupPanel;
     [SerializeField] private GameObject _cup;
 
     private List<Rigidbody> _cupPieces;
-    private CanvasGroup _canvasGroup;
 
     private void Awake()
     {
         _cupPieces = _cup.GetComponentsInChildren<Rigidbody>().ToList();
-        _canvasGroup = GetComponent<CanvasGroup>();
     }
 
     private IEnumerator LoseAnimation()
     {
-        _canvasGroup.blocksRaycasts = true;
+        CanvasGroup.blocksRaycasts = true;
         yield return new WaitForSeconds(1f);
 
-        _canvasGroup.interactable = true;
-        _canvasGroup.alpha = 1;
+        CanvasGroup.interactable = true;
+        CanvasGroup.alpha = 1;
     }
 
     private IEnumerator CupBreakAnimation()
     {
+        SoundManager.PlaySound(SoundNames.Lose);
+        
         yield return new WaitForSeconds(.5f);
 
         foreach (var piece in _cupPieces)

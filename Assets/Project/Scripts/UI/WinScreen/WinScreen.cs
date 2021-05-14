@@ -3,43 +3,31 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(CanvasGroup))]
-
-
-public class WinScreen : MonoBehaviour
+public class WinScreen : UIScreen
 {
     [SerializeField] private GameObject _cup;
     
-    private CanvasGroup _canvasGroup;
     private bool _isALottery = false;
 
     public event UnityAction IsCanStartLottery;
-
-    private void Awake()
-    {
-        _canvasGroup = GetComponent<CanvasGroup>();
-    }
 
     private IEnumerator WinAnimation()
     {
         yield return new WaitForSeconds(1f);
         
-        EnableScreen();
+        Enable();
     }
 
-    private void EnableScreen()
+    public override void Enable()
     {
-        _canvasGroup.blocksRaycasts = true;
-        _canvasGroup.interactable = true;
-        _canvasGroup.alpha = 1;
+        base.Enable();
         _cup.SetActive(true);
+        SoundManager.PlaySound(SoundNames.Win);
     }
-    
-    private void DisableScreen()
+
+    public override void Disable()
     {
-        _canvasGroup.blocksRaycasts = false;
-        _canvasGroup.interactable = false;
-        _canvasGroup.alpha = 0;
+        base.Enable();
         _cup.SetActive(false);
     }
 
@@ -55,7 +43,7 @@ public class WinScreen : MonoBehaviour
         
         if (_isALottery)
         {
-            DisableScreen();
+            Disable();
             IsCanStartLottery?.Invoke();
         }
         else

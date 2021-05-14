@@ -33,6 +33,7 @@ public class Target : MonoBehaviour
     {
         if (!other.gameObject.TryGetComponent(out Knife knife)) return;
         SoundManager.PlaySound(SoundNames.TargetHit);
+        _targetBase.TakeHit();
         knife.Stuck(_targetBase.transform);
         TakeHit();
     }

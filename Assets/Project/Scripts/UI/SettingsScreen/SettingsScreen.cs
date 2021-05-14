@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingsScreen : MonoBehaviour
+public class SettingsScreen : UIScreen
 {
     [SerializeField] private Button _sound;
     [SerializeField] private Button _music;
@@ -10,13 +10,6 @@ public class SettingsScreen : MonoBehaviour
     [SerializeField] private AudioSource _musicPlayer;
     [SerializeField] private Sprite _buttonOn;
     [SerializeField] private Sprite _buttonOff;
-
-    private CanvasGroup _canvasGroup;
-
-    private void Awake()
-    {
-        _canvasGroup = GetComponent<CanvasGroup>();
-    }
 
     private void OnEnable()
     {
@@ -61,18 +54,9 @@ public class SettingsScreen : MonoBehaviour
         UpdateButtonImages();
     }
 
-    public void EnableSettings()
+    public override void Disable()
     {
-        _canvasGroup.blocksRaycasts = true;
-        _canvasGroup.interactable = true;
-        _canvasGroup.alpha = 1;
-    }
-    
-    public void DisableSettings()
-    {
+        base.Disable();
         SoundManager.PlaySound(SoundNames.ButtonClick);
-        _canvasGroup.blocksRaycasts = false;
-        _canvasGroup.interactable = false;
-        _canvasGroup.alpha = 0;
     }
 }

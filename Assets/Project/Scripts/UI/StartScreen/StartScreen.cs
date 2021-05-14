@@ -7,20 +7,18 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class StartScreen : MonoBehaviour
+public class StartScreen : UIScreen
 {
     [SerializeField] private ShopScreen _shopScreen;
     [SerializeField] private SettingsScreen _settingsScreen;
 
     private GamemodHandler _gamemodHandler;
-    private CanvasGroup _canvasGroup;
 
     public event UnityAction IsModChanged;
 
     private void Awake()
     {
         _gamemodHandler = GetComponentInChildren<GamemodHandler>();
-        _canvasGroup = GetComponent<CanvasGroup>();
     }
 
     private void OnEnable()
@@ -41,19 +39,17 @@ public class StartScreen : MonoBehaviour
     public void EnableSettingsScreen()
     {
         SoundManager.PlaySound(SoundNames.ButtonClick);
-        _settingsScreen.EnableSettings();
+        _settingsScreen.Enable();
     }
     
     public void EnableShopScreen()
     {
         SoundManager.PlaySound(SoundNames.ButtonClick);
-        _shopScreen.EnableShop();
+        _shopScreen.Enable();
     }
     
     public void StartSession()
     {
-        _canvasGroup.alpha = 0;
-        _canvasGroup.interactable = false;
-        _canvasGroup.blocksRaycasts = false;
+        Disable();
     }
 }

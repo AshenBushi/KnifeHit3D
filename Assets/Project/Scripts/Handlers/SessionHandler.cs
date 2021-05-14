@@ -127,7 +127,7 @@ public class SessionHandler : MonoBehaviour
 
     private void OnLotteryWin(List<RewardNames> rewards)
     {
-        _lotteryScreen.Enable(rewards);
+        _lotteryScreen.SendReward(rewards);
     }
     
     private void OnLose()

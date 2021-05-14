@@ -6,16 +6,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-public class LotteryScreen : MonoBehaviour
+public class LotteryScreen : UIScreen
 {
     [SerializeField] private Player _player;
 
     private List<LotteryReward> _rewards;
-    private CanvasGroup _canvasGroup;
 
     private void Awake()
     {
-        _canvasGroup = GetComponent<CanvasGroup>();
         _rewards = GetComponentsInChildren<LotteryReward>().ToList();
     }
 
@@ -52,11 +50,9 @@ public class LotteryScreen : MonoBehaviour
         SceneManager.LoadScene(0);
     }
     
-    public void Enable(List<RewardNames> names)
+    public void SendReward(List<RewardNames> names)
     {
-        _canvasGroup.blocksRaycasts = true;
-        _canvasGroup.alpha = 1;
-        _canvasGroup.interactable = true;
+        Enable();
 
         for (var i = 0; i < names.Count; i++)
         {
