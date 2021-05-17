@@ -91,6 +91,8 @@ public class LotteryScreen : UIScreen
                     _rewards[i].SetReward("Skin");
                     OpenRandomSkin();
                     break;
+                case RewardNames.Death:
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

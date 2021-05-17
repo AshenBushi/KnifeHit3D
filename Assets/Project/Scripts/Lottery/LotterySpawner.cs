@@ -34,6 +34,11 @@ public class LotterySpawner : MonoBehaviour
     {
         IsWin?.Invoke(rewards);
     }
+
+    public void ReplayLottery()
+    {
+        _lottery.AddMaxCount();
+    }
     
     public void SpawnLottery()
     {

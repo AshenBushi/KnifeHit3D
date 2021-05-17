@@ -78,6 +78,13 @@ public class KnifeSpawner : MonoBehaviour
         }
     }
 
+    public void ReplayLottery()
+    {
+        _player.AllowThrow();
+        _knifeAmount = 3;
+        _hitScoreDisplayer.SpawnHitScores(3);
+    }
+    
     public void SecondChance()
     {
         _knifeAmount += 3;

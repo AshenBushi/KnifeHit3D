@@ -222,6 +222,10 @@ GameObject:
   - component: {fileID: 95045334607168228}
   - component: {fileID: 8601094911487802832}
   - component: {fileID: -3857109826698887013}
+  - component: {fileID: -5369249904218195418}
+  - component: {fileID: 8369623451077941967}
+  - component: {fileID: 6036179409786038740}
+  - component: {fileID: -446793566375076171}
   m_Layer: 5
   m_Name: 768x1024
   m_TagString: Untagged
@@ -408,6 +412,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &-3857109826698887013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632466019560500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce8058f7f59b24c03b2a0d05939467f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5369249904218195418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632466019560500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce8058f7f59b24c03b2a0d05939467f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8369623451077941967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632466019560500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce8058f7f59b24c03b2a0d05939467f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6036179409786038740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632466019560500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce8058f7f59b24c03b2a0d05939467f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-446793566375076171
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

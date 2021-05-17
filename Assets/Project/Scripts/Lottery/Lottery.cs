@@ -26,6 +26,7 @@ public class Lottery : MonoBehaviour
     private List<LotterySection> _sections;
     private Tween _rotator;
     private List<RewardNames> _rewards = new List<RewardNames>();
+    private int _maxRewardCount = 3;
 
     public event UnityAction IsDeath;
     public event UnityAction<List<RewardNames>> IsWin;
@@ -76,9 +77,14 @@ public class Lottery : MonoBehaviour
             return;
         }
         
-        if (_rewards.Count >= 3)
+        if (_rewards.Count >= _maxRewardCount)
         {
             IsWin?.Invoke(_rewards);
         }
+    }
+    
+    public void AddMaxCount()
+    {
+        _maxRewardCount = 6;
     }
 }
