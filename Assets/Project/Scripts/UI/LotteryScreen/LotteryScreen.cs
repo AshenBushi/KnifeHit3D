@@ -15,6 +15,7 @@ public class LotteryScreen : UIScreen
     private void Awake()
     {
         _rewards = GetComponentsInChildren<LotteryReward>().ToList();
+        CanvasGroup = GetComponent<CanvasGroup>();
     }
 
     private void OpenRandomSkin()
@@ -47,7 +48,7 @@ public class LotteryScreen : UIScreen
     
     public void Collect()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
     
     public void SendReward(List<RewardNames> names)
@@ -59,27 +60,34 @@ public class LotteryScreen : UIScreen
             switch (names[i])
             {
                 case RewardNames.TenCoins:
+                    MetricaManager.SendEvent("bns_lvl_10");
                     _rewards[i].SetReward("10 coins");
                     _player.DepositMoney(10);
                     break;
                 case RewardNames.TwentyCoins:
+                    MetricaManager.SendEvent("bns_lvl_20");
                     _rewards[i].SetReward("20 coins");
                     _player.DepositMoney(20);
                     break;
                 case RewardNames.ThirtyCoins:
+                    MetricaManager.SendEvent("bns_lvl_30");
                     _rewards[i].SetReward("30 coins");
                     _player.DepositMoney(30);
                     break;
                 case RewardNames.Slow:
+                    MetricaManager.SendEvent("bns_lvl_slow");
                     _rewards[i].SetReward("Slow");
                     break;
                 case RewardNames.LevelPass:
+                    MetricaManager.SendEvent("bns_lvl_skip");
                     _rewards[i].SetReward("Level Pass");
                     break;
                 case RewardNames.SecondChance:
+                    MetricaManager.SendEvent("bns_lvl_chance");
                     _rewards[i].SetReward("Second Chance");
                     break;
                 case RewardNames.Skin:
+                    MetricaManager.SendEvent("bns_lvl_skin");
                     _rewards[i].SetReward("Skin");
                     OpenRandomSkin();
                     break;

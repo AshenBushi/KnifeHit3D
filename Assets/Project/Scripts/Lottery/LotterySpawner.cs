@@ -26,6 +26,7 @@ public class LotterySpawner : MonoBehaviour
 
     private void OnDeath()
     {
+        MetricaManager.SendEvent("bns_lvl_death");
         IsLose?.Invoke();
     }
 

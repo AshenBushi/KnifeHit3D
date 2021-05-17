@@ -44,7 +44,7 @@ public class AdManager : MonoBehaviour
     public static void ShowRewardVideo()
     {
         if (!RewardedAd.IsLoaded()) return;
-        //Metrica.SendEvent("ad_rew_start");
+        MetricaManager.SendEvent("ad_rew_start");
         RewardedAd.Show();
         InitializeAds();
     }

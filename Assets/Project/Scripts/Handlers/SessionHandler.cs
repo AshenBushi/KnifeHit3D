@@ -53,6 +53,22 @@ public class SessionHandler : MonoBehaviour
         _targetSpawner.SetCurrentTarget();
         _startScreen.StartSession();
         _appleCounter.gameObject.SetActive(true);
+        
+        switch (DataManager.GameData.ProgressData.CurrentGamemod)
+        {
+            case 0:
+                MetricaManager.SendEvent("target_lvl_start_(" + DataManager.GameData.ProgressData.CurrentTargetLevel + ")");
+                break;
+            case 1:
+                MetricaManager.SendEvent("cube_lvl_start_(" + DataManager.GameData.ProgressData.CurrentCubeLevel + ")");
+                break;
+            case 2:
+                MetricaManager.SendEvent("flat_lvl_start_(" + DataManager.GameData.ProgressData.CurrentFlatLevel + ")");
+                break;
+            default:
+                MetricaManager.SendEvent("target_lvl_start_(" + DataManager.GameData.ProgressData.CurrentTargetLevel + ")");
+                break;
+        }
     }
 
     private void SpawnLevel()
@@ -102,27 +118,42 @@ public class SessionHandler : MonoBehaviour
 
     private void OnWin()
     {
+        int knifeReward;
+        GameObject rewardTemplate;
+        
         switch (DataManager.GameData.ProgressData.CurrentGamemod)
         {
             case 0:
-                LevelManager.NextTargetLevel();
+                MetricaManager.SendEvent("target_lvl_complete_(" + DataManager.GameData.ProgressData.CurrentTargetLevel + ")");
                 _player.DepositMoney(LevelManager.CurrentTargetLevel.Reward);
+                knifeReward = LevelManager.CurrentTargetLevel.KnifeReward;
+                rewardTemplate = LevelManager.CurrentTargetLevel.KnifeRewardTemplate;
+                LevelManager.NextTargetLevel();
                 break;
             case 1:
-                LevelManager.NextCubeLevel();
+                MetricaManager.SendEvent("cube_lvl_start_(" + DataManager.GameData.ProgressData.CurrentTargetLevel + ")");
                 _player.DepositMoney(LevelManager.CurrentCubeLevel.Reward);
+                knifeReward = LevelManager.CurrentCubeLevel.KnifeReward;
+                rewardTemplate = LevelManager.CurrentCubeLevel.KnifeRewardTemplate;
+                LevelManager.NextCubeLevel();
                 break;
             case 2:
-                LevelManager.NextFlatLevel();
+                MetricaManager.SendEvent("flat_lvl_complete_(" + DataManager.GameData.ProgressData.CurrentTargetLevel + ")");
                 _player.DepositMoney(LevelManager.CurrentFlatLevel.Reward);
+                knifeReward = LevelManager.CurrentFlatLevel.KnifeReward;
+                rewardTemplate = LevelManager.CurrentFlatLevel.KnifeRewardTemplate;
+                LevelManager.NextFlatLevel();
                 break;
             default:
-                LevelManager.NextTargetLevel();
+                MetricaManager.SendEvent("target_lvl_complete_(" + DataManager.GameData.ProgressData.CurrentTargetLevel + ")");
                 _player.DepositMoney(LevelManager.CurrentTargetLevel.Reward);
+                knifeReward = LevelManager.CurrentTargetLevel.KnifeReward;
+                rewardTemplate = LevelManager.CurrentTargetLevel.KnifeRewardTemplate;
+                LevelManager.NextTargetLevel();
                 break;
         }
         
-        _winScreen.Win(_appleCounter.Count >= 3);
+        _winScreen.Win(_appleCounter.Count >= 3, knifeReward, rewardTemplate);
     }
 
     private void OnLotteryWin(List<RewardNames> rewards)
@@ -132,6 +163,22 @@ public class SessionHandler : MonoBehaviour
     
     private void OnLose()
     {
+        switch (DataManager.GameData.ProgressData.CurrentGamemod)
+        {
+            case 0:
+                MetricaManager.SendEvent("target_lvl_fail_(" + DataManager.GameData.ProgressData.CurrentTargetLevel + ")");
+                break;
+            case 1:
+                MetricaManager.SendEvent("cube_lvl_fail_(" + DataManager.GameData.ProgressData.CurrentCubeLevel + ")");
+                break;
+            case 2:
+                MetricaManager.SendEvent("flat_lvl_fail_(" + DataManager.GameData.ProgressData.CurrentFlatLevel + ")");
+                break;
+            default:
+                MetricaManager.SendEvent("target_lvl_fail_(" + DataManager.GameData.ProgressData.CurrentTargetLevel + ")");
+                break;
+        }
+        
         _loseScreen.Lose();
     }
 }

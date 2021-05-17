@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class LoseScreen : UIScreen
 {
     [SerializeField] private GameObject _adPanel;
+    [SerializeField] private GameObject _noThanks;
     [SerializeField] private GameObject _cupPanel;
     [SerializeField] private GameObject _cup;
 
@@ -14,6 +15,7 @@ public class LoseScreen : UIScreen
     private void Awake()
     {
         _cupPieces = _cup.GetComponentsInChildren<Rigidbody>().ToList();
+        CanvasGroup = GetComponent<CanvasGroup>();
     }
 
     private IEnumerator LoseAnimation()
@@ -23,6 +25,9 @@ public class LoseScreen : UIScreen
 
         CanvasGroup.interactable = true;
         CanvasGroup.alpha = 1;
+
+        yield return new WaitForSeconds(1f);
+        _noThanks.SetActive(true);
     }
 
     private IEnumerator CupBreakAnimation()
@@ -36,7 +41,13 @@ public class LoseScreen : UIScreen
             piece.isKinematic = false;
         }
     }
-    
+
+    public override void Disable()
+    {
+        base.Disable();
+        _cupPanel.SetActive(false);
+    }
+
     public void Lose()
     {
         StartCoroutine(LoseAnimation());
@@ -52,6 +63,6 @@ public class LoseScreen : UIScreen
     public void Restart()
     {
         SoundManager.PlaySound(SoundNames.ButtonClick);
-        SceneManager.LoadScene(sceneBuildIndex: 0);
+        SceneManager.LoadScene(sceneBuildIndex: 1);
     }
 }

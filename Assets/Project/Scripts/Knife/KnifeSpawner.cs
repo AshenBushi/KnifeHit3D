@@ -36,6 +36,8 @@ public class KnifeSpawner : MonoBehaviour
     
     private void OnKnifeBounced()
     {
+        _player.DisallowThrow();
+        SpawnKnife();
         IsLose?.Invoke();
     }
 
@@ -74,6 +76,12 @@ public class KnifeSpawner : MonoBehaviour
         {
             _player.DisallowThrow();
         }
+    }
+
+    public void SecondChance()
+    {
+        _knifeAmount += 3;
+        _player.AllowThrow();
     }
     
     public void Reload()

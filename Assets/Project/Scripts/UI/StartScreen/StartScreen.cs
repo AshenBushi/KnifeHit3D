@@ -11,6 +11,7 @@ public class StartScreen : UIScreen
 {
     [SerializeField] private ShopScreen _shopScreen;
     [SerializeField] private SettingsScreen _settingsScreen;
+    [SerializeField] private GameObject _giftNotification;
 
     private GamemodHandler _gamemodHandler;
 
@@ -19,11 +20,15 @@ public class StartScreen : UIScreen
     private void Awake()
     {
         _gamemodHandler = GetComponentInChildren<GamemodHandler>();
+        CanvasGroup = GetComponent<CanvasGroup>();
     }
 
     private void OnEnable()
     {
         _gamemodHandler.IsModChanged += OnModChanged;
+        
+        if(DataManager.GameData.DailyGiftsData.UnlockedGifts > DataManager.GameData.DailyGiftsData.PickedGifts)
+            _giftNotification.SetActive(true);
     }
 
     private void OnDisable()

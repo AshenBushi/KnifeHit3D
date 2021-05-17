@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using UnityEngine;
 
@@ -50,13 +52,12 @@ public class DataManager : MonoBehaviour
     
     private void FirstPlay()
     {
-        GameData.PlayerData.Money = 5000;
+        GameData.PlayerData.Money = 0;
 
         GameData.ShopData.CurrentKnifeIndex = 0;
         GameData.ShopData.OpenedKnives = new List<int>
         {
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
-            29, 30, 31, 32, 33, 34, 35, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
+            0
         };
 
         GameData.ProgressData.CurrentTargetLevel = 0;
@@ -66,14 +67,41 @@ public class DataManager : MonoBehaviour
 
         GameData.SettingsData.SoundVolume = 1;
         GameData.SettingsData.MusicVolume = 1;
+
+        GameData.DailyGiftsData.Timer = new Timer() {Hours = 23, Minutes = 59, Seconds = 59};
+        GameData.DailyGiftsData.Date = DateTime.UtcNow.ToString("u", CultureInfo.InvariantCulture);
+        GameData.DailyGiftsData.UnlockedGifts = 0;
+        GameData.DailyGiftsData.PickedGifts = 0;
+
+        StartCoroutine(SendMetricks());
+    }
+
+    private IEnumerator SendMetricks()
+    {
+        yield return new WaitForSeconds(.5f);
+        
+        MetricaManager.SendEvent("ev_first_open");
     }
     
     public static void Save()
     {
         File.WriteAllText(_path, JsonUtility.ToJson(GameData));
     }
+    
+    public static void SaveDate(DateTime value)
+    {
+        var convert = value.ToString("u", CultureInfo.InvariantCulture);
+        GameData.DailyGiftsData.Date = convert;
+    }
 
-    public static bool IsLoaded()
+    public static DateTime LoadDate()
+    {
+        var result = GameData.DailyGiftsData.Date != null ? DateTime.ParseExact(GameData.DailyGiftsData.Date, "u", CultureInfo.InvariantCulture) : DateTime.UtcNow;
+
+        return result;
+    }
+
+    public static bool Loaded()
     {
         return _dataIsLoad;
     }
@@ -87,6 +115,7 @@ public class GameData
     public PlayerData PlayerData;
     public ProgressData ProgressData;
     public SettingsData SettingsData;
+    public DailyGiftsData DailyGiftsData;
 }
 
 [Serializable]
@@ -116,4 +145,13 @@ public struct SettingsData
 {
     public float SoundVolume;
     public float MusicVolume;
+}
+
+[Serializable]
+public struct DailyGiftsData
+{
+    public Timer Timer;
+    public string Date;
+    public int UnlockedGifts;
+    public int PickedGifts;
 }

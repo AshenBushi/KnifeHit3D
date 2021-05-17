@@ -108,6 +108,7 @@ public class ItemBuyer : MonoBehaviour
 
     private void BuyItem()
     {
+        MetricaManager.SendEvent("btn_buy");
         SoundManager.PlaySound(SoundNames.ButtonClick);
         FindLockedItemsOnPage();
         _player.WithdrawMoney(_price);

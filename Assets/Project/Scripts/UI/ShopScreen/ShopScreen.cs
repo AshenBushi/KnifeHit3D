@@ -1,4 +1,5 @@
 using System;
+using GoogleMobileAds.Api;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -27,5 +28,12 @@ public class ShopScreen : UIScreen
             IsKnifeChanged?.Invoke();
         
         gameObject.SetActive(false);
+    }
+
+    public void ChangeKnife(int index)
+    {
+        DataManager.GameData.ShopData.CurrentKnifeIndex = index;
+        IsKnifeChanged?.Invoke();
+        DataManager.Save();
     }
 }

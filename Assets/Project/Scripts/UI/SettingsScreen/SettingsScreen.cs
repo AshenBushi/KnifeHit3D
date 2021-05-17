@@ -6,10 +6,13 @@ public class SettingsScreen : UIScreen
 {
     [SerializeField] private Button _sound;
     [SerializeField] private Button _music;
-    [SerializeField] private AudioSource _soundPlayer;
-    [SerializeField] private AudioSource _musicPlayer;
     [SerializeField] private Sprite _buttonOn;
     [SerializeField] private Sprite _buttonOff;
+
+    private void Awake()
+    {
+        CanvasGroup = GetComponent<CanvasGroup>();
+    }
 
     private void OnEnable()
     {
@@ -25,31 +28,31 @@ public class SettingsScreen : UIScreen
 
     private void Start()
     {
-        _soundPlayer.volume = DataManager.GameData.SettingsData.SoundVolume;
-        _musicPlayer.volume = DataManager.GameData.SettingsData.MusicVolume;
+        SoundManager.SoundPlayer.volume = DataManager.GameData.SettingsData.SoundVolume;
+        SoundManager.MusicPlayer.volume = DataManager.GameData.SettingsData.MusicVolume;
         UpdateButtonImages();
     }
 
     private void UpdateButtonImages()
     {
-        _sound.image.sprite = _soundPlayer.volume > 0 ? _buttonOn : _buttonOff;
-        _music.image.sprite = _musicPlayer.volume > 0 ? _buttonOn : _buttonOff;
+        _sound.image.sprite = SoundManager.SoundPlayer.volume > 0 ? _buttonOn : _buttonOff;
+        _music.image.sprite = SoundManager.MusicPlayer.volume > 0 ? _buttonOn : _buttonOff;
     }
     
     private void ChangeSoundVolume()
     {
-        _soundPlayer.volume = _soundPlayer.volume > 0 ? 0 : 1;
+        SoundManager.SoundPlayer.volume = SoundManager.SoundPlayer.volume > 0 ? 0 : 1;
         SoundManager.PlaySound(SoundNames.ButtonClick);
-        DataManager.GameData.SettingsData.SoundVolume = _soundPlayer.volume;
+        DataManager.GameData.SettingsData.SoundVolume = SoundManager.SoundPlayer.volume;
         DataManager.Save();
         UpdateButtonImages();
     }
 
     private void ChangeMusicVolume()
     {
-        _musicPlayer.volume = _musicPlayer.volume > 0 ? 0 : 1;
+        SoundManager.MusicPlayer.volume = SoundManager.MusicPlayer.volume > 0 ? 0 : 1;
         SoundManager.PlaySound(SoundNames.ButtonClick);
-        DataManager.GameData.SettingsData.MusicVolume = _musicPlayer.volume;
+        DataManager.GameData.SettingsData.MusicVolume = SoundManager.MusicPlayer.volume;
         DataManager.Save();
         UpdateButtonImages();
     }

@@ -7,12 +7,6 @@ public class UIScreen : MonoBehaviour
 {
     protected CanvasGroup CanvasGroup;
 
-    private void Awake()
-    {
-        if (TryGetComponent(out CanvasGroup canvasGroup))
-            CanvasGroup = canvasGroup;
-    }
-
     public virtual void Enable()
     {
         CanvasGroup.blocksRaycasts = true;
