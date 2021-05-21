@@ -12,7 +12,7 @@ public class LotterySpawner : MonoBehaviour
     private Lottery _lottery;
     private int _hitCount = 3;
 
-    public event UnityAction IsLose;
+    public event UnityAction<float> IsLose;
     public event UnityAction<List<RewardNames>> IsWin;
     public event UnityAction<int> IsLotterySpawned;
 
@@ -27,7 +27,7 @@ public class LotterySpawner : MonoBehaviour
     private void OnDeath()
     {
         MetricaManager.SendEvent("bns_lvl_death");
-        IsLose?.Invoke();
+        IsLose?.Invoke(1f);
     }
 
     private void OnWin(List<RewardNames> rewards)
@@ -42,7 +42,7 @@ public class LotterySpawner : MonoBehaviour
     
     public void SpawnLottery()
     {
-        _lottery = Instantiate(_template, transform);
+        _lottery = Instantiate(_template, new Vector3(0f, 2.1f, 8f), Quaternion.identity, transform);
         _lottery.IsDeath += OnDeath;
         _lottery.IsWin += OnWin;
         _levelProgressDisplayer.DisableDisplayer();

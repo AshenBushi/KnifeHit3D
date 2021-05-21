@@ -14,10 +14,11 @@ public class KnifeSpawner : MonoBehaviour
     
     private Knife _currentKnife;
     private int _knifeAmount = 0;
+    private bool _isSecondLife = false;
     
     public Knife CurrentTemplate => _knives[DataManager.GameData.ShopData.CurrentKnifeIndex];
 
-    public event UnityAction IsLose;
+    public event UnityAction<bool> IsLose;
 
     private void OnEnable()
     {
@@ -36,9 +37,22 @@ public class KnifeSpawner : MonoBehaviour
     
     private void OnKnifeBounced()
     {
+        Time.timeScale = 1;
         _player.DisallowThrow();
         SpawnKnife();
-        IsLose?.Invoke();
+
+        if (DataManager.GameData.PlayerData.SecondLife > 0 && !_isSecondLife)
+        {
+            _player.AllowThrow();
+            _knifeAmount++;
+            DataManager.GameData.PlayerData.SecondLife--;
+            DataManager.Save();
+            _isSecondLife = true;
+        }
+        else
+        {
+            IsLose?.Invoke(false);
+        }
     }
 
     private void OnNewTargetSet(int amount)

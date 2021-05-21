@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,10 +19,10 @@ public class LoseScreen : UIScreen
         CanvasGroup = GetComponent<CanvasGroup>();
     }
 
-    private IEnumerator LoseAnimation()
+    private IEnumerator LoseAnimation(float delay)
     {
         CanvasGroup.blocksRaycasts = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(delay);
 
         CanvasGroup.interactable = true;
         CanvasGroup.alpha = 1;
@@ -48,9 +49,9 @@ public class LoseScreen : UIScreen
         _cupPanel.SetActive(false);
     }
 
-    public void Lose()
+    public void Lose(float delay)
     {
-        StartCoroutine(LoseAnimation());
+        StartCoroutine(LoseAnimation(delay));
     }
 
     public void SkipAd()
@@ -63,6 +64,21 @@ public class LoseScreen : UIScreen
     public void Restart()
     {
         SoundManager.PlaySound(SoundNames.ButtonClick);
+        
+        if (AdManager.Interstitial.IsLoaded())
+        {
+            AdManager.Interstitial.OnAdClosed += HandleOnAdClosed;
+            AdManager.ShowInterstitial();
+        }
+        else
+        {
+            SceneManager.LoadScene(sceneBuildIndex: 1);
+        }
+    }
+
+    private void HandleOnAdClosed(object sender, EventArgs e)
+    {
+        AdManager.Interstitial.OnAdClosed -= HandleOnAdClosed;
         SceneManager.LoadScene(sceneBuildIndex: 1);
     }
 }

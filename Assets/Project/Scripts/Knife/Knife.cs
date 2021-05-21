@@ -42,7 +42,6 @@ public class Knife : MonoBehaviour
         _isBounced = true;
         Destroy(GetComponent<Collider>());
         _rigidbody.velocity = Vector3.zero;
-        _rigidbody.useGravity = true;
         _rigidbody.AddExplosionForce(BounceForce, position, 5, 0, ForceMode.Impulse);
         IsBounced?.Invoke();
     }

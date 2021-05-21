@@ -13,6 +13,7 @@ public class Target : MonoBehaviour
     private TargetBase _targetBase;
     private TargetRotator _rotator;
     private int _edgeCount;
+    private int _expReward;
 
     //Cube Fields
     private Tween _tween;
@@ -20,9 +21,9 @@ public class Target : MonoBehaviour
     
     public int HitToBreak { get; private set; }
 
-    public event UnityAction IsRotate;
+    public event UnityAction<int> IsRotate;
     public event UnityAction IsEdgePass;
-    public event UnityAction<TargetBase> IsBreak;
+    public event UnityAction<TargetBase, int> IsBreak;
 
     private void Awake()
     {
@@ -48,40 +49,43 @@ public class Target : MonoBehaviour
         }
     }
 
-    private void SetupTarget(TargetBase template, int hitToBreak, int edgeCount, List<RotateDefinition> rotateDefinitions)
+    private void SpawnTarget(TargetBase template, int hitToBreak, int experience, int edgeCount, List<RotateDefinition> rotateDefinitions)
     {
         _targetBase = Instantiate(template, transform.position, Quaternion.Euler(0f, 180f, 0f), transform);
         HitToBreak = hitToBreak;
         _edgeCount = edgeCount;
+        _expReward = experience;
         _rotator.StartRotate(rotateDefinitions);
     }
     
-    private void SetupTarget(CubeLevel level, int edgeCount)
+    private void SpawnTarget(CubeLevel level, int edgeCount)
     {
         _currentCubeLevel = level;
         _targetBase = Instantiate(level._base, transform.position, Quaternion.Euler(0f, 0f, 0f), transform);
         _edgeCount = edgeCount;
         HitToBreak = level.Cubes[level.Cubes.Count - _edgeCount].HitToBreak;
         _rotator.StartRotate(level.Cubes[level.Cubes.Count - _edgeCount].RotateDefinitions);
+        _expReward = level.Cubes[level.Cubes.Count - _edgeCount].Experience;
     }
 
-    private void TryNextEdge()
+    public void TryNextEdge()
     {
         _edgeCount--;
             
         if(_edgeCount <= 0)
         {
             SoundManager.PlaySound(SoundNames.TargetBreak);
-            IsBreak?.Invoke(Instantiate(_targetBase, _targetBase.transform.position, _targetBase.transform.rotation));
+            IsBreak?.Invoke(Instantiate(_targetBase, _targetBase.transform.position, _targetBase.transform.rotation), _expReward);
             Destroy(gameObject);
         }
         else
         {
-            IsRotate?.Invoke();
+            IsRotate?.Invoke(_expReward);
             _tween = _targetBase.transform.DOLocalRotate(_cubeRotatePoints[_currentCubeLevel.Cubes.Count - _edgeCount], 1f);
             _tween.OnComplete(() =>
             {
                 HitToBreak = _currentCubeLevel.Cubes[_currentCubeLevel.Cubes.Count - _edgeCount].HitToBreak;
+                _expReward = _currentCubeLevel.Cubes[_currentCubeLevel.Cubes.Count - _edgeCount].Experience;
                 _rotator.StartRotate(_currentCubeLevel.Cubes[_currentCubeLevel.Cubes.Count - _edgeCount].RotateDefinitions);
                 IsEdgePass?.Invoke();
             });
@@ -90,45 +94,43 @@ public class Target : MonoBehaviour
     
     public void SpawnAndSetup(TargetConfig config, Knife obstacleTemplate)
     {
-        SetupTarget(config.Base, config.HitToBreak, 1, config.RotateDefinitions);
+        SpawnTarget(config.Base, config.HitToBreak, config.Experience,1, config.RotateDefinitions);
         
-        InitializeObstaclesAndApples(config, obstacleTemplate);
+        SetupTargetBase(config, obstacleTemplate);
     }
     
     public void SpawnAndSetup(CubeLevel level, Knife obstacleTemplate)
     {
-        SetupTarget(level, 6);
+        SpawnTarget(level, 6);
         
-        InitializeObstaclesAndApples(level, obstacleTemplate);
+        SetupTargetBase(level, obstacleTemplate);
     }
     
     public void SpawnAndSetup(FlatConfig config, Knife obstacleTemplate)
     {
-        SetupTarget(config.Base, config.HitToBreak, 1, config.RotateDefinitions);
+        SpawnTarget(config.Base, config.HitToBreak, config.Experience,1, config.RotateDefinitions);
         
-        InitializeObstaclesAndApples(config, obstacleTemplate);
+        SetupTargetBase(config, obstacleTemplate);
     }
 
-    public void InitializeObstaclesAndApples(TargetConfig config, Knife obstacleTemplate)
+    public void SetupTargetBase(TargetConfig config, Knife obstacleTemplate)
     {
-        if (config.ObstacleCount != 0) 
-            _targetBase.InitializeObstacles(0, config.ObstacleCount, obstacleTemplate);
-        if (config.HaveApple) 
-            _targetBase.InitializeApples(0, _appleTemplate);
+        if (config.ObstacleCount != 0) _targetBase.InitializeObstacles(0, config.ObstacleCount, obstacleTemplate);
+        if (config.HasApple) _targetBase.InitializeApples(0, _appleTemplate);
     }
     
-    public void InitializeObstaclesAndApples(CubeLevel level, Knife obstacleTemplate)
+    public void SetupTargetBase(CubeLevel level, Knife obstacleTemplate)
     {
         for (var i = 0; i < level.Cubes.Count; i++)
         {
             if (level.Cubes[i].ObstacleCount != 0) _targetBase.InitializeObstacles(i, level.Cubes[i].ObstacleCount, obstacleTemplate);
-            if (level.Cubes[i].IsApple) _targetBase.InitializeApples(i, _appleTemplate);
+            if (level.Cubes[i].HasApple) _targetBase.InitializeApples(i, _appleTemplate);
         }
     }
     
-    public void InitializeObstaclesAndApples(FlatConfig config, Knife obstacleTemplate)
+    public void SetupTargetBase(FlatConfig config, Knife obstacleTemplate)
     {
         if (config.ObstacleCount != 0) _targetBase.InitializeObstacles(0, config.ObstacleCount, obstacleTemplate);
-        if (config.IsApple) _targetBase.InitializeApples(0, _appleTemplate);
+        if (config.HasApple) _targetBase.InitializeApples(0, _appleTemplate);
     }
 }

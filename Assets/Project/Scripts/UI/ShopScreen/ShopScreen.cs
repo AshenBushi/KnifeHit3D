@@ -5,8 +5,6 @@ using UnityEngine.Events;
 
 public class ShopScreen : UIScreen
 {
-    [SerializeField] private Shop _shop;
-
     private int _startKnifeIndex;
     
     public event UnityAction IsKnifeChanged;

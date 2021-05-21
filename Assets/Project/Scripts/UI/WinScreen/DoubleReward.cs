@@ -3,49 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using GoogleMobileAds.Api;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class DoubleReward : MonoBehaviour
+public class DoubleReward : AdButton
 {
     [SerializeField] private Player _player;
 
-    private Button _button;
+    public event UnityAction IsWatchedReward;
 
-    private void Awake()
-    {
-        _button = GetComponent<Button>();
-    }
-
-    private void OnEnable()
-    {
-        AdManager.RewardedAd.OnAdFailedToLoad += HandleFailedToLoad;
-        AdManager.RewardedAd.OnAdLoaded += HandleAdLoaded;
-    }
-
-    private void OnDisable()
-    {
-        AdManager.RewardedAd.OnAdFailedToLoad -= HandleFailedToLoad;
-        AdManager.RewardedAd.OnAdLoaded -= HandleAdLoaded;
-    }
-
-    private void HandleAdLoaded(object sender, EventArgs e)
-    {
-        _button.interactable = true;
-    }
-    
-    private void HandleFailedToLoad(object sender, AdErrorEventArgs e)
-    {
-        _button.interactable = false;
-    }
-    
-    private void HandleFailedToShow(object sender, AdErrorEventArgs e)
+    protected override void HandleFailedToShow(object sender, AdErrorEventArgs e)
     {
         MetricaManager.SendEvent("ev_rew_fail");
-        AdManager.RewardedAd.OnUserEarnedReward -= HandleUserEarnReward;
-        AdManager.RewardedAd.OnAdFailedToShow -= HandleFailedToShow;
+        base.HandleFailedToShow(sender, e);
     }
 
-    private void HandleUserEarnReward(object sender, Reward e)
+    protected override void HandleUserEarnReward(object sender, Reward e)
     {
         switch (DataManager.GameData.ProgressData.CurrentGamemod)
         {
@@ -64,16 +37,8 @@ public class DoubleReward : MonoBehaviour
         }
         
         MetricaManager.SendEvent("ev_rew_show");
+        IsWatchedReward?.Invoke();
         
-        AdManager.RewardedAd.OnUserEarnedReward -= HandleUserEarnReward;
-        AdManager.RewardedAd.OnAdFailedToShow -= HandleFailedToShow;
-    }
-    
-    public void TakeDoubleReward()
-    {
-        AdManager.RewardedAd.OnUserEarnedReward += HandleUserEarnReward;
-        AdManager.RewardedAd.OnAdFailedToShow += HandleFailedToShow;
-        AdManager.ShowRewardVideo();
-        _button.interactable = false;
+        base.HandleUserEarnReward(sender, e);
     }
 }

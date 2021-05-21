@@ -7,14 +7,18 @@ public class TargetConfig : ScriptableObject
     [SerializeField] private TargetBase _base;
     [Range(0, 4)]
     [SerializeField] private int _obstacleCount;
-    [SerializeField] private bool _haveApple;
+    [SerializeField] private bool _hasApple;
+    [SerializeField] private bool _hasGift;
     [SerializeField] private int _hitToBreak;
+    [SerializeField] private int _experience;
     [SerializeField] private List<RotateDefinition> _rotateDefinitions;
 
     public TargetBase Base => _base;
     public int ObstacleCount => _obstacleCount;
-    public bool HaveApple => _haveApple;
+    public bool HasApple => _hasApple;
+    public bool HasGift => _hasGift;
     public int HitToBreak => _hitToBreak;
+    public int Experience => _experience;
     public List<RotateDefinition> RotateDefinitions => _rotateDefinitions;
 }
 

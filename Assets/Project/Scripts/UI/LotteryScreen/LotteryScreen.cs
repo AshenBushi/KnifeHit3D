@@ -77,14 +77,17 @@ public class LotteryScreen : UIScreen
                 case RewardNames.Slow:
                     MetricaManager.SendEvent("bns_lvl_slow");
                     _rewards[i].SetReward("Slow");
+                    DataManager.GameData.PlayerData.SlowMode++;
                     break;
                 case RewardNames.LevelPass:
                     MetricaManager.SendEvent("bns_lvl_skip");
                     _rewards[i].SetReward("Level Pass");
+                    DataManager.GameData.PlayerData.LevelPass++;
                     break;
                 case RewardNames.SecondChance:
                     MetricaManager.SendEvent("bns_lvl_chance");
                     _rewards[i].SetReward("Second Chance");
+                    DataManager.GameData.PlayerData.SecondLife++;
                     break;
                 case RewardNames.Skin:
                     MetricaManager.SendEvent("bns_lvl_skin");
@@ -96,6 +99,8 @@ public class LotteryScreen : UIScreen
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            
+            DataManager.Save();
         }
     }
 

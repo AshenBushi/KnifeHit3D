@@ -37,6 +37,12 @@ public class DailyGiftScreen : UIScreen
         }
     }
 
+    private void Start()
+    {
+        if (DataManager.GameData.DailyGiftsData.UnlockedGifts != DataManager.GameData.DailyGiftsData.PickedGifts)
+            Enable();
+    }
+
     private void CheckGiftsState()
     {
         for (var i = 0; i < DataManager.GameData.DailyGiftsData.UnlockedGifts; i++)

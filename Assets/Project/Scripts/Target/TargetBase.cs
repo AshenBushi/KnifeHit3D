@@ -13,12 +13,14 @@ public class TargetBase : MonoBehaviour
     
     private List<ObstacleSpawner> _obstacleSpawners;
     private List<AppleSpawner> _appleSpawners;
+    private List<GiftSpawner> _giftSpawners;
     private Tween _tween;
 
     private void Awake()
     {
         _obstacleSpawners = GetComponentsInChildren<ObstacleSpawner>().ToList();
         _appleSpawners = GetComponentsInChildren<AppleSpawner>().ToList();
+        _giftSpawners = GetComponentsInChildren<GiftSpawner>().ToList();
     }
 
     public void TakeHit()
@@ -32,16 +34,16 @@ public class TargetBase : MonoBehaviour
         });
     }
     
-    public void InitializeObstacles(int spawnerIndex, int count, Knife obstacleTemplate)
+    public void InitializeObstacles(int spawnerIndex, int count, Knife template)
     {
-        _obstacleSpawners[spawnerIndex].SpawnObstacles(obstacleTemplate, count);
+        _obstacleSpawners[spawnerIndex].SpawnObstacles(template, count);
     }
 
-    public void InitializeApples(int spawnerIndex, Apple appleTemplate)
+    public void InitializeApples(int spawnerIndex, Apple template)
     {
-        _appleSpawners[spawnerIndex].SpawnApple(appleTemplate);
+        _appleSpawners[spawnerIndex].SpawnApple(template);
     }
-    
+
     public void Detonate(Vector3 explodePoint)
     {
         foreach (var item in GetComponentsInChildren<Collider>())

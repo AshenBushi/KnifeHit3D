@@ -68,9 +68,9 @@ public class DataManager : MonoBehaviour
         GameData.SettingsData.SoundVolume = 1;
         GameData.SettingsData.MusicVolume = 1;
 
-        GameData.DailyGiftsData.Timer = new Timer() {Hours = 23, Minutes = 59, Seconds = 59};
+        GameData.DailyGiftsData.Timer = new Timer() {Hours = 23, Minutes =59, Seconds = 59};
         GameData.DailyGiftsData.Date = DateTime.UtcNow.ToString("u", CultureInfo.InvariantCulture);
-        GameData.DailyGiftsData.UnlockedGifts = 0;
+        GameData.DailyGiftsData.UnlockedGifts = 1;
         GameData.DailyGiftsData.PickedGifts = 0;
 
         StartCoroutine(SendMetricks());
@@ -129,6 +129,10 @@ public struct ShopData
 public struct PlayerData
 {
     public int Money;
+    public int SlowMode;
+    public int LevelPass;
+    public int SecondLife;
+    public int Experience;
 }
 
 [Serializable]

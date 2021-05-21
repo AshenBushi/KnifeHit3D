@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SessionHandler : MonoBehaviour
 {
@@ -15,16 +18,25 @@ public class SessionHandler : MonoBehaviour
     [SerializeField] private LotteryScreen _lotteryScreen;
     [SerializeField] private InputField _inputField;
     [SerializeField] private AppleCounter _appleCounter;
-    
+
+    private GiftHandler _giftHandler;
+
+    public event UnityAction IsGameStarted;
+
+    private void Awake()
+    {
+        _giftHandler = GetComponent<GiftHandler>();
+    }
 
     private void OnEnable()
     {
         _inputField.IsSessionStart += StartGame;
         _shopScreen.IsKnifeChanged += ReloadGame;
-        _targetSpawner.IsWin += OnWin;
-        _knifeSpawner.IsLose += OnLose;
+        _targetSpawner.IsWin += OnGameEnd;
+        _knifeSpawner.IsLose += OnGameEnd;
+        _giftHandler.IsGiftScreenDisabled += EndGame;
         _lotterySpawner.IsWin += OnLotteryWin;
-        _lotterySpawner.IsLose += OnLose;
+        _lotterySpawner.IsLose += LoseGame;
         _startScreen.IsModChanged += SpawnLevel;
         _winScreen.IsCanStartLottery += StartLottery;
     }
@@ -33,10 +45,11 @@ public class SessionHandler : MonoBehaviour
     {
         _inputField.IsSessionStart -= StartGame;
         _shopScreen.IsKnifeChanged -= ReloadGame;
-        _targetSpawner.IsWin -= OnWin;
-        _knifeSpawner.IsLose -= OnLose;
+        _targetSpawner.IsWin -= OnGameEnd;
+        _knifeSpawner.IsLose -= OnGameEnd;
+        _giftHandler.IsGiftScreenDisabled += EndGame;
         _lotterySpawner.IsWin -= OnLotteryWin;
-        _lotterySpawner.IsLose -= OnLose;
+        _lotterySpawner.IsLose -= LoseGame;
         _startScreen.IsModChanged -= SpawnLevel;
         _winScreen.IsCanStartLottery -= StartLottery;
     }
@@ -69,6 +82,8 @@ public class SessionHandler : MonoBehaviour
                 MetricaManager.SendEvent("target_lvl_start_(" + DataManager.GameData.ProgressData.CurrentTargetLevel + ")");
                 break;
         }
+        
+        IsGameStarted?.Invoke();
     }
 
     private void SpawnLevel()
@@ -116,7 +131,31 @@ public class SessionHandler : MonoBehaviour
         _lotterySpawner.SpawnLottery();
     }
 
-    private void OnWin()
+    private void OnGameEnd(bool isPlayerWin)
+    {
+        if (_giftHandler.HasGift)
+        {
+            _giftHandler.ShowGiftScreen(isPlayerWin);
+        }
+        else
+        {
+            EndGame(isPlayerWin, 1f);
+        }
+    }
+
+    private void EndGame(bool isPlayerWin, float delay = 0f)
+    {
+        if (isPlayerWin)
+        {
+            WinGame(delay);
+        }
+        else
+        {
+            LoseGame(delay);
+        }
+    }
+
+    private void WinGame(float delay)
     {
         int knifeReward;
         GameObject rewardTemplate;
@@ -152,8 +191,8 @@ public class SessionHandler : MonoBehaviour
                 LevelManager.NextTargetLevel();
                 break;
         }
-        
-        _winScreen.Win(_appleCounter.Count >= 3, knifeReward, rewardTemplate);
+
+        _winScreen.Win(_appleCounter.Count >= 3, knifeReward, rewardTemplate, delay);
     }
 
     private void OnLotteryWin(List<RewardNames> rewards)
@@ -161,7 +200,7 @@ public class SessionHandler : MonoBehaviour
         _lotteryScreen.SendReward(rewards);
     }
     
-    private void OnLose()
+    private void LoseGame(float delay)
     {
         switch (DataManager.GameData.ProgressData.CurrentGamemod)
         {
@@ -179,6 +218,6 @@ public class SessionHandler : MonoBehaviour
                 break;
         }
         
-        _loseScreen.Lose();
+        _loseScreen.Lose(delay);
     }
 }

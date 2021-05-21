@@ -1,4 +1,5 @@
-﻿using GoogleMobileAds.Api;
+﻿using System;
+using GoogleMobileAds.Api;
 using UnityEngine;
 
 public class AdManager : MonoBehaviour
@@ -36,7 +37,7 @@ public class AdManager : MonoBehaviour
     public static void ShowInterstitial()
     {
         if (!Interstitial.IsLoaded()) return;
-        //Metrica.SendEvent("ad_int_start");
+        MetricaManager.SendEvent("ad_int_start");
         Interstitial.Show();
         InitializeAds();
     }

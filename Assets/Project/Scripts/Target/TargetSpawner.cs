@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class TargetSpawner : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private ExperienceHandler _experienceHandler;
     [SerializeField] private HitScoreDisplayer _hitScoreDisplayer;
     [SerializeField] private LevelProgressDisplayer _levelProgressDisplayer;
     [SerializeField] private float _spawnZ;
@@ -27,28 +28,23 @@ public class TargetSpawner : MonoBehaviour
 
     
     private List<Target> _targets = new List<Target>();
-    private Target _currentTarget;
     private Tween _tween;
+    private List<int> _expRewards = new List<int>();
+    
+    public Target CurrentTarget { get; private set; }
 
-    public event UnityAction IsWin;
+    public event UnityAction<GiftSpawner> IsLevelSpawned;
+    public event UnityAction<bool> IsWin;
     public event UnityAction<int> IsNewTargetSet;
 
     private void OnDisable()
     {
-        if (_currentTarget == null) return;
-        _currentTarget.IsRotate -= OnRotate;
-        _currentTarget.IsBreak -= OnTargetBreak;
-        _currentTarget.IsEdgePass -= OnEdgePass;
+        if (CurrentTarget == null) return;
+        CurrentTarget.IsRotate -= OnRotate;
+        CurrentTarget.IsBreak -= OnTargetBreak;
+        CurrentTarget.IsEdgePass -= OnEdgePass;
     }
-
-    private void OnTargetBreak(TargetBase targetBase)
-    {
-        _currentTarget.IsRotate -= OnRotate;
-        _currentTarget.IsBreak -= OnTargetBreak;
-        _currentTarget.IsEdgePass -= OnEdgePass;
-        StartCoroutine(TargetBreakAnimation(targetBase));
-    }
-
+    
     private void OnEdgePass()
     {
         _player.AllowThrow();
@@ -56,9 +52,19 @@ public class TargetSpawner : MonoBehaviour
         SendHitCount();
     }
 
-    private void OnRotate()
+    private void OnRotate(int expReward)
     {
         _player.DisallowThrow();
+        _experienceHandler.AddExp(expReward);
+    }
+    
+    private void OnTargetBreak(TargetBase targetBase, int expReward)
+    {
+        CurrentTarget.IsRotate -= OnRotate;
+        CurrentTarget.IsBreak -= OnTargetBreak;
+        CurrentTarget.IsEdgePass -= OnEdgePass;
+        _experienceHandler.AddExp(expReward);
+        StartCoroutine(TargetBreakAnimation(targetBase));
     }
     
     private void Move()
@@ -93,7 +99,7 @@ public class TargetSpawner : MonoBehaviour
                 break;
         }
         
-        _targets.Remove(_currentTarget);
+        _targets.Remove(CurrentTarget);
         
         if (_targets.Count > 0)
         {
@@ -103,7 +109,7 @@ public class TargetSpawner : MonoBehaviour
         }
         else
         {
-            IsWin?.Invoke();
+            IsWin?.Invoke(true);
         }
         
         yield return new WaitForSeconds(2f);
@@ -111,7 +117,7 @@ public class TargetSpawner : MonoBehaviour
         Destroy(targetBase.gameObject);
     }
 
-    public void TryCleanTargets()
+    private void TryCleanTargets()
     {
         if (_targets.Count < 1) return;
         foreach (var target in _targets)
@@ -122,19 +128,19 @@ public class TargetSpawner : MonoBehaviour
         _targets.Clear();
     }
     
-    public void SetCurrentTarget()
-    {
-        _currentTarget = _targets[0];
-        _currentTarget.IsRotate += OnRotate;
-        _currentTarget.IsBreak += OnTargetBreak;
-        _currentTarget.IsEdgePass += OnEdgePass;
-        SendHitCount();
-    }
-
     private void SendHitCount()
     {
-        IsNewTargetSet?.Invoke(_currentTarget.HitToBreak);
-        _hitScoreDisplayer.SpawnHitScores(_currentTarget.HitToBreak);
+        IsNewTargetSet?.Invoke(CurrentTarget.HitToBreak);
+        _hitScoreDisplayer.SpawnHitScores(CurrentTarget.HitToBreak);
+    }
+
+    public void SetCurrentTarget()
+    {
+        CurrentTarget = _targets[0];
+        CurrentTarget.IsRotate += OnRotate;
+        CurrentTarget.IsBreak += OnTargetBreak;
+        CurrentTarget.IsEdgePass += OnEdgePass;
+        SendHitCount();
     }
 
     public void SetLotterySettings()
@@ -152,6 +158,11 @@ public class TargetSpawner : MonoBehaviour
         {
             _targets.Add(Instantiate(_targetTemplate, new Vector3(0f, _targetSpawnY, _spawnZ + _spawnStep * i), Quaternion.identity, transform));
             _targets[i].SpawnAndSetup(targetLevel.Targets[i], obstacleTemplate);
+
+            if (targetLevel.Targets[i].HasGift)
+            {
+                IsLevelSpawned?.Invoke(_targets[i].GetComponentInChildren<GiftSpawner>());
+            }
         }
     }
     
@@ -162,6 +173,10 @@ public class TargetSpawner : MonoBehaviour
         _targets.Add(Instantiate(_cubeTemplate, new Vector3(0f, _cubeSpawnY, _spawnZ), Quaternion.identity,
             transform));
         _targets[0].SpawnAndSetup(cubeLevel, obstacleTemplate);
+
+        var giftSpawners = _targets[0].GetComponentsInChildren<GiftSpawner>();
+        
+        IsLevelSpawned?.Invoke(giftSpawners[cubeLevel.Cubes.FindIndex(target => target.HasGift)]);
     }
     
     public void SpawnLevel(FlatLevel flatLevel, Knife obstacleTemplate)
@@ -172,6 +187,11 @@ public class TargetSpawner : MonoBehaviour
         {
             _targets.Add(Instantiate(_flatTemplate, new Vector3(0f, _flatSpawnY, _spawnZ + _spawnStep * i), Quaternion.identity, transform));
             _targets[i].SpawnAndSetup(flatLevel.Flats[i], obstacleTemplate);
+            
+            if (flatLevel.Flats[i].HasGift)
+            {
+                IsLevelSpawned?.Invoke(_targets[i].GetComponentInChildren<GiftSpawner>());
+            }
         }
     }
 
@@ -179,20 +199,20 @@ public class TargetSpawner : MonoBehaviour
     {
         for (var i = 0; i < targetLevel.Targets.Count; i++)
         {
-            _targets[i].InitializeObstaclesAndApples(targetLevel.Targets[i], obstacleTemplate);
+            _targets[i].SetupTargetBase(targetLevel.Targets[i], obstacleTemplate);
         }
     }
     
     public void Reload(CubeLevel cubeLevel, Knife obstacleTemplate)
     {
-        _targets[0].InitializeObstaclesAndApples(cubeLevel, obstacleTemplate);
+        _targets[0].SetupTargetBase(cubeLevel, obstacleTemplate);
     }
     
     public void Reload(FlatLevel flatLevel, Knife obstacleTemplate)
     {
         for (var i = 0; i < flatLevel.Flats.Count; i++)
         {
-            _targets[i].InitializeObstaclesAndApples(flatLevel.Flats[i], obstacleTemplate);
+            _targets[i].SetupTargetBase(flatLevel.Flats[i], obstacleTemplate);
         }
     }
 }

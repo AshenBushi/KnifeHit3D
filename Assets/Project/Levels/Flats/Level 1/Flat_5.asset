@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _base: {fileID: 6581339632723206483, guid: b208dcb759ed545459db8254731f273c, type: 3}
   _obstacleCount: 0
-  _isApple: 0
+  _hasApple: 1
+  _hasGift: 0
   _hitToBreak: 7
   _rotateDefinitions:
   - Angle: 360
