@@ -94,25 +94,26 @@ public class WinScreen : UIScreen
     {
         SoundManager.PlaySound(SoundNames.ButtonClick);
 
-        if (!_isShowedDoubleReward && AdManager.Interstitial.IsLoaded())
+        if (_isALottery)
         {
-            AdManager.Interstitial.OnAdClosed += HandleOnAdClosed;
-            AdManager.ShowInterstitial();
+            MetricaManager.SendEvent("bns_lvl");
+            MetricaManager.SendEvent("bns_lvl_start");
+            Disable();
+            IsCanStartLottery?.Invoke();
         }
         else
         {
-            if (_isALottery)
+            if (!_isShowedDoubleReward && AdManager.Interstitial.IsLoaded())
             {
-                MetricaManager.SendEvent("bns_lvl");
-                MetricaManager.SendEvent("bns_lvl_start");
-                Disable();
-                IsCanStartLottery?.Invoke();
+                AdManager.Interstitial.OnAdClosed += HandleOnAdClosed;
+                AdManager.ShowInterstitial();
             }
             else
             {
                 SceneManager.LoadScene(sceneBuildIndex: 1);
             }
         }
+        
     }
 
     public void Collect()
