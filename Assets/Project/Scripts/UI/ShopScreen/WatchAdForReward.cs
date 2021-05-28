@@ -22,5 +22,7 @@ public class WatchAdForReward : AdButton
         _moneyReward = value;
         
         base.WatchAd();
+        
+        Button.interactable = true;
     }
 }

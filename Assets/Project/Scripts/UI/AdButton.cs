@@ -8,11 +8,11 @@ using UnityEngine.UI;
 
 public class AdButton : MonoBehaviour
 {
-    private Button _button;
+    protected Button Button;
 
     private void Awake()
     {
-        _button = GetComponent<Button>();
+        Button = GetComponent<Button>();
     }
 
     private void OnEnable()
@@ -29,12 +29,12 @@ public class AdButton : MonoBehaviour
 
     private void HandleAdLoaded(object sender, EventArgs e)
     {
-        _button.interactable = true;
+        Button.interactable = true;
     }
     
     private void HandleFailedToLoad(object sender, AdErrorEventArgs e)
     {
-        _button.interactable = false;
+        Button.interactable = false;
     }
     
     protected virtual void HandleFailedToShow(object sender, AdErrorEventArgs e)
@@ -54,7 +54,7 @@ public class AdButton : MonoBehaviour
         AdManager.RewardedAd.OnUserEarnedReward += HandleUserEarnReward;
         AdManager.RewardedAd.OnAdFailedToShow += HandleFailedToShow;
         AdManager.ShowRewardVideo();
-        _button.interactable = false;
+        Button.interactable = false;
     }
     
 }

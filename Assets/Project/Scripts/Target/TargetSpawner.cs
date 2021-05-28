@@ -16,14 +16,17 @@ public class TargetSpawner : MonoBehaviour
     [Header("Target Settings")]
     [SerializeField] private Target _targetTemplate;
     [SerializeField] private float _targetSpawnY;
+    [SerializeField] private float _targetExplosionForce;
     [SerializeField] private Vector3 _targetExplodePosition;
     [Header("Cube Settings")]
     [SerializeField] private Target _cubeTemplate;
     [SerializeField] private float _cubeSpawnY;
+    [SerializeField] private float _cubeExplosionForce;
     [SerializeField] private Vector3 _cubeExplodePosition;
     [Header("Flat Settings")]
     [SerializeField] private Target _flatTemplate;
     [SerializeField] private float _flatSpawnY;
+    [SerializeField] private float _flatExplosionForce;
     [SerializeField] private Vector3 _flatExplodePosition;
 
     
@@ -86,16 +89,13 @@ public class TargetSpawner : MonoBehaviour
         switch (DataManager.GameData.ProgressData.CurrentGamemod)
         {
             case 0:
-                targetBase.Detonate(_targetExplodePosition);
+                targetBase.Detonate(_targetExplodePosition, _targetExplosionForce);
                 break;
             case 1:
-                targetBase.Detonate(_cubeExplodePosition);
+                targetBase.Detonate(_cubeExplodePosition, _cubeExplosionForce);
                 break;
             case 2:
-                targetBase.Detonate(_flatExplodePosition);
-                break;
-            default:
-                targetBase.Detonate(_targetExplodePosition);
+                targetBase.Detonate(_flatExplodePosition, _flatExplosionForce);
                 break;
         }
         

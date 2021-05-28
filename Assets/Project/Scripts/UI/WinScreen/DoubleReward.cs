@@ -2,15 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GoogleMobileAds.Api;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class DoubleReward : AdButton
 {
     [SerializeField] private Player _player;
+    [SerializeField] private TMP_Text _text;
+
+    private int _chanceGiveX5;
+    private int _coefficient;
 
     public event UnityAction IsWatchedReward;
+
+    private void OnEnable()
+    {
+        _chanceGiveX5 = Random.Range(0, 100);
+
+        _coefficient = _chanceGiveX5 < 20 ? 4 : 1;
+        _text.text = "Watch X" + (1 + _coefficient).ToString();
+    }
 
     protected override void HandleFailedToShow(object sender, AdErrorEventArgs e)
     {
@@ -23,16 +37,16 @@ public class DoubleReward : AdButton
         switch (DataManager.GameData.ProgressData.CurrentGamemod)
         {
             case 0 :
-                _player.DepositMoney(LevelManager.CurrentTargetLevel.Reward);
+                _player.DepositMoney(LevelManager.CurrentTargetLevel.Reward * _coefficient);
                 break;
             case 1 :
-                _player.DepositMoney(LevelManager.CurrentCubeLevel.Reward);
+                _player.DepositMoney(LevelManager.CurrentCubeLevel.Reward * _coefficient);
                 break;
             case 2 :
-                _player.DepositMoney(LevelManager.CurrentFlatLevel.Reward);
+                _player.DepositMoney(LevelManager.CurrentFlatLevel.Reward * _coefficient);
                 break;
             default:
-                _player.DepositMoney(LevelManager.CurrentTargetLevel.Reward);
+                _player.DepositMoney(LevelManager.CurrentTargetLevel.Reward * _coefficient);
                 break;
         }
         

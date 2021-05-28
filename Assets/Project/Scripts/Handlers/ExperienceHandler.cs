@@ -31,7 +31,6 @@ public class ExperienceHandler : MonoBehaviour
         DataManager.GameData.PlayerData.Experience += value;
         DataManager.Save();
         CheckForFull();
-        Debug.Log(DataManager.GameData.PlayerData.Experience);
         _expBar.ShowExpBar(value);
     }
 }

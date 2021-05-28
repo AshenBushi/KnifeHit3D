@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,7 @@ public class WinScreen : UIScreen
     [SerializeField] private GameObject _adPanel;
     [SerializeField] private GameObject _preview;
     [SerializeField] private GameObject _cup;
+    [SerializeField] private TMP_Text _rewardText;
     [SerializeField] private DoubleReward _doubleReward;
     
     private bool _isALottery = false;
@@ -52,8 +54,7 @@ public class WinScreen : UIScreen
         }
         else
         {
-            _adPanel.SetActive(true);
-            _cup.SetActive(true);
+            EnableAdPanel();
         }
     }
     
@@ -70,6 +71,20 @@ public class WinScreen : UIScreen
         {
             SceneManager.LoadScene(sceneBuildIndex: 1);
         }
+    }
+
+    private void EnableAdPanel()
+    {
+        _adPanel.SetActive(true);
+        _cup.SetActive(true);
+
+        _rewardText.text = DataManager.GameData.ProgressData.CurrentGamemod switch
+        {
+            0 => LevelManager.CurrentTargetLevel.Reward.ToString(),
+            1 => LevelManager.CurrentCubeLevel.Reward.ToString(),
+            2 => LevelManager.CurrentFlatLevel.Reward.ToString(),
+            _ => LevelManager.CurrentTargetLevel.Reward.ToString()
+        };
     }
 
     public override void Enable()

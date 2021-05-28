@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000015258789}
-  m_SizeDelta: {x: 0, y: -0.000022888}
+  m_AnchoredPosition: {x: -0.1623, y: 3.0838}
+  m_SizeDelta: {x: -23.697, y: -26.9432}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &797778838785436772
 CanvasRenderer:
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e13b07c396a5ac545aafb6da7576317c, type: 3}
+  m_Sprite: {fileID: 992728304312703659, guid: c9b0971758a2dc244a9f712986d83b1f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -377,9 +377,11 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: -3724514210783730073, guid: c9b0971758a2dc244a9f712986d83b1f,
+      type: 3}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 21300000, guid: 6f4b230a18e00cb40b202d212b8817b3, type: 3}
+    m_DisabledSprite: {fileID: -5589664403440696418, guid: c9b0971758a2dc244a9f712986d83b1f,
+      type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -538,7 +540,8 @@ MonoBehaviour:
   _button: {fileID: 797778839624589623}
   _moneyReward: 0
   _knifeRewardIndex: 0
-  _picked: {fileID: 21300000, guid: aaf4bf6074f95614fbee50ea9f417ddf, type: 3}
+  _picked: {fileID: -2136464288153343608, guid: c9b0971758a2dc244a9f712986d83b1f,
+    type: 3}
   _buttonText: {fileID: 797778838785436771}
 --- !u!1 &797778840305861623
 GameObject:

@@ -8,9 +8,7 @@ public class TargetBase : MonoBehaviour
 {
     private const float UpForce = 0;
     private const float Radius = 20;
-    
-    [SerializeField] private float _explosionForce;
-    
+
     private List<ObstacleSpawner> _obstacleSpawners;
     private List<AppleSpawner> _appleSpawners;
     private List<GiftSpawner> _giftSpawners;
@@ -44,7 +42,7 @@ public class TargetBase : MonoBehaviour
         _appleSpawners[spawnerIndex].SpawnApple(template);
     }
 
-    public void Detonate(Vector3 explodePoint)
+    public void Detonate(Vector3 explodePoint, float explosionForce)
     {
         foreach (var item in GetComponentsInChildren<Collider>())
         {
@@ -54,7 +52,7 @@ public class TargetBase : MonoBehaviour
         foreach (var item in GetComponentsInChildren<Rigidbody>())
         {
             item.isKinematic = false;
-            item.AddExplosionForce(_explosionForce, explodePoint, Radius, UpForce);
+            item.AddExplosionForce(explosionForce, explodePoint, Radius, UpForce);
         }
     }
     
