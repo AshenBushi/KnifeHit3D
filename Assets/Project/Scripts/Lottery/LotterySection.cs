@@ -4,17 +4,12 @@ using UnityEngine.Events;
 
 public class LotterySection : MonoBehaviour
 {
-    [SerializeField] private RewardNames _name;
-    public bool KnifeStuck { get; private set; } = false;
+    [SerializeField] private RewardName _name;
 
-    public event UnityAction<RewardNames> IsKnifeStuck;
+    public event UnityAction<RewardName> IsRewardTook;
 
-    private void OnCollisionEnter(Collision other)
+    public void TakeReward()
     {
-        if (!other.gameObject.TryGetComponent(out Knife knife)) return;
-        SoundManager.PlaySound(SoundNames.TargetHit);
-        knife.Stuck(transform);
-        IsKnifeStuck?.Invoke(_name);
-        KnifeStuck = true;
+        IsRewardTook?.Invoke(_name);
     }
 }

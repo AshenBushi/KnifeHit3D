@@ -6,7 +6,7 @@ public class InputField : MonoBehaviour, IPointerDownHandler
 {
     private bool _isSessionStart = false;
     
-    public event UnityAction InPlayerTap;
+    public event UnityAction IsTapped;
     public event UnityAction IsSessionStart;
 
     public void OnPointerDown(PointerEventData eventData)
@@ -17,6 +17,6 @@ public class InputField : MonoBehaviour, IPointerDownHandler
             _isSessionStart = true;
         }
         
-        InPlayerTap?.Invoke();
+        IsTapped?.Invoke();
     }
 }

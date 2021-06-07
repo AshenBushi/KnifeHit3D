@@ -20,9 +20,9 @@ public class ShopItem : MonoBehaviour
 
     public bool IsUnlock => _isUnlock;
 
-    public GameObject PreviewTemplate => _previewTemplate;
+    public GameObject PreviewTemplate => Models.KnifePreviews[_index];
 
-    public event UnityAction<ShopItem, GameObject> IsKnifeSelected;
+    public event UnityAction<ShopItem> IsKnifeSelected;
 
     private void Awake()
     {
@@ -41,7 +41,7 @@ public class ShopItem : MonoBehaviour
     {
         if (!_isUnlock) return;
         SoundManager.PlaySound(SoundNames.ButtonClick);
-        IsKnifeSelected?.Invoke(this, _previewTemplate);
+        IsKnifeSelected?.Invoke(this);
     }
 
     public void Unlock()

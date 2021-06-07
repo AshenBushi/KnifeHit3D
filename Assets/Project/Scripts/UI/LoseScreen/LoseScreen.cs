@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 public class LoseScreen : UIScreen
 {
@@ -12,6 +13,8 @@ public class LoseScreen : UIScreen
     [SerializeField] private GameObject _cup;
 
     private List<Rigidbody> _cupPieces;
+    
+    public event UnityAction IsScreenDisabled;
 
     private void Awake()
     {
@@ -19,15 +22,12 @@ public class LoseScreen : UIScreen
         CanvasGroup = GetComponent<CanvasGroup>();
     }
 
-    private IEnumerator LoseAnimation(float delay)
+    private IEnumerator LoseAnimation()
     {
-        CanvasGroup.blocksRaycasts = true;
-        yield return new WaitForSeconds(delay);
-
-        CanvasGroup.interactable = true;
-        CanvasGroup.alpha = 1;
+        Enable();
 
         yield return new WaitForSeconds(1f);
+        
         _noThanks.SetActive(true);
     }
 
@@ -47,11 +47,12 @@ public class LoseScreen : UIScreen
     {
         base.Disable();
         _cupPanel.SetActive(false);
+        IsScreenDisabled?.Invoke();
     }
 
-    public void Lose(float delay)
+    public void Lose()
     {
-        StartCoroutine(LoseAnimation(delay));
+        StartCoroutine(LoseAnimation());
     }
 
     public void SkipAd()
@@ -72,13 +73,13 @@ public class LoseScreen : UIScreen
         }
         else
         {
-            SceneManager.LoadScene(sceneBuildIndex: 1);
+            Disable();
         }
     }
 
     private void HandleOnAdClosed(object sender, EventArgs e)
     {
         AdManager.Interstitial.OnAdClosed -= HandleOnAdClosed;
-        SceneManager.LoadScene(sceneBuildIndex: 1);
+        Disable();
     }
 }

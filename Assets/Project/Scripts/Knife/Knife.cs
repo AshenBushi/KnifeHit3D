@@ -1,19 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-using Random = UnityEngine.Random;
 
 public class Knife : MonoBehaviour
 {
     private const float ThrowForce = 40f;
     private const float BounceForce = 10f;
     
-    [SerializeField] private Vector3 _obstacleRotation;
     [SerializeField] private GameObject _stuckEffect;
 
     private Rigidbody _rigidbody;
-
-    private bool _isBounced = false;
-    private bool _isStuck = false;
+    private bool _isCollided = false;
 
     public event UnityAction IsStuck;
     public event UnityAction IsBounced;
@@ -25,48 +21,73 @@ public class Knife : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (!other.gameObject.TryGetComponent(out Knife knife)) return;
-        
-        Bounced(knife.transform.position);
-            
-        foreach (var point in other.contacts)
+        if (_isCollided) return;
+        if (other.gameObject.TryGetComponent(out Target target))
         {
-            Instantiate(_stuckEffect, point.point, Quaternion.identity);
+            Stuck(target.Base.transform);
+            target.TakeHit();
         }
+        
+        if (other.gameObject.TryGetComponent(out LotterySection section))
+        {
+            Stuck(section.transform);
+            section.TakeReward();
+        }
+
+        if (other.gameObject.TryGetComponent(out Knife knife))
+        {
+            Bounced(knife.transform.position);
+            
+            foreach (var point in other.contacts)
+            {
+                Instantiate(_stuckEffect, point.point, Quaternion.identity);
+            }
+        }
+
+        _isCollided = true;
     }
 
-    private void Bounced(Vector3 position)
+    private void OnTriggerEnter(Collider other)
     {
-        if (_isStuck) return;
-        SoundManager.PlaySound(SoundNames.ObstacleHit);
-        _isBounced = true;
-        Destroy(GetComponent<Collider>());
+        if (other.TryGetComponent(out Apple apple))
+            apple.Sliced();
+        
+        if (other.TryGetComponent(out GiftPiece giftPiece))
+            giftPiece.Slice();
+    }
+    
+    private void MakeBounced(Vector3 position)
+    {
+        gameObject.layer = LayerMask.NameToLayer("Bounced");
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.AddExplosionForce(BounceForce, position, 5, 0, ForceMode.Impulse);
+    }
+    
+    private void Bounced(Vector3 position)
+    {
+        SoundManager.PlaySound(SoundNames.ObstacleHit);
+        MakeBounced(position);
         IsBounced?.Invoke();
     }
 
-    public void Stuck(Transform parent)
+    private void Stuck(Transform parent)
     {
-        if (_isBounced || _isStuck) return;
-        _isStuck = true;
+        SoundManager.PlaySound(SoundNames.TargetHit);
+        MakeObstacle(parent);
+        IsStuck?.Invoke();
+    }
+    
+    public void MakeObstacle(Transform parent)
+    {
+        gameObject.layer = LayerMask.NameToLayer("Obstacle");
         _rigidbody.isKinematic = true;
         transform.SetParent(parent);
-        gameObject.layer = LayerMask.NameToLayer("Obstacle");
-        IsStuck?.Invoke();
     }
     
     public void Throw()
     {
+        SoundManager.PlaySound(SoundNames.KnifeThrow);
         _rigidbody.isKinematic = false;
         _rigidbody.AddForce(Vector3.forward * ThrowForce, ForceMode.Impulse);
-        SoundManager.PlaySound(SoundNames.KnifeThrow);
-    }
-
-    public void MakeObstacle()
-    {
-        _rigidbody.isKinematic = true;
-        gameObject.layer = LayerMask.NameToLayer("Obstacle");
-        transform.localRotation = Quaternion.Euler(_obstacleRotation);
     }
 }

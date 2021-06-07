@@ -6,47 +6,13 @@ using UnityEngine.Events;
 public class LotterySpawner : MonoBehaviour
 {
     [SerializeField] private Lottery _template;
-    [SerializeField] private Player _player;
-    [SerializeField] private LevelProgressDisplayer _levelProgressDisplayer;
+
+    private readonly Vector3 _lotteryPosition = new Vector3(0f, 2.1f, 8f);
     
-    private Lottery _lottery;
-    private int _hitCount = 3;
-
-    public event UnityAction<float> IsLose;
-    public event UnityAction<List<RewardNames>> IsWin;
-    public event UnityAction<int> IsLotterySpawned;
-
-    private void OnDisable()
+    public Lottery SpawnLottery()
     {
-        if (_lottery == null) return;
-        
-        _lottery.IsDeath -= OnDeath;
-        _lottery.IsWin -= OnWin;
-    }
+        var lottery = Instantiate(_template, _lotteryPosition, Quaternion.identity, transform);
 
-    private void OnDeath()
-    {
-        MetricaManager.SendEvent("bns_lvl_death");
-        IsLose?.Invoke(1f);
-    }
-
-    private void OnWin(List<RewardNames> rewards)
-    {
-        IsWin?.Invoke(rewards);
-    }
-
-    public void ReplayLottery()
-    {
-        _lottery.AddMaxCount();
-    }
-    
-    public void SpawnLottery()
-    {
-        _lottery = Instantiate(_template, new Vector3(0f, 2.1f, 8f), Quaternion.identity, transform);
-        _lottery.IsDeath += OnDeath;
-        _lottery.IsWin += OnWin;
-        _levelProgressDisplayer.DisableDisplayer();
-        _player.AllowThrow();
-        IsLotterySpawned?.Invoke(_hitCount);
+        return lottery;
     }
 }

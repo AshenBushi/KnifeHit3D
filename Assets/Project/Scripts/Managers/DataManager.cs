@@ -60,7 +60,7 @@ public class DataManager : MonoBehaviour
             0
         };
 
-        GameData.ProgressData.CurrentTargetLevel = 0;
+        GameData.ProgressData.CurrentMarkLevel = 0;
         GameData.ProgressData.CurrentCubeLevel = 0;
         GameData.ProgressData.CurrentCubeLevel = 0;
         GameData.ProgressData.CurrentGamemod = 0;
@@ -139,7 +139,7 @@ public struct PlayerData
 public struct ProgressData
 {
     public int CurrentGamemod;
-    public int CurrentTargetLevel;
+    public int CurrentMarkLevel;
     public int CurrentCubeLevel;
     public int CurrentFlatLevel;
 }

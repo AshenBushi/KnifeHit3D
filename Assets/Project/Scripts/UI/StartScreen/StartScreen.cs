@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class StartScreen : UIScreen
 {
@@ -13,32 +6,15 @@ public class StartScreen : UIScreen
     [SerializeField] private SettingsScreen _settingsScreen;
     [SerializeField] private GameObject _giftNotification;
 
-    private GamemodHandler _gamemodHandler;
-
-    public event UnityAction IsModChanged;
-
     private void Awake()
     {
-        _gamemodHandler = GetComponentInChildren<GamemodHandler>();
         CanvasGroup = GetComponent<CanvasGroup>();
     }
 
     private void OnEnable()
     {
-        _gamemodHandler.IsModChanged += OnModChanged;
-        
         if(DataManager.GameData.DailyGiftsData.UnlockedGifts > DataManager.GameData.DailyGiftsData.PickedGifts)
             _giftNotification.SetActive(true);
-    }
-
-    private void OnDisable()
-    {
-        _gamemodHandler.IsModChanged -= OnModChanged;
-    }
-
-    private void OnModChanged()
-    {
-        IsModChanged?.Invoke();
     }
 
     public void EnableSettingsScreen()
@@ -51,10 +27,5 @@ public class StartScreen : UIScreen
     {
         SoundManager.PlaySound(SoundNames.ButtonClick);
         _shopScreen.Enable();
-    }
-    
-    public void StartSession()
-    {
-        Disable();
     }
 }

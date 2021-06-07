@@ -859,97 +859,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f6abd30f368c5346a8a95e5ee501fbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetLevels:
-  - Reward: 30
+  _markLevels:
+  - Reward: 0
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
-    Targets:
+    Marks:
     - {fileID: 11400000, guid: 43a39f551629e6640840ab698361eb9d, type: 2}
     - {fileID: 11400000, guid: f1f982f81a9a4a94d9c01c9699965987, type: 2}
     - {fileID: 11400000, guid: 825976a04cd997a4aac6af1a6e1b0a22, type: 2}
     - {fileID: 11400000, guid: 6a6fd9916c29e1243aaac6d6afb30eaf, type: 2}
     - {fileID: 11400000, guid: 1e7cecc5a41ac06419d77da90151a3fd, type: 2}
-  - Reward: 30
-    KnifeReward: 1
-    KnifeRewardTemplate: {fileID: 2069195808851569006, guid: f6f02dc28a4444f4b85d53153bc216f3,
-      type: 3}
-    Targets:
+  - Reward: 0
+    KnifeReward: 0
+    Marks:
     - {fileID: 11400000, guid: c36fe16c74069f94ab787f8720686088, type: 2}
     - {fileID: 11400000, guid: 7ee61f82ed033ce4086be64627678a69, type: 2}
     - {fileID: 11400000, guid: 100d17a89862b5c4b89f54ffec864cf8, type: 2}
     - {fileID: 11400000, guid: 5d79421745064a24686e747f12307eeb, type: 2}
     - {fileID: 11400000, guid: 444072407fa91084dbb0c44eb426e5ac, type: 2}
-  - Reward: 30
+  - Reward: 0
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
-    Targets:
+    Marks:
     - {fileID: 11400000, guid: 3e42516cf90fd8540acc700c11a164f7, type: 2}
     - {fileID: 11400000, guid: 1774dd0610d86bd41b31b74ecccfa773, type: 2}
     - {fileID: 11400000, guid: 0b1854f041afd9748b40a054f6aef6c9, type: 2}
     - {fileID: 11400000, guid: a85d0f1feac7c164aa1d8b6bc983ec35, type: 2}
     - {fileID: 11400000, guid: 55ed6b9b7f088674196e4151699a4e18, type: 2}
-  - Reward: 30
-    KnifeReward: 2
-    KnifeRewardTemplate: {fileID: 7241324833710381337, guid: 591b0b828dc3962499c163e6eed7ad47,
-      type: 3}
-    Targets:
+  - Reward: 0
+    KnifeReward: 0
+    Marks:
     - {fileID: 11400000, guid: f289840430a07444aa7dca72cd562a79, type: 2}
     - {fileID: 11400000, guid: 9e1b885f847ed514591acae784ab02e0, type: 2}
     - {fileID: 11400000, guid: 4e03b65f3c5dc544ca0b705d5e47cc59, type: 2}
     - {fileID: 11400000, guid: 344b211ad2e2b074e937b22b5ff82371, type: 2}
     - {fileID: 11400000, guid: 9335bb3bc4b6da14688f3dacde38289b, type: 2}
-  - Reward: 30
+  - Reward: 0
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
-    Targets:
+    Marks:
     - {fileID: 11400000, guid: df5e754a215cd59429679e31fa71aef8, type: 2}
     - {fileID: 11400000, guid: 443893c6ce11e5d48bb23ecb92cfd4ce, type: 2}
     - {fileID: 11400000, guid: 9309137099abe39408d2846d0c7a2f9d, type: 2}
     - {fileID: 11400000, guid: 59130262b8dcfdd4f8847452efda6ee1, type: 2}
     - {fileID: 11400000, guid: a5387e1191b2a9b4e8d2b6fdfbf82368, type: 2}
-  - Reward: 30
-    KnifeReward: 3
-    KnifeRewardTemplate: {fileID: 7271093835766611835, guid: 00d256206f49992489b87d3f398ae6e1,
-      type: 3}
-    Targets:
+  - Reward: 0
+    KnifeReward: 0
+    Marks:
     - {fileID: 11400000, guid: 78d6744ac7103324fbab6bed21f74621, type: 2}
     - {fileID: 11400000, guid: 09be813af05db554d9420293c7bcef68, type: 2}
     - {fileID: 11400000, guid: 477ab5c18b58234449227b88550e80b9, type: 2}
     - {fileID: 11400000, guid: 56a659ec1dbd55943825cb6d4b3c918d, type: 2}
     - {fileID: 11400000, guid: 6fbc1464d5262e74dac765c8be82bb64, type: 2}
-  - Reward: 30
+  - Reward: 0
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
-    Targets:
+    Marks:
     - {fileID: 11400000, guid: b0335d683471a6d4b98e23a219b69980, type: 2}
     - {fileID: 11400000, guid: 7a849d6815291124c8e7c58a8b3338ec, type: 2}
     - {fileID: 11400000, guid: fccbee57fac247f419eaaa6f43216fe2, type: 2}
     - {fileID: 11400000, guid: defef130dddeeec489598b6d6c709d60, type: 2}
     - {fileID: 11400000, guid: d7caf05be5c20fd479f759a7e6b9514e, type: 2}
-  - Reward: 30
-    KnifeReward: 4
-    KnifeRewardTemplate: {fileID: 3998801112262539676, guid: 0796768f1e51d234e95b93a4221ebe3a,
-      type: 3}
-    Targets:
+  - Reward: 0
+    KnifeReward: 0
+    Marks:
     - {fileID: 11400000, guid: fcc09b79adf20c545a07f4f5714c1686, type: 2}
     - {fileID: 11400000, guid: c019215c35210b348bda00c7f7e2f15d, type: 2}
     - {fileID: 11400000, guid: ddcc395fe3958f941b69706d20fdcce5, type: 2}
     - {fileID: 11400000, guid: a5239eb6e75dcc546b95e75e0bd4d4c2, type: 2}
     - {fileID: 11400000, guid: 54b7c86f419be0f45ae425006a213a03, type: 2}
-  - Reward: 30
+  - Reward: 0
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
-    Targets:
+    Marks:
     - {fileID: 11400000, guid: 5827ee132d60a054696f520e4ee06cd5, type: 2}
     - {fileID: 11400000, guid: 2ed547621e8306847a66088ca6f68e71, type: 2}
     - {fileID: 11400000, guid: c984bdef66cf51f4a90d2f42a89e36b8, type: 2}
     - {fileID: 11400000, guid: 546062c010bb79b44813f6d7b93e01ce, type: 2}
     - {fileID: 11400000, guid: ebf91459377dfa841b4c9df6671f9c43, type: 2}
-  - Reward: 30
-    KnifeReward: 5
-    KnifeRewardTemplate: {fileID: 956435078468601563, guid: 0d1192706d7e831438c7f9ade1d2d623,
-      type: 3}
-    Targets:
+  - Reward: 0
+    KnifeReward: 0
+    Marks:
     - {fileID: 11400000, guid: 2f71941bf39ed7f479249874024240ae, type: 2}
     - {fileID: 11400000, guid: 9962a5fca72e816409e6c9a1b37ab420, type: 2}
     - {fileID: 11400000, guid: 9e85bb5e00d23154c9a5c8243d48bb84, type: 2}
@@ -958,7 +943,6 @@ MonoBehaviour:
   _cubeLevels:
   - Reward: 30
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
     _base: {fileID: 3941740068826476237, guid: ed36dd55d848c2f4e8814e40147bcc93, type: 3}
     Cubes:
     - {fileID: 11400000, guid: ca46ed19adae9264ba7cec227318c725, type: 2}
@@ -969,8 +953,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: aa1f3066b7980bb45bf542fa2cb09f8e, type: 2}
   - Reward: 30
     KnifeReward: 6
-    KnifeRewardTemplate: {fileID: 6654130806383044730, guid: 8963e72fbb10d5f428bbb7a5f9e940cc,
-      type: 3}
     _base: {fileID: 4024443798187951685, guid: 7c087a64e7980004bb52d57b6504e720, type: 3}
     Cubes:
     - {fileID: 11400000, guid: ca46ed19adae9264ba7cec227318c725, type: 2}
@@ -981,7 +963,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: aa1f3066b7980bb45bf542fa2cb09f8e, type: 2}
   - Reward: 0
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
     _base: {fileID: 571863163152534862, guid: 3d9b36454b85109418e18f9a7d047872, type: 3}
     Cubes:
     - {fileID: 11400000, guid: cbbd8355b63d6fc4b8448feb45408858, type: 2}
@@ -992,8 +973,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: c1a0926b002db3e44ab1297d441157e2, type: 2}
   - Reward: 30
     KnifeReward: 7
-    KnifeRewardTemplate: {fileID: 4844531159211189499, guid: cf4b48e31f18d83479819bf857f7cdf5,
-      type: 3}
     _base: {fileID: 8081972228979452527, guid: 37ab05c1725f3ef4b9287e98b0e0c40e, type: 3}
     Cubes:
     - {fileID: 11400000, guid: e823496e0d159e8478682426a235bbfe, type: 2}
@@ -1004,7 +983,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 05b0083165ef4684b90212f3ced67b6b, type: 2}
   - Reward: 30
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
     _base: {fileID: 605102584719803076, guid: e8e68404236852347a08e40f880ebb4e, type: 3}
     Cubes:
     - {fileID: 11400000, guid: e9e88b459c50d73459f60b8c5119046b, type: 2}
@@ -1015,8 +993,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 84eeda2c79e1e544da5d9bb978a00cc8, type: 2}
   - Reward: 30
     KnifeReward: 8
-    KnifeRewardTemplate: {fileID: 3214166443582518331, guid: 14af42460b546744d893d601c2f911b3,
-      type: 3}
     _base: {fileID: 8788043629012658347, guid: 80fb80285a7f54848af4cf158665e227, type: 3}
     Cubes:
     - {fileID: 11400000, guid: f4ee859ea0566844892a9e48835d5b00, type: 2}
@@ -1027,7 +1003,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 59400ae9afc01774f8fb311dcb45c073, type: 2}
   - Reward: 30
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
     _base: {fileID: 3296205335570788018, guid: cb5895970ff5edd4fabd8436ec00b487, type: 3}
     Cubes:
     - {fileID: 11400000, guid: be400b28533f53e41b2739ccd3f6c1c8, type: 2}
@@ -1038,8 +1013,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 6d0a7438bc26b6d4abde87493c7bcb36, type: 2}
   - Reward: 30
     KnifeReward: 18
-    KnifeRewardTemplate: {fileID: 6539908183708156124, guid: 7a92393e21c4dd9429d9a95eabd1340f,
-      type: 3}
     _base: {fileID: 2599311371908336725, guid: 0708dd29c9102254fb67a39ae55e6ea6, type: 3}
     Cubes:
     - {fileID: 11400000, guid: 0772c90a561828842a2a5d5e80e822e9, type: 2}
@@ -1050,7 +1023,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 708b776aa5c927a489282cbe7140cb73, type: 2}
   - Reward: 30
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
     _base: {fileID: 6994829205443119885, guid: eff76691cd1102c47867c7ed092d46a6, type: 3}
     Cubes:
     - {fileID: 11400000, guid: f9e6888cffd98ee40b9264c743bf1b8f, type: 2}
@@ -1061,8 +1033,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 69f0d00936e30dd429cd1c0c04a1b895, type: 2}
   - Reward: 30
     KnifeReward: 19
-    KnifeRewardTemplate: {fileID: 319260764312234136, guid: 8d7ef57c92dc22c4da37f3e091f6f195,
-      type: 3}
     _base: {fileID: 8081972228979452527, guid: 37ab05c1725f3ef4b9287e98b0e0c40e, type: 3}
     Cubes:
     - {fileID: 11400000, guid: 50049b992fc05bc46a1ce040bfce3122, type: 2}
@@ -1073,8 +1043,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 206efdba786252a4898b64e18292c43c, type: 2}
   - Reward: 30
     KnifeReward: 20
-    KnifeRewardTemplate: {fileID: 3940730228544898756, guid: 7afdc1ddbbd8eff49a2227ee8ac2c5b8,
-      type: 3}
     _base: {fileID: 8788043629012658347, guid: 80fb80285a7f54848af4cf158665e227, type: 3}
     Cubes:
     - {fileID: 11400000, guid: 17c7be3564af9244296b966214619ee0, type: 2}
@@ -1086,7 +1054,6 @@ MonoBehaviour:
   _flatLevels:
   - Reward: 50
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
     Flats:
     - {fileID: 11400000, guid: 5baa04054c76c924785ef5ea0ecbd7fc, type: 2}
     - {fileID: 11400000, guid: a5e6d9cbbf70b844a88c2cbe898670d0, type: 2}
@@ -1095,8 +1062,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 41d81fefb38ffae4493f95e14ccd2de5, type: 2}
   - Reward: 50
     KnifeReward: 21
-    KnifeRewardTemplate: {fileID: 1516051754884569414, guid: 129abdbeaacf5234791baa2a0e19374a,
-      type: 3}
     Flats:
     - {fileID: 11400000, guid: 27a7977677d69764e8151dc92539377d, type: 2}
     - {fileID: 11400000, guid: ab71d9b2bc261a6408edbe17c08cac5f, type: 2}
@@ -1105,7 +1070,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 570593a1c5380d64eaddb3b5da603b15, type: 2}
   - Reward: 50
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
     Flats:
     - {fileID: 11400000, guid: 5512ed21218eaa2489fce8babd0f9c23, type: 2}
     - {fileID: 11400000, guid: e897405ed44ffa94fae2c0170684a0b5, type: 2}
@@ -1114,8 +1078,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: b61a118fb7eb722409cb26fe94dd61f5, type: 2}
   - Reward: 50
     KnifeReward: 22
-    KnifeRewardTemplate: {fileID: 7752152157400775745, guid: 0d43cc98905b1144eb6ab5efb07d25c8,
-      type: 3}
     Flats:
     - {fileID: 11400000, guid: 089e162607668074da4be5a437a0fd05, type: 2}
     - {fileID: 11400000, guid: 141e9cfd35191e445bc4dee0f19b7d99, type: 2}
@@ -1124,7 +1086,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0575a49eaa5c1c34395894aa050c88fd, type: 2}
   - Reward: 50
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
     Flats:
     - {fileID: 11400000, guid: d88d941e073605f40832c8c447756c11, type: 2}
     - {fileID: 11400000, guid: c30e0d9832c2e054f82fdc6cb488a136, type: 2}
@@ -1133,8 +1094,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: bd2c5d42f52def243b593c53ccec0e96, type: 2}
   - Reward: 50
     KnifeReward: 23
-    KnifeRewardTemplate: {fileID: 5551037303311172186, guid: c342f4d07f02cc64ca077649d9470c60,
-      type: 3}
     Flats:
     - {fileID: 11400000, guid: 8fd48f71d38149140ad8b9097a4e4b19, type: 2}
     - {fileID: 11400000, guid: 4d2f9624812dea249aca7e3f53823905, type: 2}
@@ -1143,7 +1102,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 22a07a55f48188946ba858535d2fb52e, type: 2}
   - Reward: 50
     KnifeReward: 0
-    KnifeRewardTemplate: {fileID: 0}
     Flats:
     - {fileID: 11400000, guid: 4b681dd416262224aaaf067b4b17afbc, type: 2}
     - {fileID: 11400000, guid: 11a9001b4a735ec43a9a91202587c7c1, type: 2}
@@ -1152,8 +1110,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: f1d0be1687ebff94f8ffd389c3d19448, type: 2}
   - Reward: 50
     KnifeReward: 24
-    KnifeRewardTemplate: {fileID: 2117452042849210985, guid: c574c6b08d5da7046974b73de7a72716,
-      type: 3}
     Flats:
     - {fileID: 11400000, guid: b91c053d4cdc8354e94ed33e7924174d, type: 2}
     - {fileID: 11400000, guid: 84ac8bd898645f748b08f9f6d9994f84, type: 2}
@@ -1162,8 +1118,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 2caad659f830f64418a8d1ae068e0375, type: 2}
   - Reward: 50
     KnifeReward: 25
-    KnifeRewardTemplate: {fileID: 2640205942123005162, guid: a7d841c323580c74e8db58af01f029c5,
-      type: 3}
     Flats:
     - {fileID: 11400000, guid: 3943da9363b6376439e606c9b26242aa, type: 2}
     - {fileID: 11400000, guid: a8faef2feee3f78499ef729d6b15a8c9, type: 2}
@@ -1172,8 +1126,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 76b44b8ba79593949a82bd8a96a8d1ef, type: 2}
   - Reward: 50
     KnifeReward: 26
-    KnifeRewardTemplate: {fileID: 6836141485598251281, guid: 22bc7c4e018b2064eb00e5bf80121eb8,
-      type: 3}
     Flats:
     - {fileID: 11400000, guid: f7368686ca367eb448bcaa1bf5d90dce, type: 2}
     - {fileID: 11400000, guid: 9cb00e8f50e25dc4a9f629d890944ace, type: 2}
@@ -1217,6 +1169,7 @@ Transform:
   m_Children:
   - {fileID: 1187982695}
   - {fileID: 371089093}
+  - {fileID: 1296952428}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1359,6 +1312,177 @@ Transform:
   m_Father: {fileID: 1014453669}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1296952427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1296952428}
+  - component: {fileID: 1296952429}
+  m_Layer: 0
+  m_Name: Models
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1296952428
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296952427}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1014453669}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1296952429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296952427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a625460c978695b4d95db6af2acd5887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _knives:
+  - {fileID: 2755488699555116574, guid: 0f1685ce3b4cc914fbb4bc535d6e68e8, type: 3}
+  - {fileID: 6389202553357156952, guid: 9d42abf6180729e49911089108a9100e, type: 3}
+  - {fileID: 946891482125996593, guid: efc88f94006848f4dafae9c9ec371e0d, type: 3}
+  - {fileID: 5713246181287250862, guid: 6deadb71bb592524fad85c16916ec058, type: 3}
+  - {fileID: 4257515454140372536, guid: 307ee6d8badee5644a94fae8582c0418, type: 3}
+  - {fileID: 9152066730239716341, guid: 06ddabeaa945d7242bf3cdbc3c3a9058, type: 3}
+  - {fileID: 661971810630293565, guid: 6e11c2bb64eba7f4aa1a46e769868012, type: 3}
+  - {fileID: 9201788687530349130, guid: bd935243a66353e4680bd2b3968459ec, type: 3}
+  - {fileID: 7347700838399385979, guid: 9069710df89859748a8996451ddac5f3, type: 3}
+  - {fileID: 7347700838399385979, guid: 9069710df89859748a8996451ddac5f3, type: 3}
+  - {fileID: 7347700838399385979, guid: 9069710df89859748a8996451ddac5f3, type: 3}
+  - {fileID: 7347700838399385979, guid: 9069710df89859748a8996451ddac5f3, type: 3}
+  - {fileID: 7347700838399385979, guid: 9069710df89859748a8996451ddac5f3, type: 3}
+  - {fileID: 7347700838399385979, guid: 9069710df89859748a8996451ddac5f3, type: 3}
+  - {fileID: 7347700838399385979, guid: 9069710df89859748a8996451ddac5f3, type: 3}
+  - {fileID: 7347700838399385979, guid: 9069710df89859748a8996451ddac5f3, type: 3}
+  - {fileID: 7347700838399385979, guid: 9069710df89859748a8996451ddac5f3, type: 3}
+  - {fileID: 7347700838399385979, guid: 9069710df89859748a8996451ddac5f3, type: 3}
+  - {fileID: 2089719794586672126, guid: 0f4f782bf0339014ba96710d3bd9904e, type: 3}
+  - {fileID: 3559998630979787691, guid: 13c52cd06afbb4b4e80c61346d9f714d, type: 3}
+  - {fileID: 6457653341039742426, guid: bea41d00b710e6d40a9ed6568445ff30, type: 3}
+  - {fileID: 3014304113271426784, guid: d05c3e4e61e485b46b33d0a1ce91fc17, type: 3}
+  - {fileID: 2924984270976952683, guid: d24f1559b8e1e4d4c98e7a2757ef4b0c, type: 3}
+  - {fileID: 4543769023220506734, guid: 9d3294922771f6b42aff0b89fe98281f, type: 3}
+  - {fileID: 8492030063851657429, guid: c6089d379ddad9949b9333d5c940847e, type: 3}
+  - {fileID: 3564245135928420558, guid: 264fcbea7908a4b41a38103378aab4ea, type: 3}
+  - {fileID: 7911866294140964435, guid: b4d5f3eb995885c41ac64766fc1726c2, type: 3}
+  - {fileID: 3563303361181063698, guid: 0468c0f220182e14391cdde421eb00d7, type: 3}
+  - {fileID: 3945606200764816936, guid: c15d4f51250dabf4892fb1dd46d0d84c, type: 3}
+  - {fileID: 9085213735767714068, guid: 2f36263a246a2354da2160f59262563b, type: 3}
+  - {fileID: 8169330210888968362, guid: 119cfc7e0ad6d8b45aa011adafb5dc4a, type: 3}
+  - {fileID: 4864521908209321717, guid: 0addc9a7cd55d4b4f997a5105962cf16, type: 3}
+  - {fileID: 4906310713723243121, guid: 11081851ea6b5ad42b3b8063e740d2bf, type: 3}
+  - {fileID: 227877854669608767, guid: efe5b9baa10bbb44eb787bb6347005ad, type: 3}
+  - {fileID: 5994514272542786523, guid: 4779f0f7fe1f7d04193ba10521850ef7, type: 3}
+  - {fileID: 5874734193583950047, guid: aae80db04fdc5e5458f5b07d80bf0841, type: 3}
+  - {fileID: 2435044039284576696, guid: ed902618ae360504d822a5915aae5438, type: 3}
+  - {fileID: 353368259783461141, guid: 9c38df93321717942b3fa9e9a129bb3b, type: 3}
+  - {fileID: 4965455911653233037, guid: 5d30fdb62d3b48b43b5313bc7c8193f9, type: 3}
+  - {fileID: 7678579505225902850, guid: 19d5c3c2eee40c1499c9bacde4118924, type: 3}
+  - {fileID: 3554076455970809663, guid: 3953df7a82ef47c40ab026505d146311, type: 3}
+  - {fileID: 6279599438389872893, guid: fe5df7a086d7507478f3e55c3a385da2, type: 3}
+  - {fileID: 8090666144372015699, guid: 65a5593905d849b40ae7b09c3c1206de, type: 3}
+  - {fileID: 7532312152769064070, guid: 2d0b419c29d495d4a83469b539098bf8, type: 3}
+  - {fileID: 964148095353218118, guid: 10c40d613d388c84e825dc5da06aeba0, type: 3}
+  - {fileID: 6590646670514543064, guid: cfc4bd54762d8cb4497503210637c968, type: 3}
+  - {fileID: 9011690788379085529, guid: 718d69c34bd933149b6654cdabaf3c9e, type: 3}
+  - {fileID: 3966735807590696091, guid: 1b23973697a249546bc6389daae25b86, type: 3}
+  - {fileID: 4418040801204938756, guid: f99b10c224955ef4ca43d84181d17029, type: 3}
+  - {fileID: 7879169510494432425, guid: 5f24c6ba203423348a44780a90c9996e, type: 3}
+  - {fileID: 2626869377495126068, guid: 232e3e386e8d9314db36a19d37188952, type: 3}
+  - {fileID: 1610260507526246882, guid: 06155cdbde7206f43a64dc6bf4a52829, type: 3}
+  - {fileID: 7950094049856477820, guid: 3d448fa2e00695742913a5cca28c0c2e, type: 3}
+  - {fileID: 622114563781772103, guid: 2bc7c98ed5b458e448397a15ba4bfb84, type: 3}
+  - {fileID: 4605527020540397417, guid: 10541edb5ea3a004ba1951b43110d5b6, type: 3}
+  - {fileID: 225470448837947905, guid: 21426ba1b6d2e0649b75094965bae375, type: 3}
+  - {fileID: 2720385110884707628, guid: 3751ee26dbe7d3a448ce1973eda35271, type: 3}
+  - {fileID: 3194248854727048927, guid: 955bd491ecbdcf04ca55520b2afd17e9, type: 3}
+  - {fileID: 581414497069262249, guid: ab96a0cea6dbc9e45925b6d689af5fe0, type: 3}
+  - {fileID: 3123009974741575927, guid: c7d98cdde7542e34d8f462681367339b, type: 3}
+  - {fileID: 7177334750398820382, guid: 6b44309aeff7246418abc72bd7938f42, type: 3}
+  - {fileID: 2008777217059303631, guid: dbc12b6cd3c64454eacfa1254632e31d, type: 3}
+  - {fileID: 105723692223570808, guid: a5bb340f7625b3540834ac0049ac5bf6, type: 3}
+  _knifePreviews:
+  - {fileID: 6276122517537537497, guid: d5e12538e4c2c2f44b8c72cfa7875052, type: 3}
+  - {fileID: 2069195808851569006, guid: f6f02dc28a4444f4b85d53153bc216f3, type: 3}
+  - {fileID: 7241324833710381337, guid: 591b0b828dc3962499c163e6eed7ad47, type: 3}
+  - {fileID: 7271093835766611835, guid: 00d256206f49992489b87d3f398ae6e1, type: 3}
+  - {fileID: 3998801112262539676, guid: 0796768f1e51d234e95b93a4221ebe3a, type: 3}
+  - {fileID: 956435078468601563, guid: 0d1192706d7e831438c7f9ade1d2d623, type: 3}
+  - {fileID: 6654130806383044730, guid: 8963e72fbb10d5f428bbb7a5f9e940cc, type: 3}
+  - {fileID: 4844531159211189499, guid: cf4b48e31f18d83479819bf857f7cdf5, type: 3}
+  - {fileID: 3214166443582518331, guid: 14af42460b546744d893d601c2f911b3, type: 3}
+  - {fileID: 3214166443582518331, guid: 14af42460b546744d893d601c2f911b3, type: 3}
+  - {fileID: 3214166443582518331, guid: 14af42460b546744d893d601c2f911b3, type: 3}
+  - {fileID: 3214166443582518331, guid: 14af42460b546744d893d601c2f911b3, type: 3}
+  - {fileID: 3214166443582518331, guid: 14af42460b546744d893d601c2f911b3, type: 3}
+  - {fileID: 3214166443582518331, guid: 14af42460b546744d893d601c2f911b3, type: 3}
+  - {fileID: 3214166443582518331, guid: 14af42460b546744d893d601c2f911b3, type: 3}
+  - {fileID: 3214166443582518331, guid: 14af42460b546744d893d601c2f911b3, type: 3}
+  - {fileID: 3214166443582518331, guid: 14af42460b546744d893d601c2f911b3, type: 3}
+  - {fileID: 3214166443582518331, guid: 14af42460b546744d893d601c2f911b3, type: 3}
+  - {fileID: 6539908183708156124, guid: 7a92393e21c4dd9429d9a95eabd1340f, type: 3}
+  - {fileID: 319260764312234136, guid: 8d7ef57c92dc22c4da37f3e091f6f195, type: 3}
+  - {fileID: 3940730228544898756, guid: 7afdc1ddbbd8eff49a2227ee8ac2c5b8, type: 3}
+  - {fileID: 1516051754884569414, guid: 129abdbeaacf5234791baa2a0e19374a, type: 3}
+  - {fileID: 7752152157400775745, guid: 0d43cc98905b1144eb6ab5efb07d25c8, type: 3}
+  - {fileID: 5551037303311172186, guid: c342f4d07f02cc64ca077649d9470c60, type: 3}
+  - {fileID: 2117452042849210985, guid: c574c6b08d5da7046974b73de7a72716, type: 3}
+  - {fileID: 2640205942123005162, guid: a7d841c323580c74e8db58af01f029c5, type: 3}
+  - {fileID: 6836141485598251281, guid: 22bc7c4e018b2064eb00e5bf80121eb8, type: 3}
+  - {fileID: 477620682700846716, guid: 00671a53cb822d84ca829e2b48d688a3, type: 3}
+  - {fileID: 2469068056535625436, guid: 8831423fc64c7e9438df9feb0548278a, type: 3}
+  - {fileID: 8920681306373070114, guid: 4e8391205c1268d418707abd65506dc9, type: 3}
+  - {fileID: 8055828216009082672, guid: 937c3401185af2e42869b2ef1662298f, type: 3}
+  - {fileID: 417558396644430267, guid: 9f4b74cefcd3f094fb4d64701fce4a8b, type: 3}
+  - {fileID: 2220952536494238945, guid: fda5960df5c75be4a9c6df2bbd80156f, type: 3}
+  - {fileID: 5381267358157217503, guid: f0b004616bf657e4c916146676517f3b, type: 3}
+  - {fileID: 5691691555888123171, guid: 67c6a7b94fbe775428c57e38134d729f, type: 3}
+  - {fileID: 6884313444644401318, guid: 42150bd5c7cd0a44ba3b2e0f0463c28e, type: 3}
+  - {fileID: 6200835624271893483, guid: 864762483f941974bb5e2b501b4cf619, type: 3}
+  - {fileID: 2996233262320312078, guid: d44adab87d856654f8c530d18706680d, type: 3}
+  - {fileID: 8649178987805949792, guid: 55e9112603b3d9c48b10b158246dfc72, type: 3}
+  - {fileID: 3714769783813318547, guid: 08efd9dae43be264d8123924351e3885, type: 3}
+  - {fileID: 5842593803279207096, guid: f97d366632a02304bb178c12e8efda6c, type: 3}
+  - {fileID: 950474776778922294, guid: 59ff2acc5de386a4794df604826b36f5, type: 3}
+  - {fileID: 5036818428331700214, guid: 5f6e2770333ad094bbac724b7641fbc9, type: 3}
+  - {fileID: 5297121021774539320, guid: 6656b05e7f183904997612b31b10c2f5, type: 3}
+  - {fileID: 7536759970325136929, guid: fb0b6c58b73194f4bac15e3926781bd1, type: 3}
+  - {fileID: 7784868374502633510, guid: 0fc3b612d7ac6564299bf731c3dda414, type: 3}
+  - {fileID: 8157625822234308299, guid: 0479e644c9327c64d9a8021c31a4ea44, type: 3}
+  - {fileID: 4186741019790560452, guid: 27be92561c55bf948904dd71db5d50d7, type: 3}
+  - {fileID: 6368722871468909807, guid: 6fedd94ebd43ad740ae6a8ec6760a1df, type: 3}
+  - {fileID: 2563770101975605345, guid: c190cb7b1d6c1764b946a5d85fc11b13, type: 3}
+  - {fileID: 5761281463573644687, guid: 0827ff0ef2fa58f4086013d627507eb4, type: 3}
+  - {fileID: 333626508207279099, guid: 7d86693df32fb3b48905f7994f6646bb, type: 3}
+  - {fileID: 125663337144749810, guid: c7faaa42d7b0abe4bade9c49c74a554a, type: 3}
+  - {fileID: 9146717638499497382, guid: cf1d73094abff7f4d9823e0df9bf9b1d, type: 3}
+  - {fileID: 2689055550411718843, guid: 8d3e22c402da1f1408d8dbc2d2756833, type: 3}
+  - {fileID: 2943260202768050475, guid: 0da3ef10eb3f2df47a35c0a45765d668, type: 3}
+  - {fileID: 8593856367322654406, guid: 0cc29f8e62368ab4b815971bc60d1e62, type: 3}
+  - {fileID: 6084710414976471251, guid: 2b87e1e45e18d6b49b0f19818451951d, type: 3}
+  - {fileID: 4557979198950686226, guid: 43741dfa9bb12274f94c04deb9d9943a, type: 3}
+  - {fileID: 8650368761872891719, guid: 470a0a8be80ae52478a1870ecad1c2b4, type: 3}
+  - {fileID: 2730267425124600621, guid: 58cb67f5a69bc9b408d11fff50be9607, type: 3}
+  - {fileID: 3767334595094059369, guid: ed013095d5e892c45800c8cbf79a5459, type: 3}
+  - {fileID: 1204234171528247348, guid: 35452d01f3d94364eba09fce018b5191, type: 3}
 --- !u!1 &1421247872
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,17 +10,15 @@ public class GiftScreen : UIScreen
     [SerializeField] private GameObject _giftModel;
     [SerializeField] private Button _continue;
 
-    public event UnityAction IsGiftScreenDisable;
+    public event UnityAction IsScreenDisabled;
 
     private void Awake()
     {
         CanvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public IEnumerator GiftScreenAnimation()
+    public IEnumerator EnableAnimation()
     {
-        yield return new WaitForSeconds(1f);
-
         Enable();
 
         yield return new WaitForSeconds(1f);
@@ -38,11 +36,6 @@ public class GiftScreen : UIScreen
     {
         base.Disable();
         _giftModel.SetActive(false);
-    }
-
-    public void Continue()
-    {
-        Disable();
-        IsGiftScreenDisable?.Invoke();
+        IsScreenDisabled?.Invoke();
     }
 }

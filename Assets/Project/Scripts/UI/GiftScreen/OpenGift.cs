@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class OpenGift : MonoBehaviour
 {
     [SerializeField] private GiftScreen _giftScreen;
-    [SerializeField] private GiftHandler _giftHandler;
+    [SerializeField] private RewardHandler _rewardHandler;
     
     private Button _button;
 
@@ -29,6 +29,12 @@ public class OpenGift : MonoBehaviour
         AdManager.RewardedAd.OnAdLoaded -= HandleAdLoaded;
     }
 
+    private void OnRewardGiven()
+    {
+        _rewardHandler.IsRewardGiven -= OnRewardGiven;
+        _giftScreen.Disable();
+    }
+    
     private void HandleAdLoaded(object sender, EventArgs e)
     {
         _button.interactable = true;
@@ -47,8 +53,8 @@ public class OpenGift : MonoBehaviour
 
     private void HandleUserEarnReward(object sender, Reward e)
     {
-        _giftScreen.Continue();
-        _giftHandler.GiveGift();
+        _rewardHandler.GiveGiftReward();
+        _rewardHandler.IsRewardGiven += OnRewardGiven;
         
         AdManager.RewardedAd.OnUserEarnedReward -= HandleUserEarnReward;
         AdManager.RewardedAd.OnAdFailedToShow -= HandleFailedToShow;

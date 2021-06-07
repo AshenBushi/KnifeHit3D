@@ -11,15 +11,15 @@ public class Skills : MonoBehaviour
 
     private void OnEnable()
     {
-        _sessionHandler.IsGameStarted += OnGameStarted;
+        _sessionHandler.IsSessionStarted += OnSessionStarted;
     }
 
     private void OnDisable()
     {
-        _sessionHandler.IsGameStarted -= OnGameStarted;
+        _sessionHandler.IsSessionStarted -= OnSessionStarted;
     }
 
-    private void OnGameStarted()
+    private void OnSessionStarted()
     {
         StartCoroutine(TryEnableButtons());
     }

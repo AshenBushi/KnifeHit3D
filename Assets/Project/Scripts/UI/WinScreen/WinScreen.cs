@@ -7,17 +7,13 @@ using UnityEngine.SceneManagement;
 
 public class WinScreen : UIScreen
 {
-    [SerializeField] private GameObject _knifeRewardPanel;
-    [SerializeField] private GameObject _adPanel;
-    [SerializeField] private GameObject _preview;
     [SerializeField] private GameObject _cup;
     [SerializeField] private TMP_Text _rewardText;
     [SerializeField] private DoubleReward _doubleReward;
     
-    private bool _isALottery = false;
     private bool _isShowedDoubleReward = false;
 
-    public event UnityAction IsCanStartLottery;
+    public event UnityAction IsScreenDisabled;
 
     private void Awake()
     {
@@ -39,103 +35,50 @@ public class WinScreen : UIScreen
         _isShowedDoubleReward = true;
     }
 
-    private IEnumerator WinAnimation(int knifeReward, GameObject template, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        
-        Enable();
-
-        if (knifeReward > 0)
-        {
-            DataManager.GameData.ShopData.OpenedKnives.Add(knifeReward);
-            DataManager.GameData.ShopData.CurrentKnifeIndex = knifeReward;
-            _knifeRewardPanel.SetActive(true);
-            Instantiate(template, _preview.transform);
-        }
-        else
-        {
-            EnableAdPanel();
-        }
-    }
-    
     private void HandleOnAdClosed(object sender, EventArgs e)
     {
-        if (_isALottery)
-        {
-            MetricaManager.SendEvent("bns_lvl");
-            MetricaManager.SendEvent("bns_lvl_start");
-            Disable();
-            IsCanStartLottery?.Invoke();
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneBuildIndex: 1);
-        }
-    }
-
-    private void EnableAdPanel()
-    {
-        _adPanel.SetActive(true);
-        _cup.SetActive(true);
-
-        _rewardText.text = DataManager.GameData.ProgressData.CurrentGamemod switch
-        {
-            0 => LevelManager.CurrentTargetLevel.Reward.ToString(),
-            1 => LevelManager.CurrentCubeLevel.Reward.ToString(),
-            2 => LevelManager.CurrentFlatLevel.Reward.ToString(),
-            _ => LevelManager.CurrentTargetLevel.Reward.ToString()
-        };
+        Disable();
     }
 
     public override void Enable()
     {
         base.Enable();
         SoundManager.PlaySound(SoundNames.Win);
+        _cup.SetActive(true);
+
+        _rewardText.text = DataManager.GameData.ProgressData.CurrentGamemod switch
+        {
+            0 => LevelManager.CurrentMarkLevel.Reward.ToString(),
+            1 => LevelManager.CurrentCubeLevel.Reward.ToString(),
+            2 => LevelManager.CurrentFlatLevel.Reward.ToString(),
+            _ => LevelManager.CurrentMarkLevel.Reward.ToString()
+        };
     }
 
     public override void Disable()
     {
         base.Disable();
         _cup.SetActive(false);
+        IsScreenDisabled?.Invoke();
     }
 
-    public void Win(bool isALottery, int knifeReward, GameObject template, float delay)
+    public void Win()
     {
-        _isALottery = isALottery;
-        StartCoroutine(WinAnimation(knifeReward, template, delay));
+        Enable();
     }
 
     public void Continue()
     {
         SoundManager.PlaySound(SoundNames.ButtonClick);
-
-        if (_isALottery)
+        
+        if (!_isShowedDoubleReward && AdManager.Interstitial.IsLoaded())
         {
-            MetricaManager.SendEvent("bns_lvl");
-            MetricaManager.SendEvent("bns_lvl_start");
-            Disable();
-            IsCanStartLottery?.Invoke();
+            AdManager.Interstitial.OnAdClosed += HandleOnAdClosed;
+            AdManager.ShowInterstitial();
         }
         else
         {
-            if (!_isShowedDoubleReward && AdManager.Interstitial.IsLoaded())
-            {
-                AdManager.Interstitial.OnAdClosed += HandleOnAdClosed;
-                AdManager.ShowInterstitial();
-            }
-            else
-            {
-                SceneManager.LoadScene(sceneBuildIndex: 1);
-            }
+            Disable();
         }
-        
-    }
-
-    public void Collect()
-    {
-        SoundManager.PlaySound(SoundNames.ButtonClick);
-        _adPanel.SetActive(true);
-        _cup.SetActive(true);
-        _knifeRewardPanel.SetActive(false);
     }
 }

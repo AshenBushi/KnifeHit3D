@@ -4,10 +4,9 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-public enum RewardNames
+public enum RewardName
 {
     TenCoins = 0,
     TwentyCoins,
@@ -25,12 +24,11 @@ public class Lottery : MonoBehaviour
     
     private List<LotterySection> _sections;
     private Tween _rotator;
-    private List<RewardNames> _rewards = new List<RewardNames>();
-    private int _maxRewardCount = 3;
 
-    public event UnityAction IsDeath;
-    public event UnityAction<List<RewardNames>> IsWin;
+    public int HitToBreak = 3;
     
+    public event UnityAction<RewardName> IsRewardTook;
+
     private void Awake()
     {
         _sections = GetComponentsInChildren<LotterySection>().ToList();
@@ -41,7 +39,7 @@ public class Lottery : MonoBehaviour
     {
         foreach (var section in _sections)
         {
-            section.IsKnifeStuck += OnKnifeStuck;
+            section.IsRewardTook += OnRewardTook;
         }
     }
 
@@ -49,7 +47,7 @@ public class Lottery : MonoBehaviour
     {
         foreach (var section in _sections)
         {
-            section.IsKnifeStuck -= OnKnifeStuck;
+            section.IsRewardTook -= OnRewardTook;
         }
     }
 
@@ -67,24 +65,9 @@ public class Lottery : MonoBehaviour
         });
     }
 
-    private void OnKnifeStuck(RewardNames reward)
+    private void OnRewardTook(RewardName reward)
     {
-        _rewards.Add(reward);
-
-        if (reward == RewardNames.Death)
-        {
-            IsDeath?.Invoke();
-            return;
-        }
-        
-        if (_rewards.Count >= _maxRewardCount)
-        {
-            IsWin?.Invoke(_rewards);
-        }
-    }
-    
-    public void AddMaxCount()
-    {
-        _maxRewardCount = 6;
+        IsRewardTook?.Invoke(reward);
+        HitToBreak--;
     }
 }

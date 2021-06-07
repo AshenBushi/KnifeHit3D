@@ -6,39 +6,23 @@ using UnityEngine.UI;
 
 public class LevelProgressDisplayer : MonoBehaviour
 {
-    [SerializeField] private StartScreen _startScreen;
     [SerializeField] private TMP_Text _levelText;
     [SerializeField] private Transform _container;
     [SerializeField] private Image _pointTemplate;
     [SerializeField] private Image _bossTemplate;
     [SerializeField] private Color _enabledColor;
 
-    private List<Image> _points = new List<Image>();
+    private readonly List<Image> _points = new List<Image>();
     private int _currentPoint = 0;
 
-    private void OnEnable()
-    {
-        _startScreen.IsModChanged += ShowLevelDisplay;
-    }
-
-    private void OnDisable()
-    {
-        _startScreen.IsModChanged -= ShowLevelDisplay;
-    }
-
-    private void Start()
-    {
-        ShowLevelDisplay();
-    }
-
-    private void ShowLevelDisplay()
+    public void ShowLevelDisplay()
     {
         _levelText.text = DataManager.GameData.ProgressData.CurrentGamemod switch
         {
-            0 => (DataManager.GameData.ProgressData.CurrentTargetLevel + 1).ToString(),
+            0 => (DataManager.GameData.ProgressData.CurrentMarkLevel + 1).ToString(),
             1 => (DataManager.GameData.ProgressData.CurrentCubeLevel + 1).ToString(),
             2 => (DataManager.GameData.ProgressData.CurrentFlatLevel + 1).ToString(),
-            _ => (DataManager.GameData.ProgressData.CurrentTargetLevel + 1).ToString()
+            _ => (DataManager.GameData.ProgressData.CurrentMarkLevel + 1).ToString()
         };
 
         if (_points.Count > 0)

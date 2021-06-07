@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GoogleMobileAds.Api;
+using Project.Scripts.Handlers;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SkipTarget : AdButton
 {
-    [SerializeField] private TargetSpawner _targetSpawner;
+    [SerializeField] private TargetHandler _targetHandler;
     [SerializeField] private Image _adIcon;
 
     private void Start()
@@ -22,7 +23,7 @@ public class SkipTarget : AdButton
     {
         DataManager.GameData.PlayerData.LevelPass--;
         DataManager.Save();
-        _targetSpawner.CurrentTarget.TryNextEdge();
+        _targetHandler.CurrentTarget.BreakTarget();
         gameObject.SetActive(false);
     }
 

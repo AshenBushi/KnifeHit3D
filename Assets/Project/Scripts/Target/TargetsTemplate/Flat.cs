@@ -1,0 +1,34 @@
+﻿using UnityEngine;
+using UnityEngine.Events;
+
+public class Flat : Target
+{
+    private readonly float _explosionForce = 500f;
+    private readonly Vector3 _explosionPosition = new Vector3(0f, .65f, 10f);
+    
+    public override event UnityAction<int> IsTargetBreak;
+    
+    private void Awake()
+    {
+        Rotator = GetComponent<TargetRotator>();
+    }
+
+    public override void SpawnTargetBase(MarkConfig markConfig = null, CubeLevel level = new CubeLevel(), FlatConfig flatConfig = null)
+    {
+        if (flatConfig is null) return;
+        Base = Instantiate(flatConfig.Base, transform.position, Quaternion.Euler(0f, 180f, 0f), transform);
+        HitToBreak = flatConfig.HitToBreak;
+        ObstacleCount[0] = flatConfig.ObstacleCount;
+        ExpReward = flatConfig.Experience;
+        Rotator.StartRotate(flatConfig.RotateDefinitions);
+    }
+
+    public override void BreakTarget()
+    {
+        SoundManager.PlaySound(SoundNames.TargetBreak);
+        var targetBase = Instantiate(Base, Base.transform.position, Base.transform.rotation);
+        targetBase.Detonate(_explosionPosition, _explosionForce);
+        IsTargetBreak?.Invoke(ExpReward);
+        Destroy(gameObject);
+    }
+}

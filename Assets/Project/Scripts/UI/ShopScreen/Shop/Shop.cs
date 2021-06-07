@@ -44,11 +44,11 @@ public class Shop : MonoBehaviour
             item.Unlock();
             
             if (item.Index != DataManager.GameData.ShopData.CurrentKnifeIndex) continue;
-            OnItemSelected(item, item.PreviewTemplate);
+            OnItemSelected(item);
         }
     }
 
-    private void OnItemSelected(ShopItem item, GameObject previewTemplate)
+    private void OnItemSelected(ShopItem item)
     {
         if(_currentItem != null)
             _currentItem.DisableIndicator();
@@ -56,9 +56,8 @@ public class Shop : MonoBehaviour
         _currentItem = item;
         DataManager.GameData.ShopData.CurrentKnifeIndex = item.Index;
         DataManager.Save();
-        
-        if(previewTemplate != null)
-            _itemPreview.SpawnSelectedItem(previewTemplate);
+
+        _itemPreview.SpawnSelectedItem(Models.KnifePreviews[item.Index]);
         
         _currentItem.EnableIndicator();
     }

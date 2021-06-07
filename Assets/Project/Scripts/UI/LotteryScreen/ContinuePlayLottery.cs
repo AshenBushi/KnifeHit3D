@@ -10,9 +10,7 @@ public class ContinuePlayLottery : AdButton
     protected override void HandleUserEarnReward(object sender, Reward e)
     {
         _lotteryScreen.Disable();
-        _lotterySpawner.ReplayLottery();
-        _knifeSpawner.ReplayLottery();
-        
+
         base.HandleUserEarnReward(sender, e);
     }
     

@@ -37,7 +37,7 @@ public class DoubleReward : AdButton
         switch (DataManager.GameData.ProgressData.CurrentGamemod)
         {
             case 0 :
-                _player.DepositMoney(LevelManager.CurrentTargetLevel.Reward * _coefficient);
+                _player.DepositMoney(LevelManager.CurrentMarkLevel.Reward * _coefficient);
                 break;
             case 1 :
                 _player.DepositMoney(LevelManager.CurrentCubeLevel.Reward * _coefficient);
@@ -46,7 +46,7 @@ public class DoubleReward : AdButton
                 _player.DepositMoney(LevelManager.CurrentFlatLevel.Reward * _coefficient);
                 break;
             default:
-                _player.DepositMoney(LevelManager.CurrentTargetLevel.Reward * _coefficient);
+                _player.DepositMoney(LevelManager.CurrentMarkLevel.Reward * _coefficient);
                 break;
         }
         
