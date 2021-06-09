@@ -6,7 +6,9 @@ using UnityEngine;
 public class LotteryHandler : MonoBehaviour
 {
     [SerializeField] private KnifeHandler _knifeHandler;
+    [SerializeField] private LoseScreen _loseScreen;
     [SerializeField] private HitScoreDisplayer _hitScoreDisplayer;
+    [SerializeField] private LevelProgressDisplayer _levelProgressDisplayer;
     [SerializeField] private LotterySpawner _lotterySpawner;
     [SerializeField] private LotteryScreen _lotteryScreen;
 
@@ -24,9 +26,13 @@ public class LotteryHandler : MonoBehaviour
 
     private void OnRewardTook(RewardName reward)
     {
-        _hitScoreDisplayer.SubmitHit();
-        
         Rewards.Add(reward);
+
+        if (reward == RewardName.Death)
+        {
+            _knifeHandler.DisallowThrow();
+            StartCoroutine(_loseScreen.LotteryLose());
+        }
         
         if (Rewards.Count >= _maxRewardCount)
         {
@@ -46,6 +52,16 @@ public class LotteryHandler : MonoBehaviour
         
         _knifeHandler.SetKnifeAmount(_lottery.HitToBreak);
         _knifeHandler.AllowThrow();
+        _hitScoreDisplayer.SpawnHitScores(_lottery.HitToBreak);
+        _levelProgressDisplayer.DisableDisplayer();
+    }
+
+    public void ContinuePlay()
+    {
+        _lotteryScreen.Disable();
+        _lottery.AddHits();
+        _maxRewardCount += _knifeAmount;
+        _knifeHandler.SetKnifeAmount(_lottery.HitToBreak);
         _hitScoreDisplayer.SpawnHitScores(_lottery.HitToBreak);
     }
 }

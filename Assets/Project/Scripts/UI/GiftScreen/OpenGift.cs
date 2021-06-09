@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using GoogleMobileAds.Api;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class OpenGift : MonoBehaviour
 {
-    [SerializeField] private GiftScreen _giftScreen;
-    [SerializeField] private RewardHandler _rewardHandler;
-    
     private Button _button;
+
+    public event UnityAction IsGiftOpened;
 
     private void Awake()
     {
@@ -29,12 +29,6 @@ public class OpenGift : MonoBehaviour
         AdManager.RewardedAd.OnAdLoaded -= HandleAdLoaded;
     }
 
-    private void OnRewardGiven()
-    {
-        _rewardHandler.IsRewardGiven -= OnRewardGiven;
-        _giftScreen.Disable();
-    }
-    
     private void HandleAdLoaded(object sender, EventArgs e)
     {
         _button.interactable = true;
@@ -53,8 +47,7 @@ public class OpenGift : MonoBehaviour
 
     private void HandleUserEarnReward(object sender, Reward e)
     {
-        _rewardHandler.GiveGiftReward();
-        _rewardHandler.IsRewardGiven += OnRewardGiven;
+        IsGiftOpened?.Invoke();
         
         AdManager.RewardedAd.OnUserEarnedReward -= HandleUserEarnReward;
         AdManager.RewardedAd.OnAdFailedToShow -= HandleFailedToShow;

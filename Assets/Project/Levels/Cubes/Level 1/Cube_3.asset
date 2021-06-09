@@ -12,13 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec59ae2786e42704e99ffd0830da95c0, type: 3}
   m_Name: Cube_3
   m_EditorClassIdentifier: 
-  _obstacleCount: 0
-  _hasApple: 1
-  _hasGift: 0
+  _obstacleCount: 1
   _hitToBreak: 7
   _experience: 10
   _rotateDefinitions:
-  - Angle: 360
+  - Angle: 400
     Duration: 3
     EaseCurve:
       serializedVersion: 2
@@ -26,18 +24,18 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0

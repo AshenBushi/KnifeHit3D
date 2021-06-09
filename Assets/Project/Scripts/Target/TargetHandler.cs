@@ -63,13 +63,13 @@ namespace Project.Scripts.Handlers
         {
             _experienceHandler.AddExp(exp);
             _knifeHandler.DisallowThrow();
-            _levelProgressDisplayer.NextPoint();
-            
+            CurrentTarget.IsTargetBreak -= OnTargetBreak;
+            CurrentTarget.IsEdgePass -= OnEdgePass;
+            _currentSpawner.RemoveTarget(CurrentTarget);
+
             if (Targets.Count > 0)
             {
-                CurrentTarget.IsTargetBreak -= OnTargetBreak;
-                CurrentTarget.IsEdgePass -= OnEdgePass;
-                _currentSpawner.RemoveTarget(CurrentTarget);
+                _levelProgressDisplayer.NextPoint();
                 _targetMover.MoveTargets(Targets);
                 SetCurrentTarget();
             }
@@ -106,6 +106,11 @@ namespace Project.Scripts.Handlers
         {
             _hitScoreDisplayer.SpawnHitScores(CurrentTarget.HitToBreak);
             _knifeHandler.SetKnifeAmount(CurrentTarget.HitToBreak);
+        }
+
+        public void ClearTargets()
+        {
+            _spawners[Gamemod].TryCleanTargets();
         }
     }
 }

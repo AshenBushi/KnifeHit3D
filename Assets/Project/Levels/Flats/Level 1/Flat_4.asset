@@ -13,13 +13,11 @@ MonoBehaviour:
   m_Name: Flat_4
   m_EditorClassIdentifier: 
   _base: {fileID: 4753900779479409324, guid: 01821a86f448b32419cafc1278ef3c07, type: 3}
-  _obstacleCount: 2
-  _hasApple: 1
-  _hasGift: 0
-  _hitToBreak: 5
+  _obstacleCount: 1
+  _hitToBreak: 6
   _experience: 15
   _rotateDefinitions:
-  - Angle: 400
+  - Angle: 360
     Duration: 3
     EaseCurve:
       serializedVersion: 2
@@ -38,84 +36,6 @@ MonoBehaviour:
         value: 1
         inSlope: 1
         outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-  - Angle: 0
-    Duration: 0.5
-    EaseCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-  - Angle: -400
-    Duration: 3
-    EaseCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 2
-        outSlope: 2
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-  - Angle: 0
-    Duration: 0.5
-    EaseCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
         tangentMode: 34
         weightedMode: 0
         inWeight: 0

@@ -11,13 +11,13 @@ public class SessionHandler : MonoBehaviour
 {
     [SerializeField] private InputField _inputField;
     [Header("Handlers")]
-    [SerializeField] private GamemodHandler _gamemodHandler;
     [SerializeField] private RewardHandler _rewardHandler;
     [SerializeField] private TargetHandler _targetHandler;
     [SerializeField] private KnifeHandler _knifeHandler;
     [SerializeField] private LotteryHandler _lotteryHandler;
     [SerializeField] private AppleHandler _appleHandler;
     [SerializeField] private GiftHandler _giftHandler;
+    [SerializeField] private ExperienceHandler _experienceHandler;
     [Header("Screens")]
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private LoseScreen _loseScreen;
@@ -26,6 +26,7 @@ public class SessionHandler : MonoBehaviour
     private int Gamemod => DataManager.GameData.ProgressData.CurrentGamemod;
     
     public event UnityAction IsSessionStarted;
+    public event UnityAction IsLotteryStarted;
 
     private void OnEnable()
     {
@@ -73,19 +74,36 @@ public class SessionHandler : MonoBehaviour
     private void OnLevelFailed()
     {
         StartCoroutine(EnableEndScreen(false));
-        Debug.Log("work!");
     }
 
-    private void OnScreenDisabled()
+    private void OnScreenDisabled(bool isAdShowed)
     {
         if (_appleHandler.SlicedAppleCount >= 3)
         {
+            _targetHandler.ClearTargets();
             _lotteryHandler.StartLottery();
+            _appleHandler.DisableCounter();
+            IsLotteryStarted?.Invoke();
         }
         else
         {
-            SceneManager.LoadScene(1);
+            if(isAdShowed || !AdManager.Interstitial.IsLoaded())
+            {
+                AsyncLoader.PrepareScene();
+                AsyncLoader.LoadScene();
+            }
+            else
+            {
+                AsyncLoader.PrepareScene();
+                AdManager.Interstitial.OnAdClosed += HandleOnAdClosed;
+                AdManager.ShowInterstitial();
+            }
         }
+    }
+
+    private void HandleOnAdClosed(object sender, EventArgs e)
+    {
+        AsyncLoader.LoadScene();
     }
 
     private void OnRewardGiven()
@@ -94,7 +112,37 @@ public class SessionHandler : MonoBehaviour
         _winScreen.Win();
     }
 
-    private void WinGame()
+    private IEnumerator EnableEndScreen(bool isLevelComplete)
+    {
+        _knifeHandler.DisallowThrow();
+        
+        yield return new WaitForSeconds(1f);
+        
+        if(_experienceHandler.HasReward)
+        {
+            _experienceHandler.GiveReward(isLevelComplete);
+        }
+        else
+        {
+            if (_giftHandler.HasGift)
+            {
+                _giftHandler.ShowGiftScreen(isLevelComplete);
+            }
+            else
+            {
+                if (isLevelComplete)
+                {
+                    WinGame();
+                }
+                else
+                {
+                    LoseGame();
+                }
+            }
+        }
+    }
+    
+    public void WinGame()
     {
         var rewardIndex = 0;
 
@@ -128,7 +176,7 @@ public class SessionHandler : MonoBehaviour
         }
     }
 
-    private void LoseGame()
+    public void LoseGame()
     {
         switch (Gamemod)
         {
@@ -144,24 +192,5 @@ public class SessionHandler : MonoBehaviour
         }
         
         _loseScreen.Lose();
-    }
-
-    public IEnumerator EnableEndScreen(bool isLevelComplete)
-    {
-        _knifeHandler.DisallowThrow();
-        
-        yield return new WaitForSeconds(1f);
-        
-        if (_giftHandler.HasGift)
-            _giftHandler.ShowGiftScreen(isLevelComplete);
-        else
-            if (isLevelComplete)
-            {
-                WinGame();
-            }
-            else
-            {
-                LoseGame();
-            }
     }
 }

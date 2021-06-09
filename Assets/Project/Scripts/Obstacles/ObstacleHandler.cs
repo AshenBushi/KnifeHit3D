@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Project.Scripts.Handlers;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class ObstacleHandler : MonoBehaviour
 {
     [SerializeField] private TargetHandler _targetHandler;
     [SerializeField] private KnifeHandler _knifeHandler;
-
+    
     private List<ObstacleSpawner> _obstacleSpawners = new List<ObstacleSpawner>();
 
     private int Gamemod => DataManager.GameData.ProgressData.CurrentGamemod;
@@ -15,11 +16,13 @@ public class ObstacleHandler : MonoBehaviour
     private void OnEnable()
     {
         _targetHandler.IsLevelSpawned += OnLevelSpawned;
+        KnifeStorage.IsKnifeChanged += OnLevelSpawned;
     }
 
     private void OnDisable()
     {
         _targetHandler.IsLevelSpawned -= OnLevelSpawned;
+        KnifeStorage.IsKnifeChanged -= OnLevelSpawned;
     }
 
     private void OnLevelSpawned()
@@ -35,7 +38,8 @@ public class ObstacleHandler : MonoBehaviour
         }
         else
         {
-            _obstacleSpawners = _targetHandler.Targets[0].GetComponentsInChildren<ObstacleSpawner>().ToList();
+            if(_targetHandler.Targets.Count > 0)
+                _obstacleSpawners = _targetHandler.Targets[0].GetComponentsInChildren<ObstacleSpawner>().ToList();
         }
 
         SpawnObstacles();

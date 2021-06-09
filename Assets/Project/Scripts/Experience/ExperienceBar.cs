@@ -29,11 +29,11 @@ public class ExperienceBar : MonoBehaviour
 
     private IEnumerator AddExpAnimation(int addedValue)
     {
-        _tween = _canvasGroup.DOFade(1f, 1f);
+        _tween = _canvasGroup.DOFade(1f, 1f).SetLink(gameObject);
         
         _tween.OnComplete(() =>
         {
-            _tween = _canvasGroup.DOFade(0f, 1f);
+            _tween = _canvasGroup.DOFade(0f, 1f).SetLink(gameObject);
         });
         
         _text.text = "+" + addedValue.ToString();
@@ -42,9 +42,9 @@ public class ExperienceBar : MonoBehaviour
         {
             _slider.value++;
 
-            if (_slider.value >= 100)
+            if (_slider.value >= 200)
             {
-                _slider.value -= 100;
+                _slider.value -= 200;
             }
             
             yield return new WaitForSeconds(1f / addedValue);

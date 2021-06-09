@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class Flat : Target
 {
-    private readonly float _explosionForce = 500f;
+    private readonly float _explosionForce = 700f;
     private readonly Vector3 _explosionPosition = new Vector3(0f, .65f, 10f);
     
     public override event UnityAction<int> IsTargetBreak;

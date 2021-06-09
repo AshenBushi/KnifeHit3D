@@ -43,6 +43,7 @@ public class LotteryScreen : UIScreen
 
     public void Collect()
     {
+        AsyncLoader.PrepareScene();
         _lotteryRewarder.SendRewards(Rewards);
     }
 }

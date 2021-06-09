@@ -79,4 +79,10 @@ public class AppleHandler : MonoBehaviour
         SlicedAppleCount++;
         _appleCounter.SetCount(SlicedAppleCount);
     }
+
+    public void DisableCounter()
+    {
+        SlicedAppleCount = 0;
+        _appleCounter.gameObject.SetActive(false);
+    }
 }

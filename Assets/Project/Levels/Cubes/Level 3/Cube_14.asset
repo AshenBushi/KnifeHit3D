@@ -12,13 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec59ae2786e42704e99ffd0830da95c0, type: 3}
   m_Name: Cube_14
   m_EditorClassIdentifier: 
-  _obstacleCount: 0
-  _hasApple: 0
-  _hasGift: 1
-  _hitToBreak: 9
+  _obstacleCount: 1
+  _hitToBreak: 6
   _experience: 10
   _rotateDefinitions:
-  - Angle: 360
+  - Angle: 180
+    Duration: 2
+    EaseCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0.0035631466
+        outSlope: 0.0035631466
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.4820869
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  - Angle: 270
     Duration: 2
     EaseCurve:
       serializedVersion: 2
@@ -35,11 +59,37 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 0
-        outSlope: 0
+        inSlope: 1.4211661
+        outSlope: 1.4211661
         tangentMode: 0
         weightedMode: 0
+        inWeight: 0.033112824
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  - Angle: 180
+    Duration: 2
+    EaseCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
         inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0.0035631466
+        outSlope: 0.0035631466
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.4820869
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2

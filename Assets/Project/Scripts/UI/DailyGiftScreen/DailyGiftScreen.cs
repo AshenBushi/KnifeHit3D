@@ -7,7 +7,6 @@ using UnityEngine;
 public class DailyGiftScreen : UIScreen
 {
     [SerializeField] private Player _player;
-    [SerializeField] private ShopScreen _shopScreen;
     [SerializeField] private GiftTimer _giftTimer;
     [SerializeField] private List<DailyGift> _gifts;
     [SerializeField] private GameObject _giftNotification;
@@ -70,8 +69,7 @@ public class DailyGiftScreen : UIScreen
     {
         if (isKnife)
         {
-            DataManager.GameData.ShopData.OpenedKnives.Add(value);
-            _shopScreen.ChangeKnife(value);
+            KnifeStorage.AddKnife(value);
         }
         else
         {

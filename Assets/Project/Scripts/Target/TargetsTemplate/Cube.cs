@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class Cube : Target
 {
     private readonly float _explosionForce = 1500f;
-    private readonly Vector3 _explosionPosition = new Vector3(0f, 0f, 10f);
+    private readonly Vector3 _explosionPosition = new Vector3(0f, 3f, 10f);
     private readonly int _maxEdgeCount = 6;
 
     private CubeLevel _currentCubeLevel;
@@ -22,7 +22,6 @@ public class Cube : Target
     
     private void SetNextEdge()
     {
-        EdgeCount--;
         HitToBreak = _currentCubeLevel.Cubes[_maxEdgeCount - EdgeCount].HitToBreak;
         Rotator.StartRotate(_currentCubeLevel.Cubes[_maxEdgeCount - EdgeCount].RotateDefinitions);
         ExpReward = _currentCubeLevel.Cubes[_maxEdgeCount - EdgeCount].Experience;
@@ -31,7 +30,7 @@ public class Cube : Target
     public override void BreakTarget()
     {
         EdgeCount--;
-
+        
         if (EdgeCount <= 0)
         {
             SoundManager.PlaySound(SoundNames.TargetBreak);

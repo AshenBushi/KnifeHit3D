@@ -10,6 +10,7 @@ public class GiftHandler : MonoBehaviour
 {
     [SerializeField] private SessionHandler _sessionHandler;
     [SerializeField] private TargetHandler _targetHandler;
+    [SerializeField] private RewardHandler _rewardHandler;
     [SerializeField] private GiftScreen _giftScreen;
     [SerializeField] private int _indexWhereSpawn;
 
@@ -24,12 +25,14 @@ public class GiftHandler : MonoBehaviour
     {
         _targetHandler.IsLevelSpawned += OnLevelSpawned;
         _giftScreen.IsScreenDisabled += OnScreenDisabled;
+        _giftScreen.IsGiftOpened += OnGiftOpened;
     }
 
     private void OnDisable()
     {
         _targetHandler.IsLevelSpawned -= OnLevelSpawned;
         _giftScreen.IsScreenDisabled += OnScreenDisabled;
+        _giftScreen.IsGiftOpened -= OnGiftOpened;
 
         if(_gift != null)
             _gift.IsSliced -= OnGiftSliced;
@@ -57,12 +60,23 @@ public class GiftHandler : MonoBehaviour
     private void OnScreenDisabled()
     {
         HasGift = false;
-        StartCoroutine(_sessionHandler.EnableEndScreen(_isLevelComplete));
+        
+        if(_isLevelComplete) 
+            _sessionHandler.WinGame();
+        else
+            _sessionHandler.LoseGame();
+    }
+    
+    private void OnGiftOpened()
+    {
+        _rewardHandler.GiveGiftReward();
+        _rewardHandler.IsRewardGiven += OnScreenDisabled;
     }
 
     private void SpawnGift()
     {
         _gift = _giftSpawners[_indexWhereSpawn].SpawnGift();
+        _gift.IsSliced += OnGiftSliced;
     }
 
     private void OnGiftSliced()

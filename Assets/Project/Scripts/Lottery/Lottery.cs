@@ -70,4 +70,9 @@ public class Lottery : MonoBehaviour
         IsRewardTook?.Invoke(reward);
         HitToBreak--;
     }
+
+    public void AddHits()
+    {
+        HitToBreak += 3;
+    }
 }

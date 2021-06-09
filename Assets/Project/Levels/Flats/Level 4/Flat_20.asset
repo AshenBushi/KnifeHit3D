@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _base: {fileID: 7065662195201448362, guid: 5fd5cf2c868ac6a48af3f21d0f3f9c1b, type: 3}
   _obstacleCount: 0
-  _hasApple: 0
-  _hasGift: 0
   _hitToBreak: 8
   _experience: 15
   _rotateDefinitions:
@@ -27,8 +25,8 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 2
-        outSlope: 2
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -36,11 +34,11 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 0
-        outSlope: 0
+        inSlope: 1.4211661
+        outSlope: 1.4211661
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.033112824
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2

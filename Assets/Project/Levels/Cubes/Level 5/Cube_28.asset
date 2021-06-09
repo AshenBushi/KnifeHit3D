@@ -13,13 +13,11 @@ MonoBehaviour:
   m_Name: Cube_28
   m_EditorClassIdentifier: 
   _obstacleCount: 0
-  _hasApple: 1
-  _hasGift: 0
-  _hitToBreak: 9
+  _hitToBreak: 8
   _experience: 15
   _rotateDefinitions:
-  - Angle: 270
-    Duration: 2.25
+  - Angle: 300
+    Duration: 2
     EaseCurve:
       serializedVersion: 2
       m_Curve:
@@ -45,33 +43,59 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 0
   - Angle: 0
-    Duration: 1
+    Duration: 0.5
     EaseCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  - Angle: 200
+    Duration: 1.5
+    EaseCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
+        inSlope: 1.4211661
+        outSlope: 1.4211661
+        tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.033112824
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
-  - Angle: -10
-    Duration: 1
+  - Angle: 200
+    Duration: 1.5
     EaseCurve:
       serializedVersion: 2
       m_Curve:
@@ -83,41 +107,15 @@ MonoBehaviour:
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
-        outWeight: 0
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
+        inSlope: 0.0035631466
+        outSlope: 0.0035631466
+        tangentMode: 0
         weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-  - Angle: 10
-    Duration: 0.083
-    EaseCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
+        inWeight: 0.4820869
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2

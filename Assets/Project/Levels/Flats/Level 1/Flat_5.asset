@@ -14,13 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _base: {fileID: 6581339632723206483, guid: b208dcb759ed545459db8254731f273c, type: 3}
   _obstacleCount: 0
-  _hasApple: 0
-  _hasGift: 0
   _hitToBreak: 7
   _experience: 15
   _rotateDefinitions:
-  - Angle: 360
-    Duration: 2.5
+  - Angle: -360
+    Duration: 3
     EaseCurve:
       serializedVersion: 2
       m_Curve:

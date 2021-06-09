@@ -1,37 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class LotteryRewarder : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private RewardHandler _rewardHandler;
+
+    private bool _hasSkinReward = false;
     
-    private void OpenRandomSkin()
+    private void OnRewardGiven()
     {
-        var index = Random.Range(45, 63);
-        var lockedKnifeCount = 0;
-        
-        for (var i = 45; i < 63; i++)
-        {
-            if (!DataManager.GameData.ShopData.OpenedKnives.Contains(i))
-            {
-                lockedKnifeCount++;
-            }
-        }
-
-        if (lockedKnifeCount == 0)
-        {
-            return;
-        }
-
-        while (DataManager.GameData.ShopData.OpenedKnives.Contains(index))
-        {
-            index = Random.Range(45, 63);
-        }
-        
-        DataManager.GameData.ShopData.OpenedKnives.Add(index);
-        DataManager.GameData.ShopData.CurrentKnifeIndex = index;
+        _rewardHandler.IsRewardGiven -= OnRewardGiven;
+        AsyncLoader.LoadScene();
     }
     
     public void SendRewards(List<RewardName> rewards)
@@ -66,12 +49,19 @@ public class LotteryRewarder : MonoBehaviour
                     break;
                 case RewardName.Skin:
                     MetricaManager.SendEvent("bns_lvl_skin");
-                    OpenRandomSkin();
+                    _rewardHandler.GiveLotteryReward();
+                    _hasSkinReward = true;
+                    _rewardHandler.IsRewardGiven += OnRewardGiven;
                     break;
                 case RewardName.Death:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+
+            if (!_hasSkinReward)
+            {
+                AsyncLoader.LoadScene();
             }
             
             DataManager.Save();

@@ -13,7 +13,7 @@ public class WinScreen : UIScreen
     
     private bool _isShowedDoubleReward = false;
 
-    public event UnityAction IsScreenDisabled;
+    public event UnityAction<bool> IsScreenDisabled;
 
     private void Awake()
     {
@@ -35,11 +35,6 @@ public class WinScreen : UIScreen
         _isShowedDoubleReward = true;
     }
 
-    private void HandleOnAdClosed(object sender, EventArgs e)
-    {
-        Disable();
-    }
-
     public override void Enable()
     {
         base.Enable();
@@ -59,7 +54,7 @@ public class WinScreen : UIScreen
     {
         base.Disable();
         _cup.SetActive(false);
-        IsScreenDisabled?.Invoke();
+        IsScreenDisabled?.Invoke(_isShowedDoubleReward);
     }
 
     public void Win()
@@ -71,14 +66,6 @@ public class WinScreen : UIScreen
     {
         SoundManager.PlaySound(SoundNames.ButtonClick);
         
-        if (!_isShowedDoubleReward && AdManager.Interstitial.IsLoaded())
-        {
-            AdManager.Interstitial.OnAdClosed += HandleOnAdClosed;
-            AdManager.ShowInterstitial();
-        }
-        else
-        {
-            Disable();
-        }
+        Disable();
     }
 }

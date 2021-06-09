@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Mark : Target
 {
     private readonly float _explosionForce = 1500f;
-    private readonly Vector3 _explosionPosition = new Vector3(0f, 1f, 11f);
+    private readonly Vector3 _explosionPosition = new Vector3(0f, 2.5f, 11f);
     
     public override event UnityAction<int> IsTargetBreak;
     

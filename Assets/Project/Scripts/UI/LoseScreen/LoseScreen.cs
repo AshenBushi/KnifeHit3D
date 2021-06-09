@@ -14,7 +14,7 @@ public class LoseScreen : UIScreen
 
     private List<Rigidbody> _cupPieces;
     
-    public event UnityAction IsScreenDisabled;
+    public event UnityAction<bool> IsScreenDisabled;
 
     private void Awake()
     {
@@ -43,11 +43,35 @@ public class LoseScreen : UIScreen
         }
     }
 
+    private void EndGame()
+    {
+        Disable();
+        IsScreenDisabled?.Invoke(false);
+    }
+
+    public IEnumerator LotteryLose()
+    {
+        yield return new WaitForSeconds(1f);
+        
+        Enable();
+        
+        _adPanel.SetActive(false);
+        _cupPanel.SetActive(true);
+        
+        SoundManager.PlaySound(SoundNames.Lose);
+        
+        yield return new WaitForSeconds(.5f);
+
+        foreach (var piece in _cupPieces)
+        {
+            piece.isKinematic = false;
+        }
+    }
+    
     public override void Disable()
     {
         base.Disable();
         _cupPanel.SetActive(false);
-        IsScreenDisabled?.Invoke();
     }
 
     public void Lose()
@@ -65,21 +89,8 @@ public class LoseScreen : UIScreen
     public void Restart()
     {
         SoundManager.PlaySound(SoundNames.ButtonClick);
-        
-        if (AdManager.Interstitial.IsLoaded())
-        {
-            AdManager.Interstitial.OnAdClosed += HandleOnAdClosed;
-            AdManager.ShowInterstitial();
-        }
-        else
-        {
-            Disable();
-        }
+        EndGame();
     }
 
-    private void HandleOnAdClosed(object sender, EventArgs e)
-    {
-        AdManager.Interstitial.OnAdClosed -= HandleOnAdClosed;
-        Disable();
-    }
+    
 }

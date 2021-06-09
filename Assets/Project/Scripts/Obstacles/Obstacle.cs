@@ -12,7 +12,6 @@ public class Obstacle : MonoBehaviour
             Destroy(_obstacle.gameObject);
             
         _obstacle = Instantiate(obstacleTemplate, transform.position, Quaternion.identity);
-        _obstacle.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        _obstacle.MakeObstacle(transform);
+        _obstacle.MakeDefaultObstacle(transform);
     }
 }

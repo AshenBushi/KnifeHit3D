@@ -8,6 +8,7 @@ public class GiftPiece : MonoBehaviour
     
     public void Slice()
     {
+        SoundManager.PlaySound(SoundNames.GiftHit);
         IsSliced?.Invoke();
     }
 }

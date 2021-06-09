@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 
 public class RewardHandler : MonoBehaviour
@@ -29,19 +30,42 @@ public class RewardHandler : MonoBehaviour
         for (var i = 29; i < 45; i++)
         {
             if (DataManager.GameData.ShopData.OpenedKnives.Contains(i)) continue;
-            DataManager.GameData.ShopData.OpenedKnives.Add(i);
-            DataManager.GameData.ShopData.CurrentKnifeIndex = i;
-            DataManager.Save();
-            _rewardScreen.Enable();
+            KnifeStorage.AddKnife(i);
+            _rewardScreen.ShowReward(i);
             break;
         }
     }
 
     public void GiveLevelCompleteReward(int knifeIndex)
     {
-        DataManager.GameData.ShopData.OpenedKnives.Add(knifeIndex);
-        DataManager.GameData.ShopData.CurrentKnifeIndex = knifeIndex;
-        DataManager.Save();
-        _rewardScreen.Enable();
+        KnifeStorage.AddKnife(knifeIndex);
+        _rewardScreen.ShowReward(knifeIndex);
+    }
+
+    public void GiveLotteryReward()
+    {
+        var index = Random.Range(45, 63);
+        var lockedKnifeCount = 0;
+        
+        for (var i = 45; i < 63; i++)
+        {
+            if (!DataManager.GameData.ShopData.OpenedKnives.Contains(i))
+            {
+                lockedKnifeCount++;
+            }
+        }
+
+        if (lockedKnifeCount == 0)
+        {
+            return;
+        }
+
+        while (DataManager.GameData.ShopData.OpenedKnives.Contains(index))
+        {
+            index = Random.Range(45, 63);
+        }
+        
+        KnifeStorage.AddKnife(index);
+        _rewardScreen.ShowReward(index);
     }
 }

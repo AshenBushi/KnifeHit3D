@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _base: {fileID: 4753900779479409324, guid: 01821a86f448b32419cafc1278ef3c07, type: 3}
   _obstacleCount: 0
-  _hasApple: 0
-  _hasGift: 1
-  _hitToBreak: 9
+  _hitToBreak: 7
   _experience: 10
   _rotateDefinitions:
   - Angle: 180
@@ -27,18 +25,18 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0
@@ -46,25 +44,25 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 0
   - Angle: 180
-    Duration: 0.5
+    Duration: 1
     EaseCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0

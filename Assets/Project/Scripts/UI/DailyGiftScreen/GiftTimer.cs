@@ -90,7 +90,6 @@ public class GiftTimer : MonoBehaviour
                 _timer.Minutes = 59;
             }
         }
-        
     }
     
     private void Countdown()

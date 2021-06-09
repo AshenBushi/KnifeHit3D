@@ -13,13 +13,11 @@ MonoBehaviour:
   m_Name: Cube_15
   m_EditorClassIdentifier: 
   _obstacleCount: 3
-  _hasApple: 1
-  _hasGift: 0
-  _hitToBreak: 6
+  _hitToBreak: 5
   _experience: 10
   _rotateDefinitions:
-  - Angle: 200
-    Duration: 1.2
+  - Angle: 360
+    Duration: 3
     EaseCurve:
       serializedVersion: 2
       m_Curve:
@@ -37,58 +35,6 @@ MonoBehaviour:
         value: 1
         inSlope: 1
         outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-  - Angle: 0
-    Duration: 0.5
-    EaseCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-  - Angle: -300
-    Duration: 2
-    EaseCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
         tangentMode: 34
         weightedMode: 0
         inWeight: 0

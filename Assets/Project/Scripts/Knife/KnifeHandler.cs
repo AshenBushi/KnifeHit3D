@@ -13,22 +13,25 @@ namespace Project.Scripts.Handlers
         [SerializeField] private KnifeSpawner _knifeSpawner;
 
         private Knife _currentKnife;
+        private List<Knife> _thrownKnives = new List<Knife>();
         private int _knifeAmount;
         private bool _isSecondLifeUsed = false;
         private bool _canThrowKnife = true;
 
         public event UnityAction IsLevelFailed;
 
-        public Knife CurrentKnifeTemplate => Models.Knives[DataManager.GameData.ShopData.CurrentKnifeIndex];
+        public Knife CurrentKnifeTemplate => KnifeStorage.Knives[DataManager.GameData.ShopData.CurrentKnifeIndex];
 
         private void OnEnable()
         {
             _inputField.IsTapped += OnTapped;
+            KnifeStorage.IsKnifeChanged += RespawnKnife;
         }
 
         private void OnDisable()
         {
             _inputField.IsTapped -= OnTapped;
+            KnifeStorage.IsKnifeChanged -= RespawnKnife;
 
             if (_currentKnife == null) return;
             _currentKnife.IsStuck -= OnKnifeStuck;
@@ -51,6 +54,7 @@ namespace Project.Scripts.Handlers
             
             _currentKnife.Throw();
             _knifeAmount--;
+            _thrownKnives.Add(_currentKnife);
             _currentKnife = null;
         }
         
@@ -63,10 +67,10 @@ namespace Project.Scripts.Handlers
                 DataManager.GameData.PlayerData.SecondLife--;
                 DataManager.Save();
                 _isSecondLifeUsed = true;
+                _knifeAmount++;
             }
             else
             {
-                Debug.Log("work!");
                 IsLevelFailed?.Invoke();
             }
         }
@@ -79,6 +83,7 @@ namespace Project.Scripts.Handlers
 
         private void InitKnife()
         {
+            if (_currentKnife != null) return;
             _currentKnife = _knifeSpawner.SpawnKnife(CurrentKnifeTemplate);
             _currentKnife.IsStuck += OnKnifeStuck;
             _currentKnife.IsBounced += OnKnifeBounced;
@@ -89,12 +94,12 @@ namespace Project.Scripts.Handlers
             _knifeAmount = knifeAmount;
         }
 
-        public void RespawnKnife()
+        private void RespawnKnife()
         {
-            _currentKnife.IsStuck -= OnKnifeStuck;
-            _currentKnife.IsBounced -= OnKnifeBounced;
-            Destroy(_currentKnife);
-            InitKnife();
+            Destroy(_currentKnife.gameObject);
+            _currentKnife = _knifeSpawner.SpawnKnife(CurrentKnifeTemplate);
+            _currentKnife.IsStuck += OnKnifeStuck;
+            _currentKnife.IsBounced += OnKnifeBounced;
         }
 
         public void AllowThrow()
