@@ -1139,54 +1139,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 962ea0d42d0e10041b9f0f176541416f, type: 3}
---- !u!1 &67021282
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 67021284}
-  - component: {fileID: 67021283}
-  m_Layer: 0
-  m_Name: GiftHandler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &67021283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 67021282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3496cb316ffc3542be31303f86db6ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sessionHandler: {fileID: 1515592138}
-  _targetHandler: {fileID: 359402187}
-  _rewardHandler: {fileID: 834063751}
-  _giftScreen: {fileID: 1066003711}
-  _indexWhereSpawn: 1
---- !u!4 &67021284
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 67021282}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 425001506}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &68367613
 GameObject:
   m_ObjectHideFlags: 0
@@ -2463,7 +2415,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 425001506}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &159499144
 GameObject:
@@ -5927,8 +5879,6 @@ Transform:
   - {fileID: 359402188}
   - {fileID: 1059475607}
   - {fileID: 2142548014}
-  - {fileID: 548174486}
-  - {fileID: 67021284}
   - {fileID: 157550467}
   - {fileID: 834063752}
   - {fileID: 1419681478}
@@ -6946,53 +6896,6 @@ MonoBehaviour:
   _enableSprite: {fileID: 21300000, guid: efd7a4c77f0d7d84f9d4f08c8272b635, type: 3}
   _disableSprite: {fileID: 21300000, guid: a89efb0b03e54d34ca099d413387763a, type: 3}
   _index: 1
---- !u!1 &548174484
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 548174486}
-  - component: {fileID: 548174485}
-  m_Layer: 0
-  m_Name: AppleHandler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &548174485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548174484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 985d9624444245ba8956a6b805f71b92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _targetHandler: {fileID: 359402187}
-  _sessionHandler: {fileID: 1515592138}
-  _appleCounter: {fileID: 559266356}
-  _indexesWhereSpawn: 000000000200000003000000
---- !u!4 &548174486
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548174484}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 425001506}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &552552339
 GameObject:
   m_ObjectHideFlags: 0
@@ -11192,7 +11095,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 425001506}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &834699032 stripped
 RectTransform:
@@ -19242,7 +19145,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 425001506}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1419681479
 MonoBehaviour:
@@ -19258,7 +19161,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rewardHandler: {fileID: 834063751}
   _sessionHandler: {fileID: 1515592138}
-  _giftHandler: {fileID: 67021283}
   _expBar: {fileID: 1399325020}
 --- !u!224 &1424874400 stripped
 RectTransform:
@@ -20994,8 +20896,6 @@ MonoBehaviour:
   _targetHandler: {fileID: 359402187}
   _knifeHandler: {fileID: 2134729985}
   _lotteryHandler: {fileID: 1059475606}
-  _appleHandler: {fileID: 548174485}
-  _giftHandler: {fileID: 67021283}
   _experienceHandler: {fileID: 1419681479}
   _startScreen: {fileID: 1870943036}
   _loseScreen: {fileID: 2106876235}
