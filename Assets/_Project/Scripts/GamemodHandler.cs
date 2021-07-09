@@ -76,7 +76,7 @@ public class GamemodHandler : MonoBehaviour
 
     public void SelectMod(int index)
     {
-        SoundManager.PlaySound(SoundNames.ButtonClick);
+        SoundManager.PlaySound(SoundName.ButtonClick);
         DataManager.GameData.ProgressData.CurrentGamemod = index % 3;
         DataManager.Save();
         

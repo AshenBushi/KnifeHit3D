@@ -89,12 +89,12 @@ public class DailyGiftScreen : UIScreen
     {
         base.Enable();
         CheckGiftsState();
-        SoundManager.PlaySound(SoundNames.ButtonClick);
+        SoundManager.PlaySound(SoundName.ButtonClick);
     }
 
     public override void Disable()
     {
         base.Disable();
-        SoundManager.PlaySound(SoundNames.ButtonClick);
+        SoundManager.PlaySound(SoundName.ButtonClick);
     }
 }

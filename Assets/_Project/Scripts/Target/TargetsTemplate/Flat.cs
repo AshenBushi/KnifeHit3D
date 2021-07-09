@@ -26,7 +26,7 @@ public class Flat : Target
 
     public override void BreakTarget()
     {
-        SoundManager.PlaySound(SoundNames.TargetBreak);
+        SoundManager.PlaySound(SoundName.TargetBreak);
         var targetBase = Instantiate(Base, Base.transform.position, Base.transform.rotation);
         targetBase.Detonate(_explosionPosition, _explosionForce);
         IsTargetBreak?.Invoke(ExpReward);

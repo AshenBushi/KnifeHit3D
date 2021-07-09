@@ -39,7 +39,7 @@ public class ShopItem : MonoBehaviour
     public void SelectItem()
     {
         if (!_isUnlock) return;
-        SoundManager.PlaySound(SoundNames.ButtonClick);
+        SoundManager.PlaySound(SoundName.ButtonClick);
         IsKnifeSelected?.Invoke(this);
     }
 

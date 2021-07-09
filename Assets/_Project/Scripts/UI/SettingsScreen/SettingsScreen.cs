@@ -42,7 +42,7 @@ public class SettingsScreen : UIScreen
     private void ChangeSoundVolume()
     {
         SoundManager.SoundPlayer.volume = SoundManager.SoundPlayer.volume > 0 ? 0 : 1;
-        SoundManager.PlaySound(SoundNames.ButtonClick);
+        SoundManager.PlaySound(SoundName.ButtonClick);
         DataManager.GameData.SettingsData.SoundVolume = SoundManager.SoundPlayer.volume;
         DataManager.Save();
         UpdateButtonImages();
@@ -51,7 +51,7 @@ public class SettingsScreen : UIScreen
     private void ChangeMusicVolume()
     {
         SoundManager.MusicPlayer.volume = SoundManager.MusicPlayer.volume > 0 ? 0 : 1;
-        SoundManager.PlaySound(SoundNames.ButtonClick);
+        SoundManager.PlaySound(SoundName.ButtonClick);
         DataManager.GameData.SettingsData.MusicVolume = SoundManager.MusicPlayer.volume;
         DataManager.Save();
         UpdateButtonImages();
@@ -60,6 +60,6 @@ public class SettingsScreen : UIScreen
     public override void Disable()
     {
         base.Disable();
-        SoundManager.PlaySound(SoundNames.ButtonClick);
+        SoundManager.PlaySound(SoundName.ButtonClick);
     }
 }

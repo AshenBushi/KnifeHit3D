@@ -33,7 +33,7 @@ public class Cube : Target
         
         if (EdgeCount <= 0)
         {
-            SoundManager.PlaySound(SoundNames.TargetBreak);
+            SoundManager.PlaySound(SoundName.TargetBreak);
             var targetBase = Instantiate(Base, Base.transform.position, Base.transform.rotation);
             targetBase.Detonate(_explosionPosition, _explosionForce);
             IsTargetBreak?.Invoke(ExpReward);

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum SoundNames
+public enum SoundName
 {
     TargetHit = 0,
     KnifeThrow,
@@ -40,7 +40,7 @@ public class SoundManager : MonoBehaviour
         _aClips = _audioClips;
     }
 
-    public static void PlaySound(SoundNames soundName)
+    public static void PlaySound(SoundName soundName)
     {
         _soundP.PlayOneShot(_aClips[(int) soundName]);
     }

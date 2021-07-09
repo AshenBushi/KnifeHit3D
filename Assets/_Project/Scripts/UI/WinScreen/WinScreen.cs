@@ -38,7 +38,7 @@ public class WinScreen : UIScreen
     public override void Enable()
     {
         base.Enable();
-        SoundManager.PlaySound(SoundNames.Win);
+        SoundManager.PlaySound(SoundName.Win);
         _cup.SetActive(true);
 
         _rewardText.text = DataManager.GameData.ProgressData.CurrentGamemod switch
@@ -64,7 +64,7 @@ public class WinScreen : UIScreen
 
     public void Continue()
     {
-        SoundManager.PlaySound(SoundNames.ButtonClick);
+        SoundManager.PlaySound(SoundName.ButtonClick);
         
         Disable();
     }

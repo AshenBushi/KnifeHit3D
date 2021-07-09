@@ -31,7 +31,6 @@ public class LotteryHandler : MonoBehaviour
         if (reward == RewardName.Death)
         {
             _knifeHandler.DisallowThrow();
-            StartCoroutine(_loseScreen.LotteryLose());
         }
         
         if (Rewards.Count >= _maxRewardCount)
