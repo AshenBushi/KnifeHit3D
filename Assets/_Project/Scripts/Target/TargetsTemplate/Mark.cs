@@ -15,10 +15,11 @@ public class Mark : Target
         Rotator = GetComponent<TargetRotator>();
     }
 
-    public override void SpawnTargetBase(MarkConfig markConfig = null, CubeLevel level = new CubeLevel(), FlatConfig flatConfig = null)
+    public override void SetupTarget(Color color, MarkConfig markConfig = null, CubeLevel level = new CubeLevel(), FlatConfig flatConfig = null)
     {
         if (markConfig is null) return;
-        Base = Instantiate(markConfig.Base, transform.position, Quaternion.Euler(0f, 180f, 0f), transform);
+        Base = GetComponentInChildren<TargetBase>();
+        Base.SetColor(color);
         HitToBreak = markConfig.HitToBreak;
         ObstacleCount[0] = markConfig.ObstacleCount;
         ExpReward = markConfig.Experience;

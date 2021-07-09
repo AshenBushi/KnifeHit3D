@@ -21,11 +21,12 @@ public class GiftTimer : MonoBehaviour
 
     private Timer _timer;
     private DateTime _lastDate;
+    private DateTime _currentDate;
     private float _timeSpend = 0f;
 
     public event UnityAction CanGiveGift;
 
-    private void Start()
+    private void OnEnable()
     {
         LoadTimer();
     }
@@ -38,90 +39,37 @@ public class GiftTimer : MonoBehaviour
     private void Update()
     {
         Countdown();
-        ShowTime();
     }
 
     private void SaveTimer()
     {
         DataManager.GameData.DailyGiftsData.Timer = _timer;
-        DataManager.SaveDate(_lastDate);
+        DataManager.SaveDate(DateTime.UtcNow);
         DataManager.Save();
     }
 
     private void LoadTimer()
     {
         _timer = DataManager.GameData.DailyGiftsData.Timer;
-        _lastDate = DateTime.UtcNow;
+        _lastDate = DataManager.LoadDate();
 
-        var secondsPassed = (int) (_lastDate - DataManager.LoadDate()).TotalSeconds;
+        var secondsPassed = (int) (DateTime.UtcNow - _lastDate).TotalSeconds;
 
-        _timer.Hours -= secondsPassed / 3600;
-
-        while (_timer.Hours < 0)
-        {
-            _timer.Hours += 24;
-            CanGiveGift?.Invoke();
-        }
-
-        secondsPassed %= 3600;
-
-        _timer.Minutes -= secondsPassed / 60;
-
-        if (_timer.Minutes < 0)
-        {
-            _timer.Minutes += 60;
-            _timer.Hours--;
-
-            if (_timer.Hours < 0)
-            {
-                _timer.Hours = 23;
-            }
-        }
+        _timer.Seconds -= secondsPassed;
         
-        _timer.Seconds -= secondsPassed % 60;
-
-        if (_timer.Seconds < 0)
-        {
-            _timer.Seconds += 60;
-            _timer.Minutes--;
-
-            if (_timer.Minutes < 0)
-            {
-                _timer.Minutes = 59;
-            }
-        }
+        CheckTimerForChanges();
     }
     
     private void Countdown()
     {
-        if (_timer.Hours == 0 && _timer.Minutes == 0 && _timer.Seconds == 0)
-        {
-            _timer.Hours = 24;
-            _timer.Minutes = 0;
-            _timer.Seconds = 0;
-            CanGiveGift?.Invoke();
-            Debug.Log("Work1");
-        }
-        
-        if (_timer.Minutes == 0 && _timer.Seconds == 0)
-        {
-            _timer.Hours--;
-            _timer.Minutes = 60;
-            _timer.Seconds = 0;
-        }
-        
-        if (_timer.Seconds == 0)
-        {
-            _timer.Minutes--;
-            _timer.Seconds = 59;
-        }
-
         _timeSpend = (int) (DateTime.UtcNow - _lastDate).TotalSeconds;
 
         if (!(_timeSpend >= 1)) return;
-        _timer.Seconds--;
         
+        _timer.Seconds--;
         _lastDate = DateTime.UtcNow;
+        CheckTimerForChanges();
+        ShowTime();
     }
 
     private void ShowTime()
@@ -140,5 +88,22 @@ public class GiftTimer : MonoBehaviour
             _seconds.text = _timer.Seconds.ToString();
         else
             _seconds.text = "0" + _timer.Seconds.ToString();
+    }
+
+    private void CheckTimerForChanges()
+    {
+        while (_timer.Seconds < 0)
+        {
+            _timer.Seconds += 60;
+            _timer.Minutes--;
+
+            if (_timer.Minutes >= 0) continue;
+            _timer.Minutes += 60;
+            _timer.Hours--;
+
+            if (_timer.Hours >= 0) continue;
+            _timer.Hours += 24;
+            CanGiveGift?.Invoke();
+        }
     }
 }

@@ -46,11 +46,12 @@ public class Cube : Target
         }
     }
     
-    public override void SpawnTargetBase(MarkConfig markConfig = null, CubeLevel level = new CubeLevel(), FlatConfig flatConfig = null)
+    public override void SetupTarget(Color color, MarkConfig markConfig = null, CubeLevel level = new CubeLevel(), FlatConfig flatConfig = null)
     {
         if(level._base == null) return;
         _currentCubeLevel = level;
-        Base = Instantiate(_currentCubeLevel._base, transform.position, Quaternion.Euler(0f, 0f, 0f), transform);
+        Base = GetComponentInChildren<TargetBase>();
+        Base.SetColor(color);
         EdgeCount = _maxEdgeCount;
         HitToBreak = _currentCubeLevel.Cubes[0].HitToBreak;
         for (var i = 0; i < _currentCubeLevel.Cubes.Count; i++)

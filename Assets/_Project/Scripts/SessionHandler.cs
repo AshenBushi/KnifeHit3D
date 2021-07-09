@@ -94,12 +94,6 @@ public class SessionHandler : MonoBehaviour
         AsyncLoader.LoadScene();
     }
 
-    private void OnRewardGiven()
-    {
-        _rewardHandler.IsRewardGiven -= OnRewardGiven;
-        _winScreen.Win();
-    }
-
     private IEnumerator EnableEndScreen(bool isLevelComplete)
     {
         _knifeHandler.DisallowThrow();
@@ -108,22 +102,21 @@ public class SessionHandler : MonoBehaviour
         
         if(_experienceHandler.HasReward)
         {
-            _experienceHandler.GiveReward(isLevelComplete);
+            _rewardHandler.GiveExperienceReward();
+        }
+        
+        if (isLevelComplete)
+        {
+            WinGame();
         }
         else
         {
-            if (isLevelComplete)
-            {
-                WinGame();
-            }
-            else
-            {
-                LoseGame();
-            }
+            LoseGame();
         }
+        
     }
-    
-    public void WinGame()
+
+    private void WinGame()
     {
         var rewardIndex = 0;
 
@@ -149,15 +142,12 @@ public class SessionHandler : MonoBehaviour
         if (rewardIndex > 0)
         {
             _rewardHandler.GiveLevelCompleteReward(rewardIndex);
-            _rewardHandler.IsRewardGiven += OnRewardGiven;
         }
-        else
-        {
-            _winScreen.Win();
-        }
+      
+        _winScreen.Win();
     }
 
-    public void LoseGame()
+    private void LoseGame()
     {
         switch (Gamemod)
         {

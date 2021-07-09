@@ -32,7 +32,7 @@ public class AdButton : MonoBehaviour
         Button.interactable = true;
     }
     
-    private void HandleFailedToLoad(object sender, AdErrorEventArgs e)
+    private void HandleFailedToLoad(object sender, AdFailedToLoadEventArgs adFailedToLoadEventArgs)
     {
         Button.interactable = false;
     }

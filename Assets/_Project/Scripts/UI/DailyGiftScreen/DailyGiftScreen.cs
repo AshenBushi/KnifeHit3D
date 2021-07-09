@@ -9,7 +9,7 @@ public class DailyGiftScreen : UIScreen
     [SerializeField] private Player _player;
     [SerializeField] private GiftTimer _giftTimer;
     [SerializeField] private List<DailyGift> _gifts;
-    [SerializeField] private GameObject _giftNotification;
+    [SerializeField] private StartScreen _startScreen;
 
     private void Awake()
     {
@@ -61,7 +61,7 @@ public class DailyGiftScreen : UIScreen
         _gifts[DataManager.GameData.DailyGiftsData.UnlockedGifts].Unlock();
         DataManager.GameData.DailyGiftsData.UnlockedGifts++;
         DataManager.Save();
-        _giftNotification.SetActive(true);
+        _startScreen.EnableGiftNotification();
         CheckGiftsState();
     }
 
@@ -80,7 +80,7 @@ public class DailyGiftScreen : UIScreen
         DataManager.Save();
         
         if(DataManager.GameData.DailyGiftsData.UnlockedGifts == DataManager.GameData.DailyGiftsData.PickedGifts)
-            _giftNotification.SetActive(false);
+            _startScreen.DisableGiftNotification();
         CheckGiftsState();
         MetricaManager.SendEvent("day_gift");
     }

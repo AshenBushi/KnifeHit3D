@@ -20,7 +20,7 @@ public abstract class Target : MonoBehaviour
     public virtual event UnityAction<int, int> IsEdgePass;
 
     public abstract void BreakTarget();
-    public abstract void SpawnTargetBase(MarkConfig markConfig = null, CubeLevel level = new CubeLevel(), FlatConfig flatConfig = null);
+    public abstract void SetupTarget(Color color, MarkConfig markConfig = null, CubeLevel level = new CubeLevel(), FlatConfig flatConfig = null);
     
     public void TakeHit()
     {

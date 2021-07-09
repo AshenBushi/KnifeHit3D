@@ -35,5 +35,15 @@ public class TargetBase : MonoBehaviour
             item.AddExplosionForce(explosionForce, explodePoint, Radius, UpForce);
         }
     }
+
+    public void SetColor(Color color)
+    {
+        var pieces = GetComponentsInChildren<MeshRenderer>();
+
+        foreach (var piece in pieces)
+        {
+            piece.material.color = color;
+        }
+    }
     
 }

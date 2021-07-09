@@ -13,7 +13,6 @@ public class LotteryRewarder : MonoBehaviour
     
     private void OnRewardGiven()
     {
-        _rewardHandler.IsRewardGiven -= OnRewardGiven;
         AsyncLoader.LoadScene();
     }
     
@@ -51,7 +50,6 @@ public class LotteryRewarder : MonoBehaviour
                     MetricaManager.SendEvent("bns_lvl_skin");
                     _rewardHandler.GiveLotteryReward();
                     _hasSkinReward = true;
-                    _rewardHandler.IsRewardGiven += OnRewardGiven;
                     break;
                 case RewardName.Death:
                     break;

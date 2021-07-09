@@ -2,9 +2,9 @@
 
 public class StartScreen : UIScreen
 {
-    [SerializeField] private ShopScreen _shopScreen;
-    [SerializeField] private SettingsScreen _settingsScreen;
     [SerializeField] private GameObject _giftNotification;
+    [SerializeField] private GameObject _shopNotification;
+    [SerializeField] private GameObject _panelNotification;
 
     private void Awake()
     {
@@ -13,19 +13,44 @@ public class StartScreen : UIScreen
 
     private void OnEnable()
     {
-        if(DataManager.GameData.DailyGiftsData.UnlockedGifts > DataManager.GameData.DailyGiftsData.PickedGifts)
-            _giftNotification.SetActive(true);
+        CheckNotificationStates();
     }
 
-    public void EnableSettingsScreen()
+    private void CheckNotificationStates()
     {
-        SoundManager.PlaySound(SoundNames.ButtonClick);
-        _settingsScreen.Enable();
+        if(DataManager.GameData.DailyGiftsData.UnlockedGifts > DataManager.GameData.DailyGiftsData.PickedGifts)
+            EnableGiftNotification();
+        
+        if(PlayerPrefs.GetInt("ShopNotification") == 1)
+            EnableShopNotification();
     }
     
-    public void EnableShopScreen()
+    public void EnableGiftNotification()
     {
-        SoundManager.PlaySound(SoundNames.ButtonClick);
-        _shopScreen.Enable();
+        _giftNotification.SetActive(true);
+        _panelNotification.SetActive(true);
+    }
+    
+    public void EnableShopNotification()
+    {
+        _shopNotification.SetActive(true);
+        _panelNotification.SetActive(true);
+        PlayerPrefs.SetInt("ShopNotification", 1);
+    }
+    
+    public void DisableGiftNotification()
+    {
+        _giftNotification.SetActive(false);
+    }
+    
+    public void DisableShopNotification()
+    {
+        _shopNotification.SetActive(false);
+        PlayerPrefs.SetInt("ShopNotification", 0);
+    }
+    
+    public void DisablePanelNotification()
+    {
+        _panelNotification.SetActive(false);
     }
 }

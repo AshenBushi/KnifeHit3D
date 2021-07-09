@@ -34,7 +34,7 @@ public class OpenGift : MonoBehaviour
         _button.interactable = true;
     }
     
-    private void HandleFailedToLoad(object sender, AdErrorEventArgs e)
+    private void HandleFailedToLoad(object sender, AdFailedToLoadEventArgs adFailedToLoadEventArgs)
     {
         _button.interactable = false;
     }

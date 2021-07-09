@@ -67,7 +67,6 @@ public class Knife : MonoBehaviour
         SoundManager.PlaySound(SoundNames.ObstacleHit);
         MakeBounced(position);
         IsBounced?.Invoke();
-        Debug.Log("Work");
     }
 
     private void Stuck(Transform parent)

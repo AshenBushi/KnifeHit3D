@@ -21,22 +21,15 @@ public class GameLoader : MonoBehaviour
         _operation = SceneManager.LoadSceneAsync(1);
         _operation.allowSceneActivation = false;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(4f);
         
-        while (_passedTime <= 5f)
+        if (AdManager.Interstitial.IsLoaded())
         {
-            _passedTime += Time.deltaTime;
-
-            if (AdManager.Interstitial.IsLoaded())
-            {
-                AdManager.Interstitial.OnAdClosed += HandleOnAdClosed;
-                AdManager.ShowInterstitial();
-                yield break;
-            }
-            
-            yield return null;
+            AdManager.Interstitial.OnAdClosed += HandleOnAdClosed;
+            AdManager.ShowInterstitial();
+            yield break;
         }
-        
+
         _operation.allowSceneActivation = true;
     }
 

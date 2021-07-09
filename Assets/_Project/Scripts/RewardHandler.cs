@@ -6,40 +6,25 @@ using Random = UnityEngine.Random;
 
 public class RewardHandler : MonoBehaviour
 {
-    [SerializeField] private RewardScreen _rewardScreen;
+    [SerializeField] private StartScreen _startScreen;
     
-    public event UnityAction IsRewardGiven;
-
-    private void OnEnable()
-    {
-        _rewardScreen.IsScreenDisabled += OnScreenDisabled;
-    }
-
-    private void OnDisable()
-    {
-        _rewardScreen.IsScreenDisabled += OnScreenDisabled;
-    }
-
-    private void OnScreenDisabled()
-    {
-        IsRewardGiven?.Invoke();
-    }
-
     public void GiveExperienceReward()
     {
         for (var i = 29; i < 45; i++)
         {
             if (DataManager.GameData.ShopData.OpenedKnives.Contains(i)) continue;
             KnifeStorage.AddKnife(i);
-            _rewardScreen.ShowReward(i);
             break;
         }
+        
+        _startScreen.EnableShopNotification();
     }
 
     public void GiveLevelCompleteReward(int knifeIndex)
     {
         KnifeStorage.AddKnife(knifeIndex);
-        _rewardScreen.ShowReward(knifeIndex);
+        
+        _startScreen.EnableShopNotification();
     }
 
     public void GiveLotteryReward()
@@ -66,6 +51,7 @@ public class RewardHandler : MonoBehaviour
         }
         
         KnifeStorage.AddKnife(index);
-        _rewardScreen.ShowReward(index);
+        
+        _startScreen.EnableShopNotification();
     }
 }

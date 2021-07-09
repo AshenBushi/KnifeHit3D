@@ -24,9 +24,21 @@ public class GamemodHandler : MonoBehaviour
 
     private void Start()
     {
-        SelectMod(DataManager.GameData.ProgressData.CurrentGamemod, 0f);
+        SelectRandomMod();
     }
 
+    private void SelectRandomMod()
+    {
+        var randomMod = Random.Range(0, 5);
+
+        while (randomMod == DataManager.GameData.ProgressData.CurrentGamemod)
+        {
+            randomMod = Random.Range(0, 5);
+        }
+        
+        SelectMod(randomMod, 0f);
+    }
+    
     private void SelectBackground(int index)
     {
         _background.sprite = _backgroundSprites[index];
@@ -50,6 +62,9 @@ public class GamemodHandler : MonoBehaviour
     
     private void SelectMod(int index, float duration)
     {
+        DataManager.GameData.ProgressData.CurrentGamemod = index % 3;
+        DataManager.Save();
+        
         SelectBackground(index % 3);
         TryChangeCameraView(index);
 

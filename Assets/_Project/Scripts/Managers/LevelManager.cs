@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public struct MarkLevel
@@ -32,6 +33,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<MarkLevel> _markLevels;
     [SerializeField] private List<CubeLevel> _cubeLevels;
     [SerializeField] private List<FlatLevel> _flatLevels;
+    [SerializeField] private LevelColorPreset[] _colorPresets;
 
     private static int _markLevelCount;
     private static int _cubeLevelCount;
@@ -39,6 +41,7 @@ public class LevelManager : MonoBehaviour
     private static List<MarkLevel> _markLvls;
     private static List<CubeLevel> _cubeLvls;
     private static List<FlatLevel> _flatLvls;
+    private static LevelColorPreset[] _colorPrsts;
 
     public static MarkLevel CurrentMarkLevel { get; private set; }
     public static CubeLevel CurrentCubeLevel { get; private set; }
@@ -49,6 +52,7 @@ public class LevelManager : MonoBehaviour
         _markLvls = _markLevels;
         _cubeLvls = _cubeLevels;
         _flatLvls = _flatLevels;
+        _colorPrsts = _colorPresets;
         _markLevelCount = _markLevels.Count;
         _cubeLevelCount = _cubeLevels.Count;
         _flatLevelCount = _flatLevels.Count;
@@ -88,5 +92,12 @@ public class LevelManager : MonoBehaviour
         DataManager.GameData.ProgressData.CurrentFlatLevel++;
         DataManager.Save();
         LoadLevel();
+    }
+
+    public static LevelColorPreset GiveColorPreset()
+    {
+        var colorPreset = _colorPrsts[Random.Range(0, _colorPrsts.Length)];
+
+        return colorPreset;
     }
 }

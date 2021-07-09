@@ -9,10 +9,11 @@ public class CubeSpawner : TargetSpawner
     public override void SpawnLevel()
     {
         var level = LevelManager.CurrentCubeLevel;
+        var colorPreset = LevelManager.GiveColorPreset();
         
         TryCleanTargets();
     
         Targets.Add(Instantiate(_template, new Vector3(0f, _spawnY, SpawnZ), Quaternion.identity, transform));
-        Targets[0].SpawnTargetBase(null, level);
+        Targets[0].SetupTarget(colorPreset.startColor,null, level);
     }
 }
