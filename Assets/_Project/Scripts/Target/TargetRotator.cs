@@ -6,14 +6,12 @@ using UnityEngine;
 public class TargetRotator : MonoBehaviour
 {
     private Tween _rotator;
-
     private List<RotateDefinition> _rotateDefinitions = new List<RotateDefinition>();
-
     private int _currentIndex;
 
     private void Rotate()
     {
-        var rotateEuler = DataManager.GameData.ProgressData.CurrentGamemod switch
+        var rotateEuler = (int)GamemodHandler.CurrentGamemod switch
         {
             0 => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle),
             1 => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle),

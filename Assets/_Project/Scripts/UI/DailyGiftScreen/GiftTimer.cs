@@ -21,7 +21,6 @@ public class GiftTimer : MonoBehaviour
 
     private Timer _timer;
     private DateTime _lastDate;
-    private DateTime _currentDate;
     private float _timeSpend = 0f;
 
     public event UnityAction CanGiveGift;

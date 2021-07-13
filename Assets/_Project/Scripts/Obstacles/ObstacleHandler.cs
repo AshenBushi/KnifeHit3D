@@ -8,10 +8,10 @@ public class ObstacleHandler : MonoBehaviour
 {
     [SerializeField] private TargetHandler _targetHandler;
     [SerializeField] private KnifeHandler _knifeHandler;
-    
+
     private List<ObstacleSpawner> _obstacleSpawners = new List<ObstacleSpawner>();
 
-    private int Gamemod => DataManager.GameData.ProgressData.CurrentGamemod;
+    private int Gamemod => (int)GamemodHandler.CurrentGamemod;
     
     private void OnEnable()
     {

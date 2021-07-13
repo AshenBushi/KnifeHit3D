@@ -19,7 +19,7 @@ namespace Project.Scripts.Handlers
 
         private TargetSpawner _currentSpawner;
         
-        private int Gamemod => DataManager.GameData.ProgressData.CurrentGamemod;
+        private int Gamemod => (int)GamemodHandler.CurrentGamemod;
         
         public Target CurrentTarget { get; private set; }
         
@@ -52,6 +52,9 @@ namespace Project.Scripts.Handlers
         private void SpawnLevel()
         {
             _currentSpawner?.TryCleanTargets();
+
+            if (GamemodHandler.CurrentGamemod == GamemodName.Lottery) return;
+            
             _currentSpawner = _spawners[Gamemod];
             _currentSpawner.SpawnLevel();
             _levelProgressDisplayer.ShowLevelDisplay();

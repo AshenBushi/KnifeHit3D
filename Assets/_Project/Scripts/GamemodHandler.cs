@@ -1,93 +1,103 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
+
+public enum GamemodName
+{
+    Mark,
+    Cube,
+    Flat,
+    Lottery
+}
 
 public class GamemodHandler : MonoBehaviour
 {
     [SerializeField] private List<Button> _buttons;
     [SerializeField] private float _duration;
     [SerializeField] private Animator _cameraAnimator;
-
-    [Header("Background Settings")] 
-    [SerializeField] private Image _background;
-    [SerializeField] private List<Sprite> _backgroundSprites;
+    
     [Header("Sizes")]
     [SerializeField] private Vector3 _selected;
     [SerializeField] private Vector3 _unselected;
 
     private Tween _tween;
-    private int _cameraViewIndex = 1;
+    private GamemodName _currentGamemod;
+    private int _cameraViewIndex = 0;
+
+    public static GamemodName CurrentGamemod;
 
     public event UnityAction IsModChanged;
 
-    private void Start()
+    private void Awake()
     {
         SelectRandomMod();
     }
 
     private void SelectRandomMod()
     {
-        var randomMod = Random.Range(0, 5);
+        var randomIndex = Random.Range(0, 3);
 
-        while (randomMod == DataManager.GameData.ProgressData.CurrentGamemod)
-        {
-            randomMod = Random.Range(0, 5);
-        }
+        var randomMod = (GamemodName)randomIndex;
         
         SelectMod(randomMod, 0f);
     }
-    
-    private void SelectBackground(int index)
-    {
-        _background.sprite = _backgroundSprites[index];
-    }
 
-    private void TryChangeCameraView(int index)
+    private void ChangeButtonSize(float duration)
     {
-        if (index < 3)
+        if (_currentGamemod == GamemodName.Lottery)
         {
-            if (_cameraViewIndex == 1) return;
-            _cameraAnimator.SetTrigger("EnableFirstView");
-            _cameraViewIndex = 1;
+            foreach (var button in _buttons)
+            {
+                _tween = button.transform.DOScale(_unselected, duration);
+            }
+
+            return;
         }
-        else
-        {
-            if (_cameraViewIndex == 2) return;
-            _cameraAnimator.SetTrigger("EnableSecondView");
-            _cameraViewIndex = 2;
-        }
-    }
-    
-    private void SelectMod(int index, float duration)
-    {
-        DataManager.GameData.ProgressData.CurrentGamemod = index % 3;
-        DataManager.Save();
         
-        SelectBackground(index % 3);
-        TryChangeCameraView(index);
-
         for (var i = 0; i < _buttons.Count; i++)
         {
-            _tween = _buttons[i].transform.DOScale(i == index ? _selected : _unselected, duration);
+            _tween = _buttons[i].transform.DOScale(i == (int) _currentGamemod + 3 * _cameraViewIndex ? _selected : _unselected, duration);
         }
     }
+    
+    private void SelectMod(GamemodName gamemodName, float duration)
+    {
+        _currentGamemod = gamemodName;
+        CurrentGamemod = _currentGamemod;
 
-    public void SelectMod(int index)
+        ChangeButtonSize(duration);
+    }
+    
+    public void SelectMod(int gamemodIndex)
     {
         SoundManager.PlaySound(SoundName.ButtonClick);
-        DataManager.GameData.ProgressData.CurrentGamemod = index % 3;
-        DataManager.Save();
+
+        _currentGamemod = (GamemodName)gamemodIndex;
+        CurrentGamemod = _currentGamemod;
         
-        SelectBackground(index % 3);
-        TryChangeCameraView(index);
-        
-        for (var i = 0; i < _buttons.Count; i++)
-        {
-            _tween = _buttons[i].transform.DOScale(i == index ? _selected : _unselected, _duration);
-        }
+        ChangeButtonSize(_duration);
         
         IsModChanged?.Invoke();
+    }
+    
+    public void TryChangeCameraView(int cameraViewIndex)
+    {
+        if (_cameraViewIndex == cameraViewIndex) return;
+
+        switch (cameraViewIndex)
+        {
+            case 0:
+                _cameraAnimator.SetTrigger("EnableFirstView");
+                break;
+            case 1:
+                _cameraAnimator.SetTrigger("EnableSecondView");
+                break;
+        }
+
+        _cameraViewIndex = cameraViewIndex;
     }
 }

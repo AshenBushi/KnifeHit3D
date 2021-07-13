@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
@@ -42,10 +43,13 @@ public class LevelManager : MonoBehaviour
     private static List<CubeLevel> _cubeLvls;
     private static List<FlatLevel> _flatLvls;
     private static LevelColorPreset[] _colorPrsts;
+    private static int _presetIndex = 0;
 
     public static MarkLevel CurrentMarkLevel { get; private set; }
     public static CubeLevel CurrentCubeLevel { get; private set; }
     public static FlatLevel CurrentFlatLevel { get; private set; }
+
+    public static event UnityAction<LevelColorPreset> IsColorChanged; 
 
     private void Awake()
     {
@@ -96,8 +100,16 @@ public class LevelManager : MonoBehaviour
 
     public static LevelColorPreset GiveColorPreset()
     {
-        var colorPreset = _colorPrsts[Random.Range(0, _colorPrsts.Length)];
+        //var colorPreset = _colorPrsts[Random.Range(0, _colorPrsts.Length)];
 
+        var colorPreset = _colorPrsts[_presetIndex];
+        _presetIndex++;
+
+        if (_presetIndex == _colorPrsts.Length)
+            _presetIndex = 0;
+        
+        IsColorChanged?.Invoke(colorPreset);
+        
         return colorPreset;
     }
 }

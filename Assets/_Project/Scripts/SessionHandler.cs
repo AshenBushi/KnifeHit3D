@@ -14,14 +14,13 @@ public class SessionHandler : MonoBehaviour
     [SerializeField] private RewardHandler _rewardHandler;
     [SerializeField] private TargetHandler _targetHandler;
     [SerializeField] private KnifeHandler _knifeHandler;
-    [SerializeField] private LotteryHandler _lotteryHandler;
     [SerializeField] private ExperienceHandler _experienceHandler;
     [Header("Screens")]
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private LoseScreen _loseScreen;
     [SerializeField] private WinScreen _winScreen;
 
-    private int Gamemod => DataManager.GameData.ProgressData.CurrentGamemod;
+    private int Gamemod => (int)GamemodHandler.CurrentGamemod;
     
     public event UnityAction IsSessionStarted;
     public event UnityAction IsLotteryStarted;

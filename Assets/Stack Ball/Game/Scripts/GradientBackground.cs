@@ -1,5 +1,6 @@
 ﻿#pragma warning disable 0649
 
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Watermelon;
@@ -31,6 +32,21 @@ public class GradientBackground : MonoBehaviour
 
         if(initOnAwake)
             SetColor(startColor, endColor);
+    }
+
+    private void OnEnable()
+    {
+        LevelManager.IsColorChanged += OnColorChanged;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.IsColorChanged -= OnColorChanged;
+    }
+    
+    private void OnColorChanged(LevelColorPreset preset)
+    {
+        SetColor(preset.cameraStartColor, preset.cameraEndColor);
     }
 
     public void SetColor(Color color1, Color color2)

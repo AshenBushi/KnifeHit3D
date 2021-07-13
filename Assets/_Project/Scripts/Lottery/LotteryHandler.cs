@@ -6,7 +6,7 @@ using UnityEngine;
 public class LotteryHandler : MonoBehaviour
 {
     [SerializeField] private KnifeHandler _knifeHandler;
-    [SerializeField] private LoseScreen _loseScreen;
+    [SerializeField] private GamemodHandler _gamemodHandler;
     [SerializeField] private HitScoreDisplayer _hitScoreDisplayer;
     [SerializeField] private LevelProgressDisplayer _levelProgressDisplayer;
     [SerializeField] private LotterySpawner _lotterySpawner;
@@ -18,12 +18,34 @@ public class LotteryHandler : MonoBehaviour
 
     public List<RewardName> Rewards { get; private set; } = new List<RewardName>();
 
+    private void OnEnable()
+    {
+        _gamemodHandler.IsModChanged += OnModChanged;
+    }
+
     private void OnDisable()
     {
+        _gamemodHandler.IsModChanged -= OnModChanged;
+        
         if(_lottery is null) return;
         _lottery.IsRewardTook -= OnRewardTook;
     }
 
+    private void OnModChanged()
+    {
+        if(GamemodHandler.CurrentGamemod == GamemodName.Lottery)
+        {
+            StartLottery();
+        }
+        else
+        {
+            if(_lottery != null)
+                Destroy(_lottery.gameObject);
+        }
+            
+        
+    }
+    
     private void OnRewardTook(RewardName reward)
     {
         Rewards.Add(reward);
@@ -44,7 +66,7 @@ public class LotteryHandler : MonoBehaviour
         _lotteryScreen.Enable();
     }
     
-    public void StartLottery()
+    private void StartLottery()
     {
         _lottery = _lotterySpawner.SpawnLottery();
         _lottery.IsRewardTook += OnRewardTook;

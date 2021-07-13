@@ -63,7 +63,6 @@ public class DataManager : MonoBehaviour
         GameData.ProgressData.CurrentMarkLevel = 0;
         GameData.ProgressData.CurrentCubeLevel = 0;
         GameData.ProgressData.CurrentCubeLevel = 0;
-        GameData.ProgressData.CurrentGamemod = 0;
 
         GameData.SettingsData.SoundVolume = 1;
         GameData.SettingsData.MusicVolume = 1;
@@ -138,7 +137,6 @@ public struct PlayerData
 [Serializable]
 public struct ProgressData
 {
-    public int CurrentGamemod;
     public int CurrentMarkLevel;
     public int CurrentCubeLevel;
     public int CurrentFlatLevel;

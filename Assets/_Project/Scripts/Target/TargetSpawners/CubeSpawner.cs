@@ -14,6 +14,6 @@ public class CubeSpawner : TargetSpawner
         TryCleanTargets();
     
         Targets.Add(Instantiate(_template, new Vector3(0f, _spawnY, SpawnZ), Quaternion.identity, transform));
-        Targets[0].SetupTarget(colorPreset.startColor,null, level);
+        Targets[0].SetupTarget(Color.Lerp(colorPreset.startColor, colorPreset.endColor, 0.5f),null, level);
     }
 }
