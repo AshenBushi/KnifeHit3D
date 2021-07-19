@@ -14,7 +14,7 @@ public enum GamemodName
     Lottery
 }
 
-public class GamemodHandler : MonoBehaviour
+public class GamemodHandler : Singleton<GamemodHandler>
 {
     [SerializeField] private List<Button> _buttons;
     [SerializeField] private float _duration;
@@ -28,7 +28,7 @@ public class GamemodHandler : MonoBehaviour
     private GamemodName _currentGamemod;
     private int _cameraViewIndex = 0;
 
-    public static GamemodName CurrentGamemod;
+    public GamemodName CurrentGamemod { get; private set; }
 
     public event UnityAction IsModChanged;
 

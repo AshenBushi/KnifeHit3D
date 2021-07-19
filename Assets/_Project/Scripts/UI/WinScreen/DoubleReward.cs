@@ -34,7 +34,7 @@ public class DoubleReward : AdButton
 
     protected override void HandleUserEarnReward(object sender, Reward e)
     {
-        switch ((int)GamemodHandler.CurrentGamemod)
+        switch ((int)GamemodHandler.Instance.CurrentGamemod)
         {
             case 0 :
                 _player.DepositMoney(LevelManager.CurrentMarkLevel.Reward * _coefficient);

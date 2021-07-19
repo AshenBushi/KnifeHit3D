@@ -4,10 +4,10 @@ using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 
-public class RewardHandler : MonoBehaviour
+public class RewardHandler : Singleton<RewardHandler>
 {
     [SerializeField] private StartScreen _startScreen;
-    
+
     public void GiveExperienceReward()
     {
         for (var i = 29; i < 45; i++)

@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public class SkipTarget : AdButton
 {
-    [SerializeField] private TargetHandler _targetHandler;
     [SerializeField] private Image _adIcon;
 
     private void Start()
@@ -23,7 +22,7 @@ public class SkipTarget : AdButton
     {
         DataManager.GameData.PlayerData.LevelPass--;
         DataManager.Save();
-        _targetHandler.CurrentTarget.BreakTarget();
+        TargetHandler.Instance.CurrentTarget.BreakTarget();
         gameObject.SetActive(false);
     }
 

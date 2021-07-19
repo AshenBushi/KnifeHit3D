@@ -5,9 +5,8 @@ using UnityEngine.Events;
 
 namespace Project.Scripts.Handlers
 {
-    public class KnifeHandler : MonoBehaviour
+    public class KnifeHandler : Singleton<KnifeHandler>
     {
-        [SerializeField] private TargetHandler _targetHandler;
         [SerializeField] private HitScoreDisplayer _hitScoreDisplayer;
         [SerializeField] private InputField _inputField;
         [SerializeField] private KnifeSpawner _knifeSpawner;
@@ -115,7 +114,7 @@ namespace Project.Scripts.Handlers
         public void SecondLife()
         {
             AllowThrow();
-            SetKnifeAmount(_targetHandler.CurrentTarget.HitToBreak);
+            SetKnifeAmount(TargetHandler.Instance.CurrentTarget.HitToBreak);
         }
     }
 }

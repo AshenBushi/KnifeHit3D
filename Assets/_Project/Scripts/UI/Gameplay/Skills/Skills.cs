@@ -5,30 +5,22 @@ using UnityEngine;
 
 public class Skills : MonoBehaviour
 {
-    [SerializeField] private SessionHandler _sessionHandler;
     [SerializeField] private SlowMode _slowMode;
     [SerializeField] private SkipTarget _skipTarget;
 
     private void OnEnable()
     {
-        _sessionHandler.IsSessionStarted += OnSessionStarted;
-        _sessionHandler.IsLotteryStarted += OnLotteryStarted;
+        SessionHandler.Instance.IsSessionStarted += OnSessionStarted;
     }
 
     private void OnDisable()
     {
-        _sessionHandler.IsSessionStarted -= OnSessionStarted;
-        _sessionHandler.IsLotteryStarted += OnLotteryStarted;
+        SessionHandler.Instance.IsSessionStarted -= OnSessionStarted;
     }
 
     private void OnSessionStarted()
     {
         StartCoroutine(TryEnableButtons());
-    }
-    
-    private void OnLotteryStarted()
-    {
-        gameObject.SetActive(false);
     }
 
     private IEnumerator TryEnableButtons()

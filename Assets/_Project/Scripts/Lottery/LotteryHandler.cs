@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using Project.Scripts.Handlers;
 using UnityEngine;
 
-public class LotteryHandler : MonoBehaviour
+public class LotteryHandler : Singleton<LotteryHandler>
 {
-    [SerializeField] private KnifeHandler _knifeHandler;
-    [SerializeField] private GamemodHandler _gamemodHandler;
     [SerializeField] private HitScoreDisplayer _hitScoreDisplayer;
     [SerializeField] private LevelProgressDisplayer _levelProgressDisplayer;
     [SerializeField] private LotterySpawner _lotterySpawner;
@@ -20,12 +18,12 @@ public class LotteryHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        _gamemodHandler.IsModChanged += OnModChanged;
+        GamemodHandler.Instance.IsModChanged += OnModChanged;
     }
 
     private void OnDisable()
     {
-        _gamemodHandler.IsModChanged -= OnModChanged;
+        GamemodHandler.Instance.IsModChanged -= OnModChanged;
         
         if(_lottery is null) return;
         _lottery.IsRewardTook -= OnRewardTook;
@@ -33,7 +31,7 @@ public class LotteryHandler : MonoBehaviour
 
     private void OnModChanged()
     {
-        if(GamemodHandler.CurrentGamemod == GamemodName.Lottery)
+        if(GamemodHandler.Instance.CurrentGamemod == GamemodName.Lottery)
         {
             StartLottery();
         }
@@ -52,7 +50,7 @@ public class LotteryHandler : MonoBehaviour
 
         if (reward == RewardName.Death)
         {
-            _knifeHandler.DisallowThrow();
+            KnifeHandler.Instance.DisallowThrow();
         }
         
         if (Rewards.Count >= _maxRewardCount)
@@ -71,8 +69,8 @@ public class LotteryHandler : MonoBehaviour
         _lottery = _lotterySpawner.SpawnLottery();
         _lottery.IsRewardTook += OnRewardTook;
         
-        _knifeHandler.SetKnifeAmount(_lottery.HitToBreak);
-        _knifeHandler.AllowThrow();
+        KnifeHandler.Instance.SetKnifeAmount(_lottery.HitToBreak);
+        KnifeHandler.Instance.AllowThrow();
         _hitScoreDisplayer.SpawnHitScores(_lottery.HitToBreak);
         _levelProgressDisplayer.DisableDisplayer();
     }
@@ -82,7 +80,7 @@ public class LotteryHandler : MonoBehaviour
         _lotteryScreen.Disable();
         _lottery.AddHits();
         _maxRewardCount += _knifeAmount;
-        _knifeHandler.SetKnifeAmount(_lottery.HitToBreak);
+        KnifeHandler.Instance.SetKnifeAmount(_lottery.HitToBreak);
         _hitScoreDisplayer.SpawnHitScores(_lottery.HitToBreak);
     }
 }

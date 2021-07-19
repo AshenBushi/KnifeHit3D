@@ -7,15 +7,9 @@ using Random = UnityEngine.Random;
 public class LotteryRewarder : MonoBehaviour
 {
     [SerializeField] private Player _player;
-    [SerializeField] private RewardHandler _rewardHandler;
 
     private bool _hasSkinReward = false;
-    
-    private void OnRewardGiven()
-    {
-        AsyncLoader.LoadScene();
-    }
-    
+
     public void SendRewards(List<RewardName> rewards)
     {
         foreach (var reward in rewards)
@@ -48,7 +42,7 @@ public class LotteryRewarder : MonoBehaviour
                     break;
                 case RewardName.Skin:
                     MetricaManager.SendEvent("bns_lvl_skin");
-                    _rewardHandler.GiveLotteryReward();
+                    RewardHandler.Instance.GiveLotteryReward();
                     _hasSkinReward = true;
                     break;
                 case RewardName.Death:

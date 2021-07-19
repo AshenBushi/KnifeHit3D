@@ -11,7 +11,7 @@ public class TargetRotator : MonoBehaviour
 
     private void Rotate()
     {
-        var rotateEuler = (int)GamemodHandler.CurrentGamemod switch
+        var rotateEuler = (int)GamemodHandler.Instance.CurrentGamemod switch
         {
             0 => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle),
             1 => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle),

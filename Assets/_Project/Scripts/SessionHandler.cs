@@ -7,29 +7,23 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class SessionHandler : MonoBehaviour
+public class SessionHandler : Singleton<SessionHandler>
 {
     [SerializeField] private InputField _inputField;
-    [Header("Handlers")]
-    [SerializeField] private RewardHandler _rewardHandler;
-    [SerializeField] private TargetHandler _targetHandler;
-    [SerializeField] private KnifeHandler _knifeHandler;
-    [SerializeField] private ExperienceHandler _experienceHandler;
     [Header("Screens")]
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private LoseScreen _loseScreen;
     [SerializeField] private WinScreen _winScreen;
 
-    private int Gamemod => (int)GamemodHandler.CurrentGamemod;
+    private int Gamemod => (int)GamemodHandler.Instance.CurrentGamemod;
     
     public event UnityAction IsSessionStarted;
-    public event UnityAction IsLotteryStarted;
 
     private void OnEnable()
     {
         _inputField.IsSessionStart += OnSessionStart;
-        _targetHandler.IsLevelComplete += OnLevelComplete;
-        _knifeHandler.IsLevelFailed += OnLevelFailed;
+        TargetHandler.Instance.IsLevelComplete += OnLevelComplete;
+        KnifeHandler.Instance.IsLevelFailed += OnLevelFailed;
         _winScreen.IsScreenDisabled += OnScreenDisabled;
         _loseScreen.IsScreenDisabled += OnScreenDisabled;
     }
@@ -37,8 +31,8 @@ public class SessionHandler : MonoBehaviour
     private void OnDisable()
     {
         _inputField.IsSessionStart -= OnSessionStart;
-        _targetHandler.IsLevelComplete -= OnLevelComplete;
-        _knifeHandler.IsLevelFailed -= OnLevelFailed;
+        TargetHandler.Instance.IsLevelComplete -= OnLevelComplete;
+        KnifeHandler.Instance.IsLevelFailed -= OnLevelFailed;
         _winScreen.IsScreenDisabled -= OnScreenDisabled;
         _loseScreen.IsScreenDisabled -= OnScreenDisabled;
     }
@@ -95,13 +89,13 @@ public class SessionHandler : MonoBehaviour
 
     private IEnumerator EnableEndScreen(bool isLevelComplete)
     {
-        _knifeHandler.DisallowThrow();
+        KnifeHandler.Instance.DisallowThrow();
         
         yield return new WaitForSeconds(1f);
         
-        if(_experienceHandler.HasReward)
+        if(ExperienceHandler.Instance.HasReward)
         {
-            _rewardHandler.GiveExperienceReward();
+            RewardHandler.Instance.GiveExperienceReward();
         }
         
         if (isLevelComplete)
@@ -140,7 +134,7 @@ public class SessionHandler : MonoBehaviour
 
         if (rewardIndex > 0)
         {
-            _rewardHandler.GiveLevelCompleteReward(rewardIndex);
+            RewardHandler.Instance.GiveLevelCompleteReward(rewardIndex);
         }
       
         _winScreen.Win();

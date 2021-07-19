@@ -41,7 +41,7 @@ public class WinScreen : UIScreen
         SoundManager.PlaySound(SoundName.Win);
         _cup.SetActive(true);
 
-        _rewardText.text = (int)GamemodHandler.CurrentGamemod switch
+        _rewardText.text = (int)GamemodHandler.Instance.CurrentGamemod switch
         {
             0 => LevelManager.CurrentMarkLevel.Reward.ToString(),
             1 => LevelManager.CurrentCubeLevel.Reward.ToString(),

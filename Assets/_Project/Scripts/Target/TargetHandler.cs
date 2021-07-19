@@ -7,11 +7,8 @@ using UnityEngine.Events;
 
 namespace Project.Scripts.Handlers
 {
-    public class TargetHandler : MonoBehaviour
+    public class TargetHandler : Singleton<TargetHandler>
     {
-        [SerializeField] private ExperienceHandler _experienceHandler;
-        [SerializeField] private KnifeHandler _knifeHandler;
-        [SerializeField] private GamemodHandler _gamemodHandler;
         [SerializeField] private LevelProgressDisplayer _levelProgressDisplayer;
         [SerializeField] private HitScoreDisplayer _hitScoreDisplayer;
         [SerializeField] private TargetMover _targetMover;
@@ -19,7 +16,7 @@ namespace Project.Scripts.Handlers
 
         private TargetSpawner _currentSpawner;
         
-        private int Gamemod => (int)GamemodHandler.CurrentGamemod;
+        private int Gamemod => (int)GamemodHandler.Instance.CurrentGamemod;
         
         public Target CurrentTarget { get; private set; }
         
@@ -31,13 +28,13 @@ namespace Project.Scripts.Handlers
         private void OnEnable()
         {
             _targetMover.IsTargetChanged += OnTargetChanged;
-            _gamemodHandler.IsModChanged += SpawnLevel;
+            GamemodHandler.Instance.IsModChanged += SpawnLevel;
         }
 
         private void OnDisable()
         {
             _targetMover.IsTargetChanged -= OnTargetChanged;
-            _gamemodHandler.IsModChanged -= SpawnLevel;
+            GamemodHandler.Instance.IsModChanged -= SpawnLevel;
             
             if (CurrentTarget is null) return;
             CurrentTarget.IsTargetBreak -= OnTargetBreak;
@@ -53,7 +50,7 @@ namespace Project.Scripts.Handlers
         {
             _currentSpawner?.TryCleanTargets();
 
-            if (GamemodHandler.CurrentGamemod == GamemodName.Lottery) return;
+            if (GamemodHandler.Instance.CurrentGamemod == GamemodName.Lottery) return;
             
             _currentSpawner = _spawners[Gamemod];
             _currentSpawner.SpawnLevel();
@@ -64,8 +61,8 @@ namespace Project.Scripts.Handlers
 
         private void OnTargetBreak(int exp)
         {
-            _experienceHandler.AddExp(exp);
-            _knifeHandler.DisallowThrow();
+            ExperienceHandler.Instance.AddExp(exp);
+            KnifeHandler.Instance.DisallowThrow();
             CurrentTarget.IsTargetBreak -= OnTargetBreak;
             CurrentTarget.IsEdgePass -= OnEdgePass;
             _currentSpawner.RemoveTarget(CurrentTarget);
@@ -84,8 +81,8 @@ namespace Project.Scripts.Handlers
 
         private void OnEdgePass(int exp, int currentEdge)
         {
-            _experienceHandler.AddExp(exp);
-            _knifeHandler.DisallowThrow();
+            ExperienceHandler.Instance.AddExp(exp);
+            KnifeHandler.Instance.DisallowThrow();
             _levelProgressDisplayer.NextPoint();
             
             _targetMover.RotateCube(CurrentTarget.Base, currentEdge);
@@ -94,7 +91,7 @@ namespace Project.Scripts.Handlers
         
         private void OnTargetChanged()
         {
-            _knifeHandler.AllowThrow();
+            KnifeHandler.Instance.AllowThrow();
         }
 
         private void SetCurrentTarget()
@@ -108,7 +105,7 @@ namespace Project.Scripts.Handlers
         private void SendHitScore()
         {
             _hitScoreDisplayer.SpawnHitScores(CurrentTarget.HitToBreak);
-            _knifeHandler.SetKnifeAmount(CurrentTarget.HitToBreak);
+            KnifeHandler.Instance.SetKnifeAmount(CurrentTarget.HitToBreak);
         }
 
         public void ClearTargets()

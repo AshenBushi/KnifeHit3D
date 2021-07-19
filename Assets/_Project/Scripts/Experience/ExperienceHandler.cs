@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ExperienceHandler : MonoBehaviour
+public class ExperienceHandler : Singleton<ExperienceHandler>
 {
     [SerializeField] private ExperienceBar _expBar;
 
