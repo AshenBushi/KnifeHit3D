@@ -40,8 +40,6 @@ public class LotteryHandler : Singleton<LotteryHandler>
             if(_lottery != null)
                 Destroy(_lottery.gameObject);
         }
-            
-        
     }
     
     private void OnRewardTook(RewardName reward)
