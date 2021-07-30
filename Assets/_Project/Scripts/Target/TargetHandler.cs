@@ -7,11 +7,8 @@ using UnityEngine.Events;
 
 namespace Project.Scripts.Handlers
 {
-    public class TargetHandler : MonoBehaviour
+    public class TargetHandler : Singleton<TargetHandler>
     {
-        [SerializeField] private ExperienceHandler _experienceHandler;
-        [SerializeField] private KnifeHandler _knifeHandler;
-        [SerializeField] private GamemodHandler _gamemodHandler;
         [SerializeField] private LevelProgressDisplayer _levelProgressDisplayer;
         [SerializeField] private HitScoreDisplayer _hitScoreDisplayer;
         [SerializeField] private TargetMover _targetMover;
@@ -19,50 +16,31 @@ namespace Project.Scripts.Handlers
 
         private TargetSpawner _currentSpawner;
         
-        private int Gamemod => DataManager.GameData.ProgressData.CurrentGamemod;
-        
         public Target CurrentTarget { get; private set; }
-        
-        public List<Target> Targets => _spawners[Gamemod].Targets;
+        public List<Target> Targets => _currentSpawner.Targets;
+
+        public int CurrentSpawnerIndex => _spawners.IndexOf(_currentSpawner);
 
         public event UnityAction IsLevelSpawned;
-        public event UnityAction IsLevelComplete;
 
         private void OnEnable()
         {
             _targetMover.IsTargetChanged += OnTargetChanged;
-            _gamemodHandler.IsModChanged += SpawnLevel;
         }
 
         private void OnDisable()
         {
             _targetMover.IsTargetChanged -= OnTargetChanged;
-            _gamemodHandler.IsModChanged -= SpawnLevel;
-            
+
             if (CurrentTarget is null) return;
             CurrentTarget.IsTargetBreak -= OnTargetBreak;
             CurrentTarget.IsEdgePass -= OnEdgePass;
         }
 
-        private void Start()
-        {
-            SpawnLevel();
-        }
-
-        private void SpawnLevel()
-        {
-            _currentSpawner?.TryCleanTargets();
-            _currentSpawner = _spawners[Gamemod];
-            _currentSpawner.SpawnLevel();
-            _levelProgressDisplayer.ShowLevelDisplay();
-            SetCurrentTarget();
-            IsLevelSpawned?.Invoke();
-        }
-
         private void OnTargetBreak(int exp)
         {
-            _experienceHandler.AddExp(exp);
-            _knifeHandler.DisallowThrow();
+            ExperienceHandler.Instance.AddExp(exp);
+            PlayerInput.Instance.DisallowTap();
             CurrentTarget.IsTargetBreak -= OnTargetBreak;
             CurrentTarget.IsEdgePass -= OnEdgePass;
             _currentSpawner.RemoveTarget(CurrentTarget);
@@ -75,14 +53,14 @@ namespace Project.Scripts.Handlers
             }
             else
             {
-                IsLevelComplete?.Invoke();
+                CompleteLevel();
             }
         }
 
         private void OnEdgePass(int exp, int currentEdge)
         {
-            _experienceHandler.AddExp(exp);
-            _knifeHandler.DisallowThrow();
+            ExperienceHandler.Instance.AddExp(exp);
+            PlayerInput.Instance.DisallowTap();
             _levelProgressDisplayer.NextPoint();
             
             _targetMover.RotateCube(CurrentTarget.Base, currentEdge);
@@ -91,7 +69,7 @@ namespace Project.Scripts.Handlers
         
         private void OnTargetChanged()
         {
-            _knifeHandler.AllowThrow();
+            PlayerInput.Instance.AllowTap();
         }
 
         private void SetCurrentTarget()
@@ -105,12 +83,43 @@ namespace Project.Scripts.Handlers
         private void SendHitScore()
         {
             _hitScoreDisplayer.SpawnHitScores(CurrentTarget.HitToBreak);
-            _knifeHandler.SetKnifeAmount(CurrentTarget.HitToBreak);
+            KnifeHandler.Instance.SetKnifeAmount(CurrentTarget.HitToBreak);
         }
 
-        public void ClearTargets()
+        private void CompleteLevel()
         {
-            _spawners[Gamemod].TryCleanTargets();
+            var rewardIndex = 0;
+            
+            switch (CurrentSpawnerIndex)
+            {
+                case 0:
+                    MetricaManager.SendEvent("target_lvl_complete_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
+                    rewardIndex = LevelManager.CurrentMarkLevel.KnifeReward;
+                    LevelManager.NextMarkLevel();
+                    break;
+                case 1:
+                    MetricaManager.SendEvent("cube_lvl_start_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
+                    rewardIndex = LevelManager.CurrentCubeLevel.KnifeReward;
+                    LevelManager.NextCubeLevel();
+                    break;
+                case 2:
+                    MetricaManager.SendEvent("flat_lvl_complete_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
+                    rewardIndex = LevelManager.CurrentFlatLevel.KnifeReward;
+                    LevelManager.NextFlatLevel();
+                    break;
+            }
+            
+            SessionHandler.Instance.CompleteLevel(rewardIndex);
+        }
+        
+        public void SpawnLevel(int spawnerIndex)
+        {
+            _currentSpawner?.TryCleanTargets();
+            _currentSpawner = _spawners[spawnerIndex];
+            _currentSpawner.SpawnLevel();
+            _levelProgressDisplayer.ShowLevelDisplay();
+            SetCurrentTarget();
+            IsLevelSpawned?.Invoke();
         }
     }
 }

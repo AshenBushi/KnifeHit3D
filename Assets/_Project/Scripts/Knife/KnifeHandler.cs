@@ -5,11 +5,9 @@ using UnityEngine.Events;
 
 namespace Project.Scripts.Handlers
 {
-    public class KnifeHandler : MonoBehaviour
+    public class KnifeHandler : Singleton<KnifeHandler>
     {
-        [SerializeField] private TargetHandler _targetHandler;
         [SerializeField] private HitScoreDisplayer _hitScoreDisplayer;
-        [SerializeField] private InputField _inputField;
         [SerializeField] private KnifeSpawner _knifeSpawner;
 
         private Knife _currentKnife;
@@ -18,19 +16,17 @@ namespace Project.Scripts.Handlers
         private bool _isSecondLifeUsed = false;
         private bool _canThrowKnife = true;
 
-        public event UnityAction IsLevelFailed;
-
         public Knife CurrentKnifeTemplate => KnifeStorage.Knives[DataManager.GameData.ShopData.CurrentKnifeIndex];
 
         private void OnEnable()
         {
-            _inputField.IsTapped += OnTapped;
+            PlayerInput.Instance.IsTapped += OnTapped;
             KnifeStorage.IsKnifeChanged += RespawnKnife;
         }
 
         private void OnDisable()
         {
-            _inputField.IsTapped -= OnTapped;
+            PlayerInput.Instance.IsTapped -= OnTapped;
             KnifeStorage.IsKnifeChanged -= RespawnKnife;
 
             if (_currentKnife == null) return;
@@ -71,7 +67,7 @@ namespace Project.Scripts.Handlers
             }
             else
             {
-                IsLevelFailed?.Invoke();
+                FailLevel();
             }
         }
         
@@ -102,20 +98,28 @@ namespace Project.Scripts.Handlers
             _currentKnife.IsBounced += OnKnifeBounced;
         }
 
-        public void AllowThrow()
+        private void FailLevel()
         {
-            _canThrowKnife = true;
-        }
-        
-        public void DisallowThrow()
-        {
-            _canThrowKnife = false;
+            switch (TargetHandler.Instance.CurrentSpawnerIndex)
+            {
+                case 0:
+                    MetricaManager.SendEvent("target_lvl_fail_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
+                    break;
+                case 1:
+                    MetricaManager.SendEvent("cube_lvl_fail_(" + DataManager.GameData.ProgressData.CurrentCubeLevel + ")");
+                    break;
+                case 2:
+                    MetricaManager.SendEvent("flat_lvl_fail_(" + DataManager.GameData.ProgressData.CurrentFlatLevel + ")");
+                    break;
+            }
+            
+            SessionHandler.Instance.FailLevel();
         }
 
         public void SecondLife()
         {
-            AllowThrow();
-            SetKnifeAmount(_targetHandler.CurrentTarget.HitToBreak);
+            PlayerInput.Instance.AllowTap();
+            SetKnifeAmount(TargetHandler.Instance.CurrentTarget.HitToBreak);
         }
     }
 }

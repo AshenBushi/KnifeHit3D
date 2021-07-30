@@ -5,12 +5,11 @@ using UnityEngine;
 public class SecondLife : AdButton
 {
     [SerializeField] private LoseScreen _loseScreen;
-    [SerializeField] private KnifeHandler _knifeHandler;
 
     protected override void HandleUserEarnReward(object sender, Reward e)
     {
         _loseScreen.Disable();
-        _knifeHandler.SecondLife();
+        KnifeHandler.Instance.SecondLife();
         
         base.HandleUserEarnReward(sender, e);
     }

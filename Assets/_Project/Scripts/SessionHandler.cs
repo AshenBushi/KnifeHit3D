@@ -7,71 +7,38 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class SessionHandler : MonoBehaviour
+public class SessionHandler : Singleton<SessionHandler>
 {
-    [SerializeField] private InputField _inputField;
-    [Header("Handlers")]
-    [SerializeField] private RewardHandler _rewardHandler;
-    [SerializeField] private TargetHandler _targetHandler;
-    [SerializeField] private KnifeHandler _knifeHandler;
-    [SerializeField] private LotteryHandler _lotteryHandler;
-    [SerializeField] private ExperienceHandler _experienceHandler;
     [Header("Screens")]
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private LoseScreen _loseScreen;
     [SerializeField] private WinScreen _winScreen;
 
-    private int Gamemod => DataManager.GameData.ProgressData.CurrentGamemod;
-    
     public event UnityAction IsSessionStarted;
-    public event UnityAction IsLotteryStarted;
 
     private void OnEnable()
     {
-        _inputField.IsSessionStart += OnSessionStart;
-        _targetHandler.IsLevelComplete += OnLevelComplete;
-        _knifeHandler.IsLevelFailed += OnLevelFailed;
         _winScreen.IsScreenDisabled += OnScreenDisabled;
         _loseScreen.IsScreenDisabled += OnScreenDisabled;
     }
 
     private void OnDisable()
     {
-        _inputField.IsSessionStart -= OnSessionStart;
-        _targetHandler.IsLevelComplete -= OnLevelComplete;
-        _knifeHandler.IsLevelFailed -= OnLevelFailed;
+        PlayerInput.Instance.IsSessionStart -= OnSessionStart;
         _winScreen.IsScreenDisabled -= OnScreenDisabled;
         _loseScreen.IsScreenDisabled -= OnScreenDisabled;
+    }
+
+    private void Start()
+    {
+        PlayerInput.Instance.IsSessionStart += OnSessionStart;
     }
 
     private void OnSessionStart()
     {
         _startScreen.Disable();
 
-        switch (Gamemod)
-        {
-            case 0:
-                MetricaManager.SendEvent("target_lvl_start_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
-                break;
-            case 1:
-                MetricaManager.SendEvent("cube_lvl_start_(" + DataManager.GameData.ProgressData.CurrentCubeLevel + ")");
-                break;
-            case 2:
-                MetricaManager.SendEvent("flat_lvl_start_(" + DataManager.GameData.ProgressData.CurrentFlatLevel + ")");
-                break;
-        }
-        
         IsSessionStarted?.Invoke();
-    }
-    
-    private void OnLevelComplete()
-    {
-        StartCoroutine(EnableEndScreen(true));
-    }
-    
-    private void OnLevelFailed()
-    {
-        StartCoroutine(EnableEndScreen(false));
     }
 
     private void OnScreenDisabled(bool isAdShowed)
@@ -94,74 +61,20 @@ public class SessionHandler : MonoBehaviour
         AsyncLoader.LoadScene();
     }
 
-    private IEnumerator EnableEndScreen(bool isLevelComplete)
+    public void CompleteLevel(int index = 0)
     {
-        _knifeHandler.DisallowThrow();
-        
-        yield return new WaitForSeconds(1f);
-        
-        if(_experienceHandler.HasReward)
-        {
-            _rewardHandler.GiveExperienceReward();
-        }
-        
-        if (isLevelComplete)
-        {
-            WinGame();
-        }
-        else
-        {
-            LoseGame();
-        }
-        
-    }
-
-    private void WinGame()
-    {
-        var rewardIndex = 0;
-
-        switch (Gamemod)
-        {
-            case 0:
-                MetricaManager.SendEvent("target_lvl_complete_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
-                rewardIndex = LevelManager.CurrentMarkLevel.KnifeReward;
-                LevelManager.NextMarkLevel();
-                break;
-            case 1:
-                MetricaManager.SendEvent("cube_lvl_start_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
-                rewardIndex = LevelManager.CurrentCubeLevel.KnifeReward;
-                LevelManager.NextCubeLevel();
-                break;
-            case 2:
-                MetricaManager.SendEvent("flat_lvl_complete_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
-                rewardIndex = LevelManager.CurrentFlatLevel.KnifeReward;
-                LevelManager.NextFlatLevel();
-                break;
-        }
+        var rewardIndex = index;
 
         if (rewardIndex > 0)
         {
-            _rewardHandler.GiveLevelCompleteReward(rewardIndex);
+            RewardHandler.Instance.GiveLevelCompleteReward(rewardIndex);
         }
       
         _winScreen.Win();
     }
 
-    private void LoseGame()
+    public void FailLevel()
     {
-        switch (Gamemod)
-        {
-            case 0:
-                MetricaManager.SendEvent("target_lvl_fail_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
-                break;
-            case 1:
-                MetricaManager.SendEvent("cube_lvl_fail_(" + DataManager.GameData.ProgressData.CurrentCubeLevel + ")");
-                break;
-            case 2:
-                MetricaManager.SendEvent("flat_lvl_fail_(" + DataManager.GameData.ProgressData.CurrentFlatLevel + ")");
-                break;
-        }
-        
         _loseScreen.Lose();
     }
 }

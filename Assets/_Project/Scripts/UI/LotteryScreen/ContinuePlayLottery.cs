@@ -3,11 +3,9 @@ using UnityEngine;
 
 public class ContinuePlayLottery : AdButton
 {
-    [SerializeField] private LotteryHandler _lotteryHandler;
-
     protected override void HandleUserEarnReward(object sender, Reward e)
     {
-        _lotteryHandler.ContinuePlay();
+        LotteryHandler.Instance.ContinuePlay();
 
         base.HandleUserEarnReward(sender, e);
     }

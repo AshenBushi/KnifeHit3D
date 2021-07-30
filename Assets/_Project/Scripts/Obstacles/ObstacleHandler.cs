@@ -4,24 +4,21 @@ using DG.Tweening;
 using Project.Scripts.Handlers;
 using UnityEngine;
 
-public class ObstacleHandler : MonoBehaviour
+public class ObstacleHandler : Singleton<ObstacleHandler>
 {
-    [SerializeField] private TargetHandler _targetHandler;
-    [SerializeField] private KnifeHandler _knifeHandler;
-    
     private List<ObstacleSpawner> _obstacleSpawners = new List<ObstacleSpawner>();
 
     private int Gamemod => DataManager.GameData.ProgressData.CurrentGamemod;
     
     private void OnEnable()
     {
-        _targetHandler.IsLevelSpawned += OnLevelSpawned;
+        TargetHandler.Instance.IsLevelSpawned += OnLevelSpawned;
         KnifeStorage.IsKnifeChanged += OnLevelSpawned;
     }
 
     private void OnDisable()
     {
-        _targetHandler.IsLevelSpawned -= OnLevelSpawned;
+        TargetHandler.Instance.IsLevelSpawned -= OnLevelSpawned;
         KnifeStorage.IsKnifeChanged -= OnLevelSpawned;
     }
 
@@ -31,15 +28,15 @@ public class ObstacleHandler : MonoBehaviour
         
         if (Gamemod != 1)
         {
-            foreach (var target in _targetHandler.Targets)
+            foreach (var target in TargetHandler.Instance.Targets)
             {
                 _obstacleSpawners.Add(target.GetComponentInChildren<ObstacleSpawner>());
             }
         }
         else
         {
-            if(_targetHandler.Targets.Count > 0)
-                _obstacleSpawners = _targetHandler.Targets[0].GetComponentsInChildren<ObstacleSpawner>().ToList();
+            if(TargetHandler.Instance.Targets.Count > 0)
+                _obstacleSpawners = TargetHandler.Instance.Targets[0].GetComponentsInChildren<ObstacleSpawner>().ToList();
         }
 
         SpawnObstacles();
@@ -51,16 +48,16 @@ public class ObstacleHandler : MonoBehaviour
         {
             for (var i = 0; i < _obstacleSpawners.Count; i++)
             {
-                _obstacleSpawners[i].SpawnObstacles(_knifeHandler.CurrentKnifeTemplate,
-                    _targetHandler.Targets[i].ObstacleCount[0]);
+                _obstacleSpawners[i].SpawnObstacles(KnifeHandler.Instance.CurrentKnifeTemplate,
+                    TargetHandler.Instance.Targets[i].ObstacleCount[0]);
             }
         }
         else
         {
             for (var i = 0; i < _obstacleSpawners.Count; i++)
             {
-                _obstacleSpawners[i].SpawnObstacles(_knifeHandler.CurrentKnifeTemplate,
-                    _targetHandler.Targets[0].ObstacleCount[i]);
+                _obstacleSpawners[i].SpawnObstacles(KnifeHandler.Instance.CurrentKnifeTemplate,
+                    TargetHandler.Instance.Targets[0].ObstacleCount[i]);
             }
         }
     }

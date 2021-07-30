@@ -2,8 +2,9 @@
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class InputField : MonoBehaviour, IPointerDownHandler
+public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler
 {
+    private bool _canTap = true;
     private bool _isSessionStart = false;
     
     public event UnityAction IsTapped;
@@ -11,6 +12,8 @@ public class InputField : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!_canTap) return;
+        
         if (!_isSessionStart)
         {
             IsSessionStart?.Invoke();
@@ -18,5 +21,15 @@ public class InputField : MonoBehaviour, IPointerDownHandler
         }
         
         IsTapped?.Invoke();
+    }
+
+    public void AllowTap()
+    {
+        _canTap = true;
+    }
+
+    public void DisallowTap()
+    {
+        _canTap = false;
     }
 }

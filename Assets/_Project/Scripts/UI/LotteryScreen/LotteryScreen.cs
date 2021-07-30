@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class LotteryScreen : UIScreen
 {
-    [SerializeField] private LotteryHandler _lotteryHandler;
     [SerializeField] private LotteryRewarder _lotteryRewarder;
     [SerializeField] private List<TMP_Text> _rewardsTexts;
 
-    private List<RewardName> Rewards => _lotteryHandler.Rewards;
+    private List<RewardName> Rewards => LotteryHandler.Instance.Rewards;
 
     private void Awake()
     {

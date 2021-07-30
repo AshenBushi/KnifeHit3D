@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ExperienceHandler : MonoBehaviour
+public class ExperienceHandler : Singleton<ExperienceHandler>
 {
     [SerializeField] private ExperienceBar _expBar;
 
@@ -15,7 +15,7 @@ public class ExperienceHandler : MonoBehaviour
         if (DataManager.GameData.PlayerData.Experience < 200) return;
         DataManager.GameData.PlayerData.Experience -= 200;
         DataManager.Save();
-        HasReward = true;
+        RewardHandler.Instance.GiveExperienceReward();
     }
 
     public void AddExp(int value)
