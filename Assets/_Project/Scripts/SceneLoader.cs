@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+public class SceneLoader : Singleton<SceneLoader>
 {
     [SerializeField] private List<string> _sceneNames;
     
     private int _lastLoadSceneIndex = -1;
 
-    public void TryLoadScene(int sceneIndex)
+    public void TryLoadGameplayScene(int sceneIndex)
     {
         if (_lastLoadSceneIndex == sceneIndex) return;
 

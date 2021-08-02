@@ -20,7 +20,7 @@ public class LoseScreen : UIScreen
     {
         Enable();
         
-        SoundManager.PlaySound(SoundName.Lose);
+        SoundManager.Instance.PlaySound(SoundName.Lose);
 
         yield return new WaitForSeconds(1f);
         

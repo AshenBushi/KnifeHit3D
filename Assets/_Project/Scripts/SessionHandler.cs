@@ -15,6 +15,7 @@ public class SessionHandler : Singleton<SessionHandler>
     [SerializeField] private WinScreen _winScreen;
 
     public event UnityAction IsSessionStarted;
+    public event UnityAction IsSessionRestarted;
 
     private void OnEnable()
     {
@@ -45,12 +46,10 @@ public class SessionHandler : Singleton<SessionHandler>
     {
         if(isAdShowed || !AdManager.Interstitial.IsLoaded())
         {
-            AsyncLoader.PrepareScene();
-            AsyncLoader.LoadScene();
+            RestartSession();
         }
         else
         {
-            AsyncLoader.PrepareScene();
             AdManager.Interstitial.OnAdClosed += HandleOnAdClosed;
             AdManager.ShowInterstitial();
         }
@@ -58,7 +57,7 @@ public class SessionHandler : Singleton<SessionHandler>
 
     private void HandleOnAdClosed(object sender, EventArgs e)
     {
-        AsyncLoader.LoadScene();
+        RestartSession();
     }
 
     public void CompleteLevel(int index = 0)
@@ -76,5 +75,12 @@ public class SessionHandler : Singleton<SessionHandler>
     public void FailLevel()
     {
         _loseScreen.Lose();
+    }
+
+    public void RestartSession()
+    {
+        GamemodManager.Instance.StartSession();
+        _startScreen.Enable();
+        IsSessionRestarted?.Invoke();
     }
 }

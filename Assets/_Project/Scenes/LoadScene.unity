@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44300318, g: 0.49219626, b: 0.57192606, a: 1}
+  m_IndirectSpecularColor: {r: 0.44824904, g: 0.49827605, b: 0.57558316, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1320,6 +1320,52 @@ MonoBehaviour:
   - Language: English
     Text: Music
     Object: {fileID: 0}
+--- !u!1 &812101227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 812101229}
+  - component: {fileID: 812101228}
+  m_Layer: 0
+  m_Name: SceneLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &812101228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812101227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d8d53b63a17901478a827de07d81eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneNames:
+  - KnifeHitScene
+  - StackKnifeScene
+--- !u!4 &812101229
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812101227}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1014453669}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &848303511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1537,6 +1583,7 @@ GameObject:
   - component: {fileID: 1014453667}
   - component: {fileID: 1014453666}
   - component: {fileID: 1014453665}
+  - component: {fileID: 1014453671}
   - component: {fileID: 1014453664}
   - component: {fileID: 1014453670}
   m_Layer: 0
@@ -1869,13 +1916,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: a7d84a9a0afb4eb44a09c17ce0d38d72, type: 2}
     - {fileID: 11400000, guid: 57caf0daf78661b42a7de72e62029cf2, type: 2}
     - {fileID: 11400000, guid: d8a6f45aa9da20d47996915e0e2e1158, type: 2}
-  _colorPresets:
-  - {fileID: 11400000, guid: e23cda4764a0b0d4493ffa1fb4c0ac4c, type: 2}
-  - {fileID: 11400000, guid: 8a82495e40697da408e64cca5fad8bb8, type: 2}
-  - {fileID: 11400000, guid: 14514f011414fcb4493269d3834859e0, type: 2}
-  - {fileID: 11400000, guid: d243482108afc3f46864a80f0dfefd5c, type: 2}
-  - {fileID: 11400000, guid: 4ba2115afd89b064387f4275ca67ec55, type: 2}
-  - {fileID: 11400000, guid: 13114aeda5e21804f9b58322f32b59bb, type: 2}
 --- !u!114 &1014453667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1888,6 +1928,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fe8a9acb713cf4b8c2d8f7e2f8bb8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameData:
+    ShopData:
+      CurrentKnifeIndex: 0
+      OpenedKnives: 
+    PlayerData:
+      Money: 0
+      SlowMode: 0
+      LevelPass: 0
+      SecondLife: 0
+      Experience: 0
+    ProgressData:
+      CurrentGamemod: 0
+      CurrentMarkLevel: 0
+      CurrentCubeLevel: 0
+      CurrentFlatLevel: 0
+    SettingsData:
+      SoundVolume: 0
+      MusicVolume: 0
+    DailyGiftsData:
+      Timer:
+        Hours: 0
+        Minutes: 0
+        Seconds: 0
+      Date: 
+      UnlockedGifts: 0
+      PickedGifts: 0
 --- !u!114 &1014453668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1915,6 +1981,7 @@ Transform:
   - {fileID: 371089093}
   - {fileID: 1296952428}
   - {fileID: 412657872}
+  - {fileID: 812101229}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1930,6 +1997,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5488cdf38355e1848b74b26b3bfb6b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1014453671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014453663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 321b73e9c5d5cc74e99381fd25d0f7ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelColorPresets:
+  - {fileID: 11400000, guid: e23cda4764a0b0d4493ffa1fb4c0ac4c, type: 2}
+  - {fileID: 11400000, guid: 8a82495e40697da408e64cca5fad8bb8, type: 2}
+  - {fileID: 11400000, guid: 14514f011414fcb4493269d3834859e0, type: 2}
+  - {fileID: 11400000, guid: d243482108afc3f46864a80f0dfefd5c, type: 2}
+  - {fileID: 11400000, guid: 4ba2115afd89b064387f4275ca67ec55, type: 2}
+  - {fileID: 11400000, guid: 13114aeda5e21804f9b58322f32b59bb, type: 2}
 --- !u!1 &1048353732
 GameObject:
   m_ObjectHideFlags: 0
@@ -2766,6 +2852,7 @@ GameObject:
   - component: {fileID: 1750025281}
   - component: {fileID: 1750025280}
   - component: {fileID: 1750025279}
+  - component: {fileID: 1750025282}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2838,6 +2925,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1750025282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750025278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &1751986281
 GameObject:
   m_ObjectHideFlags: 0

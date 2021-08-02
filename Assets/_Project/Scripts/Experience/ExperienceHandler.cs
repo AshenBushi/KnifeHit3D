@@ -12,16 +12,16 @@ public class ExperienceHandler : Singleton<ExperienceHandler>
     
     private void CheckForFull()
     {
-        if (DataManager.GameData.PlayerData.Experience < 200) return;
-        DataManager.GameData.PlayerData.Experience -= 200;
-        DataManager.Save();
+        if (DataManager.Instance.GameData.PlayerData.Experience < 200) return;
+        DataManager.Instance.GameData.PlayerData.Experience -= 200;
+        DataManager.Instance.Save();
         RewardHandler.Instance.GiveExperienceReward();
     }
 
     public void AddExp(int value)
     {
-        DataManager.GameData.PlayerData.Experience += value;
-        DataManager.Save();
+        DataManager.Instance.GameData.PlayerData.Experience += value;
+        DataManager.Instance.Save();
         CheckForFull();
         _expBar.ShowExpBar(value);
     }

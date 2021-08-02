@@ -38,15 +38,15 @@ public class WinScreen : UIScreen
     public override void Enable()
     {
         base.Enable();
-        SoundManager.PlaySound(SoundName.Win);
+        SoundManager.Instance.PlaySound(SoundName.Win);
         _cup.SetActive(true);
 
-        _rewardText.text = DataManager.GameData.ProgressData.CurrentGamemod switch
+        _rewardText.text = DataManager.Instance.GameData.ProgressData.CurrentGamemod switch
         {
-            0 => LevelManager.CurrentMarkLevel.Reward.ToString(),
-            1 => LevelManager.CurrentCubeLevel.Reward.ToString(),
-            2 => LevelManager.CurrentFlatLevel.Reward.ToString(),
-            _ => LevelManager.CurrentMarkLevel.Reward.ToString()
+            0 => LevelManager.Instance.CurrentMarkLevel.Reward.ToString(),
+            1 => LevelManager.Instance.CurrentCubeLevel.Reward.ToString(),
+            2 => LevelManager.Instance.CurrentFlatLevel.Reward.ToString(),
+            _ => LevelManager.Instance.CurrentMarkLevel.Reward.ToString()
         };
     }
 
@@ -64,7 +64,7 @@ public class WinScreen : UIScreen
 
     public void Continue()
     {
-        SoundManager.PlaySound(SoundName.ButtonClick);
+        SoundManager.Instance.PlaySound(SoundName.ButtonClick);
         
         Disable();
     }

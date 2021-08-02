@@ -8,13 +8,16 @@ using Random = UnityEngine.Random;
 
 public class GamemodManager : Singleton<GamemodManager>
 {
-    [SerializeField] private SceneLoader _sceneLoader;
-    
     public int LastPressedButtonIndex { get; private set; }
     
     public event UnityAction IsButtonIndexChanged;
 
     private void Start()
+    {
+        StartSession();
+    }
+
+    public void StartSession()
     {
         SelectMod(0);
         SetButtonIndex(Random.Range(0, 6));
@@ -22,12 +25,14 @@ public class GamemodManager : Singleton<GamemodManager>
 
     public void SelectMod(int index)
     {
-        _sceneLoader.TryLoadScene(index);
+        SceneLoader.Instance.TryLoadGameplayScene(index);
     }
 
     public void SetButtonIndex(int index)
     {
         if (LastPressedButtonIndex == index) return;
+        
+        SoundManager.Instance.PlaySound(SoundName.ButtonClick);
         
         LastPressedButtonIndex = index;
         IsButtonIndexChanged?.Invoke();

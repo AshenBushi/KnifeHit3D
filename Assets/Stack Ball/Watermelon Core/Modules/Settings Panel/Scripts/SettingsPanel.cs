@@ -103,6 +103,8 @@ namespace Watermelon
         {
             if (isAnimationActive) return;
 
+            SoundManager.Instance.PlaySound(SoundName.ButtonClick);
+            
             if (isActive)
             {
                 Hide();

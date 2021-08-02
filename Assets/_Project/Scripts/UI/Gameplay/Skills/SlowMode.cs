@@ -32,7 +32,7 @@ public class SlowMode : MonoBehaviour
     public void ActiveSlowMode()
     {
         StartCoroutine(SlowGame());
-        DataManager.GameData.PlayerData.SlowMode--;
-        DataManager.Save();
+        DataManager.Instance.GameData.PlayerData.SlowMode--;
+        DataManager.Instance.Save();
     }
 }

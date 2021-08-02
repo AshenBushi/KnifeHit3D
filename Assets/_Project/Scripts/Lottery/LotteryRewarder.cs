@@ -30,15 +30,15 @@ public class LotteryRewarder : MonoBehaviour
                     break;
                 case RewardName.Slow:
                     MetricaManager.SendEvent("bns_lvl_slow");
-                    DataManager.GameData.PlayerData.SlowMode++;
+                    DataManager.Instance.GameData.PlayerData.SlowMode++;
                     break;
                 case RewardName.LevelPass:
                     MetricaManager.SendEvent("bns_lvl_skip");
-                    DataManager.GameData.PlayerData.LevelPass++;
+                    DataManager.Instance.GameData.PlayerData.LevelPass++;
                     break;
                 case RewardName.SecondChance:
                     MetricaManager.SendEvent("bns_lvl_chance");
-                    DataManager.GameData.PlayerData.SecondLife++;
+                    DataManager.Instance.GameData.PlayerData.SecondLife++;
                     break;
                 case RewardName.Skin:
                     MetricaManager.SendEvent("bns_lvl_skin");
@@ -51,12 +51,7 @@ public class LotteryRewarder : MonoBehaviour
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (!_hasSkinReward)
-            {
-                AsyncLoader.LoadScene();
-            }
-            
-            DataManager.Save();
+            DataManager.Instance.Save();
         }
     }
 }

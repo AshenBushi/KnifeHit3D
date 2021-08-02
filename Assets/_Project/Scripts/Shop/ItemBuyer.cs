@@ -56,7 +56,7 @@ public class ItemBuyer : MonoBehaviour
         {
             while (iterations != _iterationsCount)
             {
-                SoundManager.PlaySound(SoundName.RandomBuy);
+                SoundManager.Instance.PlaySound(SoundName.RandomBuy);
                 _currentItems[_itemIndex].EnableIndicator();
                 yield return new WaitForSeconds(_animationDuration / _iterationsCount);
                 _currentItems[_itemIndex].DisableIndicator();
@@ -73,8 +73,8 @@ public class ItemBuyer : MonoBehaviour
             }
         }
 
-        KnifeStorage.AddKnife(_currentItems[_itemIndex].Index);
-        SoundManager.PlaySound(SoundName.RandomBuy);
+        KnifeStorage.Instance.AddKnife(_currentItems[_itemIndex].Index);
+        SoundManager.Instance.PlaySound(SoundName.RandomBuy);
         _currentItems[_itemIndex].Unlock();
         _currentItems[_itemIndex].SelectItem();
         _currentItems.Remove(_currentItems[_itemIndex]);
@@ -108,7 +108,7 @@ public class ItemBuyer : MonoBehaviour
     private void BuyItem()
     {
         MetricaManager.SendEvent("btn_buy");
-        SoundManager.PlaySound(SoundName.ButtonClick);
+        SoundManager.Instance.PlaySound(SoundName.ButtonClick);
         FindLockedItemsOnPage();
         _player.WithdrawMoney(_price);
         StartCoroutine(BuyAnimation());

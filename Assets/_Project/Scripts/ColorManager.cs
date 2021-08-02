@@ -1,9 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class BackgroundPaintbrush : Singleton<BackgroundPaintbrush>
+public class ColorManager : Singleton<ColorManager>
 {
+    [SerializeField] private List<LevelColorPreset> _levelColorPresets;
+
     private Texture2D _texture;
+    
+    public LevelColorPreset CurrentColorPreset { get; private set; }
+    public event UnityAction IsPresetChanged;
 
     protected override void Awake()
     {
@@ -12,8 +19,18 @@ public class BackgroundPaintbrush : Singleton<BackgroundPaintbrush>
         _texture = new Texture2D(1, 9) {wrapMode = TextureWrapMode.Clamp, filterMode = FilterMode.Bilinear};
     }
 
-    public void Colorize(RawImage background, Color color1, Color color2)
+    public void RandomColorPreset()
     {
+        CurrentColorPreset = _levelColorPresets[Random.Range(0, _levelColorPresets.Count)];
+        
+        IsPresetChanged?.Invoke();
+    }
+
+    public void ColorizeImage(RawImage image)
+    {
+        var color1 = CurrentColorPreset.cameraStartColor;
+        var color2 = CurrentColorPreset.cameraEndColor;
+
         _texture.SetPixel(0, 0, color1);
         _texture.SetPixel(0, 1, Color.Lerp(color1, color2, 0.125f));
         _texture.SetPixel(0, 2, Color.Lerp(color1, color2, 0.250f));
@@ -25,6 +42,6 @@ public class BackgroundPaintbrush : Singleton<BackgroundPaintbrush>
         _texture.SetPixel(0, 8, color2);
 
         _texture.Apply();
-        background.texture = _texture;
+        image.texture = _texture;
     }
 }

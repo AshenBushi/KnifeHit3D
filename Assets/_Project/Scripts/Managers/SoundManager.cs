@@ -19,29 +19,18 @@ public enum SoundName
     ButtonClick
 }
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] private AudioSource _soundPlayer;
     [SerializeField] private AudioSource _musicPlayer;
-
     [SerializeField] private List<AudioClip> _audioClips;
+    
 
-    private static List<AudioClip> _aClips;
-    private static AudioSource _soundP;
-    private static AudioSource _musicP;
+    public AudioSource SoundPlayer => _soundPlayer;
+    public AudioSource MusicPlayer => _musicPlayer;
 
-    public static AudioSource SoundPlayer => _soundP;
-    public static AudioSource MusicPlayer => _musicP;
-
-    private void Awake()
+    public void PlaySound(SoundName soundName)
     {
-        _soundP = _soundPlayer;
-        _musicP = _musicPlayer;
-        _aClips = _audioClips;
-    }
-
-    public static void PlaySound(SoundName soundName)
-    {
-        _soundP.PlayOneShot(_aClips[(int) soundName]);
+        _soundPlayer.PlayOneShot(_audioClips[(int) soundName]);
     }
 }

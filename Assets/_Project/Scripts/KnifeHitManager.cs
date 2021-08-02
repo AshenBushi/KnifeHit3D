@@ -39,13 +39,13 @@ public class KnifeHitManager : Singleton<KnifeHitManager>
         switch (_targetHandler.CurrentSpawnerIndex)
         {
             case 0:
-                MetricaManager.SendEvent("target_lvl_start_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
+                MetricaManager.SendEvent("target_lvl_start_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
                 break;
             case 1:
-                MetricaManager.SendEvent("cube_lvl_start_(" + DataManager.GameData.ProgressData.CurrentCubeLevel + ")");
+                MetricaManager.SendEvent("cube_lvl_start_(" + DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + ")");
                 break;
             case 2:
-                MetricaManager.SendEvent("flat_lvl_start_(" + DataManager.GameData.ProgressData.CurrentFlatLevel + ")");
+                MetricaManager.SendEvent("flat_lvl_start_(" + DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + ")");
                 break;
         }
     }

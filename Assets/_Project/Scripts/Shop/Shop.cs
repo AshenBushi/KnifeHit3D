@@ -39,11 +39,11 @@ public class Shop : MonoBehaviour
 
     private void Start()
     {
-        foreach (var item in _shopItems.Where(item => DataManager.GameData.ShopData.OpenedKnives.Contains(item.Index)))
+        foreach (var item in _shopItems.Where(item => DataManager.Instance.GameData.ShopData.OpenedKnives.Contains(item.Index)))
         {
             item.Unlock();
             
-            if (item.Index != DataManager.GameData.ShopData.CurrentKnifeIndex) continue;
+            if (item.Index != DataManager.Instance.GameData.ShopData.CurrentKnifeIndex) continue;
             OnItemSelected(item);
         }
     }
@@ -55,11 +55,11 @@ public class Shop : MonoBehaviour
         
         _currentItem = item;
 
-        _itemPreview.SpawnSelectedItem(KnifeStorage.KnifePreviews[_currentItem.Index]);
+        _itemPreview.SpawnSelectedItem(KnifeStorage.Instance.KnifePreviews[_currentItem.Index]);
         
         _currentItem.EnableIndicator();
         
-        KnifeStorage.ChangeKnife(_currentItem.Index);
+        KnifeStorage.Instance.ChangeKnife(_currentItem.Index);
     }
 
     public void EnableShopSection(int index)

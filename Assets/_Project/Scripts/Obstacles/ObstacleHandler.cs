@@ -8,18 +8,18 @@ public class ObstacleHandler : Singleton<ObstacleHandler>
 {
     private List<ObstacleSpawner> _obstacleSpawners = new List<ObstacleSpawner>();
 
-    private int Gamemod => DataManager.GameData.ProgressData.CurrentGamemod;
+    private int Gamemod => DataManager.Instance.GameData.ProgressData.CurrentGamemod;
     
     private void OnEnable()
     {
         TargetHandler.Instance.IsLevelSpawned += OnLevelSpawned;
-        KnifeStorage.IsKnifeChanged += OnLevelSpawned;
+        KnifeStorage.Instance.IsKnifeChanged += OnLevelSpawned;
     }
 
     private void OnDisable()
     {
         TargetHandler.Instance.IsLevelSpawned -= OnLevelSpawned;
-        KnifeStorage.IsKnifeChanged -= OnLevelSpawned;
+        KnifeStorage.Instance.IsKnifeChanged -= OnLevelSpawned;
     }
 
     private void OnLevelSpawned()

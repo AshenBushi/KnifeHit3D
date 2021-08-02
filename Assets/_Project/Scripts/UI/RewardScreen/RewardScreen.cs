@@ -24,7 +24,7 @@ public class RewardScreen : UIScreen
     {
         Enable();
 
-        _reward = Instantiate(KnifeStorage.KnifePreviews[index], _preview);
+        _reward = Instantiate(KnifeStorage.Instance.KnifePreviews[index], _preview);
         _animator.SetTrigger("ShowReward");
     }
 

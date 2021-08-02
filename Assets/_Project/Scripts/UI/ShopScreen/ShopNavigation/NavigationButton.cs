@@ -34,7 +34,7 @@ public class NavigationButton : MonoBehaviour
 
     private void OnClick()
     {
-        SoundManager.PlaySound(SoundName.ButtonClick);
+        SoundManager.Instance.PlaySound(SoundName.ButtonClick);
         _navigation.SelectShopSection(this);
     }
 

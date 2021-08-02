@@ -93,19 +93,19 @@ namespace Project.Scripts.Handlers
             switch (CurrentSpawnerIndex)
             {
                 case 0:
-                    MetricaManager.SendEvent("target_lvl_complete_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
-                    rewardIndex = LevelManager.CurrentMarkLevel.KnifeReward;
-                    LevelManager.NextMarkLevel();
+                    MetricaManager.SendEvent("target_lvl_complete_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
+                    rewardIndex = LevelManager.Instance.CurrentMarkLevel.KnifeReward;
+                    LevelManager.Instance.NextMarkLevel();
                     break;
                 case 1:
-                    MetricaManager.SendEvent("cube_lvl_start_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
-                    rewardIndex = LevelManager.CurrentCubeLevel.KnifeReward;
-                    LevelManager.NextCubeLevel();
+                    MetricaManager.SendEvent("cube_lvl_start_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
+                    rewardIndex = LevelManager.Instance.CurrentCubeLevel.KnifeReward;
+                    LevelManager.Instance.NextCubeLevel();
                     break;
                 case 2:
-                    MetricaManager.SendEvent("flat_lvl_complete_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
-                    rewardIndex = LevelManager.CurrentFlatLevel.KnifeReward;
-                    LevelManager.NextFlatLevel();
+                    MetricaManager.SendEvent("flat_lvl_complete_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
+                    rewardIndex = LevelManager.Instance.CurrentFlatLevel.KnifeReward;
+                    LevelManager.Instance.NextFlatLevel();
                     break;
             }
             
@@ -116,6 +116,7 @@ namespace Project.Scripts.Handlers
         {
             _currentSpawner?.TryCleanTargets();
             _currentSpawner = _spawners[spawnerIndex];
+            ColorManager.Instance.RandomColorPreset();
             _currentSpawner.SpawnLevel();
             _levelProgressDisplayer.ShowLevelDisplay();
             SetCurrentTarget();

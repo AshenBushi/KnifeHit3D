@@ -12,8 +12,8 @@ public class RewardHandler : Singleton<RewardHandler>
     {
         for (var i = 29; i < 45; i++)
         {
-            if (DataManager.GameData.ShopData.OpenedKnives.Contains(i)) continue;
-            KnifeStorage.AddKnife(i);
+            if (DataManager.Instance.GameData.ShopData.OpenedKnives.Contains(i)) continue;
+            KnifeStorage.Instance.AddKnife(i);
             break;
         }
         
@@ -22,7 +22,7 @@ public class RewardHandler : Singleton<RewardHandler>
 
     public void GiveLevelCompleteReward(int knifeIndex)
     {
-        KnifeStorage.AddKnife(knifeIndex);
+        KnifeStorage.Instance.AddKnife(knifeIndex);
         
         _startScreen.EnableShopNotification();
     }
@@ -34,7 +34,7 @@ public class RewardHandler : Singleton<RewardHandler>
         
         for (var i = 45; i < 63; i++)
         {
-            if (!DataManager.GameData.ShopData.OpenedKnives.Contains(i))
+            if (!DataManager.Instance.GameData.ShopData.OpenedKnives.Contains(i))
             {
                 lockedKnifeCount++;
             }
@@ -45,12 +45,12 @@ public class RewardHandler : Singleton<RewardHandler>
             return;
         }
 
-        while (DataManager.GameData.ShopData.OpenedKnives.Contains(index))
+        while (DataManager.Instance.GameData.ShopData.OpenedKnives.Contains(index))
         {
             index = Random.Range(45, 63);
         }
         
-        KnifeStorage.AddKnife(index);
+        KnifeStorage.Instance.AddKnife(index);
         
         _startScreen.EnableShopNotification();
     }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
@@ -9,6 +10,22 @@ public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler
     
     public event UnityAction IsTapped;
     public event UnityAction IsSessionStart;
+
+    private void OnEnable()
+    {
+        SessionHandler.Instance.IsSessionRestarted += OnSessionRestarted;
+    }
+
+    private void OnDisable()
+    {
+        SessionHandler.Instance.IsSessionRestarted -= OnSessionRestarted;
+    }
+    
+    private void OnSessionRestarted()
+    {
+        _isSessionStart = false;
+        AllowTap();
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {

@@ -17,12 +17,12 @@ public class LevelProgressDisplayer : MonoBehaviour
 
     public void ShowLevelDisplay()
     {
-        _levelText.text = DataManager.GameData.ProgressData.CurrentGamemod switch
+        _levelText.text = DataManager.Instance.GameData.ProgressData.CurrentGamemod switch
         {
-            0 => (DataManager.GameData.ProgressData.CurrentMarkLevel + 1).ToString(),
-            1 => (DataManager.GameData.ProgressData.CurrentCubeLevel + 1).ToString(),
-            2 => (DataManager.GameData.ProgressData.CurrentFlatLevel + 1).ToString(),
-            _ => (DataManager.GameData.ProgressData.CurrentMarkLevel + 1).ToString()
+            0 => (DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + 1).ToString(),
+            1 => (DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + 1).ToString(),
+            2 => (DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + 1).ToString(),
+            _ => (DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + 1).ToString()
         };
 
         if (_points.Count > 0)
@@ -35,7 +35,7 @@ public class LevelProgressDisplayer : MonoBehaviour
             _points.Clear();
         }
         
-        if (DataManager.GameData.ProgressData.CurrentGamemod == 1)
+        if (DataManager.Instance.GameData.ProgressData.CurrentGamemod == 1)
         {
             for (var i = 0; i < 5; i++)
             {

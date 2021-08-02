@@ -5,8 +5,8 @@ public class FlatSpawner : TargetSpawner
 {
     public override void SpawnLevel()
     {
-        var level = LevelManager.CurrentFlatLevel;
-        var colorPreset = LevelManager.GiveColorPreset();
+        var level = LevelManager.Instance.CurrentFlatLevel;
+        var colorPreset = ColorManager.Instance.CurrentColorPreset;
         
         TryCleanTargets();
     

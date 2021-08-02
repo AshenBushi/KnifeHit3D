@@ -34,19 +34,19 @@ public class DoubleReward : AdButton
 
     protected override void HandleUserEarnReward(object sender, Reward e)
     {
-        switch (DataManager.GameData.ProgressData.CurrentGamemod)
+        switch (DataManager.Instance.GameData.ProgressData.CurrentGamemod)
         {
             case 0 :
-                _player.DepositMoney(LevelManager.CurrentMarkLevel.Reward * _coefficient);
+                _player.DepositMoney(LevelManager.Instance.CurrentMarkLevel.Reward * _coefficient);
                 break;
             case 1 :
-                _player.DepositMoney(LevelManager.CurrentCubeLevel.Reward * _coefficient);
+                _player.DepositMoney(LevelManager.Instance.CurrentCubeLevel.Reward * _coefficient);
                 break;
             case 2 :
-                _player.DepositMoney(LevelManager.CurrentFlatLevel.Reward * _coefficient);
+                _player.DepositMoney(LevelManager.Instance.CurrentFlatLevel.Reward * _coefficient);
                 break;
             default:
-                _player.DepositMoney(LevelManager.CurrentMarkLevel.Reward * _coefficient);
+                _player.DepositMoney(LevelManager.Instance.CurrentMarkLevel.Reward * _coefficient);
                 break;
         }
         

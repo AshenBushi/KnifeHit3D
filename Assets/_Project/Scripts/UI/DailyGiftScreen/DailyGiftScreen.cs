@@ -38,18 +38,18 @@ public class DailyGiftScreen : UIScreen
 
     private void Start()
     {
-        if (DataManager.GameData.DailyGiftsData.UnlockedGifts != DataManager.GameData.DailyGiftsData.PickedGifts)
+        if (DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts != DataManager.Instance.GameData.DailyGiftsData.PickedGifts)
             Enable();
     }
 
     private void CheckGiftsState()
     {
-        for (var i = 0; i < DataManager.GameData.DailyGiftsData.UnlockedGifts; i++)
+        for (var i = 0; i < DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts; i++)
         {
             _gifts[i].Unlock();
         }
         
-        for (var i = 0; i < DataManager.GameData.DailyGiftsData.PickedGifts; i++)
+        for (var i = 0; i < DataManager.Instance.GameData.DailyGiftsData.PickedGifts; i++)
         {
             _gifts[i].Pick();
         }
@@ -57,10 +57,10 @@ public class DailyGiftScreen : UIScreen
     
     private void UnlockNextGift()
     {
-        if (_gifts.Count == DataManager.GameData.DailyGiftsData.UnlockedGifts) return;
-        _gifts[DataManager.GameData.DailyGiftsData.UnlockedGifts].Unlock();
-        DataManager.GameData.DailyGiftsData.UnlockedGifts++;
-        DataManager.Save();
+        if (_gifts.Count == DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts) return;
+        _gifts[DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts].Unlock();
+        DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts++;
+        DataManager.Instance.Save();
         _startScreen.EnableGiftNotification();
         CheckGiftsState();
     }
@@ -69,17 +69,17 @@ public class DailyGiftScreen : UIScreen
     {
         if (isKnife)
         {
-            KnifeStorage.AddKnife(value);
+            KnifeStorage.Instance.AddKnife(value);
         }
         else
         {
             _player.DepositMoney(value);
         }
 
-        DataManager.GameData.DailyGiftsData.PickedGifts++;
-        DataManager.Save();
+        DataManager.Instance.GameData.DailyGiftsData.PickedGifts++;
+        DataManager.Instance.Save();
         
-        if(DataManager.GameData.DailyGiftsData.UnlockedGifts == DataManager.GameData.DailyGiftsData.PickedGifts)
+        if(DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts == DataManager.Instance.GameData.DailyGiftsData.PickedGifts)
             _startScreen.DisableGiftNotification();
         CheckGiftsState();
         MetricaManager.SendEvent("day_gift");
@@ -89,12 +89,12 @@ public class DailyGiftScreen : UIScreen
     {
         base.Enable();
         CheckGiftsState();
-        SoundManager.PlaySound(SoundName.ButtonClick);
+        SoundManager.Instance.PlaySound(SoundName.ButtonClick);
     }
 
     public override void Disable()
     {
         base.Disable();
-        SoundManager.PlaySound(SoundName.ButtonClick);
+        SoundManager.Instance.PlaySound(SoundName.ButtonClick);
     }
 }

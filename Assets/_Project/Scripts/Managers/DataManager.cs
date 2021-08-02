@@ -5,16 +5,18 @@ using System.Globalization;
 using System.IO;
 using UnityEngine;
 
-public class DataManager : MonoBehaviour
+public class DataManager : Singleton<DataManager>
 {
-    private static string _path;
+    private string _path;
 
-    public static GameData GameData = new GameData();
+    public GameData GameData = new GameData();
 
-    private static bool _dataIsLoad = false;
+    private bool _dataIsLoad = false;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         Load();
     }
 
@@ -83,27 +85,22 @@ public class DataManager : MonoBehaviour
         MetricaManager.SendEvent("ev_first_open");
     }
     
-    public static void Save()
+    public void Save()
     {
         File.WriteAllText(_path, JsonUtility.ToJson(GameData));
     }
     
-    public static void SaveDate(DateTime value)
+    public void SaveDate(DateTime value)
     {
         var convert = value.ToString("u", CultureInfo.InvariantCulture);
         GameData.DailyGiftsData.Date = convert;
     }
 
-    public static DateTime LoadDate()
+    public DateTime LoadDate()
     {
         var result = GameData.DailyGiftsData.Date != null ? DateTime.ParseExact(GameData.DailyGiftsData.Date, "u", CultureInfo.InvariantCulture) : DateTime.UtcNow;
 
         return result;
-    }
-
-    public static bool Loaded()
-    {
-        return _dataIsLoad;
     }
 }
 

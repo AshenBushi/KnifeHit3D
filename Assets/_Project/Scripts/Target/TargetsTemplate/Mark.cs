@@ -28,7 +28,7 @@ public class Mark : Target
 
     public override void BreakTarget()
     {
-        SoundManager.PlaySound(SoundName.TargetBreak);
+        SoundManager.Instance.PlaySound(SoundName.TargetBreak);
         var targetBase = Instantiate(Base, Base.transform.position, Base.transform.rotation);
         targetBase.Detonate(_explosionPosition, _explosionForce);
         IsTargetBreak?.Invoke(ExpReward);

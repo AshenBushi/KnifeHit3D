@@ -11,23 +11,31 @@ public class Skills : MonoBehaviour
     private void OnEnable()
     {
         SessionHandler.Instance.IsSessionStarted += OnSessionStarted;
+        SessionHandler.Instance.IsSessionRestarted += OnSessionRestarted;
     }
 
     private void OnDisable()
     {
         SessionHandler.Instance.IsSessionStarted -= OnSessionStarted;
+        SessionHandler.Instance.IsSessionRestarted += OnSessionRestarted;
     }
 
     private void OnSessionStarted()
     {
         StartCoroutine(TryEnableButtons());
     }
+    
+    private void OnSessionRestarted()
+    {
+        _skipTarget.gameObject.SetActive(false);
+        _slowMode.gameObject.SetActive(false);
+    }
 
     private IEnumerator TryEnableButtons()
     {
         yield return new WaitForSeconds(2f);
 
-        if (DataManager.GameData.PlayerData.SlowMode > 0)
+        if (DataManager.Instance.GameData.PlayerData.SlowMode > 0)
         {
             _slowMode.gameObject.SetActive(true);
         }

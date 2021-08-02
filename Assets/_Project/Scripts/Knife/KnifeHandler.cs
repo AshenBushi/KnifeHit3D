@@ -16,18 +16,18 @@ namespace Project.Scripts.Handlers
         private bool _isSecondLifeUsed = false;
         private bool _canThrowKnife = true;
 
-        public Knife CurrentKnifeTemplate => KnifeStorage.Knives[DataManager.GameData.ShopData.CurrentKnifeIndex];
+        public Knife CurrentKnifeTemplate => KnifeStorage.Instance.Knives[DataManager.Instance.GameData.ShopData.CurrentKnifeIndex];
 
         private void OnEnable()
         {
             PlayerInput.Instance.IsTapped += OnTapped;
-            KnifeStorage.IsKnifeChanged += RespawnKnife;
+            KnifeStorage.Instance.IsKnifeChanged += RespawnKnife;
         }
 
         private void OnDisable()
         {
             PlayerInput.Instance.IsTapped -= OnTapped;
-            KnifeStorage.IsKnifeChanged -= RespawnKnife;
+            KnifeStorage.Instance.IsKnifeChanged -= RespawnKnife;
 
             if (_currentKnife == null) return;
             _currentKnife.IsStuck -= OnKnifeStuck;
@@ -58,10 +58,10 @@ namespace Project.Scripts.Handlers
         {
             InitKnife();
             
-            if (DataManager.GameData.PlayerData.SecondLife > 0 && !_isSecondLifeUsed)
+            if (DataManager.Instance.GameData.PlayerData.SecondLife > 0 && !_isSecondLifeUsed)
             {
-                DataManager.GameData.PlayerData.SecondLife--;
-                DataManager.Save();
+                DataManager.Instance.GameData.PlayerData.SecondLife--;
+                DataManager.Instance.Save();
                 _isSecondLifeUsed = true;
                 _knifeAmount++;
             }
@@ -103,13 +103,13 @@ namespace Project.Scripts.Handlers
             switch (TargetHandler.Instance.CurrentSpawnerIndex)
             {
                 case 0:
-                    MetricaManager.SendEvent("target_lvl_fail_(" + DataManager.GameData.ProgressData.CurrentMarkLevel + ")");
+                    MetricaManager.SendEvent("target_lvl_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
                     break;
                 case 1:
-                    MetricaManager.SendEvent("cube_lvl_fail_(" + DataManager.GameData.ProgressData.CurrentCubeLevel + ")");
+                    MetricaManager.SendEvent("cube_lvl_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + ")");
                     break;
                 case 2:
-                    MetricaManager.SendEvent("flat_lvl_fail_(" + DataManager.GameData.ProgressData.CurrentFlatLevel + ")");
+                    MetricaManager.SendEvent("flat_lvl_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + ")");
                     break;
             }
             

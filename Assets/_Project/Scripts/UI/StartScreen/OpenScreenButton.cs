@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Watermelon;
 
@@ -14,6 +12,8 @@ public class OpenScreenButton : SettingsButtonBase
 
     public override void OnClick()
     {
+        SoundManager.Instance.PlaySound(SoundName.ButtonClick);
+        
         _screen.Enable();
     }
 }

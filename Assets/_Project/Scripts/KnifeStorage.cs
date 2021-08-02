@@ -4,31 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class KnifeStorage : MonoBehaviour
+public class KnifeStorage : Singleton<KnifeStorage>
 {
     [SerializeField] private List<Knife> _knives;
     [SerializeField] private List<GameObject> _knifePreviews;
 
-    public static List<Knife> Knives { get; private set; }
-    public static List<GameObject> KnifePreviews { get; private set; }
+    public List<Knife> Knives => _knives;
+    public List<GameObject> KnifePreviews => _knifePreviews;
     
-    public static event UnityAction IsKnifeChanged;
-
-    private void Awake()
+    public event UnityAction IsKnifeChanged;
+    
+    public void ChangeKnife(int index)
     {
-        Knives = _knives;
-        KnifePreviews = _knifePreviews;
-    }
-    public static void ChangeKnife(int index)
-    {
-        DataManager.GameData.ShopData.CurrentKnifeIndex = index;
-        DataManager.Save();
+        DataManager.Instance.GameData.ShopData.CurrentKnifeIndex = index;
+        DataManager.Instance.Save();
         IsKnifeChanged?.Invoke();
     }
     
-    public static void AddKnife(int index)
+    public void AddKnife(int index)
     {   
-        DataManager.GameData.ShopData.OpenedKnives.Add(index);
+        DataManager.Instance.GameData.ShopData.OpenedKnives.Add(index);
         ChangeKnife(index);
     }
 }

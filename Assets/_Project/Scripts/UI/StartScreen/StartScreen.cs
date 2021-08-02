@@ -18,7 +18,7 @@ public class StartScreen : UIScreen
 
     private void CheckNotificationStates()
     {
-        if(DataManager.GameData.DailyGiftsData.UnlockedGifts > DataManager.GameData.DailyGiftsData.PickedGifts)
+        if(DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts > DataManager.Instance.GameData.DailyGiftsData.PickedGifts)
             EnableGiftNotification();
         
         if(PlayerPrefs.GetInt("ShopNotification") == 1)

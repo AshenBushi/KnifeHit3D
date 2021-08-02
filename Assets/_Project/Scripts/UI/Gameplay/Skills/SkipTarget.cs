@@ -10,9 +10,9 @@ public class SkipTarget : AdButton
 {
     [SerializeField] private Image _adIcon;
 
-    private void Start()
+    private void OnEnable()
     {
-        if (DataManager.GameData.PlayerData.LevelPass <= 0)
+        if (DataManager.Instance.GameData.PlayerData.LevelPass <= 0)
         {
             _adIcon.gameObject.SetActive(true);
         }
@@ -20,8 +20,8 @@ public class SkipTarget : AdButton
 
     private void Skip()
     {
-        DataManager.GameData.PlayerData.LevelPass--;
-        DataManager.Save();
+        DataManager.Instance.GameData.PlayerData.LevelPass--;
+        DataManager.Instance.Save();
         TargetHandler.Instance.CurrentTarget.BreakTarget();
         gameObject.SetActive(false);
     }
@@ -35,7 +35,7 @@ public class SkipTarget : AdButton
 
     public void ActivateSkip()
     {
-        if (DataManager.GameData.PlayerData.LevelPass > 0)
+        if (DataManager.Instance.GameData.PlayerData.LevelPass > 0)
         {
             Skip();
         }

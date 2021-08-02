@@ -8,8 +8,8 @@ public class CubeSpawner : TargetSpawner
 {
     public override void SpawnLevel()
     {
-        var level = LevelManager.CurrentCubeLevel;
-        var colorPreset = LevelManager.GiveColorPreset();
+        var level = LevelManager.Instance.CurrentCubeLevel;
+        var colorPreset = ColorManager.Instance.CurrentColorPreset;
         
         TryCleanTargets();
     

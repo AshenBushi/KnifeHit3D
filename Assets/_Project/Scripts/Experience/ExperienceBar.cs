@@ -24,7 +24,7 @@ public class ExperienceBar : MonoBehaviour
 
     private void Start()
     {
-        _slider.value = DataManager.GameData.PlayerData.Experience;
+        _slider.value = DataManager.Instance.GameData.PlayerData.Experience;
     }
 
     private IEnumerator AddExpAnimation(int addedValue)
@@ -38,7 +38,7 @@ public class ExperienceBar : MonoBehaviour
         
         _text.text = "+" + addedValue.ToString();
         
-        while ((int) _slider.value != DataManager.GameData.PlayerData.Experience)
+        while ((int) _slider.value != DataManager.Instance.GameData.PlayerData.Experience)
         {
             _slider.value++;
 

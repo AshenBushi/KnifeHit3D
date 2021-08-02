@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Project.Scripts.Handlers;
 using UnityEngine;
 
 public class TargetRotator : MonoBehaviour
@@ -13,7 +14,7 @@ public class TargetRotator : MonoBehaviour
 
     private void Rotate()
     {
-        var rotateEuler = DataManager.GameData.ProgressData.CurrentGamemod switch
+        var rotateEuler = TargetHandler.Instance.CurrentSpawnerIndex switch
         {
             0 => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle),
             1 => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle),

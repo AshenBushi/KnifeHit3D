@@ -64,14 +64,14 @@ public class Knife : MonoBehaviour
     {
         if (gameObject.layer == LayerMask.NameToLayer("Bounced")) return;
         
-        SoundManager.PlaySound(SoundName.ObstacleHit);
+        SoundManager.Instance.PlaySound(SoundName.ObstacleHit);
         MakeBounced(position);
         IsBounced?.Invoke();
     }
 
     private void Stuck(Transform parent)
     {
-        SoundManager.PlaySound(SoundName.TargetHit);
+        SoundManager.Instance.PlaySound(SoundName.TargetHit);
         MakeObstacle(parent);
         IsStuck?.Invoke();
     }
@@ -93,7 +93,7 @@ public class Knife : MonoBehaviour
     
     public void Throw()
     {
-        SoundManager.PlaySound(SoundName.KnifeThrow);
+        SoundManager.Instance.PlaySound(SoundName.KnifeThrow);
         _rigidbody.isKinematic = false;
         _rigidbody.AddForce(Vector3.forward * ThrowForce, ForceMode.Impulse);
     }

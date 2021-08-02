@@ -9,22 +9,22 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        Money = DataManager.GameData.PlayerData.Money;
+        Money = DataManager.Instance.GameData.PlayerData.Money;
     }
 
     public void DepositMoney(int count)
     {
         Money += count;
-        DataManager.GameData.PlayerData.Money = Money;
-        DataManager.Save();
+        DataManager.Instance.GameData.PlayerData.Money = Money;
+        DataManager.Instance.Save();
         IsMoneyChanged?.Invoke();
     }
 
     public void WithdrawMoney(int count)
     {
         Money -= count;
-        DataManager.GameData.PlayerData.Money = Money;
-        DataManager.Save();
+        DataManager.Instance.GameData.PlayerData.Money = Money;
+        DataManager.Instance.Save();
         IsMoneyChanged?.Invoke();
     }
 }

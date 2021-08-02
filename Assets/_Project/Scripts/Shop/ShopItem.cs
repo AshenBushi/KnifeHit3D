@@ -20,15 +20,13 @@ public class ShopItem : MonoBehaviour
 
     public bool IsUnlock => _isUnlock;
 
-    public GameObject PreviewTemplate => KnifeStorage.KnifePreviews[_index];
-
     public event UnityAction<ShopItem> IsKnifeSelected;
 
     private void Awake()
     {
         _button = GetComponent<Button>();
         _selectIndicator.GetComponentInChildren<Image>();
-        Instantiate(KnifeStorage.KnifePreviews[Index], _container);
+        Instantiate(KnifeStorage.Instance.KnifePreviews[Index], _container);
     }
 
     private void OnEnable()
@@ -39,7 +37,7 @@ public class ShopItem : MonoBehaviour
     public void SelectItem()
     {
         if (!_isUnlock) return;
-        SoundManager.PlaySound(SoundName.ButtonClick);
+        SoundManager.Instance.PlaySound(SoundName.ButtonClick);
         IsKnifeSelected?.Invoke(this);
     }
 

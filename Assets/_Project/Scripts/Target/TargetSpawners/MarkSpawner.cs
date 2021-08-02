@@ -8,8 +8,8 @@ public class MarkSpawner : TargetSpawner
 {
     public override void SpawnLevel()
     {
-        var level = LevelManager.CurrentMarkLevel;
-        var colorPreset = LevelManager.GiveColorPreset();
+        var level = LevelManager.Instance.CurrentMarkLevel;
+        var colorPreset = ColorManager.Instance.CurrentColorPreset;
         
         TryCleanTargets();
 

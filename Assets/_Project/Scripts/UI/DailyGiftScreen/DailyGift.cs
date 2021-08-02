@@ -28,7 +28,7 @@ public class DailyGift : MonoBehaviour
 
     public void Get(bool isMoney)
     {
-        SoundManager.PlaySound(SoundName.ButtonClick);
+        SoundManager.Instance.PlaySound(SoundName.ButtonClick);
         
         if (isMoney)
         {

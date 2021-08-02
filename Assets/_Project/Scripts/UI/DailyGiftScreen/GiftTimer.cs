@@ -43,15 +43,15 @@ public class GiftTimer : MonoBehaviour
 
     private void SaveTimer()
     {
-        DataManager.GameData.DailyGiftsData.Timer = _timer;
-        DataManager.SaveDate(DateTime.UtcNow);
-        DataManager.Save();
+        DataManager.Instance.GameData.DailyGiftsData.Timer = _timer;
+        DataManager.Instance.SaveDate(DateTime.UtcNow);
+        DataManager.Instance.Save();
     }
 
     private void LoadTimer()
     {
-        _timer = DataManager.GameData.DailyGiftsData.Timer;
-        _lastDate = DataManager.LoadDate();
+        _timer = DataManager.Instance.GameData.DailyGiftsData.Timer;
+        _lastDate = DataManager.Instance.LoadDate();
 
         var secondsPassed = (int) (DateTime.UtcNow - _lastDate).TotalSeconds;
 
