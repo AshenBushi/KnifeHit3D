@@ -16,7 +16,6 @@ public class Background : MonoBehaviour
         ColorManager.Instance.IsPresetChanged += OnPresetChanged;
     }
 
-    
     private void OnDisable()
     {
         ColorManager.Instance.IsPresetChanged -= OnPresetChanged;

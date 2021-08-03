@@ -42,7 +42,7 @@ public class ButtonSizeChanger : MonoBehaviour
     {
         foreach (var button in _buttons)
         {
-            _tween = button.transform.DOScale(button == selectedButton ? _selected : _unselected, _duration);
+            _tween = button.transform.DOScale(button == selectedButton ? _selected : _unselected, _duration).SetLink(gameObject);
         }
     }
 }

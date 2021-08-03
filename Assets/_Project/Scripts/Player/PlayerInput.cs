@@ -3,12 +3,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler
+public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler, IPointerUpHandler
 {
     private bool _canTap = true;
     private bool _isSessionStart = false;
     
     public event UnityAction IsTapped;
+    public event UnityAction IsUntapped;
     public event UnityAction IsSessionStart;
 
     private void OnEnable()
@@ -38,6 +39,11 @@ public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler
         }
         
         IsTapped?.Invoke();
+    }
+    
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        IsUntapped?.Invoke();
     }
 
     public void AllowTap()

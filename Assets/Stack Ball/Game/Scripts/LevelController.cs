@@ -120,7 +120,7 @@ public class LevelController : MonoBehaviour
         }
 
         Platform platform = platformGameObject.GetComponent<Platform>();
-        platform.Init(index, level.levelPlatformsData[index].data, Color.Lerp(level.levelColorPreset.endColor, level.levelColorPreset.startColor, lerpValue), lerpValue, currentScaleValue, GameController.DefaultPlatformMaterial, GameController.ObstaclePlatformMaterial);
+        platform.Init(index, level.levelPlatformsData[index].data, Color.Lerp(ColorManager.Instance.CurrentColorPreset.endColor, ColorManager.Instance.CurrentColorPreset.startColor, lerpValue), lerpValue, currentScaleValue, GameController.DefaultPlatformMaterial, GameController.ObstaclePlatformMaterial);
 
         platformsQueue.Add(platform);
 

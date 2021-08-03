@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using Watermelon;
 
 public class StartScreen : UIScreen
 {
+    [SerializeField] private SettingsPanel _settingsPanel;
     [SerializeField] private GameObject _giftNotification;
     [SerializeField] private GameObject _shopNotification;
     [SerializeField] private GameObject _panelNotification;
@@ -24,7 +26,14 @@ public class StartScreen : UIScreen
         if(PlayerPrefs.GetInt("ShopNotification") == 1)
             EnableShopNotification();
     }
-    
+
+    public override void Disable()
+    {
+        base.Disable();
+        
+        _settingsPanel.Hide();
+    }
+
     public void EnableGiftNotification()
     {
         _giftNotification.SetActive(true);

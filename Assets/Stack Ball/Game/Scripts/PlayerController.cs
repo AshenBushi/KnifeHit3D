@@ -1,5 +1,6 @@
 ﻿#pragma warning disable 0649
 
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -103,6 +104,18 @@ public class PlayerController : MonoBehaviour
         comboTimePerDestruct = (float)1 / comboRequireColums;
 
         fallWait = new WaitForFixedUpdate();
+    }
+
+    private void OnEnable()
+    {
+        PlayerInput.Instance.IsTapped += MouseDown;
+        PlayerInput.Instance.IsUntapped += MouseUp;
+    }
+
+    private void OnDisable()
+    {
+        PlayerInput.Instance.IsTapped -= MouseDown;
+        PlayerInput.Instance.IsUntapped -= MouseUp;
     }
 
     public void Init()

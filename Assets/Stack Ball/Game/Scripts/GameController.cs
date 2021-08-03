@@ -19,7 +19,6 @@ public class GameController : MonoBehaviour
     [SerializeField] PlayerHitParticle playerHitParticle;
     [SerializeField] LevelController levelController;
     [SerializeField] CameraFollow cameraFollow;
-    [SerializeField] GradientBackground gradientBackground;
     [SerializeField] UIController uiController;
     [SerializeField] ProjectData projectData;
     [SerializeField] Watermelon.AudioSettings audioSettings;
@@ -59,24 +58,16 @@ public class GameController : MonoBehaviour
 
         score = PlayerPrefs.GetInt(CURRENT_SCORE_PREFS_NAME, 0);
         bestScore = PlayerPrefs.GetInt(BEST_SCORE_PREFS_NAME, 0);
+        levelDatabase.Init();
     }
 
     private void Start()
     {
-        AudioController.PlayRandomMusic();
-
         if (projectData.isOrthographicCamera)
             Camera.main.orthographic = true;
 
-        AdsManager.RequestRewardBasedVideo();
-
-        if (!GameSettingsPrefs.Get<bool>("no_ads"))
-        {
-            AdsManager.RequestInterstitial();
-
-            AdsManager.ShowBanner();
-        }
-
+        ColorManager.Instance.RandomColorPreset();
+        
         LoadLevel(PlayerPrefs.GetInt(LAST_LEVEL_PREFS_NAME, 0));
     }
 
@@ -102,9 +93,6 @@ public class GameController : MonoBehaviour
         uiController.Init(currentLevelIndex + 1, level.levelPlatformsData.Length);
         uiController.SetScoreText(score);
 
-        gradientBackground.SetColor(level.levelColorPreset.cameraStartColor, level.levelColorPreset.cameraEndColor);
-        Camera.main.backgroundColor = level.levelColorPreset.cameraStartColor;
-
         cameraFollow.Init();
     }
 
@@ -123,61 +111,6 @@ public class GameController : MonoBehaviour
         SetScore(0);
 
         cameraFollow.Init();
-    }
-
-    private void ShowInterstitial()
-    {
-        if (!GameSettingsPrefs.Get<bool>("no_ads"))
-        {
-            AdsManager.ShowInterstitial(delegate { });
-        }
-    }
-    
-    public void ReplayLevelButton()
-    {
-        ShowInterstitial();
-
-        // Reload game
-        uiController.HideGameOverPanel();
-        uiController.ShowMenu();
-
-        ReplayLevel();
-    }
-
-    public void NextLevelButton()
-    {
-        ShowInterstitial();
-
-        uiController.HideWinPanel();
-        uiController.ShowMenu();
-
-        playerHitParticle.ReturnParticlesToPool();
-
-        levelController.UnloadLevel();
-
-        LoadLevel(PlayerPrefs.GetInt(LAST_LEVEL_PREFS_NAME, 0));
-    }
-
-    public void ReviveAdsButton()
-    {
-        AdsManager.ShowRewardBasedVideo(adsSettings.rewardedVideoType, (hasReward) =>
-        {
-            uiController.DisableReviveCoroutine();
-
-            if (hasReward)
-            {
-                playerController.Revive();
-
-                uiController.ShowLevelProgres();
-            }
-            else
-            {
-                Tween.NextFrame(delegate
-                {
-                    uiController.SkipRevive();
-                });
-            }
-        });
     }
 
     public static void Revive()

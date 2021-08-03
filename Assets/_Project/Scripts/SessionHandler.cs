@@ -44,6 +44,8 @@ public class SessionHandler : Singleton<SessionHandler>
 
     private void OnScreenDisabled(bool isAdShowed)
     {
+        SceneLoader.Instance.PrepareScene(1);
+        
         if(isAdShowed || !AdManager.Interstitial.IsLoaded())
         {
             RestartSession();
@@ -77,10 +79,11 @@ public class SessionHandler : Singleton<SessionHandler>
         _loseScreen.Lose();
     }
 
-    public void RestartSession()
+    private void RestartSession()
     {
-        GamemodManager.Instance.StartSession();
+        SceneLoader.Instance.LoadPreparedScene();
+        /*GamemodManager.Instance.StartSession();
         _startScreen.Enable();
-        IsSessionRestarted?.Invoke();
+        IsSessionRestarted?.Invoke();*/
     }
 }

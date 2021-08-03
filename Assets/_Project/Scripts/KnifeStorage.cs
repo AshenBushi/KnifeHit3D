@@ -8,9 +8,11 @@ public class KnifeStorage : Singleton<KnifeStorage>
 {
     [SerializeField] private List<Knife> _knives;
     [SerializeField] private List<GameObject> _knifePreviews;
+    [SerializeField] private List<GameObject> _stackKnives;
 
     public List<Knife> Knives => _knives;
     public List<GameObject> KnifePreviews => _knifePreviews;
+    public List<GameObject> StackKnives => _stackKnives;
     
     public event UnityAction IsKnifeChanged;
     

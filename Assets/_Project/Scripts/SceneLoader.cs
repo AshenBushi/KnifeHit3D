@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : Singleton<SceneLoader>
 {
     [SerializeField] private List<string> _sceneNames;
-    
+
+    private AsyncOperation _operation;
     private int _lastLoadSceneIndex = -1;
 
     public void TryLoadGameplayScene(int sceneIndex)
@@ -33,5 +34,16 @@ public class SceneLoader : Singleton<SceneLoader>
         }
         
         _lastLoadSceneIndex = sceneIndex;
+    }
+
+    public void PrepareScene(int sceneIndex)
+    {
+        _operation = SceneManager.LoadSceneAsync(sceneIndex);
+        _operation.allowSceneActivation = false;
+    }
+
+    public void LoadPreparedScene()
+    {
+        _operation.allowSceneActivation = true;
     }
 }

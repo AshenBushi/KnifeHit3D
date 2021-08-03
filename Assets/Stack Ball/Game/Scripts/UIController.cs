@@ -18,8 +18,6 @@ public class UIController : MonoBehaviour
     
     [SerializeField] Text scoreText;
 
-    [SerializeField] GameObject menuPanel;
-    
     [SerializeField] GameObject gameOverPanel;
 
     [SerializeField] GameObject defaultGameOverPanel;
@@ -70,13 +68,6 @@ public class UIController : MonoBehaviour
     {
         gameOverPanel.SetActive(false);
     }
-    
-    public void ShowMenu()
-    {
-        menuPanel.SetActive(true);
-
-        HideLevelProgress();
-    }
 
     public void HideLevelProgress()
     {
@@ -84,20 +75,13 @@ public class UIController : MonoBehaviour
         levelProgressCanvasGroup.DOFade(0, 0.3f);
     }
 
-    public void ShowLevelProgres()
+    public void ShowLevelProgress()
     {
         levelProgressCanvasGroup.gameObject.SetActive(true);
         scoreText.gameObject.SetActive(true);
 
         levelProgressCanvasGroup.alpha = 0;
         levelProgressCanvasGroup.DOFade(1, 0.5f);
-    }
-
-    public void HideMenu()
-    {
-        menuPanel.SetActive(false);
-
-        ShowLevelProgres();
     }
 
     private IEnumerator ShowRevivePanel()
@@ -145,7 +129,7 @@ public class UIController : MonoBehaviour
 
     public void ShowGameOverPanel(bool showRevive)
     {
-        HideLevelProgress();
+        /*HideLevelProgress();
 
         gameOverPanel.SetActive(true);
         reviveGameOverPanel.SetActive(false);
@@ -166,26 +150,22 @@ public class UIController : MonoBehaviour
             bestScoreText.text = GameController.BestScore.ToString();
 
             fillCoroutine = StartCoroutine(FillTextSmooth(GameController.Score, 1));
-        }
-    }
-
-    public void HideGameOverPanel()
-    {
-        gameOverPanel.SetActive(false);
-    }
-
-    public void HideWinPanel()
-    {
-        winPanel.SetActive(false);
+        }*/
+        
+        SessionHandler.Instance.FailLevel();
+        HideLevelProgress();
     }
 
     public void ShowWinPanel()
     {
-        HideLevelProgress();
+        /*HideLevelProgress();
 
         winPanel.SetActive(true);
 
-        levelText.text = "Level " + (GameController.CurrentLevelIndex + 1);
+        levelText.text = "Level " + (GameController.CurrentLevelIndex + 1);*/
+        
+        SessionHandler.Instance.CompleteLevel();
+        HideLevelProgress();
     }
 
     private IEnumerator FillTextSmooth(int value, float time)
@@ -202,7 +182,7 @@ public class UIController : MonoBehaviour
     
     private void OnGameStarted()
     {
-        HideMenu();
+        ShowLevelProgress();
     }
 
     private void OnPlayerDestructPlatform(Platform platform)

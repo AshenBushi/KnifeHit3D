@@ -20,7 +20,7 @@ public class GamemodManager : Singleton<GamemodManager>
     public void StartSession()
     {
         SelectMod(0);
-        SetButtonIndex(Random.Range(0, 6));
+        SetButtonIndex(0);
     }
 
     public void SelectMod(int index)
