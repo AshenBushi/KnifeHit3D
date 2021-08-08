@@ -1,21 +1,18 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using GoogleMobileAds.Api;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class DoubleReward : AdButton
 {
-    [SerializeField] private Player _player;
     [SerializeField] private TMP_Text _text;
 
     private int _chanceGiveX5;
     private int _coefficient;
 
+    private int TargetType => TargetHandler.Instance.CurrentSpawnerIndex;
+    
     public event UnityAction IsWatchedReward;
 
     private void OnEnable()
@@ -34,19 +31,19 @@ public class DoubleReward : AdButton
 
     protected override void HandleUserEarnReward(object sender, Reward e)
     {
-        switch (DataManager.Instance.GameData.ProgressData.CurrentGamemod)
+        switch (TargetType)
         {
             case 0 :
-                _player.DepositMoney(LevelManager.Instance.CurrentMarkLevel.Reward * _coefficient);
+                Player.Instance.DepositMoney(LevelManager.Instance.CurrentMarkLevel.Reward * _coefficient);
                 break;
             case 1 :
-                _player.DepositMoney(LevelManager.Instance.CurrentCubeLevel.Reward * _coefficient);
+                Player.Instance.DepositMoney(LevelManager.Instance.CurrentCubeLevel.Reward * _coefficient);
                 break;
             case 2 :
-                _player.DepositMoney(LevelManager.Instance.CurrentFlatLevel.Reward * _coefficient);
+                Player.Instance.DepositMoney(LevelManager.Instance.CurrentFlatLevel.Reward * _coefficient);
                 break;
             default:
-                _player.DepositMoney(LevelManager.Instance.CurrentMarkLevel.Reward * _coefficient);
+                Player.Instance.DepositMoney(LevelManager.Instance.CurrentMarkLevel.Reward * _coefficient);
                 break;
         }
         

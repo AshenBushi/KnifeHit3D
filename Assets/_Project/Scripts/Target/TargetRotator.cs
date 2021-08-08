@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DG.Tweening;
-using Project.Scripts.Handlers;
 using UnityEngine;
 
 public class TargetRotator : MonoBehaviour

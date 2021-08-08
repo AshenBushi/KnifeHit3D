@@ -65,7 +65,6 @@ public class DataManager : Singleton<DataManager>
         GameData.ProgressData.CurrentMarkLevel = 0;
         GameData.ProgressData.CurrentCubeLevel = 0;
         GameData.ProgressData.CurrentCubeLevel = 0;
-        GameData.ProgressData.CurrentGamemod = 0;
 
         GameData.SettingsData.SoundVolume = 1;
         GameData.SettingsData.MusicVolume = 1;

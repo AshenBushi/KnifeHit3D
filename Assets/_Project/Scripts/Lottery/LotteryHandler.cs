@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Project.Scripts.Handlers;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class LotteryHandler : Singleton<LotteryHandler>
@@ -60,5 +58,11 @@ public class LotteryHandler : Singleton<LotteryHandler>
         _maxRewardCount += _knifeAmount;
         KnifeHandler.Instance.SetKnifeAmount(_lottery.HitToBreak);
         _hitScoreDisplayer.SpawnHitScores(_lottery.HitToBreak);
+    }
+
+    public void CleanLottery()
+    {
+        if (_lottery != null)
+            Destroy(_lottery.gameObject);
     }
 }

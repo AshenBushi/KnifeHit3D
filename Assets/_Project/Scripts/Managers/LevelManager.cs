@@ -5,7 +5,7 @@ using UnityEngine;
 public struct MarkLevel
 {
     public int Reward;
-    public int KnifeReward;
+    public bool KnifeReward;
     public List<MarkConfig> Marks;
 }
 
@@ -13,7 +13,7 @@ public struct MarkLevel
 public struct CubeLevel
 {
     public int Reward;
-    public int KnifeReward;
+    public bool KnifeReward;
     public TargetBase _base;
     public List<CubeConfig> Cubes;
 }
@@ -22,7 +22,7 @@ public struct CubeLevel
 public struct FlatLevel
 {
     public int Reward;
-    public int KnifeReward;
+    public bool KnifeReward;
     public List<FlatConfig> Flats;
 }
 

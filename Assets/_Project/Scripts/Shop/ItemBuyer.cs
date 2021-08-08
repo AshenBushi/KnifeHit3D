@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 
 public class ItemBuyer : MonoBehaviour
 {
-    [SerializeField] private Player _player;
     [SerializeField] private Shop _shop;
     [SerializeField] private MenuSwiper _menuSwiper;
     [SerializeField] private List<GameObject> _pages;
@@ -28,14 +27,14 @@ public class ItemBuyer : MonoBehaviour
     private void OnEnable()
     {
         _menuSwiper.IsPageChanged += OnPageChanged;
-        _player.IsMoneyChanged += CheckPurchaseOpportunity;
+        Player.Instance.IsMoneyChanged += CheckPurchaseOpportunity;
         _button.onClick.AddListener(BuyItem);
     }
 
     private void OnDisable()
     {
         _menuSwiper.IsPageChanged -= OnPageChanged;
-        _player.IsMoneyChanged -= CheckPurchaseOpportunity;
+        Player.Instance.IsMoneyChanged -= CheckPurchaseOpportunity;
         _button.onClick.RemoveListener(BuyItem);
     }
 
@@ -89,7 +88,7 @@ public class ItemBuyer : MonoBehaviour
     
     private void CheckPurchaseOpportunity()
     {
-        if (_player.Money >= _price && _currentItems.Count > 0)
+        if (Player.Instance.Money >= _price && _currentItems.Count > 0)
         {
             _button.interactable = true;
         }
@@ -110,7 +109,7 @@ public class ItemBuyer : MonoBehaviour
         MetricaManager.SendEvent("btn_buy");
         SoundManager.Instance.PlaySound(SoundName.ButtonClick);
         FindLockedItemsOnPage();
-        _player.WithdrawMoney(_price);
+        Player.Instance.WithdrawMoney(_price);
         StartCoroutine(BuyAnimation());
     }
 }

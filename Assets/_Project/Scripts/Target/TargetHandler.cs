@@ -5,8 +5,6 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Project.Scripts.Handlers
-{
     public class TargetHandler : Singleton<TargetHandler>
     {
         [SerializeField] private LevelProgressDisplayer _levelProgressDisplayer;
@@ -88,28 +86,23 @@ namespace Project.Scripts.Handlers
 
         private void CompleteLevel()
         {
-            var rewardIndex = 0;
-            
             switch (CurrentSpawnerIndex)
             {
                 case 0:
                     MetricaManager.SendEvent("target_lvl_complete_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
-                    rewardIndex = LevelManager.Instance.CurrentMarkLevel.KnifeReward;
                     LevelManager.Instance.NextMarkLevel();
                     break;
                 case 1:
                     MetricaManager.SendEvent("cube_lvl_start_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
-                    rewardIndex = LevelManager.Instance.CurrentCubeLevel.KnifeReward;
                     LevelManager.Instance.NextCubeLevel();
                     break;
                 case 2:
                     MetricaManager.SendEvent("flat_lvl_complete_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
-                    rewardIndex = LevelManager.Instance.CurrentFlatLevel.KnifeReward;
                     LevelManager.Instance.NextFlatLevel();
                     break;
             }
-            
-            SessionHandler.Instance.CompleteLevel(rewardIndex);
+
+            SessionHandler.Instance.CompleteLevel();
         }
         
         public void SpawnLevel(int spawnerIndex)
@@ -122,5 +115,9 @@ namespace Project.Scripts.Handlers
             SetCurrentTarget();
             IsLevelSpawned?.Invoke();
         }
+
+        public void CleanTargets()
+        {
+            _currentSpawner?.TryCleanTargets();
+        }
     }
-}

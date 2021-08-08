@@ -20,6 +20,7 @@ public enum RewardName
 
 public class Lottery : MonoBehaviour
 {
+    [SerializeField] private Transform _body;
     [SerializeField] private List<RotateDefinition> _definitions;
     
     private List<LotterySection> _sections;
@@ -56,7 +57,7 @@ public class Lottery : MonoBehaviour
         var currentDefinition = _definitions[Random.Range(0, _definitions.Count)];
         var rotateEuler = new Vector3(0f, 0f, currentDefinition.Angle);
 
-        _rotator = transform.DORotate(transform.eulerAngles + rotateEuler, currentDefinition.Duration, RotateMode.FastBeyond360)
+        _rotator = _body.DORotate(_body.eulerAngles + rotateEuler, currentDefinition.Duration, RotateMode.FastBeyond360)
             .SetEase(currentDefinition.EaseCurve).SetLink(gameObject);
         
         _rotator.OnComplete(() =>

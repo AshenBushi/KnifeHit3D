@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class MoneyDisplayer : MonoBehaviour
 {
-    [SerializeField] private Player _player;
     [SerializeField] private TMP_Text _moneyText;
 
     private Tween _tween;
@@ -14,17 +13,17 @@ public class MoneyDisplayer : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.IsMoneyChanged += OnMoneyChanged;
+        Player.Instance.IsMoneyChanged += OnMoneyChanged;
     }
 
     private void OnDisable()
     {
-        _player.IsMoneyChanged -= OnMoneyChanged;
+        Player.Instance.IsMoneyChanged -= OnMoneyChanged;
     }
 
     private void Start()
     {
-        _moneyCount = _player.Money;
+        _moneyCount = Player.Instance.Money;
         _moneyText.text = _moneyCount.ToString();
     }
 
@@ -36,9 +35,9 @@ public class MoneyDisplayer : MonoBehaviour
     
     private IEnumerator AccrueReward()
     {
-        var reward = _player.Money - _moneyCount;
+        var reward = Player.Instance.Money - _moneyCount;
 
-        while (_moneyCount != _player.Money)
+        while (_moneyCount != Player.Instance.Money)
         {
             if (reward > 0)
             {

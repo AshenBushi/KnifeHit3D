@@ -6,13 +6,11 @@ using UnityEngine;
 using UnityEngine.UI;
 public class WatchAdForReward : AdButton
 {
-    [SerializeField] private Player _player;
-    
     private int _moneyReward;
 
     protected override void HandleUserEarnReward(object sender, Reward e)
     {
-        _player.DepositMoney(_moneyReward);
+        Player.Instance.DepositMoney(_moneyReward);
         
         base.HandleUserEarnReward(sender, e);
     }

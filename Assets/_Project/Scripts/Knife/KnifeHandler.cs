@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Project.Scripts.Handlers
-{
     public class KnifeHandler : Singleton<KnifeHandler>
     {
         [SerializeField] private HitScoreDisplayer _hitScoreDisplayer;
@@ -122,4 +120,3 @@ namespace Project.Scripts.Handlers
             SetKnifeAmount(TargetHandler.Instance.CurrentTarget.HitToBreak);
         }
     }
-}

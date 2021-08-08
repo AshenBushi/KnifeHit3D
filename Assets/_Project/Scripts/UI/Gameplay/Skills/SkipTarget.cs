@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using GoogleMobileAds.Api;
-using Project.Scripts.Handlers;
 using UnityEngine;
 using UnityEngine.UI;
 

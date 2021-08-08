@@ -1,5 +1,4 @@
 using GoogleMobileAds.Api;
-using Project.Scripts.Handlers;
 using UnityEngine;
 
 public class SecondLife : AdButton

@@ -13,6 +13,8 @@ public class WinScreen : UIScreen
     
     private bool _isShowedDoubleReward = false;
 
+    private int TargetType => TargetHandler.Instance.CurrentSpawnerIndex;
+    
     public event UnityAction<bool> IsScreenDisabled;
 
     private void Awake()
@@ -41,7 +43,7 @@ public class WinScreen : UIScreen
         SoundManager.Instance.PlaySound(SoundName.Win);
         _cup.SetActive(true);
 
-        _rewardText.text = DataManager.Instance.GameData.ProgressData.CurrentGamemod switch
+        _rewardText.text = TargetType switch
         {
             0 => LevelManager.Instance.CurrentMarkLevel.Reward.ToString(),
             1 => LevelManager.Instance.CurrentCubeLevel.Reward.ToString(),

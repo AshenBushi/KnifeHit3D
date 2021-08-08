@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
-using Project.Scripts.Handlers;
-using UnityEngine;
 
 public class ObstacleHandler : Singleton<ObstacleHandler>
 {
     private List<ObstacleSpawner> _obstacleSpawners = new List<ObstacleSpawner>();
 
-    private int Gamemod => DataManager.Instance.GameData.ProgressData.CurrentGamemod;
+    private int TargetType => TargetHandler.Instance.CurrentSpawnerIndex;
     
     private void OnEnable()
     {
@@ -26,7 +23,7 @@ public class ObstacleHandler : Singleton<ObstacleHandler>
     {
         _obstacleSpawners.Clear();
         
-        if (Gamemod != 1)
+        if (TargetType != 1)
         {
             foreach (var target in TargetHandler.Instance.Targets)
             {
@@ -44,7 +41,7 @@ public class ObstacleHandler : Singleton<ObstacleHandler>
 
     private void SpawnObstacles()
     {
-        if(Gamemod != 1)
+        if(TargetType != 1)
         {
             for (var i = 0; i < _obstacleSpawners.Count; i++)
             {

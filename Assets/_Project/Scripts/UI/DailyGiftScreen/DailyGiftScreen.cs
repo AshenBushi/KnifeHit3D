@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class DailyGiftScreen : UIScreen
 {
-    [SerializeField] private Player _player;
     [SerializeField] private GiftTimer _giftTimer;
     [SerializeField] private List<DailyGift> _gifts;
     [SerializeField] private StartScreen _startScreen;
@@ -73,7 +72,7 @@ public class DailyGiftScreen : UIScreen
         }
         else
         {
-            _player.DepositMoney(value);
+            Player.Instance.DepositMoney(value);
         }
 
         DataManager.Instance.GameData.DailyGiftsData.PickedGifts++;

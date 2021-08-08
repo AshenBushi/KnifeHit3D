@@ -17,7 +17,7 @@ public class LevelProgressDisplayer : MonoBehaviour
 
     public void ShowLevelDisplay()
     {
-        _levelText.text = DataManager.Instance.GameData.ProgressData.CurrentGamemod switch
+        _levelText.text = TargetHandler.Instance.CurrentSpawnerIndex switch
         {
             0 => (DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + 1).ToString(),
             1 => (DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + 1).ToString(),
@@ -35,7 +35,7 @@ public class LevelProgressDisplayer : MonoBehaviour
             _points.Clear();
         }
         
-        if (DataManager.Instance.GameData.ProgressData.CurrentGamemod == 1)
+        if (TargetHandler.Instance.CurrentSpawnerIndex == 1)
         {
             for (var i = 0; i < 5; i++)
             {

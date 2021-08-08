@@ -34,7 +34,8 @@ public class Cube : Target
         if (EdgeCount <= 0)
         {
             SoundManager.Instance.PlaySound(SoundName.TargetBreak);
-            var targetBase = Instantiate(Base, Base.transform.position, Base.transform.rotation);
+            var baseTransform = Base.transform;
+            var targetBase = Instantiate(Base, baseTransform.position, baseTransform.rotation);
             targetBase.Detonate(_explosionPosition, _explosionForce);
             IsTargetBreak?.Invoke(ExpReward);
             Destroy(gameObject);
@@ -48,16 +49,17 @@ public class Cube : Target
     
     public override void SetupTarget(Color color, MarkConfig markConfig = null, CubeLevel level = new CubeLevel(), FlatConfig flatConfig = null)
     {
-        if(level._base == null) return;
         _currentCubeLevel = level;
         Base = GetComponentInChildren<TargetBase>();
         Base.SetColor(color);
         EdgeCount = _maxEdgeCount;
         HitToBreak = _currentCubeLevel.Cubes[0].HitToBreak;
+        
         for (var i = 0; i < _currentCubeLevel.Cubes.Count; i++)
         {
             ObstacleCount[i] = _currentCubeLevel.Cubes[i].ObstacleCount;
         }
+        
         Rotator.StartRotate(_currentCubeLevel.Cubes[0].RotateDefinitions);
         ExpReward = _currentCubeLevel.Cubes[0].Experience;
     }

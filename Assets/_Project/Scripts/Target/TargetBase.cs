@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -11,6 +12,13 @@ public class TargetBase : MonoBehaviour
     
     private Tween _tween;
 
+    private IEnumerator SelfDestruction()
+    {
+        yield return new WaitForSeconds(5f);
+        
+        Destroy(gameObject);
+    }
+    
     public void SpringBack()
     {
         var currentPosition = transform.position;
@@ -34,6 +42,8 @@ public class TargetBase : MonoBehaviour
             item.isKinematic = false;
             item.AddExplosionForce(explosionForce, explodePoint, Radius, UpForce);
         }
+
+        StartCoroutine(SelfDestruction());
     }
 
     public void SetColor(Color color)

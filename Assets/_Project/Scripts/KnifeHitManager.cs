@@ -1,23 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Project.Scripts.Handlers;
 using UnityEngine;
 
 public class KnifeHitManager : Singleton<KnifeHitManager>
 {
-    [SerializeField] private TargetHandler _targetHandler;
     [SerializeField] private CameraMover _cameraMover;
+
+    private bool _isLotterySpawned = false;
 
     private void OnEnable()
     {
         GamemodManager.Instance.IsButtonIndexChanged += OnButtonIndexChanged;
+        GamemodManager.Instance.IsLotterySelected += OnLotterySelected;
         SessionHandler.Instance.IsSessionStarted += OnSessionStarted;
     }
 
     private void OnDisable()
     {
         GamemodManager.Instance.IsButtonIndexChanged -= OnButtonIndexChanged;
+        GamemodManager.Instance.IsLotterySelected -= OnLotterySelected;
+        SessionHandler.Instance.IsSessionStarted -= OnSessionStarted;
     }
 
     private void Start()
@@ -27,16 +27,31 @@ public class KnifeHitManager : Singleton<KnifeHitManager>
 
     private void OnButtonIndexChanged()
     {
+        if (_isLotterySpawned)
+        {
+            LotteryHandler.Instance.CleanLottery();
+            _isLotterySpawned = false;
+        }
+        
         var targetIndex = GamemodManager.Instance.LastPressedButtonIndex % 3;
         var cameraPositionIndex = GamemodManager.Instance.LastPressedButtonIndex / 3;
         
-        _targetHandler.SpawnLevel(targetIndex);
+        TargetHandler.Instance.SpawnLevel(targetIndex);
         _cameraMover.TryMoveCamera(cameraPositionIndex);
+    }
+    
+    private void OnLotterySelected()
+    {
+        if (_isLotterySpawned) return;
+        _cameraMover.TryMoveCamera(0);
+        TargetHandler.Instance.CleanTargets();
+        LotteryHandler.Instance.StartLottery();
+        _isLotterySpawned = true;
     }
     
     private void OnSessionStarted()
     {
-        switch (_targetHandler.CurrentSpawnerIndex)
+        switch (TargetHandler.Instance.CurrentSpawnerIndex)
         {
             case 0:
                 MetricaManager.SendEvent("target_lvl_start_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");

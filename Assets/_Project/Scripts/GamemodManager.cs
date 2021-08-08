@@ -1,23 +1,21 @@
-using System;
-using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class GamemodManager : Singleton<GamemodManager>
 {
+    [SerializeField] private Skills _skills;
+    
     public int LastPressedButtonIndex { get; private set; }
     
     public event UnityAction IsButtonIndexChanged;
+    public event UnityAction IsLotterySelected;
 
     private void Start()
     {
         StartSession();
     }
 
-    public void StartSession()
+    private void StartSession()
     {
         SelectMod(0);
         SetButtonIndex(0);
@@ -26,6 +24,7 @@ public class GamemodManager : Singleton<GamemodManager>
     public void SelectMod(int index)
     {
         SceneLoader.Instance.TryLoadGameplayScene(index);
+        _skills.DisallowSkills();
     }
 
     public void SetButtonIndex(int index)
@@ -36,11 +35,13 @@ public class GamemodManager : Singleton<GamemodManager>
         
         LastPressedButtonIndex = index;
         IsButtonIndexChanged?.Invoke();
+        _skills.AllowSkills();
     }
-}
 
-public enum Gamemod
-{
-    KnifeHit,
-    StackKnife
+    public void SelectLottery()
+    {
+        LastPressedButtonIndex = -1;
+        IsLotterySelected?.Invoke();
+        _skills.DisallowSkills();
+    }
 }

@@ -26,6 +26,5 @@ public class KnifeStorage : Singleton<KnifeStorage>
     public void AddKnife(int index)
     {   
         DataManager.Instance.GameData.ShopData.OpenedKnives.Add(index);
-        ChangeKnife(index);
     }
 }

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Project.Scripts.Handlers;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public class SessionHandler : Singleton<SessionHandler>
 {
@@ -62,15 +57,10 @@ public class SessionHandler : Singleton<SessionHandler>
         RestartSession();
     }
 
-    public void CompleteLevel(int index = 0)
+    public void CompleteLevel()
     {
-        var rewardIndex = index;
-
-        if (rewardIndex > 0)
-        {
-            RewardHandler.Instance.GiveLevelCompleteReward(rewardIndex);
-        }
-      
+        RewardHandler.Instance.GiveLevelCompleteReward();
+        
         _winScreen.Win();
     }
 

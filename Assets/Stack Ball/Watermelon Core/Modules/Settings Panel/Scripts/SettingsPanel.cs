@@ -108,18 +108,14 @@ namespace Watermelon
             if (isActive)
             {
                 Hide();
-
-                isActive = false;
             }
             else
             {
                 Show();
-
-                isActive = true;
             }
         }
 
-        public void Show()
+        private void Show()
         {
             isAnimationActive = true;
 
@@ -127,6 +123,8 @@ namespace Watermelon
             {
                 isAnimationActive = false;
             }));
+            
+            isActive = true;
         }
 
         public void Hide(bool immediately = false)
@@ -146,9 +144,9 @@ namespace Watermelon
                 {
                     settingsButtonsInfo[i].SettingsButton.gameObject.SetActive(false);
                 }
-
-                isActive = false;
             }
+            
+            isActive = false;
         }
 
         public void OnValidate()

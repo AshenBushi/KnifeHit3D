@@ -7,51 +7,30 @@ using Random = UnityEngine.Random;
 public class RewardHandler : Singleton<RewardHandler>
 {
     [SerializeField] private StartScreen _startScreen;
-    
-    public void GiveExperienceReward()
+
+    private void GiveFirstKnifeInRange(int startIndex, int endIndex)
     {
-        for (var i = 29; i < 45; i++)
+        for (var i = startIndex; i <= endIndex; i++)
         {
             if (DataManager.Instance.GameData.ShopData.OpenedKnives.Contains(i)) continue;
             KnifeStorage.Instance.AddKnife(i);
+            _startScreen.EnableShopNotification();
             break;
         }
-        
-        _startScreen.EnableShopNotification();
+    }
+    
+    public void GiveExperienceReward()
+    {
+        GiveFirstKnifeInRange(18, 35);
     }
 
-    public void GiveLevelCompleteReward(int knifeIndex)
+    public void GiveLevelCompleteReward()
     {
-        KnifeStorage.Instance.AddKnife(knifeIndex);
-        
-        _startScreen.EnableShopNotification();
+        GiveFirstKnifeInRange(0, 17);
     }
 
     public void GiveLotteryReward()
     {
-        var index = Random.Range(45, 63);
-        var lockedKnifeCount = 0;
-        
-        for (var i = 45; i < 63; i++)
-        {
-            if (!DataManager.Instance.GameData.ShopData.OpenedKnives.Contains(i))
-            {
-                lockedKnifeCount++;
-            }
-        }
-
-        if (lockedKnifeCount == 0)
-        {
-            return;
-        }
-
-        while (DataManager.Instance.GameData.ShopData.OpenedKnives.Contains(index))
-        {
-            index = Random.Range(45, 63);
-        }
-        
-        KnifeStorage.Instance.AddKnife(index);
-        
-        _startScreen.EnableShopNotification();
+        GiveFirstKnifeInRange(36, 53);
     }
 }

@@ -8,6 +8,8 @@ public class Skills : MonoBehaviour
     [SerializeField] private SlowMode _slowMode;
     [SerializeField] private SkipTarget _skipTarget;
 
+    private bool _canEnableSkills = false;
+
     private void OnEnable()
     {
         SessionHandler.Instance.IsSessionStarted += OnSessionStarted;
@@ -33,6 +35,8 @@ public class Skills : MonoBehaviour
 
     private IEnumerator TryEnableButtons()
     {
+        if(!_canEnableSkills) yield break;
+        
         yield return new WaitForSeconds(2f);
 
         if (DataManager.Instance.GameData.PlayerData.SlowMode > 0)
@@ -41,5 +45,15 @@ public class Skills : MonoBehaviour
         }
 
         _skipTarget.gameObject.SetActive(true);
+    }
+
+    public void AllowSkills()
+    {
+        _canEnableSkills = true;
+    }
+
+    public void DisallowSkills()
+    {
+        _canEnableSkills = false;
     }
 }

@@ -6,8 +6,6 @@ using Random = UnityEngine.Random;
 
 public class LotteryRewarder : MonoBehaviour
 {
-    [SerializeField] private Player _player;
-
     private bool _hasSkinReward = false;
 
     public void SendRewards(List<RewardName> rewards)
@@ -18,15 +16,15 @@ public class LotteryRewarder : MonoBehaviour
             {
                 case RewardName.TenCoins:
                     MetricaManager.SendEvent("bns_lvl_10");
-                    _player.DepositMoney(10);
+                    Player.Instance.DepositMoney(10);
                     break;
                 case RewardName.TwentyCoins:
                     MetricaManager.SendEvent("bns_lvl_20");
-                    _player.DepositMoney(20);
+                    Player.Instance.DepositMoney(20);
                     break;
                 case RewardName.ThirtyCoins:
                     MetricaManager.SendEvent("bns_lvl_30");
-                    _player.DepositMoney(30);
+                    Player.Instance.DepositMoney(30);
                     break;
                 case RewardName.Slow:
                     MetricaManager.SendEvent("bns_lvl_slow");
@@ -50,8 +48,9 @@ public class LotteryRewarder : MonoBehaviour
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            DataManager.Instance.Save();
         }
+        
+        DataManager.Instance.Save();
+        SceneLoader.Instance.LoadPreparedScene();
     }
 }

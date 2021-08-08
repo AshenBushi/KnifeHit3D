@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using Watermelon;
 
 public class StartScreen : UIScreen
@@ -6,7 +7,7 @@ public class StartScreen : UIScreen
     [SerializeField] private SettingsPanel _settingsPanel;
     [SerializeField] private GameObject _giftNotification;
     [SerializeField] private GameObject _shopNotification;
-    [SerializeField] private GameObject _panelNotification;
+    [SerializeField] private GameObject _settingsNotification;
 
     private void Awake()
     {
@@ -29,21 +30,21 @@ public class StartScreen : UIScreen
 
     public override void Disable()
     {
-        base.Disable();
+        _settingsPanel.Hide(true);
         
-        _settingsPanel.Hide();
+        base.Disable();
     }
 
     public void EnableGiftNotification()
     {
         _giftNotification.SetActive(true);
-        _panelNotification.SetActive(true);
+        _settingsNotification.SetActive(true);
     }
     
     public void EnableShopNotification()
     {
         _shopNotification.SetActive(true);
-        _panelNotification.SetActive(true);
+        _settingsNotification.SetActive(true);
         PlayerPrefs.SetInt("ShopNotification", 1);
     }
     
@@ -60,6 +61,6 @@ public class StartScreen : UIScreen
     
     public void DisablePanelNotification()
     {
-        _panelNotification.SetActive(false);
+        _settingsNotification.SetActive(false);
     }
 }
