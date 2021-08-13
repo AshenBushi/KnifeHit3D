@@ -9,9 +9,7 @@ public class DataManager : Singleton<DataManager>
 {
     private string _path;
 
-    public GameData GameData = new GameData();
-
-    private bool _dataIsLoad = false;
+    public GameData GameData;
 
     protected override void Awake()
     {
@@ -35,10 +33,8 @@ public class DataManager : Singleton<DataManager>
         else
         {
             FirstPlay();
-            File.WriteAllText(_path, JsonUtility.ToJson(GameData));
+            Save();
         }
-
-        _dataIsLoad = true;
     }
 
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -54,29 +50,7 @@ public class DataManager : Singleton<DataManager>
     
     private void FirstPlay()
     {
-        GameData.PlayerData.Money = 0;
-
-        GameData.ShopData.CurrentKnifeIndex = 0;
-        GameData.ShopData.OpenedKnives = new List<int>
-        {
-            0
-        };
-
-        GameData.ProgressData.CurrentMarkLevel = 0;
-        GameData.ProgressData.CurrentCubeLevel = 0;
-        GameData.ProgressData.CurrentCubeLevel = 0;
-
-        GameData.SettingsData.SoundVolume = 1;
-        GameData.SettingsData.MusicVolume = 1;
-
-        GameData.DailyGiftsData.Time = new Time() {Hours = 23, Minutes =59, Seconds = 59};
-        GameData.DailyGiftsData.Date = DateTime.UtcNow.ToString("u", CultureInfo.InvariantCulture);
-        GameData.DailyGiftsData.UnlockedGifts = 1;
-        GameData.DailyGiftsData.PickedGifts = 0;
-
-        GameData.LotteryTime = new Time() { Hours = 0, Minutes = 4, Seconds = 59 };
-        GameData.IsLotteryEnable = true;
-
+        GameData = new GameData();
         StartCoroutine(SendMetricks());
     }
 
@@ -115,8 +89,39 @@ public class GameData
     public ProgressData ProgressData;
     public SettingsData SettingsData;
     public DailyGiftsData DailyGiftsData;
-    public Time LotteryTime;
+    public Clock _lotteryClock;
     public bool IsLotteryEnable;
+    public int CurrentGamemod;
+    public int CurrentTargetType;
+
+    public GameData()
+    {
+        PlayerData.Money = 0;
+
+        ShopData.CurrentKnifeIndex = 0;
+        ShopData.OpenedKnives = new List<int>
+        {
+            0
+        };
+
+        ProgressData.CurrentMarkLevel = 0;
+        ProgressData.CurrentCubeLevel = 0;
+        ProgressData.CurrentCubeLevel = 0;
+
+        SettingsData.SoundVolume = 1;
+        SettingsData.MusicVolume = 1;
+
+        DailyGiftsData._clock = new Clock() {Hours = 23, Minutes =59, Seconds = 59};
+        DailyGiftsData.Date = DateTime.UtcNow.ToString("u", CultureInfo.InvariantCulture);
+        DailyGiftsData.UnlockedGifts = 1;
+        DailyGiftsData.PickedGifts = 0;
+
+        _lotteryClock = new Clock() { Hours = 0, Minutes = 4, Seconds = 59 };
+        IsLotteryEnable = true;
+        CurrentGamemod = -1;
+        CurrentTargetType = 0;
+    }
+    
 }
 
 [Serializable]
@@ -155,7 +160,7 @@ public struct SettingsData
 [Serializable]
 public struct DailyGiftsData
 {
-    public Time Time;
+    public Clock _clock;
     public string Date;
     public int UnlockedGifts;
     public int PickedGifts;

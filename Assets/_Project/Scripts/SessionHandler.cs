@@ -45,14 +45,20 @@ public class SessionHandler : Singleton<SessionHandler>
     {
         SceneLoader.Instance.PrepareScene(1);
         
-        if(isAdShowed || !AdManager.Interstitial.IsLoaded())
+        if(isAdShowed)
         {
             RestartSession();
         }
         else
         {
-            AdManager.Interstitial.OnAdClosed += HandleOnAdClosed;
-            AdManager.ShowInterstitial();
+            if(AdManager.Instance.ShowInterstitial())
+            {
+                AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
+            }
+            else
+            {
+                RestartSession();
+            }
         }
     }
 

@@ -18,8 +18,26 @@ public class GamemodManager : Singleton<GamemodManager>
 
     private void StartSession()
     {
-        SelectMod(0);
-        SetButtonIndex(0);
+        if (DataManager.Instance.GameData.CurrentGamemod == -1)
+        {
+            SelectRandomMod();
+        }
+        else
+        {
+            SelectMod(DataManager.Instance.GameData.CurrentGamemod);
+            SetButtonIndex(DataManager.Instance.GameData.CurrentTargetType);
+        }
+        
+    }
+
+    private void SelectRandomMod()
+    {
+        var modIndex = Random.Range(0, 2);
+        SelectMod(modIndex);
+        
+        var randomType = Random.Range(0, 6);
+        SetButtonIndex(randomType);
+
     }
 
     public void SelectMod(int index)
@@ -27,6 +45,7 @@ public class GamemodManager : Singleton<GamemodManager>
         CurrentModIndex = index;
         SceneLoader.Instance.TryLoadGameplayScene(index);
         _skills.DisallowSkills();
+        DataManager.Instance.GameData.CurrentGamemod = CurrentModIndex;
     }
 
     public void SetButtonIndex(int index)
@@ -38,6 +57,7 @@ public class GamemodManager : Singleton<GamemodManager>
         LastPressedButtonIndex = index;
         IsButtonIndexChanged?.Invoke();
         _skills.AllowSkills();
+        DataManager.Instance.GameData.CurrentTargetType = LastPressedButtonIndex;
     }
 
     public void SelectLottery()

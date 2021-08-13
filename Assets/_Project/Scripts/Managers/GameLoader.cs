@@ -23,10 +23,9 @@ public class GameLoader : MonoBehaviour
 
         yield return new WaitForSeconds(4f);
         
-        if (AdManager.Interstitial.IsLoaded())
+        if (AdManager.Instance.ShowInterstitial())
         {
-            AdManager.Interstitial.OnAdClosed += HandleOnAdClosed;
-            AdManager.ShowInterstitial();
+            AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
             yield break;
         }
 
@@ -35,7 +34,7 @@ public class GameLoader : MonoBehaviour
 
     private void HandleOnAdClosed(object sender, EventArgs args)
     {
-        AdManager.Interstitial.OnAdClosed -= HandleOnAdClosed;
+        AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
         _operation.allowSceneActivation = true;
     }
 

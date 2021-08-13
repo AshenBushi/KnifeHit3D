@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
-public struct Time
+public struct Clock
 {
     public int Hours;
     public int Minutes;
@@ -16,12 +16,12 @@ public class Timer : MonoBehaviour
     [SerializeField] private TMP_Text _hours;
     [SerializeField] private TMP_Text _minutes;
     [SerializeField] private TMP_Text _seconds;
-    [SerializeField] private Time _timeToCountdown;
+    [SerializeField] private Clock _timeToCountdown;
     
     private float _timeSpend = 0f;
     
     protected DateTime LastDate;
-    protected Time Time;
+    protected Clock Clock;
     
     public virtual event UnityAction IsTimeEnd;
 
@@ -46,7 +46,7 @@ public class Timer : MonoBehaviour
 
         if (!(_timeSpend >= 1)) return;
         
-        Time.Seconds--;
+        Clock.Seconds--;
         LastDate = DateTime.UtcNow;
         CheckTimerForChanges();
         ShowTime();
@@ -54,35 +54,35 @@ public class Timer : MonoBehaviour
 
     protected void ShowTime()
     {
-        if (Time.Hours >= 10)
-            _hours.text = Time.Hours.ToString();
+        if (Clock.Hours >= 10)
+            _hours.text = Clock.Hours.ToString();
         else
-            _hours.text = "0" + Time.Hours;
+            _hours.text = "0" + Clock.Hours;
 
-        if (Time.Minutes >= 10)
-            _minutes.text = Time.Minutes.ToString();
+        if (Clock.Minutes >= 10)
+            _minutes.text = Clock.Minutes.ToString();
         else
-            _minutes.text = "0" + Time.Minutes;
+            _minutes.text = "0" + Clock.Minutes;
         
-        if (Time.Seconds >= 10)
-            _seconds.text = Time.Seconds.ToString();
+        if (Clock.Seconds >= 10)
+            _seconds.text = Clock.Seconds.ToString();
         else
-            _seconds.text = "0" + Time.Seconds;
+            _seconds.text = "0" + Clock.Seconds;
     }
 
     protected virtual void CheckTimerForChanges()
     {
-        while (Time.Seconds < 0)
+        while (Clock.Seconds < 0)
         {
-            Time.Seconds += _timeToCountdown.Seconds;
-            Time.Minutes--;
+            Clock.Seconds += _timeToCountdown.Seconds;
+            Clock.Minutes--;
 
-            if (Time.Minutes >= 0) continue;
-            Time.Minutes += _timeToCountdown.Minutes;
-            Time.Hours--;
+            if (Clock.Minutes >= 0) continue;
+            Clock.Minutes += _timeToCountdown.Minutes;
+            Clock.Hours--;
 
-            if (Time.Hours >= 0) continue;
-            Time.Hours += _timeToCountdown.Hours;
+            if (Clock.Hours >= 0) continue;
+            Clock.Hours += _timeToCountdown.Hours;
             IsTimeEnd?.Invoke();
         }
     }
@@ -96,7 +96,7 @@ public class Timer : MonoBehaviour
         
         var secondsPassed = (int) (DateTime.UtcNow - LastDate).TotalSeconds;
 
-        Time.Seconds -= secondsPassed;
+        Clock.Seconds -= secondsPassed;
         
         CheckTimerForChanges();
     }

@@ -19,14 +19,14 @@ public class OpenGift : MonoBehaviour
 
     private void OnEnable()
     {
-        AdManager.RewardedAd.OnAdFailedToLoad += HandleFailedToLoad;
-        AdManager.RewardedAd.OnAdLoaded += HandleAdLoaded;
+        AdManager.Instance.RewardedAd.OnAdFailedToLoad += HandleFailedToLoad;
+        AdManager.Instance.RewardedAd.OnAdLoaded += HandleAdLoaded;
     }
 
     private void OnDisable()
     {
-        AdManager.RewardedAd.OnAdFailedToLoad -= HandleFailedToLoad;
-        AdManager.RewardedAd.OnAdLoaded -= HandleAdLoaded;
+        AdManager.Instance.RewardedAd.OnAdFailedToLoad -= HandleFailedToLoad;
+        AdManager.Instance.RewardedAd.OnAdLoaded -= HandleAdLoaded;
     }
 
     private void HandleAdLoaded(object sender, EventArgs e)
@@ -41,24 +41,24 @@ public class OpenGift : MonoBehaviour
     
     private void HandleFailedToShow(object sender, AdErrorEventArgs e)
     {
-        AdManager.RewardedAd.OnUserEarnedReward -= HandleUserEarnReward;
-        AdManager.RewardedAd.OnAdFailedToShow -= HandleFailedToShow;
+        AdManager.Instance.RewardedAd.OnUserEarnedReward -= HandleUserEarnReward;
+        AdManager.Instance.RewardedAd.OnAdFailedToShow -= HandleFailedToShow;
     }
 
     private void HandleUserEarnReward(object sender, Reward e)
     {
         IsGiftOpened?.Invoke();
         
-        AdManager.RewardedAd.OnUserEarnedReward -= HandleUserEarnReward;
-        AdManager.RewardedAd.OnAdFailedToShow -= HandleFailedToShow;
+        AdManager.Instance.RewardedAd.OnUserEarnedReward -= HandleUserEarnReward;
+        AdManager.Instance.RewardedAd.OnAdFailedToShow -= HandleFailedToShow;
     }
     
     public void OpenGiftForAd()
     {
         MetricaManager.SendEvent("btn_open_gift");
-        AdManager.RewardedAd.OnUserEarnedReward += HandleUserEarnReward;
-        AdManager.RewardedAd.OnAdFailedToShow += HandleFailedToShow;
-        AdManager.ShowRewardVideo();
+        AdManager.Instance.RewardedAd.OnUserEarnedReward += HandleUserEarnReward;
+        AdManager.Instance.RewardedAd.OnAdFailedToShow += HandleFailedToShow;
+        AdManager.Instance.ShowRewardVideo();
         _button.interactable = false;
     }
 }

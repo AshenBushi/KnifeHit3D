@@ -8,7 +8,7 @@ public class LotteryTimer : Timer
 
     protected override void SaveTimer()
     {
-        DataManager.Instance.GameData.LotteryTime = Time;
+        DataManager.Instance.GameData._lotteryClock = Clock;
         DataManager.Instance.SaveDate(DateTime.UtcNow);
         DataManager.Instance.Save();
     }
@@ -17,18 +17,18 @@ public class LotteryTimer : Timer
     {
         if (DataManager.Instance.GameData.IsLotteryEnable)
         {
-            Time = new Time();
+            Clock = new Clock();
             DisableTimer();
         }
         else
         {
-            Time = DataManager.Instance.GameData.LotteryTime;
+            Clock = DataManager.Instance.GameData._lotteryClock;
 
             LastDate = DataManager.Instance.LoadDate();
 
             var secondsPassed = (int)(DateTime.UtcNow - LastDate).TotalSeconds;
 
-            Time.Seconds -= secondsPassed;
+            Clock.Seconds -= secondsPassed;
 
             CheckTimerForChanges();
         }
@@ -42,12 +42,12 @@ public class LotteryTimer : Timer
 
     protected override void CheckTimerForChanges()
     {
-        while (Time.Seconds < 0)
+        while (Clock.Seconds < 0)
         {
-            Time.Seconds += 60;
-            Time.Minutes--;
+            Clock.Seconds += 60;
+            Clock.Minutes--;
 
-            if (Time.Minutes >= 0) continue;
+            if (Clock.Minutes >= 0) continue;
             DisableTimer();
         }
     }
@@ -55,9 +55,9 @@ public class LotteryTimer : Timer
     private void DisableTimer()
     {
         DataManager.Instance.GameData.IsLotteryEnable = true;
-        Time.Hours = 0;
-        Time.Minutes = 0;
-        Time.Seconds = 0;
+        Clock.Hours = 0;
+        Clock.Minutes = 0;
+        Clock.Seconds = 0;
         
         ShowTime();
         
@@ -67,9 +67,9 @@ public class LotteryTimer : Timer
     public void EnableTimer()
     {
         DataManager.Instance.GameData.IsLotteryEnable = false;
-        Time.Hours = 0;
-        Time.Minutes = 4;
-        Time.Seconds = 59;
+        Clock.Hours = 0;
+        Clock.Minutes = 4;
+        Clock.Seconds = 59;
         LastDate = DateTime.UtcNow;
         
         ShowTime();

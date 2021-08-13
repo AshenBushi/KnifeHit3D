@@ -17,14 +17,14 @@ public class AdButton : MonoBehaviour
 
     private void OnEnable()
     {
-        AdManager.RewardedAd.OnAdFailedToLoad += HandleFailedToLoad;
-        AdManager.RewardedAd.OnAdLoaded += HandleAdLoaded;
+        AdManager.Instance.RewardedAd.OnAdFailedToLoad += HandleFailedToLoad;
+        AdManager.Instance.RewardedAd.OnAdLoaded += HandleAdLoaded;
     }
 
     private void OnDisable()
     {
-        AdManager.RewardedAd.OnAdFailedToLoad -= HandleFailedToLoad;
-        AdManager.RewardedAd.OnAdLoaded -= HandleAdLoaded;
+        AdManager.Instance.RewardedAd.OnAdFailedToLoad -= HandleFailedToLoad;
+        AdManager.Instance.RewardedAd.OnAdLoaded -= HandleAdLoaded;
     }
 
     private void HandleAdLoaded(object sender, EventArgs e)
@@ -39,21 +39,21 @@ public class AdButton : MonoBehaviour
     
     protected virtual void HandleFailedToShow(object sender, AdErrorEventArgs e)
     {
-        AdManager.RewardedAd.OnUserEarnedReward -= HandleUserEarnReward;
-        AdManager.RewardedAd.OnAdFailedToShow -= HandleFailedToShow;
+        AdManager.Instance.RewardedAd.OnUserEarnedReward -= HandleUserEarnReward;
+        AdManager.Instance.RewardedAd.OnAdFailedToShow -= HandleFailedToShow;
     }
 
     protected virtual void HandleUserEarnReward(object sender, Reward e)
     {
-        AdManager.RewardedAd.OnUserEarnedReward -= HandleUserEarnReward;
-        AdManager.RewardedAd.OnAdFailedToShow -= HandleFailedToShow;
+        AdManager.Instance.RewardedAd.OnUserEarnedReward -= HandleUserEarnReward;
+        AdManager.Instance.RewardedAd.OnAdFailedToShow -= HandleFailedToShow;
     }
     
     public virtual void WatchAd()
     {
-        AdManager.RewardedAd.OnUserEarnedReward += HandleUserEarnReward;
-        AdManager.RewardedAd.OnAdFailedToShow += HandleFailedToShow;
-        AdManager.ShowRewardVideo();
+        AdManager.Instance.RewardedAd.OnUserEarnedReward += HandleUserEarnReward;
+        AdManager.Instance.RewardedAd.OnAdFailedToShow += HandleFailedToShow;
+        AdManager.Instance.ShowRewardVideo();
         Button.interactable = false;
     }
     

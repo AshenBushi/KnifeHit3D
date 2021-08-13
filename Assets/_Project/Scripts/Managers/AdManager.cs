@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
-public class AdManager : MonoBehaviour
+public class AdManager : Singleton<AdManager>
 {
-    public static InterstitialAd Interstitial { get; private set; }
-    public static RewardedAd RewardedAd{ get; private set; }
+    private float _timeSpendFromLastInterstitial = 30f;
+    
+    public InterstitialAd Interstitial { get; private set; }
+    public RewardedAd RewardedAd{ get; private set; }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         MobileAds.Initialize((initStatus) =>
         {
             Dictionary<string, AdapterStatus> map = initStatus.getAdapterStatusMap();
@@ -41,7 +45,13 @@ public class AdManager : MonoBehaviour
         RewardedAd.OnAdClosed -= HandleRewardedAdClosed;
     }
 
-    private static void InitializeRewarded()
+    private void Update()
+    {
+        if (_timeSpendFromLastInterstitial < 30)
+            _timeSpendFromLastInterstitial += Time.deltaTime;
+    }
+
+    private void InitializeRewarded()
     {
 #if UNITY_ANDROID
         const string rewardId = "ca-app-pub-9672913692313370/5241874778"; 
@@ -60,7 +70,7 @@ public class AdManager : MonoBehaviour
         RewardedAd.LoadAd(request);
     }
 
-    private static void InitializeInterstitial()
+    private void InitializeInterstitial()
     {
 #if UNITY_ANDROID
         const string interstitialId = "ca-app-pub-9672913692313370/9922964234";
@@ -77,34 +87,36 @@ public class AdManager : MonoBehaviour
         Interstitial.LoadAd(request);
     }
     
-    private static void HandleOnAdClosed(object sender, EventArgs e)
+    private void HandleOnAdClosed(object sender, EventArgs e)
     {
         InitializeInterstitial();
     }
     
-    private static void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs e)
+    private void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs e)
     {
         InitializeRewarded();
     }
     
-    private static void HandleUserEarnedReward(object sender, Reward e)
+    private void HandleUserEarnedReward(object sender, Reward e)
     {
         InitializeRewarded();
     }
     
-    private static void HandleRewardedAdClosed(object sender, EventArgs e)
+    private void HandleRewardedAdClosed(object sender, EventArgs e)
     {
         InitializeRewarded();
     }
 
-    public static void ShowInterstitial()
+    public bool ShowInterstitial()
     {
-        if (!Interstitial.IsLoaded()) return;
+        if (!Interstitial.IsLoaded() || _timeSpendFromLastInterstitial < 30f) return false;
         MetricaManager.SendEvent("ad_int_start");
         Interstitial.Show();
+        _timeSpendFromLastInterstitial = 0f;
+        return true;
     }
 
-    public static void ShowRewardVideo()
+    public void ShowRewardVideo()
     {
         if (!RewardedAd.IsLoaded()) return;
         MetricaManager.SendEvent("ad_rew_start");
