@@ -45,6 +45,7 @@ using UnityEngine.Events;
 
             if (Targets.Count > 0)
             {
+                Player.Instance.DepositMoney(5);
                 _levelProgressDisplayer.NextPoint();
                 _targetMover.MoveTargets(Targets);
                 SetCurrentTarget();
@@ -58,6 +59,7 @@ using UnityEngine.Events;
         private void OnEdgePass(int exp, int currentEdge)
         {
             ExperienceHandler.Instance.AddExp(exp);
+            Player.Instance.DepositMoney(5);
             PlayerInput.Instance.DisallowTap();
             _levelProgressDisplayer.NextPoint();
             
@@ -102,6 +104,8 @@ using UnityEngine.Events;
                     break;
             }
 
+            RewardHandler.Instance.GiveLevelCompleteReward();
+            
             SessionHandler.Instance.CompleteLevel();
         }
         

@@ -140,6 +140,6 @@ public class LevelController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        platformsContainer.Rotate(0, Time.fixedDeltaTime * projectData.platformsRotationSpeed, 0);
+        platformsContainer.Rotate(0, UnityEngine.Time.fixedDeltaTime * projectData.platformsRotationSpeed, 0);
     }
 }

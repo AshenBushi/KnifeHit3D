@@ -90,7 +90,7 @@ public class UIController : MonoBehaviour
 
         bool noThanksIsActive = false;
 
-        for (float f = 0; f <= REVIVE_TIME; f += Time.deltaTime)
+        for (float f = 0; f <= REVIVE_TIME; f += UnityEngine.Time.deltaTime)
         {
             if (!noThanksIsActive && f >= 2.0f)
                 skipReviveButton.SetActive(true);
@@ -170,7 +170,7 @@ public class UIController : MonoBehaviour
 
     private IEnumerator FillTextSmooth(int value, float time)
     {
-        for(float state = 0; state < 1; state += Time.deltaTime / time)
+        for(float state = 0; state < 1; state += UnityEngine.Time.deltaTime / time)
         {
             resultScoreText.text = Mathf.RoundToInt(Mathf.Lerp(0, value, state)).ToString();
 

@@ -43,20 +43,24 @@ public class WinScreen : UIScreen
         SoundManager.Instance.PlaySound(SoundName.Win);
         _cup.SetActive(true);
 
-        _rewardText.text = TargetType switch
-        {
-            0 => LevelManager.Instance.CurrentMarkLevel.Reward.ToString(),
-            1 => LevelManager.Instance.CurrentCubeLevel.Reward.ToString(),
-            2 => LevelManager.Instance.CurrentFlatLevel.Reward.ToString(),
-            _ => LevelManager.Instance.CurrentMarkLevel.Reward.ToString()
-        };
+        _rewardText.text = GamemodManager.Instance.CurrentModIndex == 0
+            ? TargetType switch
+            {
+                0 => LevelManager.Instance.CurrentMarkLevel.Reward.ToString(),
+                1 => LevelManager.Instance.CurrentCubeLevel.Reward.ToString(),
+                2 => LevelManager.Instance.CurrentFlatLevel.Reward.ToString(),
+                _ => LevelManager.Instance.CurrentMarkLevel.Reward.ToString()
+            }
+            : "15";
+
+        Player.Instance.DepositMoney(Convert.ToInt32(_rewardText.text));
     }
 
     public override void Disable()
     {
         base.Disable();
         _cup.SetActive(false);
-        IsScreenDisabled?.Invoke(_isShowedDoubleReward);
+        IsScreenDisabled?.Invoke(true);
     }
 
     public void Win()

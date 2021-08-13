@@ -26,6 +26,6 @@ public class CameraFollow : MonoBehaviour
     private void FixedUpdate()
     {
         if(refTransform.position.y > minYPosition)
-            refTransform.position = Vector3.Lerp(refTransform.position, new Vector3(refTransform.position.x, target.position.y + offsetY, refTransform.position.z), Time.fixedDeltaTime * speed);
+            refTransform.position = Vector3.Lerp(refTransform.position, new Vector3(refTransform.position.x, target.position.y + offsetY, refTransform.position.z), UnityEngine.Time.fixedDeltaTime * speed);
     }
 }

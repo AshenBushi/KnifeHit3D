@@ -20,6 +20,6 @@ public class CFX_Demo_Translate : MonoBehaviour
 	
 	void Update ()
 	{
-		this.transform.Translate(axis * speed * Time.deltaTime, Space.Self);
+		this.transform.Translate(axis * speed * UnityEngine.Time.deltaTime, Space.Self);
 	}
 }

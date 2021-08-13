@@ -404,8 +404,8 @@ namespace Watermelon
             if (updateRequiresActiveReorganization)
                 ReorganizeUpdateActiveTweens();
 
-            float deltaTime = Time.deltaTime;
-            float unscaledDeltaTime = Time.unscaledDeltaTime;
+            float deltaTime = UnityEngine.Time.deltaTime;
+            float unscaledDeltaTime = UnityEngine.Time.unscaledDeltaTime;
 
             for (int i = 0; i < updateTweensCount; i++)
             {
@@ -422,7 +422,7 @@ namespace Watermelon
                         {
                             if (!tween.isUnscaled)
                             {
-                                if (Time.timeScale == 0)
+                                if (UnityEngine.Time.timeScale == 0)
                                     continue;
 
                                 tween.NextState(deltaTime);
@@ -466,8 +466,8 @@ namespace Watermelon
             if (fixedRequiresActiveReorganization)
                 ReorganizeFixedActiveTweens();
 
-            float deltaTime = Time.fixedDeltaTime;
-            float unscaledDeltaTime = Time.fixedUnscaledDeltaTime;
+            float deltaTime = UnityEngine.Time.fixedDeltaTime;
+            float unscaledDeltaTime = UnityEngine.Time.fixedUnscaledDeltaTime;
 
             for (int i = 0; i < fixedTweensCount; i++)
             {
@@ -484,7 +484,7 @@ namespace Watermelon
                         {
                             if (!tween.isUnscaled)
                             {
-                                if (Time.timeScale == 0)
+                                if (UnityEngine.Time.timeScale == 0)
                                     continue;
 
                                 tween.NextState(deltaTime);
@@ -528,8 +528,8 @@ namespace Watermelon
             if (lateRequiresActiveReorganization)
                 ReorganizeLateActiveTweens();
 
-            float deltaTime = Time.deltaTime;
-            float unscaledDeltaTime = Time.unscaledDeltaTime;
+            float deltaTime = UnityEngine.Time.deltaTime;
+            float unscaledDeltaTime = UnityEngine.Time.unscaledDeltaTime;
 
             for (int i = 0; i < lateTweensCount; i++)
             {
@@ -546,7 +546,7 @@ namespace Watermelon
                         {
                             if (!tween.isUnscaled)
                             {
-                                if (Time.timeScale == 0)
+                                if (UnityEngine.Time.timeScale == 0)
                                     continue;
 
                                 tween.NextState(deltaTime);

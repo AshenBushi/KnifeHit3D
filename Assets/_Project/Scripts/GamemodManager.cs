@@ -6,6 +6,7 @@ public class GamemodManager : Singleton<GamemodManager>
     [SerializeField] private Skills _skills;
     
     public int LastPressedButtonIndex { get; private set; }
+    public int CurrentModIndex { get; private set; }
     
     public event UnityAction IsButtonIndexChanged;
     public event UnityAction IsLotterySelected;
@@ -23,6 +24,7 @@ public class GamemodManager : Singleton<GamemodManager>
 
     public void SelectMod(int index)
     {
+        CurrentModIndex = index;
         SceneLoader.Instance.TryLoadGameplayScene(index);
         _skills.DisallowSkills();
     }

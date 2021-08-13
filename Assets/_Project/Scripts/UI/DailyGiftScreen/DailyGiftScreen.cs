@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class DailyGiftScreen : UIScreen
 {
-    [SerializeField] private GiftTimer _giftTimer;
+    [SerializeField] private Timer _timer;
     [SerializeField] private List<DailyGift> _gifts;
     [SerializeField] private StartScreen _startScreen;
 
@@ -17,7 +17,7 @@ public class DailyGiftScreen : UIScreen
 
     private void OnEnable()
     {
-        _giftTimer.CanGiveGift += UnlockNextGift;
+        _timer.IsTimeEnd += UnlockNextGift;
 
         foreach (var gift in _gifts)
         {
@@ -27,7 +27,7 @@ public class DailyGiftScreen : UIScreen
 
     private void OnDisable()
     {
-        _giftTimer.CanGiveGift -= UnlockNextGift;
+        _timer.IsTimeEnd -= UnlockNextGift;
         
         foreach (var gift in _gifts)
         {

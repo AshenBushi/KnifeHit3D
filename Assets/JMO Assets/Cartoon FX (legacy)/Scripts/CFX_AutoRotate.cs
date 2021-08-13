@@ -15,6 +15,6 @@ public class CFX_AutoRotate : MonoBehaviour
 	
 	void Update()
 	{
-		this.transform.Rotate(rotation * Time.deltaTime, space);
+		this.transform.Rotate(rotation * UnityEngine.Time.deltaTime, space);
 	}
 }

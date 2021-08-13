@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44824904, g: 0.49827605, b: 0.57558316, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6211,7 +6211,6 @@ MonoBehaviour:
   playerHitParticle: {fileID: 2112407602}
   levelController: {fileID: 1060784198}
   cameraFollow: {fileID: 956244642}
-  gradientBackground: {fileID: 1060784202}
   uiController: {fileID: 1060784203}
   projectData: {fileID: 11400000, guid: c510fc29afa373f4aa4ecc41f490b726, type: 2}
   audioSettings: {fileID: 11400000, guid: 92f5abd1b75e55c489dbff531cecb72a, type: 2}
@@ -6255,7 +6254,6 @@ MonoBehaviour:
   levelProgressImage: {fileID: 4423777888454190769}
   levelProgressArrow: {fileID: 8946650295906809098}
   scoreText: {fileID: 1620782097}
-  menuPanel: {fileID: 2071701966}
   gameOverPanel: {fileID: 220816843}
   defaultGameOverPanel: {fileID: 1872389756}
   reviveGameOverPanel: {fileID: 2095525399}

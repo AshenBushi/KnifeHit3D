@@ -20,11 +20,11 @@ public class CFX_Demo_RandomDirectionTranslate : MonoBehaviour
 	
 	void Update ()
 	{
-		this.transform.Translate(dir * speed * Time.deltaTime);
+		this.transform.Translate(dir * speed * UnityEngine.Time.deltaTime);
 		
 		if(gravity)
 		{
-			this.transform.Translate(Physics.gravity * Time.deltaTime);
+			this.transform.Translate(Physics.gravity * UnityEngine.Time.deltaTime);
 		}
 	}
 }

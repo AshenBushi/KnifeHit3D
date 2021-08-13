@@ -69,10 +69,13 @@ public class DataManager : Singleton<DataManager>
         GameData.SettingsData.SoundVolume = 1;
         GameData.SettingsData.MusicVolume = 1;
 
-        GameData.DailyGiftsData.Timer = new Timer() {Hours = 23, Minutes =59, Seconds = 59};
+        GameData.DailyGiftsData.Time = new Time() {Hours = 23, Minutes =59, Seconds = 59};
         GameData.DailyGiftsData.Date = DateTime.UtcNow.ToString("u", CultureInfo.InvariantCulture);
         GameData.DailyGiftsData.UnlockedGifts = 1;
         GameData.DailyGiftsData.PickedGifts = 0;
+
+        GameData.LotteryTime = new Time() { Hours = 0, Minutes = 4, Seconds = 59 };
+        GameData.IsLotteryEnable = true;
 
         StartCoroutine(SendMetricks());
     }
@@ -112,6 +115,8 @@ public class GameData
     public ProgressData ProgressData;
     public SettingsData SettingsData;
     public DailyGiftsData DailyGiftsData;
+    public Time LotteryTime;
+    public bool IsLotteryEnable;
 }
 
 [Serializable]
@@ -150,7 +155,7 @@ public struct SettingsData
 [Serializable]
 public struct DailyGiftsData
 {
-    public Timer Timer;
+    public Time Time;
     public string Date;
     public int UnlockedGifts;
     public int PickedGifts;

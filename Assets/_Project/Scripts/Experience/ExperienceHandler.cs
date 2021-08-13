@@ -8,8 +8,6 @@ public class ExperienceHandler : Singleton<ExperienceHandler>
 {
     [SerializeField] private ExperienceBar _expBar;
 
-    public bool HasReward { get; private set; } = false;
-    
     private void CheckForFull()
     {
         if (DataManager.Instance.GameData.PlayerData.Experience < 200) return;

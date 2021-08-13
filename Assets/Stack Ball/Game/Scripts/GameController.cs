@@ -74,7 +74,6 @@ public class GameController : MonoBehaviour
     private void LoadLevel(int levelIndex)
     {
         revived = false;
-
         currentLevelIndex = levelIndex;
 
         Level level = levelDatabase.GetLevel(currentLevelIndex);
@@ -149,6 +148,8 @@ public class GameController : MonoBehaviour
 
         instance.winParticle.Play();
         
+        ExperienceHandler.Instance.AddExp(20);
+
         instance.uiController.ShowWinPanel();
     }
 

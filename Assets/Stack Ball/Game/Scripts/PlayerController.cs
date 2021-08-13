@@ -161,11 +161,11 @@ public class PlayerController : MonoBehaviour
         {
             if(!mouseDown)
             {
-                comboTimer -= Time.deltaTime / comboActiveTime;
+                comboTimer -= UnityEngine.Time.deltaTime / comboActiveTime;
             }
             else if(isComboReached)
             {
-                comboTimer -= Time.deltaTime / comboActiveTime;
+                comboTimer -= UnityEngine.Time.deltaTime / comboActiveTime;
 
                 if(comboTimer <= 0.2f)
                 {
@@ -346,7 +346,7 @@ public class PlayerController : MonoBehaviour
                         float timer = projectData.playerSafeTime;
                         while (timer > 0)
                         {
-                            timer -= Time.deltaTime;
+                            timer -= UnityEngine.Time.deltaTime;
 
                             if (!mouseDown)
                                 yield break;
@@ -381,11 +381,11 @@ public class PlayerController : MonoBehaviour
                             {
                                 if (audioSettings.vibrations.shortVibration != 0)
                                 {
-                                    if (instance.vibrationTime <= Time.time)
+                                    if (instance.vibrationTime <= UnityEngine.Time.time)
                                     {
                                         Vibration.Vibrate(audioSettings.vibrations.shortVibration);
 
-                                        instance.vibrationTime = Time.time + instance.vibrationCooldown;
+                                        instance.vibrationTime = UnityEngine.Time.time + instance.vibrationCooldown;
                                     }
                                 }
                             }

@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 public class SessionHandler : Singleton<SessionHandler>
 {
+    [SerializeField] private LotteryTimer _lotteryTimer;
     [Header("Screens")]
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private LoseScreen _loseScreen;
@@ -34,6 +35,9 @@ public class SessionHandler : Singleton<SessionHandler>
     {
         _startScreen.Disable();
 
+        if (GamemodManager.Instance.LastPressedButtonIndex == -1)
+            _lotteryTimer.EnableTimer();
+
         IsSessionStarted?.Invoke();
     }
 
@@ -59,8 +63,6 @@ public class SessionHandler : Singleton<SessionHandler>
 
     public void CompleteLevel()
     {
-        RewardHandler.Instance.GiveLevelCompleteReward();
-        
         _winScreen.Win();
     }
 

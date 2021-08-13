@@ -26,7 +26,7 @@ namespace Watermelon
 
         private void Update()
         {
-            fps = (int)(1f / Time.unscaledDeltaTime);
+            fps = (int)(1f / UnityEngine.Time.unscaledDeltaTime);
         }
     }
 }

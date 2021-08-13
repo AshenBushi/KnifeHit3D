@@ -13,6 +13,6 @@ public class CFX_Demo_RotateCamera : MonoBehaviour
 	void Update ()
 	{
 		if(rotating)
-			transform.RotateAround(rotationCenter.position, Vector3.up, speed*Time.deltaTime);
+			transform.RotateAround(rotationCenter.position, Vector3.up, speed*UnityEngine.Time.deltaTime);
 	}
 }
