@@ -3,6 +3,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 using Watermelon;
 
 public class UIController : MonoBehaviour
@@ -15,8 +16,6 @@ public class UIController : MonoBehaviour
     [SerializeField] CanvasGroup levelProgressCanvasGroup;
     [SerializeField] Image levelProgressImage;
     [SerializeField] RectTransform levelProgressArrow;
-    
-    [SerializeField] Text scoreText;
 
     [SerializeField] GameObject gameOverPanel;
 
@@ -31,6 +30,7 @@ public class UIController : MonoBehaviour
     
     [SerializeField] Image reviveFillBar;
     [SerializeField] GameObject skipReviveButton;
+    [SerializeField] private TMP_Text _level;
 
     private int totalPlatformsCount;
 
@@ -69,16 +69,19 @@ public class UIController : MonoBehaviour
         gameOverPanel.SetActive(false);
     }
 
-    public void HideLevelProgress()
+    private void HideLevelProgress()
     {
-        scoreText.gameObject.SetActive(false);
         levelProgressCanvasGroup.DOFade(0, 0.3f);
+        
+        _level.gameObject.SetActive(false);
     }
 
-    public void ShowLevelProgress()
+    private void ShowLevelProgress()
     {
         levelProgressCanvasGroup.gameObject.SetActive(true);
-        scoreText.gameObject.SetActive(true);
+        _level.gameObject.SetActive(true);
+
+        _level.text = (PlayerPrefs.GetInt("lastLevel", 0) + 1).ToString();
 
         levelProgressCanvasGroup.alpha = 0;
         levelProgressCanvasGroup.DOFade(1, 0.5f);
@@ -90,7 +93,7 @@ public class UIController : MonoBehaviour
 
         bool noThanksIsActive = false;
 
-        for (float f = 0; f <= REVIVE_TIME; f += UnityEngine.Time.deltaTime)
+        for (float f = 0; f <= REVIVE_TIME; f += Time.deltaTime)
         {
             if (!noThanksIsActive && f >= 2.0f)
                 skipReviveButton.SetActive(true);
@@ -188,18 +191,11 @@ public class UIController : MonoBehaviour
     private void OnPlayerDestructPlatform(Platform platform)
     {
         SetProgress(1 - (float)platform.platformIndex / totalPlatformsCount);
-
-        SetScoreText(GameController.Score);
     }
 
     public void SetProgress(float value)
     {
         levelProgressImage.fillAmount = value;
         levelProgressArrow.anchoredPosition = new Vector2(Mathf.Lerp(0, levelProgressBarWidth, value), levelProgressArrow.anchoredPosition.y);
-    }
-
-    public void SetScoreText(int score)
-    {
-        scoreText.text = score.ToString();
     }
 }

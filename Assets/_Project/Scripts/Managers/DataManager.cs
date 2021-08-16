@@ -93,6 +93,7 @@ public class GameData
     public bool IsLotteryEnable;
     public int CurrentGamemod;
     public int CurrentTargetType;
+    public bool CanShowStartAd;
 
     public GameData()
     {
@@ -120,6 +121,7 @@ public class GameData
         IsLotteryEnable = true;
         CurrentGamemod = -1;
         CurrentTargetType = 0;
+        CanShowStartAd = false;
     }
     
 }

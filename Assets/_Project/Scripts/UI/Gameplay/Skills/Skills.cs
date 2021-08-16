@@ -8,7 +8,7 @@ public class Skills : MonoBehaviour
     [SerializeField] private SlowMode _slowMode;
     [SerializeField] private SkipTarget _skipTarget;
 
-    private bool _canEnableSkills = false;
+    private bool _canEnableSkills = true;
 
     private void OnEnable()
     {
@@ -35,10 +35,10 @@ public class Skills : MonoBehaviour
 
     private IEnumerator TryEnableButtons()
     {
-        if(!_canEnableSkills) yield break;
-        
         yield return new WaitForSeconds(2f);
 
+        if(!_canEnableSkills) yield break;
+        
         if (DataManager.Instance.GameData.PlayerData.SlowMode > 0)
         {
             _slowMode.gameObject.SetActive(true);
@@ -50,10 +50,14 @@ public class Skills : MonoBehaviour
     public void AllowSkills()
     {
         _canEnableSkills = true;
+        
+        Debug.Log("Skills enabled");
     }
 
     public void DisallowSkills()
     {
         _canEnableSkills = false;
+        
+        Debug.Log("Skills disabled");
     }
 }

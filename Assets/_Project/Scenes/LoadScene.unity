@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.44824904, g: 0.49827605, b: 0.57558316, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1967,13 +1967,21 @@ MonoBehaviour:
       SoundVolume: 0
       MusicVolume: 0
     DailyGiftsData:
-      Timer:
-        Hours: 0
-        Minutes: 0
-        Seconds: 0
+      _clock:
+        Hours: 23
+        Minutes: 59
+        Seconds: 59
       Date: 
       UnlockedGifts: 0
       PickedGifts: 0
+    _lotteryClock:
+      Hours: 0
+      Minutes: 4
+      Seconds: 59
+    IsLotteryEnable: 1
+    CurrentGamemod: -1
+    CurrentTargetType: 0
+    CanShowStartAd: 0
 --- !u!114 &1014453668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2907,7 +2915,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1750025281}
   - component: {fileID: 1750025280}
-  - component: {fileID: 1750025279}
   - component: {fileID: 1750025282}
   m_Layer: 0
   m_Name: Main Camera
@@ -2916,14 +2923,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1750025279
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1750025278}
-  m_Enabled: 1
 --- !u!20 &1750025280
 Camera:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,6 +18,8 @@ public class SessionHandler : Singleton<SessionHandler>
     {
         _winScreen.IsScreenDisabled += OnScreenDisabled;
         _loseScreen.IsScreenDisabled += OnScreenDisabled;
+        
+        TryToShowAd();
     }
 
     private void OnDisable()
@@ -43,38 +46,28 @@ public class SessionHandler : Singleton<SessionHandler>
 
     private void OnScreenDisabled(bool isAdShowed)
     {
-        SceneLoader.Instance.PrepareScene(1);
-        
-        if(isAdShowed)
-        {
-            RestartSession();
-        }
-        else
-        {
-            if(AdManager.Instance.ShowInterstitial())
-            {
-                AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
-            }
-            else
-            {
-                RestartSession();
-            }
-        }
+        DataManager.Instance.GameData.CanShowStartAd = !isAdShowed;
+        RestartSession();
     }
 
-    private void HandleOnAdClosed(object sender, EventArgs e)
+    private void TryToShowAd()
     {
-        RestartSession();
+        if(DataManager.Instance.GameData.CanShowStartAd)
+        {
+            AdManager.Instance.ShowInterstitial();
+        }
     }
 
     public void CompleteLevel()
     {
         _winScreen.Win();
+        SceneLoader.Instance.PrepareScene(1);
     }
 
     public void FailLevel()
     {
         _loseScreen.Lose();
+        SceneLoader.Instance.PrepareScene(1);
     }
 
     private void RestartSession()

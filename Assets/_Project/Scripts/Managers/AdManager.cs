@@ -43,6 +43,9 @@ public class AdManager : Singleton<AdManager>
         RewardedAd.OnAdFailedToShow -= HandleRewardedAdFailedToShow;
         RewardedAd.OnUserEarnedReward -= HandleUserEarnedReward;
         RewardedAd.OnAdClosed -= HandleRewardedAdClosed;
+
+        DataManager.Instance.GameData.CanShowStartAd = false;
+        DataManager.Instance.Save();
     }
 
     private void Update()

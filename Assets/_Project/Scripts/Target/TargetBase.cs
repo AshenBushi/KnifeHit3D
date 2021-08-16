@@ -25,7 +25,7 @@ public class TargetBase : MonoBehaviour
     {
         var currentPosition = transform.position;
         
-        Vibration.Vibrate(300);
+        Vibration.Vibrate(20);
 
         _tween = ShortcutExtensions.DOMove(transform, new Vector3(currentPosition.x, currentPosition.y, currentPosition.z + 0.3f), 0.05f).SetLink(gameObject);
         _tween.OnComplete(() =>

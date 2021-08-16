@@ -25,9 +25,11 @@ public class GamemodManager : Singleton<GamemodManager>
         else
         {
             SelectMod(DataManager.Instance.GameData.CurrentGamemod);
+            
+            if(DataManager.Instance.GameData.CurrentGamemod == 1) return;
+            
             SetButtonIndex(DataManager.Instance.GameData.CurrentTargetType);
         }
-        
     }
 
     private void SelectRandomMod()
@@ -35,28 +37,33 @@ public class GamemodManager : Singleton<GamemodManager>
         var modIndex = Random.Range(0, 2);
         SelectMod(modIndex);
         
+        if(modIndex == 1) return;
+        
         var randomType = Random.Range(0, 6);
         SetButtonIndex(randomType);
-
     }
 
     public void SelectMod(int index)
     {
         CurrentModIndex = index;
+        
+        if(CurrentModIndex == 1)
+            _skills.DisallowSkills();
+        
         SceneLoader.Instance.TryLoadGameplayScene(index);
-        _skills.DisallowSkills();
         DataManager.Instance.GameData.CurrentGamemod = CurrentModIndex;
     }
 
     public void SetButtonIndex(int index)
     {
+        _skills.AllowSkills();
+        
         if (LastPressedButtonIndex == index) return;
         
         SoundManager.Instance.PlaySound(SoundName.ButtonClick);
         
         LastPressedButtonIndex = index;
         IsButtonIndexChanged?.Invoke();
-        _skills.AllowSkills();
         DataManager.Instance.GameData.CurrentTargetType = LastPressedButtonIndex;
     }
 

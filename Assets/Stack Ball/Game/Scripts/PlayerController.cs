@@ -118,6 +118,11 @@ public class PlayerController : MonoBehaviour
         PlayerInput.Instance.IsUntapped -= MouseUp;
     }
 
+    private void OnDestroy()
+    {
+        Tween.PauseAll();
+    }
+
     public void Init()
     {
         Platform platform = levelController.NextPlatform;
@@ -310,7 +315,7 @@ public class PlayerController : MonoBehaviour
             {
                 for (int i = 0; i < destructRigidbodies.Length; i++)
                 {
-                    destructRigidbodies[i].gameObject.SetActive(false);
+                    destructRigidbodies?[i].gameObject.SetActive(false);
                 }
             });
         }
@@ -381,11 +386,13 @@ public class PlayerController : MonoBehaviour
                             {
                                 if (audioSettings.vibrations.shortVibration != 0)
                                 {
-                                    if (instance.vibrationTime <= UnityEngine.Time.time)
+                                    Debug.Log($"Vibration is {audioSettings.vibrations.shortVibration}");
+                                    
+                                    if (instance.vibrationTime <= Time.time)
                                     {
                                         Vibration.Vibrate(audioSettings.vibrations.shortVibration);
 
-                                        instance.vibrationTime = UnityEngine.Time.time + instance.vibrationCooldown;
+                                        instance.vibrationTime = Time.time + instance.vibrationCooldown;
                                     }
                                 }
                             }

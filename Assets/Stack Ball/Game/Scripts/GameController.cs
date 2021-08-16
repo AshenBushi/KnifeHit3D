@@ -90,7 +90,6 @@ public class GameController : MonoBehaviour
         playerController.Init();
 
         uiController.Init(currentLevelIndex + 1, level.levelPlatformsData.Length);
-        uiController.SetScoreText(score);
 
         cameraFollow.Init();
     }
@@ -105,7 +104,6 @@ public class GameController : MonoBehaviour
         playerController.Init();
 
         uiController.SetProgress(0);
-        uiController.SetScoreText(0);
 
         SetScore(0);
 

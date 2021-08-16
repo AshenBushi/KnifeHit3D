@@ -9,6 +9,7 @@ public class SceneLoader : Singleton<SceneLoader>
 
     private AsyncOperation _operation;
     private int _lastLoadSceneIndex = -1;
+    private bool _isScenePrepearing = false;
 
     public void TryLoadGameplayScene(int sceneIndex)
     {
@@ -38,12 +39,17 @@ public class SceneLoader : Singleton<SceneLoader>
 
     public void PrepareScene(int sceneIndex)
     {
+        /*if (_isScenePrepearing) return;
         _operation = SceneManager.LoadSceneAsync(sceneIndex);
         _operation.allowSceneActivation = false;
+        _isScenePrepearing = true;*/
     }
 
     public void LoadPreparedScene()
     {
-        _operation.allowSceneActivation = true;
+        SceneManager.LoadScene(1);
+        
+        /*_isScenePrepearing = false;
+        _operation.allowSceneActivation = true;*/
     }
 }
