@@ -20,7 +20,7 @@ public class TargetMover : MonoBehaviour
         foreach (var target in targets)
         {
             var position = target.transform.position;
-            _mover = target.transform.DOMove(new Vector3(position.x, position.y, position.z - SpawnStep), AnimationDuration);
+            _mover = target.transform.DOMove(new Vector3(position.x, position.y, position.z - SpawnStep), AnimationDuration).SetLink(gameObject);
         }
 
         _mover.OnComplete(() =>
@@ -31,7 +31,7 @@ public class TargetMover : MonoBehaviour
 
     public void RotateCube(TargetBase cubeBase, int edgeNumber)
     {
-        _mover = cubeBase.transform.DOLocalRotate(_cubeRotatePoints[edgeNumber], AnimationDuration);
+        _mover = cubeBase.transform.DOLocalRotate(_cubeRotatePoints[edgeNumber], AnimationDuration).SetLink(gameObject);
         
         _mover.OnComplete(() =>
         {

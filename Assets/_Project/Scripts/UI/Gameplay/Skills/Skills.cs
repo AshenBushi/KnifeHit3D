@@ -50,14 +50,10 @@ public class Skills : MonoBehaviour
     public void AllowSkills()
     {
         _canEnableSkills = true;
-        
-        Debug.Log("Skills enabled");
     }
 
     public void DisallowSkills()
     {
         _canEnableSkills = false;
-        
-        Debug.Log("Skills disabled");
     }
 }

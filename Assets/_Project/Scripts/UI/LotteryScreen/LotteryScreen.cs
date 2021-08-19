@@ -42,7 +42,6 @@ public class LotteryScreen : UIScreen
 
     public void Collect()
     {
-        SceneLoader.Instance.PrepareScene(1);
         _lotteryRewarder.SendRewards(Rewards);
     }
 }

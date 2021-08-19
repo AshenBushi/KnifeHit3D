@@ -7,8 +7,7 @@ using UnityEngine;
 public class MoneyDisplayer : MonoBehaviour
 {
     [SerializeField] private TMP_Text _moneyText;
-
-    private Tween _tween;
+    
     private int _moneyCount;
 
     private void OnEnable()

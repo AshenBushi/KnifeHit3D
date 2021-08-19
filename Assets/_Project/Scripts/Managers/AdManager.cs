@@ -6,7 +6,8 @@ using UnityEngine;
 public class AdManager : Singleton<AdManager>
 {
     private float _timeSpendFromLastInterstitial = 30f;
-    
+
+    public bool IsInterstitialShowed { get; private set; }
     public InterstitialAd Interstitial { get; private set; }
     public RewardedAd RewardedAd{ get; private set; }
 
@@ -93,6 +94,7 @@ public class AdManager : Singleton<AdManager>
     private void HandleOnAdClosed(object sender, EventArgs e)
     {
         InitializeInterstitial();
+        IsInterstitialShowed = true;
     }
     
     private void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs e)
@@ -116,6 +118,7 @@ public class AdManager : Singleton<AdManager>
         MetricaManager.SendEvent("ad_int_start");
         Interstitial.Show();
         _timeSpendFromLastInterstitial = 0f;
+        IsInterstitialShowed = false;
         return true;
     }
 

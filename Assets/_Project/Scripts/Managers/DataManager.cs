@@ -91,8 +91,7 @@ public class GameData
     public DailyGiftsData DailyGiftsData;
     public Clock _lotteryClock;
     public bool IsLotteryEnable;
-    public int CurrentGamemod;
-    public int CurrentTargetType;
+    public Gamemod CurrentGamemod;
     public bool CanShowStartAd;
 
     public GameData()
@@ -119,8 +118,6 @@ public class GameData
 
         _lotteryClock = new Clock() { Hours = 0, Minutes = 4, Seconds = 59 };
         IsLotteryEnable = true;
-        CurrentGamemod = -1;
-        CurrentTargetType = 0;
         CanShowStartAd = false;
     }
     

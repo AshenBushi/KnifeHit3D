@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,7 +11,8 @@ public class SessionHandler : Singleton<SessionHandler>
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private LoseScreen _loseScreen;
     [SerializeField] private WinScreen _winScreen;
-
+    
+    public bool IsPlayerLose;
     public event UnityAction IsSessionStarted;
     public event UnityAction IsSessionRestarted;
 
@@ -18,8 +20,6 @@ public class SessionHandler : Singleton<SessionHandler>
     {
         _winScreen.IsScreenDisabled += OnScreenDisabled;
         _loseScreen.IsScreenDisabled += OnScreenDisabled;
-        
-        TryToShowAd();
     }
 
     private void OnDisable()
@@ -38,7 +38,7 @@ public class SessionHandler : Singleton<SessionHandler>
     {
         _startScreen.Disable();
 
-        if (GamemodManager.Instance.LastPressedButtonIndex == -1)
+        if (GamemodManager.Instance.KnifeHitMod == 6)
             _lotteryTimer.EnableTimer();
 
         IsSessionStarted?.Invoke();
@@ -47,34 +47,40 @@ public class SessionHandler : Singleton<SessionHandler>
     private void OnScreenDisabled(bool isAdShowed)
     {
         DataManager.Instance.GameData.CanShowStartAd = !isAdShowed;
-        RestartSession();
+        
+        StartCoroutine(TryToShowAdRestart());
     }
 
-    private void TryToShowAd()
+    private IEnumerator TryToShowAdRestart()
     {
         if(DataManager.Instance.GameData.CanShowStartAd)
         {
-            AdManager.Instance.ShowInterstitial();
+            if (AdManager.Instance.ShowInterstitial())
+            {
+                yield return new WaitUntil(() => AdManager.Instance.IsInterstitialShowed);
+            }
         }
+        
+        RestartSession();
     }
 
     public void CompleteLevel()
     {
         _winScreen.Win();
-        SceneLoader.Instance.PrepareScene(1);
+        IsPlayerLose = false;
     }
 
     public void FailLevel()
     {
         _loseScreen.Lose();
-        SceneLoader.Instance.PrepareScene(1);
+        IsPlayerLose = true;
     }
 
-    private void RestartSession()
+    public void RestartSession()
     {
-        SceneLoader.Instance.LoadPreparedScene();
-        /*GamemodManager.Instance.StartSession();
+        GamemodManager.Instance.StartSession(IsPlayerLose);
+        PlayerInput.Instance.AllowTap();
         _startScreen.Enable();
-        IsSessionRestarted?.Invoke();*/
+        IsSessionRestarted?.Invoke();
     }
 }

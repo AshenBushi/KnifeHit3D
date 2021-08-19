@@ -29,8 +29,8 @@ public class LoseScreen : UIScreen
 
     private void EndGame()
     {
+        Disable();
         IsScreenDisabled?.Invoke(false);
-        DataManager.Instance.GameData.CurrentGamemod = -1;
     }
 
     public void Lose()

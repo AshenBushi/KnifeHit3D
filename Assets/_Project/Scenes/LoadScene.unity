@@ -1606,6 +1606,7 @@ GameObject:
   - component: {fileID: 1014453671}
   - component: {fileID: 1014453664}
   - component: {fileID: 1014453670}
+  - component: {fileID: 1014453672}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -2043,6 +2044,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d243482108afc3f46864a80f0dfefd5c, type: 2}
   - {fileID: 11400000, guid: 4ba2115afd89b064387f4275ca67ec55, type: 2}
   - {fileID: 11400000, guid: 13114aeda5e21804f9b58322f32b59bb, type: 2}
+--- !u!81 &1014453672
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014453663}
+  m_Enabled: 1
 --- !u!1 &1048353732
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,76 +1,74 @@
 using UnityEngine;
-using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class GamemodManager : Singleton<GamemodManager>
 {
     [SerializeField] private Skills _skills;
-    
-    public int LastPressedButtonIndex { get; private set; }
-    public int CurrentModIndex { get; private set; }
-    
-    public event UnityAction IsButtonIndexChanged;
-    public event UnityAction IsLotterySelected;
+
+    public int KnifeHitMod { get; private set; }
+    public Gamemod CurrentMod { get; private set; }
 
     private void Start()
     {
-        StartSession();
+        StartSession(true);
+    }
+    
+    private void SelectRandomMod()
+    {
+        var randomGamemod = Random.Range(0, 2);
+        var randomKnifeHitMod = Random.Range(0, 6);
+        
+        SelectKnifeHitMod(randomKnifeHitMod);
+        SelectMod(randomGamemod);
     }
 
-    private void StartSession()
+    public void StartSession(bool firstTime)
     {
-        if (DataManager.Instance.GameData.CurrentGamemod == -1)
+        if (firstTime)
         {
             SelectRandomMod();
         }
         else
         {
-            SelectMod(DataManager.Instance.GameData.CurrentGamemod);
-            
-            if(DataManager.Instance.GameData.CurrentGamemod == 1) return;
-            
-            SetButtonIndex(DataManager.Instance.GameData.CurrentTargetType);
+            SelectMod((int)DataManager.Instance.GameData.CurrentGamemod);
         }
     }
-
-    private void SelectRandomMod()
-    {
-        var modIndex = Random.Range(0, 2);
-        SelectMod(modIndex);
-        
-        if(modIndex == 1) return;
-        
-        var randomType = Random.Range(0, 6);
-        SetButtonIndex(randomType);
-    }
-
+    
     public void SelectMod(int index)
     {
-        CurrentModIndex = index;
+        CurrentMod = (Gamemod)index;
         
-        if(CurrentModIndex == 1)
-            _skills.DisallowSkills();
-        
-        SceneLoader.Instance.TryLoadGameplayScene(index);
-        DataManager.Instance.GameData.CurrentGamemod = CurrentModIndex;
-    }
-
-    public void SetButtonIndex(int index)
-    {
-        _skills.AllowSkills();
-        
-        if (LastPressedButtonIndex == index) return;
-        
-        SoundManager.Instance.PlaySound(SoundName.ButtonClick);
-        
-        LastPressedButtonIndex = index;
-        IsButtonIndexChanged?.Invoke();
-        DataManager.Instance.GameData.CurrentTargetType = LastPressedButtonIndex;
-    }
-
-    public void SelectLottery()
-    {
-        LastPressedButtonIndex = -1;
-        IsLotterySelected?.Invoke();
         _skills.DisallowSkills();
+
+        switch (CurrentMod)
+        {
+            case Gamemod.KnifeHit:
+                if (KnifeHitMod == 6)
+                {
+                    _skills.DisallowSkills();
+                }
+                else
+                {
+                    _skills.AllowSkills();
+                }
+                SceneLoader.Instance.LoadGamemodScene(0);
+                break;
+            case Gamemod.StackKnife:
+                SceneLoader.Instance.LoadGamemodScene(1);
+                break;
+        }
+        
+        DataManager.Instance.GameData.CurrentGamemod = CurrentMod;
     }
+
+    public void SelectKnifeHitMod(int index)
+    {
+        KnifeHitMod = index;
+    }
+}
+
+public enum Gamemod
+{
+    KnifeHit,
+    StackKnife
 }

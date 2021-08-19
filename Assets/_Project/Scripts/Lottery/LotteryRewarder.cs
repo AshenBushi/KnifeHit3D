@@ -50,7 +50,9 @@ public class LotteryRewarder : MonoBehaviour
             }
         }
         
+        
         DataManager.Instance.Save();
-        SceneLoader.Instance.LoadPreparedScene();
+        SessionHandler.Instance.IsPlayerLose = true;
+        SessionHandler.Instance.RestartSession();
     }
 }

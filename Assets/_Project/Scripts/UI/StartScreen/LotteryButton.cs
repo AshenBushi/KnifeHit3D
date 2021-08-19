@@ -10,14 +10,14 @@ public class LotteryButton : MonoBehaviour
     private void Awake()
     {
         _button = GetComponent<Button>();
-
-        _button.interactable = DataManager.Instance.GameData.IsLotteryEnable;
     }
 
     private void OnEnable()
     {
         _lotteryTimer.IsTimeEnd += EnableButton;
         _lotteryTimer.IsTimeStart += DisableButton;
+        
+        _button.interactable = DataManager.Instance.GameData.IsLotteryEnable;
     }
 
     private void OnDisable()

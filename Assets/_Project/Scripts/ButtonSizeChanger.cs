@@ -1,10 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class ButtonSizeChanger : MonoBehaviour
 {
@@ -40,6 +39,8 @@ public class ButtonSizeChanger : MonoBehaviour
 
     private void ChangeButtonsSize(Button selectedButton)
     {
+        SoundManager.Instance.PlaySound(SoundName.ButtonClick);
+
         foreach (var button in _buttons)
         {
             _tween = button.transform.DOScale(button == selectedButton ? _selected : _unselected, _duration).SetLink(gameObject);

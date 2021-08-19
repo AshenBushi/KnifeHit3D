@@ -16,7 +16,7 @@ public class CameraMover : MonoBehaviour
         if (_currentPointIndex == index) return;
 
         _currentPointIndex = index;
-        _tween = transform.DOMove(_movementPoints[_currentPointIndex].position, _animationDuration);
-        _tween = transform.DORotate(_movementPoints[_currentPointIndex].eulerAngles, _animationDuration);
+        _tween = transform.DOMove(_movementPoints[_currentPointIndex].position, _animationDuration).SetLink(gameObject);
+        _tween = transform.DORotate(_movementPoints[_currentPointIndex].eulerAngles, _animationDuration).SetLink(gameObject);
     }
 }
