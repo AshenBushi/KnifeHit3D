@@ -386,8 +386,6 @@ public class PlayerController : MonoBehaviour
                             {
                                 if (audioSettings.vibrations.shortVibration != 0)
                                 {
-                                    Debug.Log($"Vibration is {audioSettings.vibrations.shortVibration}");
-                                    
                                     if (instance.vibrationTime <= Time.time)
                                     {
                                         Vibration.Vibrate(audioSettings.vibrations.shortVibration);

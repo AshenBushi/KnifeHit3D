@@ -26,6 +26,7 @@ public class KnifeHitManager : Singleton<KnifeHitManager>
         if (_currentMod == 6)
         {
             _cameraMover.TryMoveCamera(0);
+            ColorManager.Instance.RandomColorPreset();
             TargetHandler.Instance.CleanTargets();
             LotteryHandler.Instance.StartLottery();
             return;
