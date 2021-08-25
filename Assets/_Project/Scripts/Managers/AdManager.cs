@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GoogleMobileAds.Api;
+using GoogleMobileAds.Api.Mediation.AppLovin;
 using UnityEngine;
 
 public class AdManager : Singleton<AdManager>
@@ -14,6 +15,10 @@ public class AdManager : Singleton<AdManager>
     protected override void Awake()
     {
         base.Awake();
+        
+        AppLovin.SetHasUserConsent(true);
+        AppLovin.SetIsAgeRestrictedUser(true);
+        AppLovin.Initialize();
         
         MobileAds.Initialize((initStatus) =>
         {

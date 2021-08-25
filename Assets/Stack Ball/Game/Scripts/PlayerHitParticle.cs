@@ -53,7 +53,7 @@ public class PlayerHitParticle : MonoBehaviour
 
     public void OnHit()
     {
-        ParticleSystem hit = hitParticlePool.GetPooledComponent();
+        /*ParticleSystem hit = hitParticlePool.GetPooledComponent();
         if(hit != null)
         {
             hit.gameObject.SetActive(true);
@@ -70,7 +70,7 @@ public class PlayerHitParticle : MonoBehaviour
 
             hit.transform.position = playerPosition.transform.position + particleOffset;
             hit.Play();
-        }
+        }*/
 
         AudioController.PlaySound(audioSettings.sounds.playerHitAudioClip, 0.5f);
     }

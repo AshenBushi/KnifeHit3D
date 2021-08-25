@@ -124,4 +124,20 @@ using UnityEngine.Events;
         {
             _currentSpawner?.TryCleanTargets();
         }
+
+        public void EnableSlowMode()
+        {
+            foreach (var target in Targets)
+            {
+                target.Rotator.ChangeSpeed(0.5f);
+            }
+        }
+        
+        public void DisableSlowMode()
+        {
+            foreach (var target in Targets)
+            {
+                target.Rotator.ChangeSpeed(1f);
+            }
+        }
     }

@@ -41,4 +41,9 @@ public class TargetRotator : MonoBehaviour
         if (_rotateDefinitions.Count <= 0) return;
         Rotate();
     }
+
+    public void ChangeSpeed(float value)
+    {
+        _rotator.timeScale = value;
+    }
 }

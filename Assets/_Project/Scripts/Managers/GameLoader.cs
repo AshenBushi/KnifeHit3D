@@ -13,10 +13,10 @@ public class GameLoader : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(LoadAsync());
+        SceneManager.LoadSceneAsync(1);
     }
     
-    private IEnumerator LoadAsync()
+    /*private IEnumerator LoadAsync()
     {
         _operation = SceneManager.LoadSceneAsync(1);
         _operation.allowSceneActivation = false;
@@ -36,6 +36,6 @@ public class GameLoader : MonoBehaviour
     {
         AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
         _operation.allowSceneActivation = true;
-    }
+    }*/
 
 }

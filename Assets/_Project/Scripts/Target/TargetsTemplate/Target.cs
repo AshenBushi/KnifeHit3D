@@ -7,12 +7,11 @@ using UnityEngine.Events;
 [RequireComponent(typeof(TargetRotator))]
 public abstract class Target : MonoBehaviour
 {
-    protected TargetRotator Rotator;
     protected int EdgeCount;
     protected int ExpReward;
 
+    public TargetRotator Rotator { get; protected set; }
     public int HitToBreak { get; protected set; }
-
     public int[] ObstacleCount { get; protected set; } = new int[6];
     public TargetBase Base { get; protected set; }
     

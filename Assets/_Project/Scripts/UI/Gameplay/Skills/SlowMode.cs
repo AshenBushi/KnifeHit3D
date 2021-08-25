@@ -13,19 +13,22 @@ public class SlowMode : MonoBehaviour
 
     private IEnumerator SlowGame()
     {
-        UnityEngine.Time.timeScale = 0.5f;
+        TargetHandler.Instance.EnableSlowMode();
+        
         _button.interactable = false;
+        
         var timer = 5f;
         _text.text = "";
         
         while (timer > 0)
         {
-            timer -= UnityEngine.Time.deltaTime * 2;
+            timer -= Time.deltaTime;
             _timer.text = timer.ToString("#.##");
             yield return null;
         }
-
-        UnityEngine.Time.timeScale = 1f;
+        
+        TargetHandler.Instance.DisableSlowMode();
+        
         gameObject.SetActive(false);
     }
 

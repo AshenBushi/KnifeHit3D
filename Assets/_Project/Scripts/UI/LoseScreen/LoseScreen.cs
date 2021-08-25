@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 public class LoseScreen : UIScreen
 {
+    [SerializeField] private GameObject _continue;
     [SerializeField] private GameObject _noThanks;
 
     public event UnityAction<bool> IsScreenDisabled;
@@ -19,6 +20,8 @@ public class LoseScreen : UIScreen
     private IEnumerator LoseAnimation()
     {
         Enable();
+        
+        _noThanks.SetActive(false);
         
         SoundManager.Instance.PlaySound(SoundName.Lose);
 
