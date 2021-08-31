@@ -15,7 +15,7 @@ public class GamemodManager : Singleton<GamemodManager>
     
     private void SelectRandomMod()
     {
-        var randomGamemod = Random.Range(0, 2);
+        var randomGamemod = Random.Range(0, 3);
         var randomKnifeHitMod = Random.Range(0, 6);
         
         SelectKnifeHitMod(randomKnifeHitMod);
@@ -56,6 +56,9 @@ public class GamemodManager : Singleton<GamemodManager>
             case Gamemod.StackKnife:
                 SceneLoader.Instance.LoadGamemodScene(1);
                 break;
+            case Gamemod.KnifeFest:
+                SceneLoader.Instance.LoadGamemodScene(2);
+                break;
         }
         
         DataManager.Instance.GameData.CurrentGamemod = CurrentMod;
@@ -70,5 +73,6 @@ public class GamemodManager : Singleton<GamemodManager>
 public enum Gamemod
 {
     KnifeHit,
-    StackKnife
+    StackKnife,
+    KnifeFest
 }

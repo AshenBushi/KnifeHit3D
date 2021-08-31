@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PathCreation;
 using UnityEngine;
 
 namespace KnifeFest
@@ -11,12 +12,12 @@ namespace KnifeFest
 
         private void OnEnable()
         {
-            KnifeStorage.Instance.IsKnifeChanged += OnKnifeChanged;
+            KnifeStorage.Instance.IsKnifeChanged += SpawnKnife;
         }
 
         private void OnDisable()
         {
-            KnifeStorage.Instance.IsKnifeChanged -= OnKnifeChanged;
+            KnifeStorage.Instance.IsKnifeChanged -= SpawnKnife;
         }
 
         private void Start()
@@ -27,10 +28,10 @@ namespace KnifeFest
         private IEnumerator Init()
         {
             yield return new WaitForSeconds(0f);
-            OnKnifeChanged();
+            SpawnKnife();
         }
         
-        private void OnKnifeChanged()
+        private void SpawnKnife()
         {
             if (_knife != null)
             {
