@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2868234480995897008}
   - component: {fileID: 1180470340112253205}
   - component: {fileID: 4000648704659191263}
+  - component: {fileID: 5501498828855704410}
   m_Layer: 0
   m_Name: 48_SKBatterfly
   m_TagString: Untagged
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5501498828855704410
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3208204216828548106}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.56098974, y: 2.4438286, z: 0.26584166}
+  m_Center: {x: -0.0000006109476, y: 0.00000023841858, z: -0.000000014901161}

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 877487621803468877}
   - component: {fileID: 4288180846334765032}
   - component: {fileID: 2046422635419144994}
+  - component: {fileID: -1695060744591269048}
   m_Layer: 0
   m_Name: 43_SKTorch
   m_TagString: Untagged
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &-1695060744591269048
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533297204246721271}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.66609704, y: 2.588996, z: 0.33816874}
+  m_Center: {x: -0.000000014901161, y: 0, z: 0}

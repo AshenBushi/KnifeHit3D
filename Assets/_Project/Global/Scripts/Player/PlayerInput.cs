@@ -55,4 +55,14 @@ public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler, IPointer
     {
         _canTap = false;
     }
+
+    public void Enable()
+    {
+        gameObject.SetActive(true);
+    }
+    
+    public void Disable()
+    {
+        gameObject.SetActive(false);
+    }
 }

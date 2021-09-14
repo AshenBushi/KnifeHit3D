@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7389242321604386051}
   - component: {fileID: 5846806087240258214}
   - component: {fileID: 8557103593396430444}
+  - component: {fileID: 3586634427409820891}
   m_Layer: 0
   m_Name: 16_SKClaws
   m_TagString: Untagged
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3586634427409820891
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7908334213893670841}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6033138, y: 2.532381, z: 0.15191032}
+  m_Center: {x: -0.00000031292439, y: 0.000008523464, z: 0.000000014901161}

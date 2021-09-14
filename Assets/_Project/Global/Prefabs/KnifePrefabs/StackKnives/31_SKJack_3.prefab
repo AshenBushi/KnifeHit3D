@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1145081731203854811}
   - component: {fileID: 4056615516532309630}
   - component: {fileID: 2283053535575542452}
+  - component: {fileID: 4631007410087361616}
   m_Layer: 0
   m_Name: 31_SKJack_3
   m_TagString: Untagged
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4631007410087361616
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337758324529408865}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5093479, y: 2.57333, z: 0.18750066}
+  m_Center: {x: -0.0000001937151, y: -0.000010251999, z: -0.000000007450581}

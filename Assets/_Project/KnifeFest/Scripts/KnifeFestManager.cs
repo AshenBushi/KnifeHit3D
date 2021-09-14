@@ -17,6 +17,7 @@ public class KnifeFestManager : MonoBehaviour
 
     private void OnSessionStarted()
     {
+        PlayerInput.Instance.Disable();
         _pathFollower.AllowMove();
     }
 }

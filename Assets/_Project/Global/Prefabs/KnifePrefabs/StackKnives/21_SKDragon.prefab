@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9134758760384127596}
   - component: {fileID: 5290310249609850313}
   - component: {fileID: 7966307459676150019}
+  - component: {fileID: -2699689138183227647}
   m_Layer: 0
   m_Name: 21_SKDragon
   m_TagString: Untagged
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &-2699689138183227647
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8470987351100045526}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7122966, y: 2.6557202, z: 0.2477969}
+  m_Center: {x: 0.000000044703484, y: -0.0000005364418, z: 0.000000011175871}

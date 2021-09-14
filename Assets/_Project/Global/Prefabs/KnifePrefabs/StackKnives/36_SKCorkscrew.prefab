@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2430296748868875383}
   - component: {fileID: 1591456842709646290}
   - component: {fileID: 3598669503883530008}
+  - component: {fileID: 6821855629619559589}
   m_Layer: 0
   m_Name: 36_SKCorkscrew
   m_TagString: Untagged
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6821855629619559589
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3094525623980125901}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.377403, y: 2.4471717, z: 0.5910105}
+  m_Center: {x: 0.0000028312206, y: 0, z: 0}

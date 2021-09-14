@@ -79,6 +79,7 @@ public class SessionHandler : Singleton<SessionHandler>
     public void RestartSession()
     {
         GamemodManager.Instance.StartSession(IsPlayerLose);
+        PlayerInput.Instance.Enable();
         PlayerInput.Instance.AllowTap();
         _startScreen.Enable();
         IsSessionRestarted?.Invoke();

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3127350111551573401}
   - component: {fileID: 2074276850120540732}
   - component: {fileID: 4264267315560888054}
+  - component: {fileID: 4251122420472183545}
   m_Layer: 0
   m_Name: 8_SKSpoon
   m_TagString: Untagged
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4251122420472183545
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2318585215074637603}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.64139557, y: 2.5581245, z: 0.23822936}
+  m_Center: {x: 0, y: 0.000000059604645, z: 0.000000007450581}
