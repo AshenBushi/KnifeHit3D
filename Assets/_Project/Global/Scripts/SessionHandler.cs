@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +9,7 @@ public class SessionHandler : Singleton<SessionHandler>
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private LoseScreen _loseScreen;
     [SerializeField] private WinScreen _winScreen;
-    
+
     public bool IsPlayerLose;
     public event UnityAction IsSessionStarted;
     public event UnityAction IsSessionRestarted;
@@ -47,26 +45,32 @@ public class SessionHandler : Singleton<SessionHandler>
     private void OnScreenDisabled(bool isAdShowed)
     {
         DataManager.Instance.GameData.CanShowStartAd = !isAdShowed;
-        
+
         StartCoroutine(TryToShowAdRestart());
     }
 
     private IEnumerator TryToShowAdRestart()
     {
-        if(DataManager.Instance.GameData.CanShowStartAd)
+        if (DataManager.Instance.GameData.CanShowStartAd)
         {
             if (AdManager.Instance.ShowInterstitial())
             {
                 yield return new WaitUntil(() => AdManager.Instance.IsInterstitialShowed);
             }
         }
-        
+
         RestartSession();
     }
 
     public void CompleteLevel()
     {
         _winScreen.Win();
+        IsPlayerLose = false;
+    }
+
+    public void CompleteLevelWithCutscene(float multiplierLastStep)
+    {
+        _winScreen.WinWithReward(multiplierLastStep);
         IsPlayerLose = false;
     }
 

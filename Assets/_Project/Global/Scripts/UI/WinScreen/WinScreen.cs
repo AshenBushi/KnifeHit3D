@@ -8,11 +8,12 @@ public class WinScreen : UIScreen
     [SerializeField] private GameObject _cup;
     [SerializeField] private TMP_Text _rewardText;
     [SerializeField] private DoubleReward _doubleReward;
-    
+
+    private float _multiplierCutscene;
     private bool _isShowedDoubleReward = false;
 
     private int TargetType => TargetHandler.Instance.CurrentSpawnerIndex;
-    
+
     public event UnityAction<bool> IsScreenDisabled;
 
     private void Awake()
@@ -51,6 +52,13 @@ public class WinScreen : UIScreen
             }
             : "15";
 
+        if (_multiplierCutscene != 0)
+        {
+            float tempReward = Convert.ToInt32(_rewardText.text);
+            tempReward *= _multiplierCutscene;
+            _rewardText.text = tempReward.ToString();
+        }
+
         Player.Instance.DepositMoney(Convert.ToInt32(_rewardText.text));
     }
 
@@ -66,10 +74,16 @@ public class WinScreen : UIScreen
         Enable();
     }
 
+    public void WinWithReward(float multiplierLastStep)
+    {
+        _multiplierCutscene = multiplierLastStep;
+        Enable();
+    }
+
     public void Continue()
     {
         SoundManager.Instance.PlaySound(SoundName.ButtonClick);
-        
+
         Disable();
     }
 }
