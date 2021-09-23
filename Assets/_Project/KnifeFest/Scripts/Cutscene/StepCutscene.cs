@@ -7,24 +7,33 @@ namespace KnifeFest
 {
     public class StepCutscene : MonoBehaviour
     {
-        [SerializeField] private WallCutscene _wall;
         [SerializeField] private TMP_Text _textLeft;
         [SerializeField] private TMP_Text _textRight;
         [SerializeField] private Material _material;
         [SerializeField] private Material _materialBlink;
 
-        private int _index;
-        private int _indexTwo;
+        private int k = 0;
 
-        public WallCutscene Wall { get => _wall; set => _wall = value; }
-        public TMP_Text TextLeft { get => _textLeft; set => _textLeft = value; }
-        public TMP_Text TextRight { get => _textRight; set => _textRight = value; }
-        public int Index { get => _index; set => _index = value; }
-        public int IndexTwo { get => _indexTwo; set => _indexTwo = value; }
+        private float _indexMultiplier;
+
+        public float IndexMultiplier => _indexMultiplier;
 
         public void ChangeColor(WallCutscene wall)
         {
             StartCoroutine(ChangeColorRoutine(wall));
+        }
+
+        public void UpdatingTextsMultiplier()
+        {
+            _textLeft.text = "x" + _indexMultiplier;
+            _textRight.text = "x" + _indexMultiplier;
+        }
+
+        public void ChangeIndexMultiprier(float indexPrevStep)
+        {
+            float index = indexPrevStep + 0.2f;
+            string str = index.ToString("0.0");
+            _indexMultiplier = float.Parse(str);
         }
 
         private IEnumerator ChangeColorRoutine(WallCutscene wall)

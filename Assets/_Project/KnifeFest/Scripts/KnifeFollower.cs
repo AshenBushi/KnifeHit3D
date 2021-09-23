@@ -1,7 +1,5 @@
 using DG.Tweening;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace KnifeFest
@@ -9,7 +7,7 @@ namespace KnifeFest
     public class KnifeFollower : MonoBehaviour
     {
         [SerializeField] private Transform _target;
-        private bool _isCutscene;
+        private bool _isStartCutscene;
 
         private Vector3 _lastTargetPosition;
 
@@ -21,10 +19,19 @@ namespace KnifeFest
         private void Update()
         {
             if (_lastTargetPosition == _target.position) return;
-            if (!_isCutscene)
-                Follow();
-            else
+            if (_isStartCutscene)
                 FollowCutscene();
+            else
+                Follow();
+
+        }
+
+        public void AllowCutscene()
+        {
+            var position = _target.position;
+            transform.DOMove(new Vector3(position.x, position.y + 6.5f, position.z - 7.5f), 0.5f);
+
+            StartCoroutine(AllowCutsceneRoutine());
         }
 
         private void Follow()
@@ -37,21 +44,14 @@ namespace KnifeFest
         private void FollowCutscene()
         {
             var position = _target.position;
-            transform.position = new Vector3(position.x, position.y + 5.5f, position.z - 6);
+            transform.position = new Vector3(_target.position.x, _target.position.y + 6.5f, _target.position.z - 7.5f);
             _lastTargetPosition = position;
-        }
-
-        public void AllowCutscene()
-        {
-            StartCoroutine(AllowCutsceneRoutine());
         }
 
         private IEnumerator AllowCutsceneRoutine()
         {
-            var position = _target.position;
-            yield return transform.DOMove(new Vector3(position.x, position.y + 5.5f, position.z - 6.5f), 1f);
-
-            _isCutscene = true;
+            yield return new WaitForSeconds(0.3f);
+            _isStartCutscene = true;
         }
     }
 }

@@ -29,50 +29,47 @@ namespace KnifeFest
             OnStartingCutscene -= StartCutscene;
         }
 
-        private void StartCutscene()
+        private void Start()
         {
-            _pathFollower.Knife.WeightDisable();
+            StartCoroutine(CreateCutscene());
+        }
 
-            int k = 0;
+        private IEnumerator CreateCutscene()
+        {
+            yield return new WaitForSeconds(0.3f);
             for (int i = 0; i < LENGTH_CUTSCENE; i++)
             {
                 if (i == 0)
                 {
-                    var tempObj = Instantiate(_template, new Vector3(-10, 0, (Camera.main.ScreenToWorldPoint(new Vector3(0, 0, _mainRoad.localScale.z)).z + 25f)), Quaternion.Euler(0, 90, 0), transform);
-
-                    ChangeIndexStep(i, tempObj);
-
-                    tempObj.IndexTwo = k % 10;
-                    _steps.Add(tempObj);
+                    _steps.Add(Instantiate(_template, new Vector3(-10, 0, _pathFollower.PathCreator.path.length + 30f), Quaternion.Euler(0, 90, 0), transform));
                 }
                 else
                 {
-                    var tempObj = Instantiate(_template, new Vector3(-10, 0, _steps[i - 1].transform.position.z + 20f), Quaternion.Euler(0, 90, 0), transform);
-
-                    ChangeIndexStep(i, tempObj);
-
-                    tempObj.IndexTwo = k % 10;
-                    _steps.Add(tempObj);
+                    _steps.Add(Instantiate(_template, new Vector3(-10, 0, _steps[i - 1].transform.position.z + 20f), Quaternion.Euler(0, 90, 0), transform));
                 }
-                k += 2;
             }
 
             for (int i = 0; i < _steps.Count; i++)
             {
-                UpdatingTextSteps(i);
+                if (i == 0)
+                    _steps[i].ChangeIndexMultiprier(0.8f);
+                else
+                    _steps[i].ChangeIndexMultiprier(_steps[i - 1].IndexMultiplier);
+
+                _steps[i].UpdatingTextsMultiplier();
             }
+
+            StartCoroutine(StartAnimations());
+        }
+
+        private void StartCutscene()
+        {
+            _pathFollower.Knife.WeightDisable();
 
             _pathFollower.PathCreator.bezierPath.AddSegmentToEnd(new Vector3(0f, 0f, _steps[_steps.Count - 1].transform.position.z));
             _pathFollower.PathCreator.EditorData.PathModifiedByUndo();
 
-            StartCoroutine(StartAnimations());
             StartCoroutine(ControlKnifeRoutine());
-        }
-
-        private void UpdatingTextSteps(int i)
-        {
-            _steps[i].TextLeft.text = "x" + _steps[i].Index + "." + _steps[i].IndexTwo;
-            _steps[i].TextRight.text = "x" + _steps[i].Index + "." + _steps[i].IndexTwo;
         }
 
 
@@ -92,7 +89,7 @@ namespace KnifeFest
         private IEnumerator ControlKnifeRoutine()
         {
             PlayerInput.Instance.Disable();
-            _pathFollower.Speed += 20f;
+            _pathFollower.Speed += 5f;
             yield return new WaitForSeconds(0.2f);
             _pathFollower.CanMoveCutscene = true;
             _pathFollower.Knife.transform.DOMoveX(0f, 0.5f);
@@ -101,20 +98,6 @@ namespace KnifeFest
             _knifeFollower.AllowCutscene();
         }
 
-        private void ChangeIndexStep(int i, StepCutscene step)
-        {
-            //согласен не очень хорошо сделал)
-            //по времени не смог иначе реализовать (но т.к. всегда максимальный множитель х5.0, то можно и так оставить)
-            if (i < 5)
-                step.Index = 1;
-            else if (i < 10 && i >= 5)
-                step.Index = 2;
-            else if (i < 15 && i >= 10)
-                step.Index = 3;
-            else if (i < 20 && i >= 15)
-                step.Index = 4;
-            else if (i < 25 && i >= 20)
-                step.Index = 5;
-        }
+
     }
 }
