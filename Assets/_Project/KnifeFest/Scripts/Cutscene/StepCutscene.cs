@@ -11,12 +11,20 @@ namespace KnifeFest
         [SerializeField] private TMP_Text _textRight;
         [SerializeField] private Material _material;
         [SerializeField] private Material _materialBlink;
+        private WallCutscene _wall;
 
         private int k = 0;
 
-        private float _indexMultiplier;
+        private float _multiplier;
 
-        public float IndexMultiplier => _indexMultiplier;
+        public float Multiplier => _multiplier;
+
+        public WallCutscene Wall { get => _wall; set => _wall = value; }
+
+        private void Awake()
+        {
+            _wall = GetComponentInChildren<WallCutscene>();
+        }
 
         public void ChangeColor(WallCutscene wall)
         {
@@ -25,15 +33,15 @@ namespace KnifeFest
 
         public void UpdatingTextsMultiplier()
         {
-            _textLeft.text = "x" + _indexMultiplier;
-            _textRight.text = "x" + _indexMultiplier;
+            _textLeft.text = "x" + _multiplier;
+            _textRight.text = "x" + _multiplier;
         }
 
         public void ChangeIndexMultiprier(float indexPrevStep)
         {
             float index = indexPrevStep + 0.2f;
             string str = index.ToString("0.0");
-            _indexMultiplier = float.Parse(str);
+            _multiplier = float.Parse(str);
         }
 
         private IEnumerator ChangeColorRoutine(WallCutscene wall)

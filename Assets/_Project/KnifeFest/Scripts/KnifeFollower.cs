@@ -1,5 +1,4 @@
 using DG.Tweening;
-using System.Collections;
 using UnityEngine;
 
 namespace KnifeFest
@@ -7,9 +6,12 @@ namespace KnifeFest
     public class KnifeFollower : MonoBehaviour
     {
         [SerializeField] private Transform _target;
+        [SerializeField] private float _offsetYPos = 4f;
+        [SerializeField] private float _offsetZPos = 5.5f;
         private bool _isStartCutscene;
 
         private Vector3 _lastTargetPosition;
+        private Tweener _tween;
 
         private void Start()
         {
@@ -19,39 +21,26 @@ namespace KnifeFest
         private void Update()
         {
             if (_lastTargetPosition == _target.position) return;
-            if (_isStartCutscene)
-                FollowCutscene();
-            else
-                Follow();
-
+            Follow();
         }
 
         public void AllowCutscene()
         {
-            var position = _target.position;
-            transform.DOMove(new Vector3(position.x, position.y + 6.5f, position.z - 7.5f), 0.5f);
+            _tween = transform.DOMove(new Vector3(_target.position.x, _target.position.y + _offsetYPos, _target.position.z - _offsetZPos), 1f).SetAutoKill(false);
+            _offsetYPos = 5.5f;
+            _offsetZPos = 5.5f;
 
-            StartCoroutine(AllowCutsceneRoutine());
+            _isStartCutscene = true;
         }
 
         private void Follow()
         {
             var position = _target.position;
-            transform.position = new Vector3(position.x, position.y + 4, position.z - 5);
+            if (_isStartCutscene)
+                _tween.ChangeEndValue(new Vector3(position.x, position.y + _offsetYPos, position.z - _offsetZPos), true).Restart();
+            else
+                transform.position = new Vector3(position.x, position.y + _offsetYPos, position.z - _offsetZPos);
             _lastTargetPosition = position;
-        }
-
-        private void FollowCutscene()
-        {
-            var position = _target.position;
-            transform.position = new Vector3(_target.position.x, _target.position.y + 6.5f, _target.position.z - 7.5f);
-            _lastTargetPosition = position;
-        }
-
-        private IEnumerator AllowCutsceneRoutine()
-        {
-            yield return new WaitForSeconds(0.3f);
-            _isStartCutscene = true;
         }
     }
 }

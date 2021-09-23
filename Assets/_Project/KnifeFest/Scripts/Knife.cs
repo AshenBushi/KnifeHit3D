@@ -15,7 +15,7 @@ namespace KnifeFest
         private float _xDelta;
 
         public int KnifeWeight { get; private set; } = 10;
-        public float MultiplierLastStepCutscene { get; }
+        public float MultiplierLastStepCutscene { get; private set; }
         public bool IsStartingCutscene { get; set; }
 
         public event UnityAction OnWeightChanged, OnWeightDisable;
@@ -66,7 +66,7 @@ namespace KnifeFest
 
                 StartCoroutine(ChangeKnifeScale());
 
-                //MultiplierLastStepCutscene = CalculatingMultiplier(step.IndexMultiplierOne, step.IndexMultiplierTwo);
+                MultiplierLastStepCutscene = step.Multiplier;
             }
         }
 
@@ -117,15 +117,6 @@ namespace KnifeFest
 
             transform.position = new Vector3(knifePosition.x + _cursorTracker.XDelta / 100f, knifePosition.y,
                 knifePosition.z);
-        }
-
-        private float CalculatingMultiplier(int index, int indexTwo)
-        {
-            float z;
-            z = indexTwo;
-            while (z >= 1) z /= 10;
-            z += index;
-            return z;
         }
 
         public void WeightDisable()

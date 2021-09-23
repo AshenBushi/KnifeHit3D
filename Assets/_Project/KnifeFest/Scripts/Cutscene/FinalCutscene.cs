@@ -11,7 +11,6 @@ namespace KnifeFest
         private const int LENGTH_CUTSCENE = 20;
         [SerializeField] private StepCutscene _template;
         [SerializeField] private PathFollower _pathFollower;
-        [SerializeField] private Transform _mainRoad;
         [SerializeField] private KnifeFollower _knifeFollower;
 
         private List<StepCutscene> _steps = new List<StepCutscene>();
@@ -54,7 +53,7 @@ namespace KnifeFest
                 if (i == 0)
                     _steps[i].ChangeIndexMultiprier(0.8f);
                 else
-                    _steps[i].ChangeIndexMultiprier(_steps[i - 1].IndexMultiplier);
+                    _steps[i].ChangeIndexMultiprier(_steps[i - 1].Multiplier);
 
                 _steps[i].UpdatingTextsMultiplier();
             }
@@ -68,6 +67,11 @@ namespace KnifeFest
 
             _pathFollower.PathCreator.bezierPath.AddSegmentToEnd(new Vector3(0f, 0f, _steps[_steps.Count - 1].transform.position.z));
             _pathFollower.PathCreator.EditorData.PathModifiedByUndo();
+
+            for (int i = 0; i < _steps.Count; i++)
+            {
+                _steps[i].Wall.ChangeColor();
+            }
 
             StartCoroutine(ControlKnifeRoutine());
         }
