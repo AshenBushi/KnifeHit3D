@@ -5865,40 +5865,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c7859b0dcc407a42a9c8f2fa18f90a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levels:
-  - Walls:
-    - Side: 0
-      ZPosition: 1
-      Type: 0
-      value: 10
-    - Side: 1
-      ZPosition: 1
-      Type: 1
-      value: 5
-    - Side: 1
-      ZPosition: 2
-      Type: 1
-      value: 10
-    - Side: 0
-      ZPosition: 3
-      Type: 2
-      value: 2
-    - Side: 1
-      ZPosition: 3
-      Type: 3
-      value: 3
-    - Side: 1
-      ZPosition: 4
-      Type: 0
-      value: 20
-    - Side: 0
-      ZPosition: 4
-      Type: 2
-      value: 2
-    - Side: 1
-      ZPosition: 5
-      Type: 1
-      value: 50
+  _knifeFestLevels:
+    Levels:
+    - Walls:
+      - Side: 0
+        ZPosition: 1
+        Type: 0
+        value: 20
+      - Side: 1
+        ZPosition: 1
+        Type: 1
+        value: 10
+      - Side: 0
+        ZPosition: 2
+        Type: 2
+        value: 3
+      - Side: 1
+        ZPosition: 2
+        Type: 3
+        value: 2
+    - Walls:
+      - Side: 0
+        ZPosition: 1
+        Type: 0
+        value: 20
+      - Side: 1
+        ZPosition: 1
+        Type: 1
+        value: 10
+      - Side: 0
+        ZPosition: 2
+        Type: 2
+        value: 3
+      - Side: 1
+        ZPosition: 2
+        Type: 3
+        value: 2
 --- !u!4 &1080719832
 Transform:
   m_ObjectHideFlags: 0
