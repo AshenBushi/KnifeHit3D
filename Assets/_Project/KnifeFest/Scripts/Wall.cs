@@ -58,6 +58,7 @@ public class Wall : MonoBehaviour
     }
 }
 
+[Serializable]
 public enum WallType
 {
     Addition,

@@ -53,7 +53,7 @@ namespace KnifeFest
             
             if (!(_progress >= 1)) return;
             _canMove = false;
-            SessionHandler.Instance.CompleteLevel();
+            //SessionHandler.Instance.CompleteLevel();
         }
 
         public void AllowMove()
