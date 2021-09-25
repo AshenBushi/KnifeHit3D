@@ -19,7 +19,7 @@ public class AdManager : Singleton<AdManager>
         AppLovin.SetHasUserConsent(true);
         AppLovin.SetIsAgeRestrictedUser(true);
         AppLovin.Initialize();
-        
+
         MobileAds.Initialize((initStatus) =>
         {
             Dictionary<string, AdapterStatus> map = initStatus.getAdapterStatusMap();
@@ -38,7 +38,7 @@ public class AdManager : Singleton<AdManager>
                 }
             }
         });
-        
+
         InitializeRewarded();
         InitializeInterstitial();
     }
