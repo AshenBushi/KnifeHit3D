@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace KnifeFest
 {
-    public class WallSpawner : MonoBehaviour
+    public class WallSpawner : Singleton<WallSpawner>
     {
         [SerializeField] private PathCreator _path;
         [SerializeField] private Transform _road;
@@ -16,15 +16,15 @@ namespace KnifeFest
 
         private readonly List<Wall> _walls = new List<Wall>();
 
-        private void Start()
+        protected override void Awake()
         {
-            SpawnWalls(LevelManager.Instance.CurrentLevel);
+            base.Awake();
         }
 
-        private void SpawnWalls(Level level)
+        public void SpawnWalls(Level level)
         {
             float greatestZ = 0;
-            
+
             for (var i = 0; i < level.Walls.Count; i++)
             {
                 var wall = level.Walls[i];
@@ -34,30 +34,32 @@ namespace KnifeFest
                 if (greatestZ < wall.ZPosition)
                     greatestZ = wall.ZPosition;
             }
-            
+
             _road.localScale = new Vector3(1f, 1f, greatestZ + 1f);
-            _path.bezierPath.AddSegmentToEnd( new Vector3(0f, 0f, (greatestZ + 0.5f) * 20f));
+            _path.bezierPath.AddSegmentToEnd(new Vector3(0f, 0f, (greatestZ + 0.5f) * 20f));
+
+            FinalCutscene.OnCreatingCurscene?.Invoke();
         }
 
         public void TryClearWalls()
         {
             if (_walls.Count <= 0) return;
-            
+
             foreach (var wall in _walls)
             {
                 Destroy(wall);
             }
-                
+
             _walls.Clear();
         }
     }
-    
+
     [Serializable]
     public class Level
     {
         public List<WallParameters> Walls;
     }
-    
+
     [Serializable]
     public class WallParameters
     {
@@ -66,7 +68,7 @@ namespace KnifeFest
         public WallType Type;
         public int value;
     }
-    
+
     [Serializable]
     public enum Side
     {

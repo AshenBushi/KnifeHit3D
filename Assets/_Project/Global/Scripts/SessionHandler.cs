@@ -11,6 +11,7 @@ public class SessionHandler : Singleton<SessionHandler>
     [SerializeField] private WinScreen _winScreen;
 
     public bool IsPlayerLose;
+
     public event UnityAction IsSessionStarted;
     public event UnityAction IsSessionRestarted;
 

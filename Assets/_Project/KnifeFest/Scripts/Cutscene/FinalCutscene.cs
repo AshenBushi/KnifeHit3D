@@ -15,27 +15,30 @@ namespace KnifeFest
 
         private List<StepCutscene> _steps = new List<StepCutscene>();
 
-        public static UnityAction OnStartingCutscene;
+        public static UnityAction OnCreatingCurscene, OnStartingCutscene;
 
 
         private void OnEnable()
         {
+            OnCreatingCurscene += StartCreateCurscene;
             OnStartingCutscene += StartCutscene;
         }
 
         private void OnDisable()
         {
+            OnCreatingCurscene -= StartCreateCurscene;
             OnStartingCutscene -= StartCutscene;
         }
 
-        private void Start()
+        private void StartCreateCurscene()
         {
             StartCoroutine(CreateCutscene());
         }
 
         private IEnumerator CreateCutscene()
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.2f);
+            _pathFollower.PathCreator.EditorData.PathModifiedByUndo();
             for (int i = 0; i < LENGTH_CUTSCENE; i++)
             {
                 if (i == 0)
@@ -57,6 +60,8 @@ namespace KnifeFest
 
                 _steps[i].UpdatingTextsMultiplier();
             }
+
+            KnifeFestManager.IsLoadingDataComplete?.Invoke();
 
             StartCoroutine(StartAnimations());
         }
