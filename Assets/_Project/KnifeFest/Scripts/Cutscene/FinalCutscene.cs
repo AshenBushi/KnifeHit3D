@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,6 +38,7 @@ namespace KnifeFest
         {
             yield return new WaitForSeconds(0.2f);
             _pathFollower.PathCreator.EditorData.PathModifiedByUndo();
+
             for (int i = 0; i < LENGTH_CUTSCENE; i++)
             {
                 if (i == 0)
@@ -60,8 +60,6 @@ namespace KnifeFest
 
                 _steps[i].UpdatingTextsMultiplier();
             }
-
-            KnifeFestManager.IsLoadingDataComplete?.Invoke();
 
             StartCoroutine(StartAnimations());
         }
@@ -98,13 +96,12 @@ namespace KnifeFest
         private IEnumerator ControlKnifeRoutine()
         {
             PlayerInput.Instance.Disable();
-            _pathFollower.Speed += 5f;
-            yield return new WaitForSeconds(0.2f);
-            _pathFollower.CanMoveCutscene = true;
-            _pathFollower.Knife.transform.DOMoveX(0f, 0.5f);
-            yield return new WaitForSeconds(0.5f);
-            _pathFollower.Knife.IsStartingCutscene = true;
-            _knifeFollower.AllowCutscene();
+            _pathFollower.AddSpeedKnifeMoving(5f);
+            yield return new WaitForSeconds(0.1f);
+            _pathFollower.AllowMoveCutscene();
+            yield return new WaitForSeconds(0.3f);
+            _pathFollower.Knife.AllowStartingCutscene();
+            _knifeFollower.AllowStartingCutscene();
         }
 
 

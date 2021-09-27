@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -13,10 +14,11 @@ namespace KnifeFest
 
         private GameObject _knife;
         private float _xDelta;
+        private float _multiplierLastStepCutscene;
+        private bool _isStartingCutscene;
 
         public int KnifeWeight { get; private set; } = 10;
-        public float MultiplierLastStepCutscene { get; private set; }
-        public bool IsStartingCutscene { get; set; }
+        public float MultiplierLastStepCutscene => _multiplierLastStepCutscene;
 
         public event UnityAction OnWeightChanged, OnWeightDisable;
 
@@ -37,10 +39,10 @@ namespace KnifeFest
 
         private void Update()
         {
-            if (IsStartingCutscene)
+            if (_isStartingCutscene)
             {
-                transform.position = new Vector3(0, transform.position.y,
-                transform.position.z);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, transform.position.y,
+                transform.position.z), Time.deltaTime * 2f);
                 return;
             }
             if (_cursorTracker.XDelta != 0)
@@ -56,7 +58,8 @@ namespace KnifeFest
 
                 StartCoroutine(ChangeKnifeScale());
             }
-            else if (other.TryGetComponent(out WallCutscene wallCutscene))
+
+            if (other.TryGetComponent(out WallCutscene wallCutscene))
             {
                 var step = wallCutscene.GetComponentInParent<StepCutscene>();
                 step.ChangeColor(wallCutscene);
@@ -66,8 +69,18 @@ namespace KnifeFest
 
                 StartCoroutine(ChangeKnifeScale());
 
-                MultiplierLastStepCutscene = step.Multiplier;
+                _multiplierLastStepCutscene = step.Multiplier;
             }
+        }
+
+        public void AllowStartingCutscene()
+        {
+            _isStartingCutscene = true;
+        }
+
+        public void DisallowStartingCutscene()
+        {
+            _isStartingCutscene = false;
         }
 
         private IEnumerator Init()
@@ -99,7 +112,7 @@ namespace KnifeFest
 
             while (_knife.transform.localScale != targetScale)
             {
-                _knife.transform.localScale = Vector3.MoveTowards(_knife.transform.localScale, targetScale, Time.deltaTime * _weightChangeSpeed);
+                _knife.transform.localScale = Vector3.MoveTowards(_knife.transform.localScale, targetScale, Time.deltaTime * 0.3f);
 
                 yield return null;
             }
@@ -113,10 +126,10 @@ namespace KnifeFest
 
             var knifePosition = transform.position;
 
-            if (Math.Abs(knifePosition.x + _cursorTracker.XDelta / 100f) >= 1.5f) return;
+            if (Math.Abs(knifePosition.x + _cursorTracker.XDelta / 700f) >= 1.5f) return;
 
-            transform.position = new Vector3(knifePosition.x + _cursorTracker.XDelta / 100f, knifePosition.y,
-                knifePosition.z);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(knifePosition.x + _cursorTracker.XDelta / 500f, knifePosition.y,
+                knifePosition.z), Time.fixedDeltaTime / 0.01f);
         }
 
         public void WeightDisable()

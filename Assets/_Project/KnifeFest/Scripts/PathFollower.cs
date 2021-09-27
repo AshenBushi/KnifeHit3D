@@ -12,14 +12,11 @@ namespace KnifeFest
         [SerializeField] private bool _canMove;
         [SerializeField] private bool _canMoveCutscene;
 
-
         private float _progress;
         private float _distanceTravelled;
 
         public PathCreator PathCreator { get => _pathCreator; set => _pathCreator = value; }
         public Knife Knife => _knife;
-        public bool CanMoveCutscene { get => _canMoveCutscene; set => _canMoveCutscene = value; }
-        public float Speed { get => _speed; set => _speed = value; }
 
         private void OnEnable()
         {
@@ -44,9 +41,32 @@ namespace KnifeFest
                 return;
             }
             if (_canMove)
-            {
                 MoveAlongPath();
-            }
+        }
+
+        public void AllowMove()
+        {
+            _canMove = true;
+        }
+
+        public void DisallowMove()
+        {
+            _canMove = false;
+        }
+
+        public void AddSpeedKnifeMoving(float speed)
+        {
+            _speed += speed;
+        }
+
+        public void AllowMoveCutscene()
+        {
+            _canMoveCutscene = true;
+        }
+
+        public void DisallowMoveCutscene()
+        {
+            _canMoveCutscene = false;
         }
 
         private void OnPathChanged()
@@ -56,13 +76,12 @@ namespace KnifeFest
 
         private void MoveAlongPath()
         {
-            _distanceTravelled += _speed * Time.deltaTime;
+            _distanceTravelled += _speed * Time.fixedDeltaTime;
             transform.position = _pathCreator.path.GetPointAtDistance(_distanceTravelled, EndOfPathInstruction.Stop);
 
             if (!_canMoveCutscene)
             {
                 _progress = _pathCreator.path.GetClosestTimeOnPath(transform.position);
-
                 if (_knife.KnifeWeight <= 0)
                 {
                     _canMove = false;
@@ -82,16 +101,6 @@ namespace KnifeFest
                     _particleConfettiWin.SetActive(true);
                 }
             }
-        }
-
-        public void AllowMove()
-        {
-            _canMove = true;
-        }
-
-        public void DisallowMove()
-        {
-            _canMove = false;
         }
     }
 }

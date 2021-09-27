@@ -10,7 +10,7 @@ public class SessionHandler : Singleton<SessionHandler>
     [SerializeField] private LoseScreen _loseScreen;
     [SerializeField] private WinScreen _winScreen;
 
-    public bool IsPlayerLose;
+    private bool _isPlayerLose;
 
     public event UnityAction IsSessionStarted;
     public event UnityAction IsSessionRestarted;
@@ -31,6 +31,16 @@ public class SessionHandler : Singleton<SessionHandler>
     private void Start()
     {
         PlayerInput.Instance.IsSessionStart += OnSessionStart;
+    }
+
+    public void AllowPlayerLose()
+    {
+        _isPlayerLose = true;
+    }
+
+    public void DisallowPlayerLose()
+    {
+        _isPlayerLose = false;
     }
 
     private void OnSessionStart()
@@ -66,24 +76,24 @@ public class SessionHandler : Singleton<SessionHandler>
     public void CompleteLevel()
     {
         _winScreen.Win();
-        IsPlayerLose = false;
+        _isPlayerLose = false;
     }
 
     public void CompleteLevelWithCutscene(float multiplierLastStep)
     {
         _winScreen.WinWithReward(multiplierLastStep);
-        IsPlayerLose = false;
+        _isPlayerLose = false;
     }
 
     public void FailLevel()
     {
         _loseScreen.Lose();
-        IsPlayerLose = true;
+        _isPlayerLose = true;
     }
 
     public void RestartSession()
     {
-        GamemodManager.Instance.StartSession(IsPlayerLose);
+        GamemodManager.Instance.StartSession(_isPlayerLose);
         PlayerInput.Instance.Enable();
         PlayerInput.Instance.AllowTap();
         _startScreen.Enable();
