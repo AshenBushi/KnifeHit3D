@@ -1,13 +1,11 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler, IPointerUpHandler
 {
     private bool _canTap = true;
     private bool _isSessionStart = false;
-    
+
     public event UnityAction IsTapped;
     public event UnityAction IsUntapped;
     public event UnityAction IsSessionStart;
@@ -21,7 +19,7 @@ public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler, IPointer
     {
         SessionHandler.Instance.IsSessionRestarted -= OnSessionRestarted;
     }
-    
+
     private void OnSessionRestarted()
     {
         _isSessionStart = false;
@@ -31,16 +29,16 @@ public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler, IPointer
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!_canTap) return;
-        
+
         if (!_isSessionStart)
         {
             IsSessionStart?.Invoke();
             _isSessionStart = true;
         }
-        
+
         IsTapped?.Invoke();
     }
-    
+
     public void OnPointerUp(PointerEventData eventData)
     {
         IsUntapped?.Invoke();
@@ -60,7 +58,7 @@ public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler, IPointer
     {
         gameObject.SetActive(true);
     }
-    
+
     public void Disable()
     {
         gameObject.SetActive(false);

@@ -1,12 +1,16 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace KnifeFest
 {
-    public class CursorTracker : MonoBehaviour, IDragHandler
+    public class CursorTracker : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
-        public float XDelta { get; private set; }
+        public float XDelta { get; set; }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            PlayerInput.Instance.OnPointerDown(eventData);
+        }
 
         public void OnDrag(PointerEventData eventData)
         {
