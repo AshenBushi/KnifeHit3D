@@ -126,10 +126,10 @@ namespace KnifeFest
 
             var knifePosition = transform.position;
 
-            if (Math.Abs(knifePosition.x + _cursorTracker.XDelta / 700f) >= 1.5f) return;
+            if (Math.Abs(knifePosition.x + _cursorTracker.XDelta / 300f) >= 1.5f) return;
 
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(knifePosition.x + _cursorTracker.XDelta / 500f, knifePosition.y,
-                knifePosition.z), Time.fixedDeltaTime / 0.01f);
+            transform.position = new Vector3(knifePosition.x + _cursorTracker.XDelta / 200f, knifePosition.y,
+                knifePosition.z);
         }
 
         public void WeightDisable()
