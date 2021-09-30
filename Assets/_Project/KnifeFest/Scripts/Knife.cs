@@ -62,7 +62,6 @@ namespace KnifeFest
             if (other.TryGetComponent(out WallCutscene wallCutscene))
             {
                 var step = wallCutscene.GetComponentInParent<StepCutscene>();
-                step.ChangeColor(wallCutscene);
 
                 KnifeWeight -= wallCutscene.MultiplierWeight;
                 OnWeightDisable?.Invoke();

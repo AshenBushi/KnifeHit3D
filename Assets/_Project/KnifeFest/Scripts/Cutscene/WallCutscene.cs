@@ -53,7 +53,7 @@ namespace KnifeFest
 
         private IEnumerator SelfDestruction()
         {
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(0f);
 
             Destroy(gameObject);
         }
