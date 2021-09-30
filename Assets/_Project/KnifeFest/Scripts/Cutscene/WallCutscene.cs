@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 
 namespace KnifeFest
 {
@@ -17,9 +18,11 @@ namespace KnifeFest
             _material = GetComponent<MeshRenderer>().material;
         }
 
-        public void ChangeColor()
+        public void ChangeColor(bool isEndWall)
         {
-            GetComponent<MeshRenderer>().material.DOColor(Random.ColorHSV(0, 1, 0, 1, 0, 1, 0, 0.5f), 0.5f).SetLoops(-1, LoopType.Yoyo);
+            if (isEndWall) return;
+
+            GetComponent<MeshRenderer>().material.DOColor(Random.ColorHSV(0, 1, 0, 1, 0, 1, 0, 0.5f), 0.5f);
         }
 
         public void ChangeMultiplier(int value)
@@ -30,6 +33,29 @@ namespace KnifeFest
         public void ChangeScale(float valueX)
         {
             transform.localScale = new Vector3(transform.localScale.x + valueX, transform.localScale.y, transform.localScale.z);
+        }
+
+        public void Detonate()
+        {
+            foreach (var item in transform.parent.GetComponentsInChildren<Collider>())
+            {
+                item.isTrigger = false;
+            }
+
+            foreach (var item in transform.parent.GetComponentsInChildren<Rigidbody>())
+            {
+                item.isKinematic = false;
+                item.AddExplosionForce(1500f, new Vector3(0f, 3f, 10f), 20, 0);
+            }
+
+            StartCoroutine(SelfDestruction());
+        }
+
+        private IEnumerator SelfDestruction()
+        {
+            yield return new WaitForSeconds(4f);
+
+            Destroy(gameObject);
         }
     }
 }

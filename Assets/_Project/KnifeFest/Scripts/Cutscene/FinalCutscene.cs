@@ -44,15 +44,15 @@ namespace KnifeFest
             {
                 if (i == 0)
                 {
-                    _steps.Add(Instantiate(_template, new Vector3(-10, 0, _pathFollower.PathCreator.path.length + 30f), Quaternion.Euler(0, 90, 0), transform));
+                    _steps.Add(Instantiate(_template, new Vector3(_template.transform.position.x, 0, _pathFollower.PathCreator.path.length + 30f), Quaternion.Euler(0, 90, 0), transform));
                 }
                 else
                 {
-                    _steps.Add(Instantiate(_template, new Vector3(-10, 0, _steps[i - 1].transform.position.z + 20f), Quaternion.Euler(0, 90, 0), transform));
+                    _steps.Add(Instantiate(_template, new Vector3(_template.transform.position.x, 0, _steps[i - 1].transform.position.z + 20f), Quaternion.Euler(0, 90, 0), transform));
                 }
             }
 
-            _steps.Add(Instantiate(_templateStepEnd, new Vector3(-20, 0, _steps[_steps.Count - 1].transform.position.z + 20f), Quaternion.Euler(0, 90, 0), transform));
+            _steps.Add(Instantiate(_templateStepEnd, new Vector3(_templateStepEnd.transform.position.x, 0, _steps[_steps.Count - 1].transform.position.z + 20f), Quaternion.Euler(0, 90, 0), transform));
             _steps[_steps.Count - 1].ChangeWallMultiplier(30000);
 
             for (int i = 0; i < _steps.Count; i++)
@@ -65,8 +65,6 @@ namespace KnifeFest
                 _steps[i].UpdatingTextsMultiplier();
                 _steps[i].gameObject.SetActive(true);
             }
-
-            //StartCoroutine(StartAnimations());
         }
 
         private void StartCutscene()
@@ -76,27 +74,15 @@ namespace KnifeFest
             _pathFollower.PathCreator.bezierPath.AddSegmentToEnd(new Vector3(0f, 0f, _steps[_steps.Count - 1].transform.position.z));
             _pathFollower.PathCreator.EditorData.PathModifiedByUndo();
 
-            for (int i = 0; i < _steps.Count; i++)
+            for (int i = 0; i < _steps.Count - 1; i++)
             {
-                _steps[i].Wall.ChangeColor();
+                _steps[i].Wall.ChangeColor(false);
             }
+
+            _steps[_steps.Count - 1].Wall.ChangeColor(true);
 
             StartCoroutine(ControlKnifeRoutine());
         }
-
-
-        //private IEnumerator StartAnimations()
-        //{
-        //    for (int i = 0; i < _steps.Count; i++)
-        //    {
-        //        _steps[i].gameObject.SetActive(true);
-        //        if (i % 2 != 0)
-        //            _steps[i].GetComponent<Animator>().Play("StepCutscene_AppearRL");
-        //        else
-        //            _steps[i].GetComponent<Animator>().Play("StepCutscene_Appear");
-        //        yield return new WaitForSeconds(_steps[i].GetComponent<Animation>().clip.length / 25f);
-        //    }
-        //}
 
         private IEnumerator ControlKnifeRoutine()
         {

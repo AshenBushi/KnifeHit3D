@@ -71,6 +71,8 @@ namespace KnifeFest
 
                 _multiplierLastStepCutscene = step.Multiplier;
 
+                wallCutscene.Detonate();
+
                 OnAddedSpeed?.Invoke();
             }
         }
