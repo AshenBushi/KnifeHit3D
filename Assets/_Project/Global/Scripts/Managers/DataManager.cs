@@ -14,7 +14,7 @@ public class DataManager : Singleton<DataManager>
     protected override void Awake()
     {
         base.Awake();
-        
+
         Load();
     }
 
@@ -47,7 +47,7 @@ public class DataManager : Singleton<DataManager>
     {
         Save();
     }
-    
+
     private void FirstPlay()
     {
         GameData = new GameData();
@@ -57,15 +57,15 @@ public class DataManager : Singleton<DataManager>
     private IEnumerator SendMetricks()
     {
         yield return new WaitForSeconds(.5f);
-        
+
         MetricaManager.SendEvent("ev_first_open");
     }
-    
+
     public void Save()
     {
         File.WriteAllText(_path, JsonUtility.ToJson(GameData));
     }
-    
+
     public void SaveDate(DateTime value)
     {
         var convert = value.ToString("u", CultureInfo.InvariantCulture);
@@ -111,7 +111,7 @@ public class GameData
         SettingsData.SoundVolume = 1;
         SettingsData.MusicVolume = 1;
 
-        DailyGiftsData._clock = new Clock() {Hours = 23, Minutes =59, Seconds = 59};
+        DailyGiftsData._clock = new Clock() { Hours = 23, Minutes = 59, Seconds = 59 };
         DailyGiftsData.Date = DateTime.UtcNow.ToString("u", CultureInfo.InvariantCulture);
         DailyGiftsData.UnlockedGifts = 1;
         DailyGiftsData.PickedGifts = 0;
@@ -120,7 +120,7 @@ public class GameData
         IsLotteryEnable = true;
         CanShowStartAd = false;
     }
-    
+
 }
 
 [Serializable]
@@ -147,6 +147,8 @@ public struct ProgressData
     public int CurrentMarkLevel;
     public int CurrentCubeLevel;
     public int CurrentFlatLevel;
+    public int CurrentKnifeFestLevel;
+    public int CurrentStackKnifeLevel;
 }
 
 [Serializable]

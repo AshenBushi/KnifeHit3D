@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-    public class TargetHandler : Singleton<TargetHandler>
+public class TargetHandler : Singleton<TargetHandler>
     {
         [SerializeField] private LevelProgressDisplayer _levelProgressDisplayer;
         [SerializeField] private HitScoreDisplayer _hitScoreDisplayer;

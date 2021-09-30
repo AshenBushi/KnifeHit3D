@@ -22,11 +22,9 @@ namespace KnifeFest
 
         public Level CurrentLevel { get; private set; }
 
-
         protected override void Awake()
         {
             base.Awake();
-            DontDestroyOnLoad(gameObject);
 
 #if UNITY_ANDROID && !UNITY_EDITOR
         _path = Path.Combine(Application.persistentDataPath, "KnifeFestLevels.json");
@@ -37,17 +35,17 @@ namespace KnifeFest
             if (File.Exists(_path))
             {
                 _knifeFestLevels = JsonUtility.FromJson<KnifeFestLevels>(File.ReadAllText(_path));
-                CurrentLevel = _knifeFestLevels.Levels[0];
+                CurrentLevel = _knifeFestLevels.Levels[DataManager.Instance.GameData.ProgressData.CurrentKnifeFestLevel];
 
                 WallSpawner.Instance.SpawnWalls(CurrentLevel);
             }
             else
             {
-                StartCoroutine(LoadDataWalls(_wallParametersUrl, "KnifeFestLevels.json", _knifeFestLevels));
+                StartCoroutine(LoadLevels(_wallParametersUrl, "KnifeFestLevels.json", _knifeFestLevels));
             }
         }
 
-        private IEnumerator LoadDataWalls(string url, string fileName, KnifeFestLevels knifeFestLevels)
+        private IEnumerator LoadLevels(string url, string fileName, KnifeFestLevels knifeFestLevels)
         {
             var request = UnityWebRequest.Get(url);
 

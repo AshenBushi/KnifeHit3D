@@ -60,6 +60,16 @@ public class WinScreen : UIScreen
         }
 
         Player.Instance.DepositMoney(Convert.ToInt32(_rewardText.text));
+
+        switch (GamemodManager.Instance.CurrentMod)
+        {
+            case Gamemod.StackKnife:
+                LevelManager.Instance.NextStackKnifeLevel();
+                break;
+            case Gamemod.KnifeFest:
+                LevelManager.Instance.NextKnifeFestLevel();
+                break;
+        }
     }
 
     public override void Disable()

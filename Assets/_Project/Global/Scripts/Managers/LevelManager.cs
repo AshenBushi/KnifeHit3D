@@ -71,4 +71,18 @@ public class LevelManager : Singleton<LevelManager>
         DataManager.Instance.Save();
         LoadLevel();
     }
+
+    public void NextKnifeFestLevel()
+    {
+        DataManager.Instance.GameData.ProgressData.CurrentKnifeFestLevel++;
+        DataManager.Instance.Save();
+        LoadLevel();
+    }
+
+    public void NextStackKnifeLevel()
+    {
+        DataManager.Instance.GameData.ProgressData.CurrentStackKnifeLevel++;
+        DataManager.Instance.Save();
+        LoadLevel();
+    }
 }
