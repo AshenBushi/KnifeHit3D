@@ -20,7 +20,7 @@ namespace KnifeFest
         public int KnifeWeight { get; private set; } = 10;
         public float MultiplierLastStepCutscene => _multiplierLastStepCutscene;
 
-        public event UnityAction OnWeightChanged, OnWeightDisable;
+        public event UnityAction OnWeightChanged, OnWeightDisable, OnAddedSpeed;
 
         private void OnEnable()
         {
@@ -70,6 +70,8 @@ namespace KnifeFest
                 StartCoroutine(ChangeKnifeScale());
 
                 _multiplierLastStepCutscene = step.Multiplier;
+
+                OnAddedSpeed?.Invoke();
             }
         }
 

@@ -9,6 +9,7 @@ namespace KnifeFest
     {
         private const int LENGTH_CUTSCENE = 20;
         [SerializeField] private StepCutscene _template;
+        [SerializeField] private StepCutscene _templateStepEnd;
         [SerializeField] private PathFollower _pathFollower;
         [SerializeField] private KnifeFollower _knifeFollower;
 
@@ -51,6 +52,9 @@ namespace KnifeFest
                 }
             }
 
+            _steps.Add(Instantiate(_templateStepEnd, new Vector3(-20, 0, _steps[_steps.Count - 1].transform.position.z + 20f), Quaternion.Euler(0, 90, 0), transform));
+            _steps[_steps.Count - 1].ChangeWallMultiplier(30000);
+
             for (int i = 0; i < _steps.Count; i++)
             {
                 if (i == 0)
@@ -59,9 +63,10 @@ namespace KnifeFest
                     _steps[i].ChangeIndexMultiprier(_steps[i - 1].Multiplier);
 
                 _steps[i].UpdatingTextsMultiplier();
+                _steps[i].gameObject.SetActive(true);
             }
 
-            StartCoroutine(StartAnimations());
+            //StartCoroutine(StartAnimations());
         }
 
         private void StartCutscene()
@@ -80,18 +85,18 @@ namespace KnifeFest
         }
 
 
-        private IEnumerator StartAnimations()
-        {
-            for (int i = 0; i < _steps.Count; i++)
-            {
-                _steps[i].gameObject.SetActive(true);
-                if (i % 2 != 0)
-                    _steps[i].GetComponent<Animator>().Play("StepCutscene_AppearRL");
-                else
-                    _steps[i].GetComponent<Animator>().Play("StepCutscene_Appear");
-                yield return new WaitForSeconds(_steps[i].GetComponent<Animation>().clip.length / 25f);
-            }
-        }
+        //private IEnumerator StartAnimations()
+        //{
+        //    for (int i = 0; i < _steps.Count; i++)
+        //    {
+        //        _steps[i].gameObject.SetActive(true);
+        //        if (i % 2 != 0)
+        //            _steps[i].GetComponent<Animator>().Play("StepCutscene_AppearRL");
+        //        else
+        //            _steps[i].GetComponent<Animator>().Play("StepCutscene_Appear");
+        //        yield return new WaitForSeconds(_steps[i].GetComponent<Animation>().clip.length / 25f);
+        //    }
+        //}
 
         private IEnumerator ControlKnifeRoutine()
         {

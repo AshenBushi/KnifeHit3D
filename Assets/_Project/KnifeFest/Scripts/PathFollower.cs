@@ -21,11 +21,13 @@ namespace KnifeFest
         private void OnEnable()
         {
             _pathCreator.pathUpdated += OnPathChanged;
+            _knife.OnAddedSpeed += AddSpeed;
         }
 
         private void OnDisable()
         {
             _pathCreator.pathUpdated -= OnPathChanged;
+            _knife.OnAddedSpeed -= AddSpeed;
         }
 
         private void Start()
@@ -101,6 +103,11 @@ namespace KnifeFest
                     _particleConfettiWin.SetActive(true);
                 }
             }
+        }
+
+        private void AddSpeed()
+        {
+            _speed += 1.5f;
         }
     }
 }

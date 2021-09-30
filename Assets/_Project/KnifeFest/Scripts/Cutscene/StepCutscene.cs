@@ -11,9 +11,8 @@ namespace KnifeFest
         [SerializeField] private TMP_Text _textRight;
         [SerializeField] private Material _material;
         [SerializeField] private Material _materialBlink;
+        [SerializeField] private Gradient _gradientColors;
         private WallCutscene _wall;
-
-        private int k = 0;
 
         private float _multiplier;
 
@@ -21,7 +20,8 @@ namespace KnifeFest
 
         public WallCutscene Wall { get => _wall; set => _wall = value; }
 
-        private void Awake()
+
+        private void Start()
         {
             _wall = GetComponentInChildren<WallCutscene>();
         }
@@ -44,15 +44,22 @@ namespace KnifeFest
             _multiplier = float.Parse(str);
         }
 
+        public void ChangeWallMultiplier(int multiplier)
+        {
+            if (_wall == null)
+                _wall = GetComponentInChildren<WallCutscene>();
+            _wall.ChangeMultiplier(multiplier);
+        }
+
         private IEnumerator ChangeColorRoutine(WallCutscene wall)
         {
             var baseMat = _material;
             var baseMatWall = wall.Material;
-            GetComponent<MeshRenderer>().material.DOColor(_materialBlink.color, 0.5f).SetAutoKill(false);
-            wall.GetComponent<MeshRenderer>().material.DOColor(_materialBlink.color, 0.5f).SetAutoKill(false);
-            yield return new WaitForSeconds(0.2f);
-            GetComponent<MeshRenderer>().material.DOColor(baseMat.color, 0.5f).Restart();
-            wall.GetComponent<MeshRenderer>().material.DOColor(baseMatWall.color, 0.5f).Restart();
+            GetComponent<MeshRenderer>().material.DOColor(_materialBlink.color, 0.2f).SetAutoKill(false);
+            wall.GetComponent<MeshRenderer>().material.DOColor(_materialBlink.color, 0.2f).SetAutoKill(false);
+            yield return new WaitForSeconds(0.1f);
+            GetComponent<MeshRenderer>().material.DOColor(baseMat.color, 0.2f).Restart();
+            wall.GetComponent<MeshRenderer>().material.DOColor(baseMatWall.color, 0.2f).Restart();
         }
     }
 }

@@ -19,12 +19,17 @@ namespace KnifeFest
 
         public void ChangeColor()
         {
-            _material.DOColor(
-                Color.Lerp(
-                    new Color(Random.Range(0, 0.4f), Random.Range(0, 0.4f), Random.Range(0, 0.4f), 0.7f),
-                    new Color(Random.Range(0.5f, 1), Random.Range(0.5f, 1), Random.Range(0.5f, 1), 0.7f),
-                    0.375f),
-                1f).SetLoops(-1, LoopType.Yoyo);
+            GetComponent<MeshRenderer>().material.DOColor(Random.ColorHSV(0, 1, 0, 1, 0, 1, 0, 0.5f), 0.5f).SetLoops(-1, LoopType.Yoyo);
+        }
+
+        public void ChangeMultiplier(int value)
+        {
+            _multiplierWeight = value;
+        }
+
+        public void ChangeScale(float valueX)
+        {
+            transform.localScale = new Vector3(transform.localScale.x + valueX, transform.localScale.y, transform.localScale.z);
         }
     }
 }

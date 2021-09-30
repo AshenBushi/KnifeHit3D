@@ -1964,6 +1964,8 @@ MonoBehaviour:
       CurrentMarkLevel: 0
       CurrentCubeLevel: 0
       CurrentFlatLevel: 0
+      CurrentKnifeFestLevel: 0
+      CurrentStackKnifeLevel: 0
     SettingsData:
       SoundVolume: 0
       MusicVolume: 0
@@ -2955,7 +2957,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 2000
   field of view: 60
   orthographic: 0
   orthographic size: 5
