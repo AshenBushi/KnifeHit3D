@@ -52,6 +52,21 @@ namespace KnifeFest
         {
             if (other.TryGetComponent(out Wall wall))
             {
+                if (!wall.IsWallUsed) return;
+
+                foreach (var wallTemp in WallSpawner.Instance.Walls)
+                {
+                    if (wallTemp.transform.position.z == wall.transform.position.z && wallTemp.transform.position.x != wall.transform.position.x)
+                    {
+                        //Debug.Log(wallTemp.transform.position.x + " wallTemp");
+
+                        wallTemp.DisallowUsing();
+                        break;
+                    }
+                }
+
+                Debug.Log(wall.transform.position.z);
+
                 KnifeWeight = wall.ChangeValue(KnifeWeight);
                 OnWeightChanged?.Invoke();
 
@@ -69,10 +84,20 @@ namespace KnifeFest
 
                 _multiplierLastStepCutscene = step.Multiplier;
 
-                wallCutscene.Detonate();
-
-                OnAddedSpeed?.Invoke();
+                if (!wallCutscene.IsEndWall)
+                {
+                    wallCutscene.Detonate();
+                    step.FadeTextObject();
+                    OnAddedSpeed?.Invoke();
+                }
+                else StopKnife();
             }
+        }
+
+        private IEnumerator Init()
+        {
+            yield return new WaitForSeconds(0f);
+            SpawnKnife();
         }
 
         public void AllowStartingCutscene()
@@ -85,10 +110,9 @@ namespace KnifeFest
             _isStartingCutscene = false;
         }
 
-        private IEnumerator Init()
+        public void WeightDisable()
         {
-            yield return new WaitForSeconds(0f);
-            SpawnKnife();
+            OnWeightDisable?.Invoke();
         }
 
         private void SpawnKnife()
@@ -134,9 +158,9 @@ namespace KnifeFest
                 knifePosition.z);
         }
 
-        public void WeightDisable()
+        private void StopKnife()
         {
-            OnWeightDisable?.Invoke();
+            KnifeWeight = 0;
         }
     }
 }

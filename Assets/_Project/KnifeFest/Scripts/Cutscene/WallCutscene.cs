@@ -12,6 +12,7 @@ namespace KnifeFest
 
         public Material Material { get => _material; set => _material = value; }
         public int MultiplierWeight => _multiplierWeight;
+        public bool IsEndWall { get; private set; } = false;
 
         private void Awake()
         {
@@ -22,12 +23,7 @@ namespace KnifeFest
         {
             if (isEndWall) return;
 
-            GetComponent<MeshRenderer>().material.DOColor(Random.ColorHSV(0, 1, 0, 1, 0, 1, 0, 0.5f), 0.5f);
-        }
-
-        public void ChangeMultiplier(int value)
-        {
-            _multiplierWeight = value;
+            GetComponent<MeshRenderer>().material.DOColor(Random.ColorHSV(0, 1, 0, 1, 0, 1, 0.3f, 0.7f), 0.5f);
         }
 
         public void ChangeScale(float valueX)
@@ -49,6 +45,11 @@ namespace KnifeFest
             }
 
             StartCoroutine(SelfDestruction());
+        }
+
+        public void SetEndWall()
+        {
+            IsEndWall = true;
         }
 
         private IEnumerator SelfDestruction()

@@ -12,6 +12,8 @@ public class Wall : MonoBehaviour
     private int _value;
     private WallType _currentWallType;
 
+    public bool IsWallUsed { get; private set; } = true;
+
     private void Awake()
     {
         _meshRenderer = GetComponent<MeshRenderer>();
@@ -41,6 +43,16 @@ public class Wall : MonoBehaviour
                 _text.text = $"÷{value}";
                 break;
         }
+    }
+
+    public void AllowUsing()
+    {
+        IsWallUsed = true;
+    }
+
+    public void DisallowUsing()
+    {
+        IsWallUsed = false;
     }
 
     public int ChangeValue(int startValue)

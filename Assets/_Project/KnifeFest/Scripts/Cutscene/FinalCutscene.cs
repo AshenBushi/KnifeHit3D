@@ -44,16 +44,16 @@ namespace KnifeFest
             {
                 if (i == 0)
                 {
-                    _steps.Add(Instantiate(_template, new Vector3(_template.transform.position.x, 0, _pathFollower.PathCreator.path.length + 30f), Quaternion.Euler(0, 90, 0), transform));
+                    _steps.Add(Instantiate(_template, new Vector3(_template.transform.position.x, _template.transform.position.y, _pathFollower.PathCreator.path.length + 30f), Quaternion.Euler(0, 90, 0), transform));
                 }
                 else
                 {
-                    _steps.Add(Instantiate(_template, new Vector3(_template.transform.position.x, 0, _steps[i - 1].transform.position.z + 20f), Quaternion.Euler(0, 90, 0), transform));
+                    _steps.Add(Instantiate(_template, new Vector3(_template.transform.position.x, _template.transform.position.y, _steps[i - 1].transform.position.z + 20f), Quaternion.Euler(0, 90, 0), transform));
                 }
             }
 
-            _steps.Add(Instantiate(_templateStepEnd, new Vector3(_templateStepEnd.transform.position.x, 0, _steps[_steps.Count - 1].transform.position.z + 20f), Quaternion.Euler(0, 90, 0), transform));
-            _steps[_steps.Count - 1].ChangeWallMultiplier(30000);
+            _steps.Add(Instantiate(_templateStepEnd, new Vector3(_templateStepEnd.transform.position.x, _templateStepEnd.transform.position.y, _steps[_steps.Count - 1].transform.position.z + 20f), Quaternion.Euler(0, 90, 0), transform));
+            _steps[_steps.Count - 1].SetEndStep();
 
             for (int i = 0; i < _steps.Count; i++)
             {

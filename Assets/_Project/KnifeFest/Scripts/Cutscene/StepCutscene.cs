@@ -35,11 +35,16 @@ namespace KnifeFest
             _multiplier = float.Parse(str);
         }
 
-        public void ChangeWallMultiplier(int multiplier)
+        public void SetEndStep()
         {
             if (_wall == null)
                 _wall = GetComponentInChildren<WallCutscene>();
-            _wall.ChangeMultiplier(multiplier);
+            _wall.SetEndWall();
+        }
+
+        public void FadeTextObject()
+        {
+            _text.DOFade(0, 0.3f);
         }
     }
 }

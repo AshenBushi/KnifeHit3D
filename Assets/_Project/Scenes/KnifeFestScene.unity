@@ -5532,8 +5532,8 @@ MonoBehaviour:
   _road: {fileID: 902241237}
   _template: {fileID: 1785864788488846004, guid: 4b1289989eb218944bd7d2dd3e2c5c5f,
     type: 3}
-  _leftX: -1.23
-  _rightX: 1.23
+  _leftX: -1.35
+  _rightX: 1.35
 --- !u!4 &748941225
 Transform:
   m_ObjectHideFlags: 0
@@ -5855,7 +5855,7 @@ MonoBehaviour:
   _pathCreator: {fileID: 420820326}
   _knife: {fileID: 1278095598}
   _particleConfettiWin: {fileID: 399480770}
-  _speed: 8
+  _speed: 6
   _canMove: 0
   _canMoveCutscene: 0
 --- !u!4 &1015544128
@@ -6731,8 +6731,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.23, y: 0.29, z: 0.25}
-  m_Center: {x: 0.0000001937151, y: 0.0000044107437, z: -0.00000014901161}
+  m_Size: {x: 0.19, y: 0.51, z: 0.79}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1337084220
 GameObject:
   m_ObjectHideFlags: 0
@@ -7275,7 +7275,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1696279210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.0000004768374}
+  m_LocalPosition: {x: 0, y: 0, z: 0.97}
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1128252171}
