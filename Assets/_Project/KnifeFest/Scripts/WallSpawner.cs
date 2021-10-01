@@ -15,6 +15,8 @@ namespace KnifeFest
 
         private readonly List<Wall> _walls = new List<Wall>();
 
+        public List<Wall> Walls => _walls;
+
         protected override void Awake()
         {
             base.Awake();
@@ -27,8 +29,8 @@ namespace KnifeFest
             for (var i = 0; i < level.Walls.Count; i++)
             {
                 var wall = level.Walls[i];
-                _walls.Add(Instantiate(_template, new Vector3(wall.Side == Side.Left ? _leftX : _rightX, 1.5f, wall.ZPosition * 20f), Quaternion.Euler(Vector3.zero), transform));
-                _walls[i].Init(wall.Type, wall.value);
+                Walls.Add(Instantiate(_template, new Vector3(wall.Side == Side.Left ? _leftX : _rightX, 1.5f, wall.ZPosition * 20f), Quaternion.Euler(Vector3.zero), transform));
+                Walls[i].Init(wall.Type, wall.value);
 
                 if (greatestZ < wall.ZPosition)
                     greatestZ = wall.ZPosition;
@@ -42,14 +44,14 @@ namespace KnifeFest
 
         public void TryClearWalls()
         {
-            if (_walls.Count <= 0) return;
+            if (Walls.Count <= 0) return;
 
-            foreach (var wall in _walls)
+            foreach (var wall in Walls)
             {
                 Destroy(wall);
             }
 
-            _walls.Clear();
+            Walls.Clear();
         }
     }
 

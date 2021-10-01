@@ -7,7 +7,7 @@ public class Wall : MonoBehaviour
     [SerializeField] private TMP_Text _text;
     [SerializeField] private Material _positive;
     [SerializeField] private Material _negative;
-    
+
     private MeshRenderer _meshRenderer;
     private int _value;
     private WallType _currentWallType;
