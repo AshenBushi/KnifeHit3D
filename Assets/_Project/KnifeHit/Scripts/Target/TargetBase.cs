@@ -59,5 +59,4 @@ public class TargetBase : MonoBehaviour
             piece.material.color = color;
         }
     }
-    
 }
