@@ -102,6 +102,7 @@ namespace KnifeFest
             {
                 if (_knife.KnifeWeight <= 0)
                 {
+                    _speed = 0;
                     _canMoveCutscene = false;
                     SessionHandler.Instance.CompleteLevelWithCutscene(_knife.MultiplierLastStepCutscene);
                     _particleConfettiWin.SetActive(true);

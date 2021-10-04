@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine.UI;
 
 namespace KnifeFest
 {
@@ -31,31 +32,34 @@ namespace KnifeFest
             transform.localScale = new Vector3(transform.localScale.x + valueX, transform.localScale.y, transform.localScale.z);
         }
 
-        public void Detonate()
-        {
-            foreach (var item in transform.parent.GetComponentsInChildren<Collider>())
-            {
-                item.isTrigger = false;
-            }
-
-            foreach (var item in transform.parent.GetComponentsInChildren<Rigidbody>())
-            {
-                item.isKinematic = false;
-                item.AddExplosionForce(1500f, new Vector3(0f, 3f, 10f), 20, 0);
-            }
-
-            StartCoroutine(SelfDestruction());
-        }
-
         public void SetEndWall()
         {
             IsEndWall = true;
         }
 
-        private IEnumerator SelfDestruction()
+        public void Detonate()
         {
-            yield return new WaitForSeconds(0f);
+            var childCollider = transform.parent.GetComponentsInChildren<Collider>();
+            var childRigidbody = transform.parent.GetComponentsInChildren<Rigidbody>();
 
+            foreach (var item in childCollider)
+            {
+                item.isTrigger = false;
+            }
+
+            foreach (var item in childRigidbody)
+            {
+                item.isKinematic = false;
+                item.AddExplosionForce(5000f, new Vector3(0, 150f, 150f), 150f, 0f, ForceMode.Acceleration);
+            }
+
+            StartCoroutine(SelfDestruction());
+        }
+
+        public IEnumerator SelfDestruction()
+        {
+            gameObject.transform.DOScale(new Vector3(0, 0, 0), 0.2f);
+            yield return new WaitForSeconds(3f);
             Destroy(gameObject);
         }
     }

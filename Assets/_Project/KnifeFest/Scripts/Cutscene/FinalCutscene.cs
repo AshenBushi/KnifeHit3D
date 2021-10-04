@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 namespace KnifeFest
 {
@@ -69,9 +70,11 @@ namespace KnifeFest
 
         private void StartCutscene()
         {
+            _knifeFollower.GetComponent<Camera>().DOFieldOfView(70, 0.5f);
+
             _pathFollower.Knife.WeightDisable();
 
-            _pathFollower.PathCreator.bezierPath.AddSegmentToEnd(new Vector3(0f, 0f, _steps[_steps.Count - 1].transform.position.z));
+            _pathFollower.PathCreator.bezierPath.AddSegmentToEnd(new Vector3(0f, 0f, _steps[_steps.Count - 1].transform.position.z - 5.5f));
             _pathFollower.PathCreator.EditorData.PathModifiedByUndo();
 
             for (int i = 0; i < _steps.Count - 1; i++)

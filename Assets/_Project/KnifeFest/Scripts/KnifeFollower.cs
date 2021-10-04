@@ -26,9 +26,9 @@ namespace KnifeFest
 
         public void AllowStartingCutscene()
         {
-            _tween = transform.DOMove(new Vector3(_target.position.x, _target.position.y + _offsetYPos, _target.position.z - _offsetZPos), 0.2f).SetAutoKill(false);
-            _offsetYPos = 5.5f;
-            _offsetZPos = 6.5f;
+            _tween = transform.DOMove(new Vector3(_target.position.x, _target.position.y + _offsetYPos, _target.position.z - _offsetZPos), 0.5f).SetAutoKill(false);
+            _offsetYPos = 6.5f;
+            _offsetZPos = 7f;
 
             _isStartCutscene = true;
         }

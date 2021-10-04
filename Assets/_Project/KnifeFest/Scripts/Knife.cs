@@ -152,9 +152,9 @@ namespace KnifeFest
 
             var knifePosition = transform.position;
 
-            if (Math.Abs(knifePosition.x + _cursorTracker.XDelta / 300f) >= 1.5f) return;
+            if (Math.Abs(knifePosition.x + (_cursorTracker.XDelta / _cursorTracker.GetComponentInParent<Canvas>().scaleFactor) / 400f) >= 1.5f) return;
 
-            transform.position = new Vector3(knifePosition.x + _cursorTracker.XDelta / 200f, knifePosition.y,
+            transform.position = new Vector3(knifePosition.x + (_cursorTracker.XDelta / _cursorTracker.GetComponentInParent<Canvas>().scaleFactor) / 400f, knifePosition.y,
                 knifePosition.z);
         }
 
