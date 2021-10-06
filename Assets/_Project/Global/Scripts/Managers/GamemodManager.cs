@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,12 +13,12 @@ public class GamemodManager : Singleton<GamemodManager>
     {
         StartSession(true);
     }
-    
+
     private void SelectRandomMod()
     {
         var randomGamemod = Random.Range(0, 3);
         var randomKnifeHitMod = Random.Range(0, 6);
-        
+
         SelectKnifeHitMod(randomKnifeHitMod);
         SelectMod(randomGamemod);
     }
@@ -33,11 +34,11 @@ public class GamemodManager : Singleton<GamemodManager>
             SelectMod((int)DataManager.Instance.GameData.CurrentGamemod);
         }
     }
-    
+
     public void SelectMod(int index)
     {
         CurrentMod = (Gamemod)index;
-        
+
         _skills.DisallowSkills();
 
         switch (CurrentMod)
@@ -60,7 +61,7 @@ public class GamemodManager : Singleton<GamemodManager>
                 SceneLoader.Instance.LoadGamemodScene(2);
                 break;
         }
-        
+
         DataManager.Instance.GameData.CurrentGamemod = CurrentMod;
     }
 
