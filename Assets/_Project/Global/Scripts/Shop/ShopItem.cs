@@ -10,6 +10,7 @@ public class ShopItem : MonoBehaviour
     [SerializeField] private int _index;
     [SerializeField] private Image _selectIndicator;
     [SerializeField] private Image _lockIndicator;
+    [SerializeField] private Image _unlockIndicator;
     [SerializeField] private GameObject _previewTemplate;
     [SerializeField] private Transform _container;
 
@@ -45,6 +46,7 @@ public class ShopItem : MonoBehaviour
     {
         _isUnlock = true;
         _lockIndicator.gameObject.SetActive(false);
+        _unlockIndicator.gameObject.SetActive(true);
     }
     
     public void EnableIndicator()

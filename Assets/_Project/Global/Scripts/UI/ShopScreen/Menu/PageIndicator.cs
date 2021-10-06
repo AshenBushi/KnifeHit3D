@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class PageIndicator : MonoBehaviour
 {
     [SerializeField] private Image _image;
-    [SerializeField] private Color _enabled;
-    [SerializeField] private Color _disabled;
+    [SerializeField] private Sprite _enabled;
+    [SerializeField] private Sprite _disabled;
     
 
     private void Awake()
@@ -16,11 +16,11 @@ public class PageIndicator : MonoBehaviour
 
     public void EnablePoint()
     {
-        _image.color = _enabled;
+        _image.sprite = _enabled;
     }
 
     public void DisablePoint()
     {
-        _image.color = _disabled;
+        _image.sprite = _disabled;
     }
 }
