@@ -4,10 +4,18 @@ using UnityEngine.UI;
 
 public class SettingsScreen : UIScreen
 {
-    [SerializeField] private Button _sound;
-    [SerializeField] private Button _music;
-    [SerializeField] private Sprite _buttonOn;
-    [SerializeField] private Sprite _buttonOff;
+    [SerializeField] private Button _buttonSound;
+    [SerializeField] private Button _buttonMusic;
+
+    [SerializeField] private Sprite _soundActiveIcon;
+    [SerializeField] private Sprite _soundInactiveIcon;
+    [SerializeField] private Sprite _musicActiveIcon;
+    [SerializeField] private Sprite _musicInactiveIcon;
+    [SerializeField] private Sprite _turnOn;
+    [SerializeField] private Sprite _turnOff;
+
+    private Image _soundIcon;
+    private Image _musicIcon;
 
     private void Awake()
     {
@@ -16,29 +24,34 @@ public class SettingsScreen : UIScreen
 
     private void OnEnable()
     {
-        _sound.onClick.AddListener(ChangeSoundVolume);
-        _music.onClick.AddListener(ChangeMusicVolume);
+        _buttonSound.onClick.AddListener(ChangeSoundVolume);
+        _buttonMusic.onClick.AddListener(ChangeMusicVolume);
     }
 
     private void OnDisable()
     {
-        _sound.onClick.RemoveListener(ChangeSoundVolume);
-        _music.onClick.RemoveListener(ChangeMusicVolume);
+        _buttonSound.onClick.RemoveListener(ChangeSoundVolume);
+        _buttonMusic.onClick.RemoveListener(ChangeMusicVolume);
     }
 
     private void Start()
     {
         SoundManager.Instance.SoundPlayer.volume = DataManager.Instance.GameData.SettingsData.SoundVolume;
         SoundManager.Instance.MusicPlayer.volume = DataManager.Instance.GameData.SettingsData.MusicVolume;
+        _soundIcon = _buttonSound.transform.GetChild(0).GetComponent<Image>();
+        _musicIcon = _buttonMusic.transform.GetChild(0).GetComponent<Image>();
         UpdateButtonImages();
     }
 
     private void UpdateButtonImages()
     {
-        _sound.image.sprite = SoundManager.Instance.SoundPlayer.volume > 0 ? _buttonOn : _buttonOff;
-        _music.image.sprite = SoundManager.Instance.MusicPlayer.volume > 0 ? _buttonOn : _buttonOff;
+        _buttonSound.image.sprite = SoundManager.Instance.SoundPlayer.volume > 0 ? _turnOn : _turnOff;
+        _soundIcon.sprite = SoundManager.Instance.SoundPlayer.volume > 0 ? _soundActiveIcon : _soundInactiveIcon;
+
+        _buttonMusic.image.sprite = SoundManager.Instance.MusicPlayer.volume > 0 ? _turnOn : _turnOff;
+        _musicIcon.sprite = SoundManager.Instance.MusicPlayer.volume > 0 ? _musicActiveIcon : _musicInactiveIcon;
     }
-    
+
     private void ChangeSoundVolume()
     {
         SoundManager.Instance.SoundPlayer.volume = SoundManager.Instance.SoundPlayer.volume > 0 ? 0 : 1;
