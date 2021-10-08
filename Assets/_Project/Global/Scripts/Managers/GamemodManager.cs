@@ -5,14 +5,14 @@ using Random = UnityEngine.Random;
 public class GamemodManager : Singleton<GamemodManager>
 {
     [SerializeField] private Skills _skills;
+    [SerializeField] private HandlePages _handlerPages;
+    [SerializeField] private int _knifeHitModsCount = 5;
+    [SerializeField] private int _gameModCount = 3;
 
     public int KnifeHitMod { get; private set; }
     public Gamemod CurrentMod { get; private set; }
-
-    private void Start()
-    {
-        StartSession(true);
-    }
+    public int KnifeHitModsCount => _knifeHitModsCount;
+    public int GameModCount => _gameModCount;
 
     private void SelectRandomMod()
     {
@@ -23,7 +23,15 @@ public class GamemodManager : Singleton<GamemodManager>
         SelectMod(randomGamemod);
     }
 
-    public void StartSession(bool firstTime)
+    public void OnClick()
+    {
+        Debug.Log(_handlerPages.Mods[_handlerPages.CurrentIndexPage].KnifeMod);
+        Debug.Log(_handlerPages.Mods[_handlerPages.CurrentIndexPage].GameMod);
+        SelectKnifeHitMod(_handlerPages.Mods[_handlerPages.CurrentIndexPage].KnifeMod);
+        SelectMod(_handlerPages.Mods[_handlerPages.CurrentIndexPage].GameMod);
+    }
+
+    public void ControlSession(bool firstTime)
     {
         if (firstTime)
         {
@@ -33,6 +41,11 @@ public class GamemodManager : Singleton<GamemodManager>
         {
             SelectMod((int)DataManager.Instance.GameData.CurrentGamemod);
         }
+    }
+
+    public void EndSession()
+    {
+        SceneLoader.Instance.LoadPreparedScene();
     }
 
     public void SelectMod(int index)

@@ -3,14 +3,19 @@ using UnityEngine.EventSystems;
 
 namespace KnifeFest
 {
-    public class CursorTracker : Singleton<CursorTracker>, IPointerDownHandler, IDragHandler
+    public class CursorTracker : Singleton<CursorTracker>, /*IPointerDownHandler,*/ IDragHandler
     {
         public float XDelta { get; set; }
 
-        public void OnPointerDown(PointerEventData eventData)
+        private void Start()
         {
-            PlayerInput.Instance.OnPointerDown(eventData);
+            PlayerInput.Instance.AllowStartGame();
         }
+
+        //public void OnPointerDown(PointerEventData eventData)
+        //{
+        //    PlayerInput.Instance.OnPointerDown(eventData);
+        //}
 
         public void OnDrag(PointerEventData eventData)
         {

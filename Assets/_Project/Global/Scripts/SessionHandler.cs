@@ -55,8 +55,14 @@ public class SessionHandler : Singleton<SessionHandler>
 
     private void OnScreenDisabled(bool isAdShowed)
     {
-        DataManager.Instance.GameData.CanShowStartAd = !isAdShowed;
+        if (!isAdShowed)
+        {
+            DataManager.Instance.GameData.CanShowStartAd = isAdShowed;
+            EndSession();
+            return;
+        }
 
+        DataManager.Instance.GameData.CanShowStartAd = isAdShowed;
         StartCoroutine(TryToShowAdRestart());
     }
 
@@ -93,9 +99,18 @@ public class SessionHandler : Singleton<SessionHandler>
 
     public void RestartSession()
     {
-        GamemodManager.Instance.StartSession(_isPlayerLose);
+        GamemodManager.Instance.ControlSession(_isPlayerLose);
         PlayerInput.Instance.Enable();
         PlayerInput.Instance.AllowTap();
+        _startScreen.Enable();
+        IsSessionRestarted?.Invoke();
+    }
+
+    public void EndSession()
+    {
+        GamemodManager.Instance.EndSession();
+        PlayerInput.Instance.Enable();
+        PlayerInput.Instance.DisallowTap();
         _startScreen.Enable();
         IsSessionRestarted?.Invoke();
     }

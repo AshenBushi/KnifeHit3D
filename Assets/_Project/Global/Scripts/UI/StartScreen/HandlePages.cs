@@ -9,14 +9,18 @@ public class HandlePages : MonoBehaviour
     [SerializeField] private int _countMods;
     [SerializeField] private float _offsetX = 1500f;
 
-    private List<Page> _mods = new List<Page>();
+    private Page[] _mods;
     private List<Vector2> _modsPos = new List<Vector2>();
     private int _currentIndexPage;
+    private bool _isScrolled = false;
+
+    public Page[] Mods => _mods;
 
     public int CurrentIndexPage
     {
         get => _currentIndexPage;
-        set
+
+        private set
         {
             if (_mods[_currentIndexPage] != null)
             {
@@ -25,8 +29,8 @@ public class HandlePages : MonoBehaviour
             }
 
             if (value < 0)
-                _currentIndexPage = _mods.Count - 1;
-            else if (value > _mods.Count - 1)
+                _currentIndexPage = _mods.Length - 1;
+            else if (value > _mods.Length - 1)
                 _currentIndexPage = 0;
             else
                 _currentIndexPage = value;
@@ -38,20 +42,34 @@ public class HandlePages : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void Init()
     {
+        _mods = new Page[_countMods];
+
+        int indexGameMod = 1;
         for (int i = 0; i < _countMods; i++)
         {
-            _mods.Add(Instantiate(_templatePage, _contentRect.transform, false));
+            _mods[i] = Instantiate(_templatePage, _contentRect.transform, false);
             _mods[i].SetTextNum(i);
+
+            if (i <= GamemodManager.Instance.KnifeHitModsCount)
+            {
+                _mods[i].SetKnifeMod(i);
+            }
+            else
+            {
+                _mods[i].SetGameMod(indexGameMod);
+                if (indexGameMod < GamemodManager.Instance.GameModCount)
+                    indexGameMod++;
+            }
 
             if (i != 0)
             {
                 _mods[i].Deactivation();
-                _mods[i].transform.localPosition = new Vector2(_mods[i - 1].transform.localPosition.x + _templatePage.GetComponent<RectTransform>().sizeDelta.x + _offsetX, 0);
+                _mods[i].transform.localPosition = new Vector2(_mods[i - 1].transform.localPosition.x + _templatePage.GetComponent<RectTransform>().sizeDelta.x + _offsetX, 10f);
             }
             else
-                _mods[i].transform.localPosition = new Vector2(_templatePage.transform.localPosition.x, 0);
+                _mods[i].transform.localPosition = new Vector2(_templatePage.transform.localPosition.x, 10f);
 
             _modsPos.Add(-_mods[i].transform.localPosition);
         }

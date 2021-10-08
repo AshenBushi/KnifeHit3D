@@ -15,8 +15,9 @@ public class ShopItem : MonoBehaviour
     [SerializeField] private Transform _container;
 
     private Button _button;
+    private GameObject _knife;
     private bool _isUnlock = false;
-    
+
     public int Index => _index;
 
     public bool IsUnlock => _isUnlock;
@@ -27,7 +28,10 @@ public class ShopItem : MonoBehaviour
     {
         _button = GetComponent<Button>();
         _selectIndicator.GetComponentInChildren<Image>();
-        Instantiate(KnifeStorage.Instance.KnifePreviews[Index], _container);
+        if (!_isUnlock)
+        {
+            Instantiate(KnifeStorage.Instance.KnifePreviews[Index], _container);
+        }
     }
 
     private void OnEnable()
@@ -48,12 +52,12 @@ public class ShopItem : MonoBehaviour
         _lockIndicator.gameObject.SetActive(false);
         _unlockIndicator.gameObject.SetActive(true);
     }
-    
+
     public void EnableIndicator()
     {
         _selectIndicator.gameObject.SetActive(true);
     }
-    
+
     public void DisableIndicator()
     {
         _selectIndicator.gameObject.SetActive(false);

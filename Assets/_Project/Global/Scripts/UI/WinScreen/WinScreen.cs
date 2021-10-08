@@ -76,7 +76,7 @@ public class WinScreen : UIScreen
     {
         base.Disable();
         _cup.SetActive(false);
-        IsScreenDisabled?.Invoke(true);
+        IsScreenDisabled?.Invoke(false);
     }
 
     public void Win()

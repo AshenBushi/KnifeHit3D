@@ -1,21 +1,27 @@
-using System;
-using System.Collections;
-using GoogleMobileAds.Api;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameLoader : MonoBehaviour
 {
+    [SerializeField] private Slider _sliderProgressBar;
+    [SerializeField] private TextMeshProUGUI _textProgress;
+
     private AsyncOperation _operation;
-    
-    private float _passedTime = 0f;
 
     private void Start()
     {
-        SceneManager.LoadSceneAsync(1);
+        _operation = SceneManager.LoadSceneAsync(1);
     }
-    
+
+    private void Update()
+    {
+        float progressValue = Mathf.Clamp01(_operation.progress / 0.9f);
+        _sliderProgressBar.value = progressValue * 100;
+        _textProgress.text = Mathf.Round(progressValue * 100) + "%";
+    }
+
     /*private IEnumerator LoadAsync()
     {
         _operation = SceneManager.LoadSceneAsync(1);
@@ -37,5 +43,4 @@ public class GameLoader : MonoBehaviour
         AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
         _operation.allowSceneActivation = true;
     }*/
-
 }

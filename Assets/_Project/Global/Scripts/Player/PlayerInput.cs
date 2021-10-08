@@ -30,11 +30,24 @@ public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler, IPointer
     {
         if (!_canTap) return;
 
+        IsTapped?.Invoke();
+    }
+
+    public void OnClick()
+    {
+        if (!_canTap) return;
+
         if (!_isSessionStart)
         {
             IsSessionStart?.Invoke();
             _isSessionStart = true;
         }
+    }
+
+    public void AllowStartGame()
+    {
+        if (!_canTap) return;
+        if (!_isSessionStart) return;
 
         IsTapped?.Invoke();
     }

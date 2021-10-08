@@ -1271,7 +1271,7 @@ GameObject:
   - component: {fileID: 774377730}
   - component: {fileID: 774377731}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: ProgressBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2929,7 +2929,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 12
   m_WholeNumbers: 1
-  m_Value: 7
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3583,3 +3583,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b60e253c00d49cb4a8a1539dba916028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sliderProgressBar: {fileID: 1401450961}
+  _textProgress: {fileID: 1189398970}

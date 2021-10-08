@@ -23,7 +23,7 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
     public int CurrentPage => _currentPage;
 
     public event UnityAction IsPageChanged;
-    
+
     public void OnDrag(PointerEventData eventData)
     {
         if (Mathf.Abs(eventData.delta.x) > 2)
@@ -39,14 +39,16 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
             _isFastScroll = false;
         }
     }
-    
+
     public void OnEndDrag(PointerEventData eventData)
     {
         if (_isFastScroll)
         {
             if ((_currentPage + _fastScrollIndex) >= 0 && (_currentPage + _fastScrollIndex) < _menuItems.Length)
             {
+                _menuItems[_currentPage].gameObject.SetActive(false);
                 _currentPage += _fastScrollIndex;
+                _menuItems[_currentPage].gameObject.SetActive(true);
             }
         }
         else
@@ -55,14 +57,19 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
             for (var i = 0; i < _menuItemTransforms.Count; i++)
             {
-                if (!(Mathf.Abs(_menuItemTransforms[i].position.x) < currentX)) continue;
+                if (!(Mathf.Abs(_menuItemTransforms[i].position.x) < currentX))
+                {
+                    _menuItems[i].gameObject.SetActive(false);
+                    continue;
+                }
                 currentX = Mathf.Abs(_menuItemTransforms[i].position.x);
                 _currentPage = i;
+                _menuItems[i].gameObject.SetActive(true);
             }
         }
 
         IsPageChanged?.Invoke();
-        
+
         SelectCurrentPage(_duration);
     }
 
@@ -71,12 +78,12 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
         _layoutGroup = _content.GetComponent<HorizontalLayoutGroup>();
         _menuItems = _content.GetComponentsInChildren<MItem>();
         _navigationPoints = GetComponentsInChildren<PageIndicator>();
-        
+
         foreach (var item in _menuItems)
         {
             _menuItemTransforms.Add(item.GetComponent<RectTransform>());
         }
-        
+
         SelectCurrentPage(0f);
     }
 
@@ -93,9 +100,9 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
                 _navigationPoints[i].DisablePoint();
             }
         }
-        
+
         _content.DOLocalMove(new Vector3(-_menuItemTransforms[_currentPage].localPosition.x +
-                                         (_menuItemTransforms[_currentPage].sizeDelta.x + 
+                                         (_menuItemTransforms[_currentPage].sizeDelta.x +
                                           _layoutGroup.spacing) / 2, 0f, 0f), duration);
     }
 }

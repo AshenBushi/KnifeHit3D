@@ -86,6 +86,7 @@ public class DailyGiftScreen : UIScreen
     
     public override void Enable()
     {
+        gameObject.SetActive(true);
         base.Enable();
         CheckGiftsState();
         SoundManager.Instance.PlaySound(SoundName.ButtonClick);
@@ -94,6 +95,7 @@ public class DailyGiftScreen : UIScreen
     public override void Disable()
     {
         base.Disable();
+        gameObject.SetActive(false);
         SoundManager.Instance.PlaySound(SoundName.ButtonClick);
     }
 }

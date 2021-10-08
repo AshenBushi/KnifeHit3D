@@ -5,6 +5,8 @@ public class KnifeFestManager : MonoBehaviour
 {
     [SerializeField] private PathFollower _pathFollower;
 
+    public PathFollower PathFollower => _pathFollower;
+
     private void OnEnable()
     {
         SessionHandler.Instance.IsSessionStarted += OnSessionStarted;

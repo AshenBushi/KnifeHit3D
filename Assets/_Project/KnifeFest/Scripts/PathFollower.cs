@@ -20,12 +20,14 @@ namespace KnifeFest
 
         private void OnEnable()
         {
+            PlayerInput.Instance.IsTapped += AllowMove;
             _pathCreator.pathUpdated += OnPathChanged;
             _knife.OnAddedSpeed += AddSpeed;
         }
 
         private void OnDisable()
         {
+            PlayerInput.Instance.IsTapped -= AllowMove;
             _pathCreator.pathUpdated -= OnPathChanged;
             _knife.OnAddedSpeed -= AddSpeed;
         }

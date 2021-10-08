@@ -58,8 +58,6 @@ namespace KnifeFest
                 {
                     if (wallTemp.transform.position.z == wall.transform.position.z && wallTemp.transform.position.x != wall.transform.position.x)
                     {
-                        //Debug.Log(wallTemp.transform.position.x + " wallTemp");
-
                         wallTemp.DisallowUsing();
                         break;
                     }
