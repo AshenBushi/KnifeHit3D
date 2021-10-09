@@ -25,8 +25,8 @@ public class GamemodManager : Singleton<GamemodManager>
 
     public void OnClick()
     {
-        Debug.Log(_handlerPages.Mods[_handlerPages.CurrentIndexPage].KnifeMod);
-        Debug.Log(_handlerPages.Mods[_handlerPages.CurrentIndexPage].GameMod);
+        //Debug.Log(_handlerPages.Mods[_handlerPages.CurrentIndexPage].KnifeMod);
+        //Debug.Log(_handlerPages.Mods[_handlerPages.CurrentIndexPage].GameMod);
         SelectKnifeHitMod(_handlerPages.Mods[_handlerPages.CurrentIndexPage].KnifeMod);
         SelectMod(_handlerPages.Mods[_handlerPages.CurrentIndexPage].GameMod);
     }

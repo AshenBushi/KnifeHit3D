@@ -8,17 +8,22 @@ public class StartScreen : UIScreen
     [SerializeField] private HandlePages _handlerPages;
     [SerializeField] private GameObject _giftNotification;
     [SerializeField] private GameObject _shopNotification;
-    [SerializeField] private GameObject _settingsNotification;
+    //[SerializeField] private GameObject _settingsNotification;
 
     private void Awake()
     {
         CanvasGroup = GetComponent<CanvasGroup>();
     }
 
+    private void Start()
+    {
+        _handlerPages.Init();
+    }
+
     private void OnEnable()
     {
         CheckNotificationStates();
-        _handlerPages.Init();
+        
     }
 
     private void CheckNotificationStates()
@@ -40,13 +45,13 @@ public class StartScreen : UIScreen
     public void EnableGiftNotification()
     {
         _giftNotification.SetActive(true);
-        _settingsNotification.SetActive(true);
+        //_settingsNotification.SetActive(true);
     }
 
     public void EnableShopNotification()
     {
         _shopNotification.SetActive(true);
-        _settingsNotification.SetActive(true);
+        //_settingsNotification.SetActive(true);
         PlayerPrefs.SetInt("ShopNotification", 1);
     }
 
@@ -63,6 +68,6 @@ public class StartScreen : UIScreen
 
     public void DisablePanelNotification()
     {
-        _settingsNotification.SetActive(false);
+        //_settingsNotification.SetActive(false);
     }
 }

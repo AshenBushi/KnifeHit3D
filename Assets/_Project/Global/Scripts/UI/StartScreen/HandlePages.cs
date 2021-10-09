@@ -41,6 +41,10 @@ public class HandlePages : MonoBehaviour
             }
         }
     }
+    private void FixedUpdate()
+    {
+        _contentRect.DOAnchorPosX(_modsPos[CurrentIndexPage].x, 0.4f);
+    }
 
     public void Init()
     {
@@ -50,7 +54,6 @@ public class HandlePages : MonoBehaviour
         for (int i = 0; i < _countMods; i++)
         {
             _mods[i] = Instantiate(_templatePage, _contentRect.transform, false);
-            _mods[i].SetTextNum(i);
 
             if (i <= GamemodManager.Instance.KnifeHitModsCount)
             {
@@ -73,11 +76,6 @@ public class HandlePages : MonoBehaviour
 
             _modsPos.Add(-_mods[i].transform.localPosition);
         }
-    }
-
-    private void FixedUpdate()
-    {
-        _contentRect.DOAnchorPosX(_modsPos[CurrentIndexPage].x, 0.15f);
     }
 
     public void SelectNextMod()

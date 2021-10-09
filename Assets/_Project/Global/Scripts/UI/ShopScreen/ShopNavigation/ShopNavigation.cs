@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class ShopNavigation : MonoBehaviour
+public class ShopNavigation : Singleton<ShopNavigation>
 {
     [SerializeField] private Shop _shop;
     [SerializeField] private List<NavigationButton> _buttons;
@@ -19,10 +16,13 @@ public class ShopNavigation : MonoBehaviour
             _buttons[i].transform.SetSiblingIndex(i);
             _buttons[i].SetDisableSprite();
         }
-        
+
         button.transform.SetAsLastSibling();
         button.SetEnableSprite();
-
     }
-    
+
+    public void SelectShopSectionOnFirstOpened()
+    {
+        SelectShopSection(_buttons[0]);
+    }
 }

@@ -1,8 +1,4 @@
-using System;
-using GoogleMobileAds.Api;
-using KnifeFest;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class ShopScreen : UIScreen
 {
@@ -15,10 +11,8 @@ public class ShopScreen : UIScreen
         gameObject.SetActive(true);
         _startScreen.DisableShopNotification();
         _uiCanvas.SetActive(false);
-        _canvasPlayerInput.GetComponentInChildren<PlayerInput>().DisallowTap();
         _canvasPlayerInput.SetActive(false);
-        if (GamemodManager.Instance.CurrentMod == Gamemod.KnifeFest)
-            CursorTracker.Instance.DisableCanvas();
+        ShopNavigation.Instance.SelectShopSectionOnFirstOpened();
     }
 
     public override void Disable()
@@ -26,8 +20,5 @@ public class ShopScreen : UIScreen
         _uiCanvas.SetActive(true);
         _canvasPlayerInput.SetActive(true);
         gameObject.SetActive(false);
-        _canvasPlayerInput.GetComponentInChildren<PlayerInput>().AllowTap();
-        if (GamemodManager.Instance.CurrentMod == Gamemod.KnifeFest)
-            CursorTracker.Instance.EnableCanvas();
     }
 }

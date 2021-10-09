@@ -1,14 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DailyGiftScreen : UIScreen
 {
     [SerializeField] private Timer _timer;
     [SerializeField] private List<DailyGift> _gifts;
     [SerializeField] private StartScreen _startScreen;
+    [SerializeField] private DailyGiftArrows _dailyArrows;
 
     private void Awake()
     {
@@ -22,13 +22,14 @@ public class DailyGiftScreen : UIScreen
         foreach (var gift in _gifts)
         {
             gift.IsGotReward += GotReward;
+            gift.DailyArrows = _dailyArrows;
         }
     }
 
     private void OnDisable()
     {
         _timer.IsTimeEnd -= UnlockNextGift;
-        
+
         foreach (var gift in _gifts)
         {
             gift.IsGotReward -= GotReward;
@@ -47,16 +48,17 @@ public class DailyGiftScreen : UIScreen
         {
             _gifts[i].Unlock();
         }
-        
+
         for (var i = 0; i < DataManager.Instance.GameData.DailyGiftsData.PickedGifts; i++)
         {
             _gifts[i].Pick();
         }
     }
-    
+
     private void UnlockNextGift()
     {
         if (_gifts.Count == DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts) return;
+
         _gifts[DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts].Unlock();
         DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts++;
         DataManager.Instance.Save();
@@ -77,13 +79,13 @@ public class DailyGiftScreen : UIScreen
 
         DataManager.Instance.GameData.DailyGiftsData.PickedGifts++;
         DataManager.Instance.Save();
-        
-        if(DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts == DataManager.Instance.GameData.DailyGiftsData.PickedGifts)
+
+        if (DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts == DataManager.Instance.GameData.DailyGiftsData.PickedGifts)
             _startScreen.DisableGiftNotification();
         CheckGiftsState();
         MetricaManager.SendEvent("day_gift");
     }
-    
+
     public override void Enable()
     {
         gameObject.SetActive(true);

@@ -40,10 +40,10 @@ namespace Watermelon
             instance = this;
 
             // Disable all buttons
-            for (int i = 0; i < settingsButtonsInfo.Length; i++)
-            {
-                settingsButtonsInfo[i].SettingsButton.gameObject.SetActive(false);
-            }
+            //for (int i = 0; i < settingsButtonsInfo.Length; i++)
+            //{
+            //    settingsButtonsInfo[i].SettingsButton.gameObject.SetActive(false);
+            //}
 
             InitAnimation();
             InitPositions();
@@ -140,10 +140,10 @@ namespace Watermelon
             }
             else
             {
-                for (int i = settingsButtonsInfo.Length - 1; i >= 0; i--)
-                {
-                    settingsButtonsInfo[i].SettingsButton.gameObject.SetActive(false);
-                }
+                //for (int i = settingsButtonsInfo.Length - 1; i >= 0; i--)
+                //{
+                //    settingsButtonsInfo[i].SettingsButton.gameObject.SetActive(false);
+                //}
             }
             
             isActive = false;

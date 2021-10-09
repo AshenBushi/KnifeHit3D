@@ -1,7 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
 using System.Collections.Generic;
-using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -46,9 +44,7 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             if ((_currentPage + _fastScrollIndex) >= 0 && (_currentPage + _fastScrollIndex) < _menuItems.Length)
             {
-                _menuItems[_currentPage].gameObject.SetActive(false);
                 _currentPage += _fastScrollIndex;
-                _menuItems[_currentPage].gameObject.SetActive(true);
             }
         }
         else
@@ -57,14 +53,10 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
             for (var i = 0; i < _menuItemTransforms.Count; i++)
             {
-                if (!(Mathf.Abs(_menuItemTransforms[i].position.x) < currentX))
-                {
-                    _menuItems[i].gameObject.SetActive(false);
-                    continue;
-                }
+                if (!(Mathf.Abs(_menuItemTransforms[i].position.x) < currentX)) continue;
+
                 currentX = Mathf.Abs(_menuItemTransforms[i].position.x);
                 _currentPage = i;
-                _menuItems[i].gameObject.SetActive(true);
             }
         }
 

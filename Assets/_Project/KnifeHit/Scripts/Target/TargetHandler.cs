@@ -92,11 +92,11 @@ public class TargetHandler : Singleton<TargetHandler>
                     LevelManager.Instance.NextMarkLevel();
                     break;
                 case 1:
-                    MetricaManager.SendEvent("cube_lvl_start_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
+                    MetricaManager.SendEvent("cube_lvl_start_(" + DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + ")");
                     LevelManager.Instance.NextCubeLevel();
                     break;
                 case 2:
-                    MetricaManager.SendEvent("flat_lvl_complete_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
+                    MetricaManager.SendEvent("flat_lvl_complete_(" + DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + ")");
                     LevelManager.Instance.NextFlatLevel();
                     break;
             }

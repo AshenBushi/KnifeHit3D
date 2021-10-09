@@ -11,11 +11,16 @@ public class DailyGift : MonoBehaviour
     [SerializeField] private Sprite _picked;
     [SerializeField] private TMP_Text _buttonText;
 
+    private DailyGiftArrows _dailyArrows;
+
+    public DailyGiftArrows DailyArrows { get => _dailyArrows; set => _dailyArrows = value; }
+
     public event UnityAction<bool, int> IsGotReward;
 
     public void Unlock()
     {
         _button.interactable = true;
+        _dailyArrows.SetPosition(transform.GetChild(1).position.y - 40f);
     }
 
     public void Pick()
@@ -24,12 +29,13 @@ public class DailyGift : MonoBehaviour
         _button.interactable = false;
         _buttonText.text = "";
         _button.GetComponent<Image>().sprite = _picked;
+        _dailyArrows.AllowMove();
     }
 
     public void Get(bool isMoney)
     {
         SoundManager.Instance.PlaySound(SoundName.ButtonClick);
-        
+
         if (isMoney)
         {
             IsGotReward?.Invoke(false, _moneyReward);
@@ -38,7 +44,7 @@ public class DailyGift : MonoBehaviour
         {
             IsGotReward?.Invoke(true, _knifeRewardIndex);
         }
-        
+
         Pick();
     }
 }
