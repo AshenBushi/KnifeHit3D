@@ -6,21 +6,17 @@ public class DailyGiftArrows : MonoBehaviour
     private float _yTarget;
     private bool _isFirstMoving = true;
 
-    //private void FixedUpdate()
-    //{
-    //    var yPos = Mathf.Lerp(transform.position.y, _yTarget, 5.5f * Time.fixedDeltaTime);
-    //    transform.position = new Vector3(transform.position.x, yPos, transform.position.z);
-    //}
-
     public void SetPosition(float yTarget)
     {
+        _yTarget = yTarget;
+
         if (!_isFirstMoving)
         {
-            transform.position = new Vector3(transform.position.x, yTarget, transform.position.z);
+            transform.position = new Vector3(transform.position.x, _yTarget, transform.position.z);
             return;
         }
 
-        transform.DOMoveY(yTarget, 0.7f).OnComplete(DisallowMove);
+        transform.DOMoveY(yTarget, 0.7f).SetLink(gameObject);
     }
 
     public void AllowMove()

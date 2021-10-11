@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class DailyGiftScreen : UIScreen
 {
@@ -24,6 +22,11 @@ public class DailyGiftScreen : UIScreen
             gift.IsGotReward += GotReward;
             gift.DailyArrows = _dailyArrows;
         }
+
+        if (DataManager.Instance.GameData.DailyGiftsData.PickedGifts > 0)
+            _gifts[DataManager.Instance.GameData.DailyGiftsData.PickedGifts - 1].SetPositionArrows(false);
+        else
+            _gifts[0].SetPositionArrows(false);
     }
 
     private void OnDisable()
@@ -77,9 +80,9 @@ public class DailyGiftScreen : UIScreen
             Player.Instance.DepositMoney(value);
         }
 
+        _gifts[DataManager.Instance.GameData.DailyGiftsData.PickedGifts].SetPositionArrows(true);
         DataManager.Instance.GameData.DailyGiftsData.PickedGifts++;
         DataManager.Instance.Save();
-
         if (DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts == DataManager.Instance.GameData.DailyGiftsData.PickedGifts)
             _startScreen.DisableGiftNotification();
         CheckGiftsState();

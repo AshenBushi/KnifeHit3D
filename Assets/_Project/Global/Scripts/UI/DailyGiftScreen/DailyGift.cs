@@ -20,7 +20,6 @@ public class DailyGift : MonoBehaviour
     public void Unlock()
     {
         _button.interactable = true;
-        _dailyArrows.SetPosition(transform.GetChild(1).position.y - 40f);
     }
 
     public void Pick()
@@ -29,7 +28,6 @@ public class DailyGift : MonoBehaviour
         _button.interactable = false;
         _buttonText.text = "";
         _button.GetComponent<Image>().sprite = _picked;
-        _dailyArrows.AllowMove();
     }
 
     public void Get(bool isMoney)
@@ -46,5 +44,19 @@ public class DailyGift : MonoBehaviour
         }
 
         Pick();
+    }
+
+    public void SetPositionArrows(bool isEffectMoving)
+    {
+        if (isEffectMoving)
+        {
+            _dailyArrows.AllowMove();
+            _dailyArrows.SetPosition(transform.GetChild(1).position.y - 40f);
+        }
+        else
+        {
+            _dailyArrows.DisallowMove();
+            _dailyArrows.SetPosition(transform.GetChild(1).position.y - 40f);
+        }
     }
 }
