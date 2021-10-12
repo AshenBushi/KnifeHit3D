@@ -54,32 +54,6 @@ public class SessionHandler : Singleton<SessionHandler>
         IsSessionStarted?.Invoke();
     }
 
-    private void OnScreenDisabled(bool isAdShowed)
-    {
-        DataManager.Instance.GameData.CanShowStartAd = isAdShowed;
-
-        if (!isAdShowed)
-        {
-            EndSession();
-            return;
-        }
-
-        StartCoroutine(TryToShowAdRestart());
-    }
-
-    private IEnumerator TryToShowAdRestart()
-    {
-        if (DataManager.Instance.GameData.CanShowStartAd)
-        {
-            if (AdManager.Instance.ShowInterstitial())
-            {
-                yield return new WaitUntil(() => AdManager.Instance.IsInterstitialShowed);
-            }
-        }
-
-        RestartSession();
-    }
-
     public void CompleteLevel()
     {
         _winScreen.Win();
@@ -114,5 +88,31 @@ public class SessionHandler : Singleton<SessionHandler>
         PlayerInput.Instance.DisallowTap();
         _startScreen.Enable();
         IsSessionRestarted?.Invoke();
+    }
+
+    private void OnScreenDisabled(bool isAdShowed)
+    {
+        DataManager.Instance.GameData.CanShowStartAd = isAdShowed;
+
+        if (!isAdShowed)
+        {
+            EndSession();
+            return;
+        }
+
+        StartCoroutine(TryToShowAdRestart());
+    }
+
+    private IEnumerator TryToShowAdRestart()
+    {
+        if (DataManager.Instance.GameData.CanShowStartAd)
+        {
+            if (AdManager.Instance.ShowInterstitial())
+            {
+                yield return new WaitUntil(() => AdManager.Instance.IsInterstitialShowed);
+            }
+        }
+
+        RestartSession();
     }
 }

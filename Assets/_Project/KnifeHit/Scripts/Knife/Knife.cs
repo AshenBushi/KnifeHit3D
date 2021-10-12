@@ -53,6 +53,21 @@ public class Knife : MonoBehaviour
         }
     }
 
+    public void MakeDefaultObstacle(Transform parent)
+    {
+        gameObject.layer = LayerMask.NameToLayer("Obstacle");
+        _rigidbody.isKinematic = true;
+        transform.SetParent(parent);
+        transform.localRotation = Quaternion.Euler(_obstacleRotation);
+    }
+
+    public void Throw()
+    {
+        SoundManager.Instance.PlaySound(SoundName.KnifeThrow);
+        _rigidbody.isKinematic = false;
+        _rigidbody.AddForce(Vector3.forward * ThrowForce, ForceMode.Impulse);
+    }
+
     private void MakeBounced(Vector3 position)
     {
         gameObject.layer = LayerMask.NameToLayer("Bounced");
@@ -81,20 +96,5 @@ public class Knife : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Obstacle");
         _rigidbody.isKinematic = true;
         transform.SetParent(parent);
-    }
-    
-    public void MakeDefaultObstacle(Transform parent)
-    {
-        gameObject.layer = LayerMask.NameToLayer("Obstacle");
-        _rigidbody.isKinematic = true;
-        transform.SetParent(parent);
-        transform.localRotation = Quaternion.Euler(_obstacleRotation);
-    }
-    
-    public void Throw()
-    {
-        SoundManager.Instance.PlaySound(SoundName.KnifeThrow);
-        _rigidbody.isKinematic = false;
-        _rigidbody.AddForce(Vector3.forward * ThrowForce, ForceMode.Impulse);
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Random = UnityEngine.Random;
 
 public class LotteryRewarder : MonoBehaviour
 {
@@ -53,6 +51,6 @@ public class LotteryRewarder : MonoBehaviour
         
         DataManager.Instance.Save();
         SessionHandler.Instance.AllowPlayerLose();
-        SessionHandler.Instance.RestartSession();
+        SessionHandler.Instance.EndSession();
     }
 }

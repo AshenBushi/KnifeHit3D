@@ -16,35 +16,16 @@ public class LotteryHandler : Singleton<LotteryHandler>
 
     private void OnDisable()
     {
-        if(_lottery is null) return;
+        if (_lottery is null) return;
         _lottery.IsRewardTook -= OnRewardTook;
     }
 
-    private void OnRewardTook(RewardName reward)
-    {
-        Rewards.Add(reward);
-
-        if (reward == RewardName.Death)
-        {
-            PlayerInput.Instance.DisallowTap();
-        }
-        
-        if (Rewards.Count >= _maxRewardCount)
-        {
-            EndLottery();
-        }
-    }
-    
-    private void EndLottery()
-    {
-        _lotteryScreen.Enable();
-    }
-    
     public void StartLottery()
     {
         _lottery = _lotterySpawner.SpawnLottery();
         _lottery.IsRewardTook += OnRewardTook;
-        
+
+        PlayerInput.Instance.OnClick();
         KnifeHandler.Instance.SetKnifeAmount(_lottery.HitToBreak);
         PlayerInput.Instance.AllowTap();
         _hitScoreDisplayer.SpawnHitScores(_lottery.HitToBreak);
@@ -64,5 +45,25 @@ public class LotteryHandler : Singleton<LotteryHandler>
     {
         if (_lottery != null)
             Destroy(_lottery.gameObject);
+    }
+
+    private void OnRewardTook(RewardName reward)
+    {
+        Rewards.Add(reward);
+
+        if (reward == RewardName.Death)
+        {
+            PlayerInput.Instance.DisallowTap();
+        }
+
+        if (Rewards.Count >= _maxRewardCount)
+        {
+            EndLottery();
+        }
+    }
+
+    private void EndLottery()
+    {
+        _lotteryScreen.Enable();
     }
 }

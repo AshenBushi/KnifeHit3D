@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class LotteryScreen : UIScreen
 {
@@ -13,6 +15,17 @@ public class LotteryScreen : UIScreen
     private void Awake()
     {
         CanvasGroup = GetComponent<CanvasGroup>();
+    }
+
+    public override void Enable()
+    {
+        base.Enable();
+        ShowRewards();
+    }
+
+    public void Collect()
+    {
+        _lotteryRewarder.SendRewards(Rewards);
     }
 
     private void ShowRewards()
@@ -31,17 +44,8 @@ public class LotteryScreen : UIScreen
                 RewardName.Death => "",
                 _ => throw new ArgumentOutOfRangeException()
             };
-        }
-    }
-    
-    public override void Enable()
-    {
-        base.Enable();
-        ShowRewards();
-    }
 
-    public void Collect()
-    {
-        _lotteryRewarder.SendRewards(Rewards);
+            _rewardsTexts[i].GetComponentInParent<Image>().DOFade(1, 0.1f);
+        }
     }
 }
