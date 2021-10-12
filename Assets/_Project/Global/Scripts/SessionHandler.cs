@@ -8,6 +8,7 @@ public class SessionHandler : Singleton<SessionHandler>
     [Header("Screens")]
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private LoseScreen _loseScreen;
+    [SerializeField] private ContinueScreen _continueScreen;
     [SerializeField] private WinScreen _winScreen;
 
     private bool _isPlayerLose;
@@ -55,14 +56,14 @@ public class SessionHandler : Singleton<SessionHandler>
 
     private void OnScreenDisabled(bool isAdShowed)
     {
+        DataManager.Instance.GameData.CanShowStartAd = isAdShowed;
+
         if (!isAdShowed)
         {
-            DataManager.Instance.GameData.CanShowStartAd = isAdShowed;
             EndSession();
             return;
         }
 
-        DataManager.Instance.GameData.CanShowStartAd = isAdShowed;
         StartCoroutine(TryToShowAdRestart());
     }
 
@@ -93,7 +94,7 @@ public class SessionHandler : Singleton<SessionHandler>
 
     public void FailLevel()
     {
-        _loseScreen.Lose();
+        _continueScreen.Enable();
         _isPlayerLose = true;
     }
 

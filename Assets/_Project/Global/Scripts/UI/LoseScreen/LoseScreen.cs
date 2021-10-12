@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
+
 public class LoseScreen : UIScreen
 {
     [SerializeField] private GameObject _continue;
-    [SerializeField] private GameObject _noThanks;
 
     public event UnityAction<bool> IsScreenDisabled;
 
@@ -17,32 +12,14 @@ public class LoseScreen : UIScreen
         CanvasGroup = GetComponent<CanvasGroup>();
     }
 
-    private IEnumerator LoseAnimation()
+    public override void Disable()
     {
-        Enable();
-        
-        _noThanks.SetActive(false);
-        
-        SoundManager.Instance.PlaySound(SoundName.Lose);
-
-        yield return new WaitForSeconds(1f);
-        
-        _noThanks.SetActive(true);
-    }
-
-    private void EndGame()
-    {
-        Disable();
+        base.Disable();
         IsScreenDisabled?.Invoke(false);
     }
 
     public void Lose()
     {
-        StartCoroutine(LoseAnimation());
-    }
-
-    public void SkipAd()
-    {
-        EndGame();
+        Enable();
     }
 }

@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class SecondLife : AdButton
 {
-    [SerializeField] private LoseScreen _loseScreen;
+    [SerializeField] private ContinueScreen _continueScreen;
 
     protected override void HandleUserEarnReward(object sender, Reward e)
     {
-        _loseScreen.Disable();
+        _continueScreen.Disable();
         KnifeHandler.Instance.SecondLife();
         
         base.HandleUserEarnReward(sender, e);
