@@ -8,6 +8,7 @@ public class ShopNavigation : Singleton<ShopNavigation>
 
     public void SelectShopSection(NavigationButton button)
     {
+        button.DisableNotification();
         _shop.EnableShopSection(button.Index);
 
         for (var i = 0; i < _buttons.Count; i++)
@@ -23,6 +24,19 @@ public class ShopNavigation : Singleton<ShopNavigation>
 
     public void SelectShopSectionOnFirstOpened()
     {
-        SelectShopSection(_buttons[0]);
+        SelectShopSection(_buttons[1]);
+    }
+
+    public void EnableNavigationNotification(int indexKnife)
+    {
+        for (int i = 0; i < _buttons.Count; i++)
+        {
+            if (_buttons[i].Index == indexKnife)
+            {
+                _buttons[i].EnableNotification();
+                PlayerPrefs.DeleteKey("ShopNavigationNotification");
+                break;
+            }
+        }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Events;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
 
 
 public class RewardHandler : Singleton<RewardHandler>
@@ -15,10 +12,17 @@ public class RewardHandler : Singleton<RewardHandler>
             if (DataManager.Instance.GameData.ShopData.OpenedKnives.Contains(i)) continue;
             KnifeStorage.Instance.AddKnife(i);
             _startScreen.EnableShopNotification();
+
+            if (startIndex >= 18 && endIndex <= 35)
+                PlayerPrefs.SetInt("ShopNavigationNotification", 0);
+            else if (startIndex >= 0 && endIndex <= 17)
+                PlayerPrefs.SetInt("ShopNavigationNotification", 1);
+            else
+                PlayerPrefs.SetInt("ShopNavigationNotification", 2);
             break;
         }
     }
-    
+
     public void GiveExperienceReward()
     {
         GiveFirstKnifeInRange(18, 35);

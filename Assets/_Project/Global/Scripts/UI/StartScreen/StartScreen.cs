@@ -23,7 +23,7 @@ public class StartScreen : UIScreen
     private void OnEnable()
     {
         CheckNotificationStates();
-        
+
     }
 
     private void CheckNotificationStates()
@@ -45,13 +45,11 @@ public class StartScreen : UIScreen
     public void EnableGiftNotification()
     {
         _giftNotification.SetActive(true);
-        //_settingsNotification.SetActive(true);
     }
 
     public void EnableShopNotification()
     {
         _shopNotification.SetActive(true);
-        //_settingsNotification.SetActive(true);
         PlayerPrefs.SetInt("ShopNotification", 1);
     }
 
@@ -68,6 +66,6 @@ public class StartScreen : UIScreen
 
     public void DisablePanelNotification()
     {
-        //_settingsNotification.SetActive(false);
+
     }
 }

@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class NavigationButton : MonoBehaviour
 {
+    [SerializeField] private GameObject _iconNotification;
     [SerializeField] private Sprite _enableSprite;
     [SerializeField] private Sprite _disableSprite;
     [SerializeField] private int _index;
@@ -42,9 +41,19 @@ public class NavigationButton : MonoBehaviour
     {
         _image.sprite = _enableSprite;
     }
-    
+
     public void SetDisableSprite()
     {
         _image.sprite = _disableSprite;
+    }
+
+    public void EnableNotification()
+    {
+        _iconNotification.SetActive(true);
+    }
+
+    public void DisableNotification()
+    {
+        _iconNotification.SetActive(false);
     }
 }
