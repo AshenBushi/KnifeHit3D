@@ -54,6 +54,7 @@ public class HandlePages : MonoBehaviour
         for (int i = 0; i < _countMods; i++)
         {
             _mods[i] = Instantiate(_templatePage, _contentRect.transform, false);
+            _mods[i].ActivationMovie(i + 1);
 
             if (i <= GamemodManager.Instance.KnifeHitModsCount)
             {

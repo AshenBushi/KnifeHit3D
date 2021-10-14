@@ -5,10 +5,13 @@ using UnityEngine.UI;
 public class Page : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _textNumber;
+    [SerializeField] private Animator _animator;
 
     private Button _buttonContinue;
+
     private int _knifeMod;
     private int _gameMod;
+    private int _currentMovie;
 
     public int KnifeMod => _knifeMod;
     public int GameMod => _gameMod;
@@ -26,11 +29,19 @@ public class Page : MonoBehaviour
     public void Activation()
     {
         gameObject.SetActive(true);
+        _animator.SetTrigger(_currentMovie.ToString());
+    }
+
+    public void ActivationMovie(int currentMovie)
+    {
+        _currentMovie = currentMovie;
+        _animator.SetTrigger(_currentMovie.ToString());
     }
 
     public void Deactivation()
     {
         gameObject.SetActive(false);
+        _animator.ResetTrigger(_currentMovie.ToString());
     }
 
     public void SetKnifeMod(int knifeMod)
