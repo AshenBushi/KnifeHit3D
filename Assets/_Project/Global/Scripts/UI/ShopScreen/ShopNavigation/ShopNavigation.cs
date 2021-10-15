@@ -24,7 +24,7 @@ public class ShopNavigation : Singleton<ShopNavigation>
 
     public void SelectShopSectionOnFirstOpened()
     {
-        SelectShopSection(_buttons[1]);
+        SelectShopSection(_buttons[2]);
     }
 
     public void EnableNavigationNotification(int indexKnife)
