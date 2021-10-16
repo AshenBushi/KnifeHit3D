@@ -23,7 +23,6 @@ public class ShopItem : MonoBehaviour
     private void Awake()
     {
         _button = GetComponent<Button>();
-        _selectIndicator.GetComponentInChildren<Image>();
         Instantiate(KnifeStorage.Instance.KnifePreviews[Index], _container);
         if (!_isUnlock)
             _container.gameObject.SetActive(false);
@@ -44,9 +43,9 @@ public class ShopItem : MonoBehaviour
     public void Unlock()
     {
         _isUnlock = true;
-        _container.gameObject.SetActive(true);
         _lockIndicator.gameObject.SetActive(false);
         _unlockIndicator.gameObject.SetActive(true);
+        _container.gameObject.SetActive(true);
     }
 
     public void EnableIndicator()

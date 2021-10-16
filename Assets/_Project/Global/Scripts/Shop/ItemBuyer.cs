@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,7 @@ public class ItemBuyer : MonoBehaviour
     [SerializeField] private int _price;
 
     private Button _button;
-    private List<ShopItem> _currentItems;
+    private List<ShopItem> _currentLockedItems;
     private int _itemIndex;
 
     private void Awake()
@@ -47,24 +46,26 @@ public class ItemBuyer : MonoBehaviour
     {
         var iterations = 0;
 
-        _shop.CurrentItem.DisableIndicator();
-        _button.interactable = false;
-        _itemIndex = Random.Range(0, _currentItems.Count);
+        if (_shop.CurrentItem != null)
+            _shop.CurrentItem.DisableIndicator();
 
-        if (_currentItems.Count > 1)
+        _button.interactable = false;
+        _itemIndex = Random.Range(0, _currentLockedItems.Count);
+
+        if (_currentLockedItems.Count > 1)
         {
             while (iterations != _iterationsCount)
             {
                 SoundManager.Instance.PlaySound(SoundName.RandomBuy);
-                _currentItems[_itemIndex].EnableIndicator();
+                _currentLockedItems[_itemIndex].EnableIndicator();
                 yield return new WaitForSeconds(_animationDuration / _iterationsCount);
-                _currentItems[_itemIndex].DisableIndicator();
+                _currentLockedItems[_itemIndex].DisableIndicator();
 
-                var itemIndex = Random.Range(0, _currentItems.Count);
+                var itemIndex = Random.Range(0, _currentLockedItems.Count);
 
                 while (itemIndex == _itemIndex)
                 {
-                    itemIndex = Random.Range(0, _currentItems.Count);
+                    itemIndex = Random.Range(0, _currentLockedItems.Count);
                 }
 
                 _itemIndex = itemIndex;
@@ -72,23 +73,23 @@ public class ItemBuyer : MonoBehaviour
             }
         }
 
-        KnifeStorage.Instance.AddKnife(_currentItems[_itemIndex].Index);
+        KnifeStorage.Instance.AddKnife(_currentLockedItems[_itemIndex].Index);
         SoundManager.Instance.PlaySound(SoundName.RandomBuy);
-        _currentItems[_itemIndex].Unlock();
-        _currentItems[_itemIndex].SelectItem();
-        _currentItems.Remove(_currentItems[_itemIndex]);
+        _currentLockedItems[_itemIndex].Unlock();
+        _currentLockedItems[_itemIndex].SelectItem();
+        _currentLockedItems.Remove(_currentLockedItems[_itemIndex]);
         CheckPurchaseOpportunity();
     }
 
     private void FindLockedItemsOnPage()
     {
-        _currentItems = _pages[_menuSwiper.CurrentPage].GetComponentsInChildren<ShopItem>()
+        _currentLockedItems = _pages[_menuSwiper.CurrentPage].GetComponentsInChildren<ShopItem>()
             .Where(item => !item.IsUnlock).ToList();
     }
-    
+
     private void CheckPurchaseOpportunity()
     {
-        if (Player.Instance.Money >= _price && _currentItems.Count > 0)
+        if (Player.Instance.Money >= _price && _currentLockedItems.Count > 0)
         {
             _button.interactable = true;
         }
