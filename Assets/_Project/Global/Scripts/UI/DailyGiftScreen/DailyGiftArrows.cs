@@ -3,20 +3,23 @@ using UnityEngine;
 
 public class DailyGiftArrows : MonoBehaviour
 {
+    private RectTransform _rectTransform;
     private float _yTarget;
     private bool _isFirstMoving = true;
 
     public void SetPosition(float yTarget)
     {
+        _rectTransform = GetComponent<RectTransform>();
         _yTarget = yTarget;
 
         if (!_isFirstMoving)
         {
-            transform.position = new Vector3(transform.position.x, _yTarget, transform.position.z);
+            _rectTransform.anchoredPosition = new Vector3(_rectTransform.anchoredPosition.x, _yTarget);
             return;
         }
 
-        transform.DOMoveY(yTarget, 0.7f).SetLink(gameObject);
+        DailyGiftScreen.IsScrollDisable?.Invoke();
+        _rectTransform.DOAnchorPosY(yTarget, 0.8f).SetLink(gameObject).OnComplete(DailyGiftScreen.IsScrollEnable.Invoke);
     }
 
     public void AllowMove()
@@ -27,5 +30,10 @@ public class DailyGiftArrows : MonoBehaviour
     public void DisallowMove()
     {
         _isFirstMoving = false;
+    }
+
+    public void SetParent(Transform parent)
+    {
+        transform.parent = parent;
     }
 }

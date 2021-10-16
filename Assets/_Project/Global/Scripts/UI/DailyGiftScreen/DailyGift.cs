@@ -49,14 +49,11 @@ public class DailyGift : MonoBehaviour
     public void SetPositionArrows(bool isEffectMoving)
     {
         if (isEffectMoving)
-        {
             _dailyArrows.AllowMove();
-            _dailyArrows.SetPosition(transform.GetChild(1).position.y - 40f);
-        }
         else
-        {
             _dailyArrows.DisallowMove();
-            _dailyArrows.SetPosition(transform.GetChild(1).position.y - 40f);
-        }
+
+        _dailyArrows.SetParent(_button.gameObject.transform.parent);
+        _dailyArrows.SetPosition(-(_button.gameObject.transform.parent.GetComponent<RectTransform>().rect.height / 2));
     }
 }
