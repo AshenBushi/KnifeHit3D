@@ -65,5 +65,6 @@ public class LotteryHandler : Singleton<LotteryHandler>
     private void EndLottery()
     {
         _lotteryScreen.Enable();
+        _lotterySpawner.DeactivationBackground();
     }
 }
