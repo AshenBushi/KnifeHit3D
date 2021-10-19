@@ -5,12 +5,10 @@ using UnityEngine.Events;
 
 public class WinScreen : UIScreen
 {
-    [SerializeField] private GameObject _cup;
     [SerializeField] private TMP_Text _rewardText;
-    [SerializeField] private DoubleReward _doubleReward;
+    //[SerializeField] private DoubleReward _doubleReward;
 
     private float _multiplierCutscene;
-    private bool _isShowedDoubleReward = false;
 
     private int TargetType => TargetHandler.Instance.CurrentSpawnerIndex;
 
@@ -21,28 +19,31 @@ public class WinScreen : UIScreen
         CanvasGroup = GetComponent<CanvasGroup>();
     }
 
-    private void OnEnable()
-    {
-        _doubleReward.IsWatchedReward += OnWatchedReward;
-    }
+    //private void OnEnable()
+    //{
+    //    _doubleReward.IsWatchedReward += OnWatchedReward;
+    //}
 
-    private void OnDisable()
-    {
-        _doubleReward.IsWatchedReward -= OnWatchedReward;
-    }
+    //private void OnDisable()
+    //{
+    //    _doubleReward.IsWatchedReward -= OnWatchedReward;
+    //}
 
-    private void OnWatchedReward()
+    private void OnWatchedReward(int coefficient)
     {
-        _isShowedDoubleReward = true;
+        Player.Instance.WithdrawMoney(Convert.ToInt32(_rewardText.text));
+        int reward = Convert.ToInt32(_rewardText.text);
+        reward *= coefficient;
+        _rewardText.text = reward.ToString();
+        Player.Instance.DepositMoney(Convert.ToInt32(_rewardText.text));
     }
 
     public override void Enable()
     {
         base.Enable();
         SoundManager.Instance.PlaySound(SoundName.Win);
-        _cup.SetActive(true);
 
-        _rewardText.text = GamemodManager.Instance.CurrentMod == 0
+        _rewardText.text = GamemodManager.Instance.CurrentMod == Gamemod.KnifeHit
             ? TargetType switch
             {
                 0 => LevelManager.Instance.CurrentMarkLevel.Reward.ToString(),
@@ -75,7 +76,6 @@ public class WinScreen : UIScreen
     public override void Disable()
     {
         base.Disable();
-        _cup.SetActive(false);
         IsScreenDisabled?.Invoke(false);
     }
 
