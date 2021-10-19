@@ -7,7 +7,7 @@ public class HandlePages : MonoBehaviour
     [SerializeField] private RectTransform _contentRect;
     [SerializeField] private Page _templatePage;
     [SerializeField] private int _countMods;
-    [SerializeField] private float _offsetX = 1500f;
+    [SerializeField] private float _offsetX = 1200f;
 
     private Page[] _mods;
     private List<Vector2> _modsPos = new List<Vector2>();
@@ -43,7 +43,7 @@ public class HandlePages : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        _contentRect.DOAnchorPosX(_modsPos[CurrentIndexPage].x, 0.2f);
+        _contentRect.DOAnchorPosX(_modsPos[CurrentIndexPage].x, 1.2f).SetEase(Ease.OutBack);
     }
 
     public void Init()
