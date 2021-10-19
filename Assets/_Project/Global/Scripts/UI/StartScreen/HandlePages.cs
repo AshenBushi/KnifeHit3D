@@ -43,7 +43,7 @@ public class HandlePages : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        _contentRect.DOAnchorPosX(_modsPos[CurrentIndexPage].x, 0.4f);
+        _contentRect.DOAnchorPosX(_modsPos[CurrentIndexPage].x, 0.2f);
     }
 
     public void Init()
