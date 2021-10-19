@@ -47,6 +47,12 @@ public class LotteryHandler : Singleton<LotteryHandler>
             Destroy(_lottery.gameObject);
     }
 
+    public void EndLottery()
+    {
+        _lotteryScreen.Enable();
+        _lotterySpawner.DeactivationBackground();
+    }
+
     private void OnRewardTook(RewardName reward)
     {
         Rewards.Add(reward);
@@ -60,11 +66,5 @@ public class LotteryHandler : Singleton<LotteryHandler>
         {
             EndLottery();
         }
-    }
-
-    private void EndLottery()
-    {
-        _lotteryScreen.Enable();
-        _lotterySpawner.DeactivationBackground();
     }
 }
