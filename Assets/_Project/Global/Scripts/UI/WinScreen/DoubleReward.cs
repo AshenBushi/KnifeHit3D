@@ -1,10 +1,10 @@
+using DG.Tweening;
 using GoogleMobileAds.Api;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
-using DG.Tweening;
-using System.Collections.Generic;
 
 public class DoubleReward : AdButton
 {
@@ -13,8 +13,6 @@ public class DoubleReward : AdButton
     [SerializeField] private GameObject _arrow;
     [SerializeField] private List<RotateDefinition> _definitions;
 
-    //private float[] _durations = { 65f, 55f, 75f };
-    //private int _chanceGiveX5;
     private int _coefficient = 1;
 
     private int TargetType => TargetHandler.Instance.CurrentSpawnerIndex;
@@ -24,10 +22,6 @@ public class DoubleReward : AdButton
     private void OnEnable()
     {
         RotateCircle();
-        //_chanceGiveX5 = Random.Range(0, 100);
-
-        //_coefficient = _chanceGiveX5 < 20 ? 4 : 1;
-        //_text.text = "Watch X" + (1 + _coefficient).ToString();
     }
 
     protected override void HandleFailedToShow(object sender, AdErrorEventArgs e)
@@ -62,15 +56,11 @@ public class DoubleReward : AdButton
 
     private void RotateCircle()
     {
-        //var duration = Random.Range(0, _durations.Length);
-
         var currentDefinition = _definitions[Random.Range(0, _definitions.Count)];
         var rotateEuler = new Vector3(0f, 0f, currentDefinition.Angle);
 
         _circleCoefficients.transform.DORotate(_circleCoefficients.transform.eulerAngles + rotateEuler, currentDefinition.Duration, RotateMode.FastBeyond360)
             .SetEase(currentDefinition.EaseCurve).OnComplete(RotateCircle);
-
-        //_circleCoefficients.transform.DORotate(_circleCoefficients.transform.eulerAngles + new Vector3(0, 0, 360f), duration, RotateMode.FastBeyond360).SetDelay(0.5f).SetEase(Ease.OutCubic).OnComplete(RotateCircle);
     }
 
     public void CheckArrowCoefficient()
@@ -84,18 +74,12 @@ public class DoubleReward : AdButton
             var obj = hit.collider.gameObject.GetComponent<WinLotterySection>();
 
             if (obj != null)
-                switch (obj.Type)
+                _coefficient = obj.Type switch
                 {
-                    case WinLotterySectionType.x2:
-                        _coefficient = 2;
-                        break;
-                    case WinLotterySectionType.x3:
-                        _coefficient = 3;
-                        break;
-                    default:
-                        _coefficient = 1;
-                        break;
-                }
+                    WinLotterySectionType.x2 => 2,
+                    WinLotterySectionType.x3 => 3,
+                    _ => 1,
+                };
         }
 
         Debug.Log(_coefficient);

@@ -6,7 +6,6 @@ using UnityEngine.Events;
 public class WinScreen : UIScreen
 {
     [SerializeField] private TMP_Text _rewardText;
-    //[SerializeField] private DoubleReward _doubleReward;
 
     private float _multiplierCutscene;
 
@@ -18,16 +17,6 @@ public class WinScreen : UIScreen
     {
         CanvasGroup = GetComponent<CanvasGroup>();
     }
-
-    //private void OnEnable()
-    //{
-    //    _doubleReward.IsWatchedReward += OnWatchedReward;
-    //}
-
-    //private void OnDisable()
-    //{
-    //    _doubleReward.IsWatchedReward -= OnWatchedReward;
-    //}
 
     private void OnWatchedReward(int coefficient)
     {
