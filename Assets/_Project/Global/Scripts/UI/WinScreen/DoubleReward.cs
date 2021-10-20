@@ -17,8 +17,6 @@ public class DoubleReward : AdButton
 
     private int TargetType => TargetHandler.Instance.CurrentSpawnerIndex;
 
-    public event UnityAction<int> IsWatchedReward;
-
     private void OnEnable()
     {
         RotateCircle();
@@ -65,11 +63,11 @@ public class DoubleReward : AdButton
 
     public void CheckArrowCoefficient()
     {
-        var pos = new Vector3(_circleCoefficients.transform.position.x, _circleCoefficients.transform.position.y + 70f, _circleCoefficients.transform.position.z);
-        Ray ray = new Ray(pos, _circleCoefficients.transform.forward * 100);
+        var pos = new Vector3(_circleCoefficients.transform.position.x, _arrow.transform.position.y, _circleCoefficients.transform.position.z);
+        Ray ray = new Ray(pos, _arrow.transform.forward * 150);
 
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 150))
+        if (Physics.Raycast(ray, out hit, 200))
         {
             var obj = hit.collider.gameObject.GetComponent<WinLotterySection>();
 
@@ -82,6 +80,6 @@ public class DoubleReward : AdButton
                 };
         }
 
-        Debug.Log(_coefficient);
+        WinScreen.Instance.OnWatchedReward(_coefficient);
     }
 }

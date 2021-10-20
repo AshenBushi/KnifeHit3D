@@ -11,20 +11,15 @@ public class WinScreen : UIScreen
 
     private int TargetType => TargetHandler.Instance.CurrentSpawnerIndex;
 
+    public static WinScreen Instance;
+
     public event UnityAction<bool> IsScreenDisabled;
 
     private void Awake()
     {
-        CanvasGroup = GetComponent<CanvasGroup>();
-    }
+        Instance = this;
 
-    private void OnWatchedReward(int coefficient)
-    {
-        Player.Instance.WithdrawMoney(Convert.ToInt32(_rewardText.text));
-        int reward = Convert.ToInt32(_rewardText.text);
-        reward *= coefficient;
-        _rewardText.text = reward.ToString();
-        Player.Instance.DepositMoney(Convert.ToInt32(_rewardText.text));
+        CanvasGroup = GetComponent<CanvasGroup>();
     }
 
     public override void Enable()
@@ -66,6 +61,14 @@ public class WinScreen : UIScreen
     {
         base.Disable();
         IsScreenDisabled?.Invoke(false);
+    }
+
+    public void OnWatchedReward(int coefficient)
+    {
+        Player.Instance.WithdrawMoney(Convert.ToInt32(_rewardText.text));
+        int reward = Convert.ToInt32(_rewardText.text);
+        _rewardText.text = (reward * coefficient).ToString();
+        Player.Instance.DepositMoney(Convert.ToInt32(_rewardText.text));
     }
 
     public void Win()
