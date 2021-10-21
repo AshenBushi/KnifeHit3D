@@ -54,6 +54,7 @@ public class DailyGift : MonoBehaviour
             _dailyArrows.DisallowMove();
 
         _dailyArrows.SetParent(_button.gameObject.transform.parent);
+        _dailyArrows.transform.SetAsFirstSibling();
         _dailyArrows.SetPosition(-(_button.gameObject.transform.parent.GetComponent<RectTransform>().rect.height / 2));
     }
 }
