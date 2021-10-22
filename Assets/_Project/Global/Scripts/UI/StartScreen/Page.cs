@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Page : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Page : MonoBehaviour
     [SerializeField] private Animator _animator;
 
     private Button _buttonContinue;
-
+    private CanvasGroup _canvasGroup;
     private int _knifeMod;
     private int _gameMod;
     private int _currentMovie;
@@ -16,9 +17,16 @@ public class Page : MonoBehaviour
     public int KnifeMod => _knifeMod;
     public int GameMod => _gameMod;
 
+    private void Awake()
+    {
+        _canvasGroup = GetComponent<CanvasGroup>();
+        _animator.playbackTime = 0f;
+    }
+
     private void OnEnable()
     {
-        SetButtonEvent();
+        _buttonContinue = GetComponentInChildren<Button>();
+        _buttonContinue.onClick.AddListener(ButtonClick);
     }
 
     private void OnDisable()
@@ -26,22 +34,27 @@ public class Page : MonoBehaviour
         _buttonContinue.onClick.RemoveListener(ButtonClick);
     }
 
-    public void Activation()
-    {
-        gameObject.SetActive(true);
-        _animator.SetTrigger(_currentMovie.ToString());
-    }
-
-    public void ActivationMovie(int currentMovie)
+    public void InitMovie(int currentMovie)
     {
         _currentMovie = currentMovie;
-        _animator.SetTrigger(_currentMovie.ToString());
+        _animator.SetBool(_currentMovie.ToString(), true);
+        _animator.playbackTime = 0f;
+    }
+
+    public void Activation()
+    {
+        _animator.playbackTime = 0f;
+        _canvasGroup.alpha = 1f;
+        _canvasGroup.interactable = true;
+        _canvasGroup.blocksRaycasts = true;
     }
 
     public void Deactivation()
     {
-        gameObject.SetActive(false);
-        _animator.ResetTrigger(_currentMovie.ToString());
+        _animator.playbackTime = 0f;
+        _canvasGroup.alpha = 0f;
+        _canvasGroup.interactable = false;
+        _canvasGroup.blocksRaycasts = false;
     }
 
     public void SetKnifeMod(int knifeMod)
@@ -63,12 +76,6 @@ public class Page : MonoBehaviour
                 SetTextNum(2);
                 break;
         }
-    }
-
-    public void SetButtonEvent()
-    {
-        _buttonContinue = GetComponentInChildren<Button>();
-        _buttonContinue.onClick.AddListener(ButtonClick);
     }
 
     private void ButtonClick()

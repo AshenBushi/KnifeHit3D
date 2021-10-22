@@ -179,7 +179,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 4adb67ae4e392f54897c50ac483821f2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 8558517658328642744}
   - component: {fileID: 8558517658328642747}
   - component: {fileID: 5052439880071809833}
+  - component: {fileID: 3715049136902978629}
   m_Layer: 5
   m_Name: Page
   m_TagString: Untagged
@@ -294,6 +295,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _textNumber: {fileID: 8558517658838696054}
   _animator: {fileID: 526379322449047079}
+--- !u!225 &3715049136902978629
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8558517658328642749}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8558517658838696040
 GameObject:
   m_ObjectHideFlags: 0
