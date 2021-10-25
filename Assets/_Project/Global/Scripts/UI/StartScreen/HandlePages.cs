@@ -12,7 +12,6 @@ public class HandlePages : MonoBehaviour
     private Page[] _mods;
     private List<Vector2> _modsPos = new List<Vector2>();
     private int _currentIndexPage;
-    private bool _isScrolled = false;
 
     public Page[] Mods => _mods;
 
@@ -41,6 +40,7 @@ public class HandlePages : MonoBehaviour
             }
         }
     }
+
     private void FixedUpdate()
     {
         _contentRect.DOAnchorPosX(_modsPos[CurrentIndexPage].x, 1.2f).SetEase(Ease.OutBack);

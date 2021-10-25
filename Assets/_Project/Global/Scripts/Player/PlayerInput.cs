@@ -1,5 +1,6 @@
 ﻿using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler, IPointerUpHandler
 {
@@ -30,6 +31,12 @@ public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler, IPointer
     {
         if (!_canTap) return;
 
+        if (!_isSessionStart)
+        {
+            IsSessionStart?.Invoke();
+            _isSessionStart = true;
+        }
+
         IsTapped?.Invoke();
     }
 
@@ -44,12 +51,14 @@ public class PlayerInput : Singleton<PlayerInput>, IPointerDownHandler, IPointer
         }
     }
 
-    public void AllowStartGame()
+    public void AllowUsing()
     {
-        if (!_canTap) return;
-        if (!_isSessionStart) return;
+        GetComponent<Image>().raycastTarget = true;
+    }
 
-        IsTapped?.Invoke();
+    public void DisallowUsing()
+    {
+        GetComponent<Image>().raycastTarget = false;
     }
 
     public void OnPointerUp(PointerEventData eventData)

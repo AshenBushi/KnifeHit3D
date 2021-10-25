@@ -83,6 +83,7 @@ public class SessionHandler : Singleton<SessionHandler>
 
     public void EndSession()
     {
+        PlayerInput.Instance.DisallowUsing();
         GamemodManager.Instance.EndSession();
         PlayerInput.Instance.Enable();
         PlayerInput.Instance.DisallowTap();

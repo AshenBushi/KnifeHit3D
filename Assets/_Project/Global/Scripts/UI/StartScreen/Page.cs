@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 
 public class Page : MonoBehaviour
 {
@@ -20,13 +19,14 @@ public class Page : MonoBehaviour
     private void Awake()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
-        _animator.playbackTime = 0f;
+        _buttonContinue = GetComponentInChildren<Button>();
     }
 
     private void OnEnable()
     {
-        _buttonContinue = GetComponentInChildren<Button>();
         _buttonContinue.onClick.AddListener(ButtonClick);
+
+        _animator.SetBool(_currentMovie.ToString(), true);
     }
 
     private void OnDisable()
@@ -43,7 +43,6 @@ public class Page : MonoBehaviour
 
     public void Activation()
     {
-        _animator.playbackTime = 0f;
         _canvasGroup.alpha = 1f;
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
@@ -80,6 +79,7 @@ public class Page : MonoBehaviour
 
     private void ButtonClick()
     {
+        PlayerInput.Instance.AllowUsing();
         PlayerInput.Instance.OnClick();
         GamemodManager.Instance.OnClick();
     }
