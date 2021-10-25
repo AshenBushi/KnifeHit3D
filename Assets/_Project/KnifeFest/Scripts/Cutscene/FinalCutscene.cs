@@ -51,6 +51,8 @@ namespace KnifeFest
                 {
                     _steps.Add(Instantiate(_template, new Vector3(_template.transform.position.x, _template.transform.position.y, _steps[i - 1].transform.position.z + 20f), Quaternion.Euler(0, 90, 0), transform));
                 }
+
+                _steps[i].Init();
             }
 
             _steps.Add(Instantiate(_templateStepEnd, new Vector3(_templateStepEnd.transform.position.x, _templateStepEnd.transform.position.y, _steps[_steps.Count - 1].transform.position.z + 20f), Quaternion.Euler(0, 90, 0), transform));
@@ -66,6 +68,11 @@ namespace KnifeFest
                 _steps[i].UpdatingTextsMultiplier();
                 _steps[i].gameObject.SetActive(true);
             }
+
+            for (int i = 0; i < _steps.Count; i++)
+            {
+                _steps[i].ChangeColorMark(i, _steps.Count);
+            }
         }
 
         private void StartCutscene()
@@ -76,13 +83,6 @@ namespace KnifeFest
 
             _pathFollower.PathCreator.bezierPath.AddSegmentToEnd(new Vector3(0f, 0f, _steps[_steps.Count - 1].transform.position.z - 5.5f));
             _pathFollower.PathCreator.EditorData.PathModifiedByUndo();
-
-            for (int i = 0; i < _steps.Count - 1; i++)
-            {
-                _steps[i].Wall.ChangeColor(false);
-            }
-
-            _steps[_steps.Count - 1].Wall.ChangeColor(true);
 
             StartCoroutine(ControlKnifeRoutine());
         }

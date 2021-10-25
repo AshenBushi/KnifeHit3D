@@ -84,7 +84,7 @@ namespace KnifeFest
 
                 if (!wallCutscene.IsEndWall)
                 {
-                    wallCutscene.Detonate();
+                    step.Detonate();
                     step.FadeTextObject();
                     OnAddedSpeed?.Invoke();
                 }
