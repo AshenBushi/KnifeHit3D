@@ -3,7 +3,6 @@ using GoogleMobileAds.Api;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class DoubleReward : AdButton
@@ -24,7 +23,6 @@ public class DoubleReward : AdButton
 
     protected override void HandleFailedToShow(object sender, AdErrorEventArgs e)
     {
-        MetricaManager.SendEvent("ev_rew_fail");
         base.HandleFailedToShow(sender, e);
     }
 
@@ -47,18 +45,8 @@ public class DoubleReward : AdButton
                     break;
             }
 
-        MetricaManager.SendEvent("ev_rew_show");
-
         base.HandleUserEarnReward(sender, e);
-    }
-
-    private void RotateCircle()
-    {
-        var currentDefinition = _definitions[Random.Range(0, _definitions.Count)];
-        var rotateEuler = new Vector3(0f, 0f, currentDefinition.Angle);
-
-        _circleCoefficients.transform.DORotate(_circleCoefficients.transform.eulerAngles + rotateEuler, currentDefinition.Duration, RotateMode.FastBeyond360)
-            .SetEase(currentDefinition.EaseCurve).OnComplete(RotateCircle);
+        Button.interactable = true;
     }
 
     public void CheckArrowCoefficient()
@@ -81,5 +69,14 @@ public class DoubleReward : AdButton
         }
 
         WinScreen.Instance.OnWatchedReward(_coefficient);
+    }
+
+    private void RotateCircle()
+    {
+        var currentDefinition = _definitions[Random.Range(0, _definitions.Count)];
+        var rotateEuler = new Vector3(0f, 0f, currentDefinition.Angle);
+
+        _circleCoefficients.transform.DORotate(_circleCoefficients.transform.eulerAngles + rotateEuler, currentDefinition.Duration, RotateMode.FastBeyond360)
+            .SetEase(currentDefinition.EaseCurve).OnComplete(RotateCircle);
     }
 }

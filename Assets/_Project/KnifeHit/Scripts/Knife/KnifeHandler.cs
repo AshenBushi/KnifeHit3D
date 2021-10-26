@@ -102,17 +102,35 @@ public class KnifeHandler : Singleton<KnifeHandler>
 
     private void FailLevel()
     {
-        switch (TargetHandler.Instance.CurrentSpawnerIndex)
+        if ((KnifeHitManager.Instance.CurrentKnifeHitMod % 3) <= 2)
         {
-            case 0:
-                MetricaManager.SendEvent("target_lvl_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
-                break;
-            case 1:
-                MetricaManager.SendEvent("cube_lvl_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + ")");
-                break;
-            case 2:
-                MetricaManager.SendEvent("flat_lvl_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + ")");
-                break;
+            switch (TargetHandler.Instance.CurrentSpawnerIndex)
+            {
+                case 0:
+                    MetricaManager.SendEvent("target_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
+                    break;
+                case 1:
+                    MetricaManager.SendEvent("cube_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + ")");
+                    break;
+                case 2:
+                    MetricaManager.SendEvent("disk_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + ")");
+                    break;
+            }
+        }
+        else
+        {
+            switch (TargetHandler.Instance.CurrentSpawnerIndex)
+            {
+                case 0:
+                    MetricaManager.SendEvent("target2_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
+                    break;
+                case 1:
+                    MetricaManager.SendEvent("cube2_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + ")");
+                    break;
+                case 2:
+                    MetricaManager.SendEvent("disk2_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + ")");
+                    break;
+            }
         }
 
         SessionHandler.Instance.FailLevel();

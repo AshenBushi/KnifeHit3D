@@ -24,10 +24,10 @@ public class UIController : MonoBehaviour
 
     [SerializeField] Text resultScoreText;
     [SerializeField] Text bestScoreText;
-    
+
     [SerializeField] GameObject winPanel;
     [SerializeField] Text levelText;
-    
+
     [SerializeField] Image reviveFillBar;
     [SerializeField] GameObject skipReviveButton;
     [SerializeField] private TMP_Text _level;
@@ -72,7 +72,7 @@ public class UIController : MonoBehaviour
     private void HideLevelProgress()
     {
         levelProgressCanvasGroup.DOFade(0, 0.3f);
-        
+
         _level.gameObject.SetActive(false);
     }
 
@@ -154,7 +154,9 @@ public class UIController : MonoBehaviour
 
             fillCoroutine = StartCoroutine(FillTextSmooth(GameController.Score, 1));
         }*/
-        
+
+
+        MetricaManager.SendEvent("tower_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentStackKnifeLevel + ")");
         SessionHandler.Instance.FailLevel();
         HideLevelProgress();
     }
@@ -166,14 +168,15 @@ public class UIController : MonoBehaviour
         winPanel.SetActive(true);
 
         levelText.text = "Level " + (GameController.CurrentLevelIndex + 1);*/
-        
+
+        MetricaManager.SendEvent("tower_com_(" + DataManager.Instance.GameData.ProgressData.CurrentStackKnifeLevel + ")");
         SessionHandler.Instance.CompleteLevel();
         HideLevelProgress();
     }
 
     private IEnumerator FillTextSmooth(int value, float time)
     {
-        for(float state = 0; state < 1; state += UnityEngine.Time.deltaTime / time)
+        for (float state = 0; state < 1; state += UnityEngine.Time.deltaTime / time)
         {
             resultScoreText.text = Mathf.RoundToInt(Mathf.Lerp(0, value, state)).ToString();
 
@@ -182,7 +185,7 @@ public class UIController : MonoBehaviour
 
         resultScoreText.text = value.ToString();
     }
-    
+
     private void OnGameStarted()
     {
         ShowLevelProgress();

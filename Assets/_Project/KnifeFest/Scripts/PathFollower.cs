@@ -89,10 +89,13 @@ namespace KnifeFest
                 if (_knife.KnifeWeight <= 0)
                 {
                     _canMove = false;
+
                     foreach (var wall in WallSpawner.Instance.Walls)
                     {
                         wall.AllowUsing();
                     }
+
+                    MetricaManager.SendEvent("arrow_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentKnifeFestLevel + ")");
                     SessionHandler.Instance.FailLevel();
                 }
 

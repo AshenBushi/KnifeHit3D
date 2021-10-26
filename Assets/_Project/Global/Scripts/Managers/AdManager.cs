@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using GoogleMobileAds.Api;
+﻿using GoogleMobileAds.Api;
 using GoogleMobileAds.Api.Mediation.AppLovin;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AdManager : Singleton<AdManager>
@@ -10,12 +10,12 @@ public class AdManager : Singleton<AdManager>
 
     public bool IsInterstitialShowed { get; private set; }
     public InterstitialAd Interstitial { get; private set; }
-    public RewardedAd RewardedAd{ get; private set; }
+    public RewardedAd RewardedAd { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
-        
+
         AppLovin.SetHasUserConsent(true);
         AppLovin.SetIsAgeRestrictedUser(true);
         AppLovin.Initialize();
@@ -46,6 +46,7 @@ public class AdManager : Singleton<AdManager>
     private void OnDisable()
     {
         Interstitial.OnAdClosed -= HandleOnAdClosed;
+        Interstitial.OnAdFailedToShow -= HandleOnAdFailedToShow;
         RewardedAd.OnAdFailedToShow -= HandleRewardedAdFailedToShow;
         RewardedAd.OnUserEarnedReward -= HandleUserEarnedReward;
         RewardedAd.OnAdClosed -= HandleRewardedAdClosed;
@@ -63,15 +64,15 @@ public class AdManager : Singleton<AdManager>
     private void InitializeRewarded()
     {
 #if UNITY_ANDROID
-        const string rewardId = "ca-app-pub-9672913692313370/5241874778"; 
+        const string rewardId = "ca-app-pub-9672913692313370/5241874778";
 #elif UNITY_IPHONE
         const string rewardId = "";
 #else
         const string rewardId = "unexpected_platform";
 #endif
-        
+
         var request = new AdRequest.Builder().Build();
-        
+
         RewardedAd = new RewardedAd(rewardId);
         RewardedAd.OnAdFailedToShow += HandleRewardedAdFailedToShow;
         RewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
@@ -88,30 +89,40 @@ public class AdManager : Singleton<AdManager>
 #else
         const string interstitialId = "unexpected_platform";
 #endif
-        
+
         var request = new AdRequest.Builder().Build();
-        
+
         Interstitial = new InterstitialAd(interstitialId);
+        Interstitial.OnAdFailedToShow += HandleOnAdFailedToShow;
         Interstitial.OnAdClosed += HandleOnAdClosed;
         Interstitial.LoadAd(request);
     }
-    
+
     private void HandleOnAdClosed(object sender, EventArgs e)
     {
+        MetricaManager.SendEvent("int_show");
         InitializeInterstitial();
         IsInterstitialShowed = true;
     }
-    
+
+    private void HandleOnAdFailedToShow(object sender, AdErrorEventArgs e)
+    {
+        MetricaManager.SendEvent("int_fail");
+        InitializeInterstitial();
+    }
+
     private void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs e)
     {
+        MetricaManager.SendEvent("rew_fail");
         InitializeRewarded();
     }
-    
+
     private void HandleUserEarnedReward(object sender, Reward e)
     {
+        MetricaManager.SendEvent("rew_show");
         InitializeRewarded();
     }
-    
+
     private void HandleRewardedAdClosed(object sender, EventArgs e)
     {
         InitializeRewarded();
@@ -120,7 +131,8 @@ public class AdManager : Singleton<AdManager>
     public bool ShowInterstitial()
     {
         if (!Interstitial.IsLoaded() || _timeSpendFromLastInterstitial < 30f) return false;
-        MetricaManager.SendEvent("ad_int_start");
+
+        MetricaManager.SendEvent("int_start");
         Interstitial.Show();
         _timeSpendFromLastInterstitial = 0f;
         IsInterstitialShowed = false;
@@ -130,7 +142,8 @@ public class AdManager : Singleton<AdManager>
     public void ShowRewardVideo()
     {
         if (!RewardedAd.IsLoaded()) return;
-        MetricaManager.SendEvent("ad_rew_start");
+
+        MetricaManager.SendEvent("rew_start");
         RewardedAd.Show();
     }
 }

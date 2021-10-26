@@ -79,6 +79,25 @@ public class Page : MonoBehaviour
 
     private void ButtonClick()
     {
+        if (PlayerPrefs.GetInt("first_level") == 1)
+        {
+            switch (_gameMod)
+            {
+                case 0:
+                    var knifeMod = _knifeMod;
+                    MetricaManager.SendEvent($"first_start_({knifeMod + 1})");
+                    break;
+                case 1:
+                    MetricaManager.SendEvent("first_start_(7)");
+                    break;
+                case 2:
+                    MetricaManager.SendEvent("first_start_(8)");
+                    break;
+            }
+
+            PlayerPrefs.SetInt("first_level", 0);
+        }
+
         PlayerInput.Instance.AllowUsing();
         PlayerInput.Instance.OnClick();
         GamemodManager.Instance.OnClick();
@@ -89,10 +108,10 @@ public class Page : MonoBehaviour
         switch (gameModIndex)
         {
             case 1:
-                _textNumber.text = DataManager.Instance.GameData.ProgressData.CurrentStackKnifeLevel.ToString();
+                _textNumber.text = (DataManager.Instance.GameData.ProgressData.CurrentStackKnifeLevel + 1).ToString();
                 break;
             case 2:
-                _textNumber.text = DataManager.Instance.GameData.ProgressData.CurrentKnifeFestLevel.ToString();
+                _textNumber.text = (DataManager.Instance.GameData.ProgressData.CurrentKnifeFestLevel + 1).ToString();
                 break;
         }
     }

@@ -59,11 +59,12 @@ public class HandlePages : MonoBehaviour
             if (i <= GamemodManager.Instance.KnifeHitModsCount)
             {
                 _mods[i].SetKnifeMod(i);
+                _mods[i].SetGameMod(0);
             }
             else
             {
                 _mods[i].SetGameMod(indexGameMod);
-                if (indexGameMod < GamemodManager.Instance.GameModCount)
+                if (indexGameMod <= GamemodManager.Instance.GameModCount)
                     indexGameMod++;
             }
 

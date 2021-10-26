@@ -1,13 +1,19 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+
+public enum Gamemod
+{
+    KnifeHit,
+    StackKnife,
+    KnifeFest
+}
 
 public class GamemodManager : Singleton<GamemodManager>
 {
     [SerializeField] private Skills _skills;
     [SerializeField] private HandlePages _handlerPages;
     [SerializeField] private int _knifeHitModsCount = 5;
-    [SerializeField] private int _gameModCount = 3;
+    [SerializeField] private int _gameModCount = 2;
 
     public int KnifeHitMod { get; private set; }
     public Gamemod CurrentMod { get; private set; }
@@ -25,8 +31,6 @@ public class GamemodManager : Singleton<GamemodManager>
 
     public void OnClick()
     {
-        //Debug.Log(_handlerPages.Mods[_handlerPages.CurrentIndexPage].KnifeMod);
-        //Debug.Log(_handlerPages.Mods[_handlerPages.CurrentIndexPage].GameMod);
         SelectKnifeHitMod(_handlerPages.Mods[_handlerPages.CurrentIndexPage].KnifeMod);
         SelectMod(_handlerPages.Mods[_handlerPages.CurrentIndexPage].GameMod);
     }
@@ -50,6 +54,8 @@ public class GamemodManager : Singleton<GamemodManager>
 
     public void SelectMod(int index)
     {
+        PlayerInput.Instance.AllowUsing();
+
         CurrentMod = (Gamemod)index;
 
         _skills.DisallowSkills();
@@ -82,11 +88,4 @@ public class GamemodManager : Singleton<GamemodManager>
     {
         KnifeHitMod = index;
     }
-}
-
-public enum Gamemod
-{
-    KnifeHit,
-    StackKnife,
-    KnifeFest
 }

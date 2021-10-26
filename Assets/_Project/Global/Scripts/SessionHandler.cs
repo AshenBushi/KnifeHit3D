@@ -62,6 +62,7 @@ public class SessionHandler : Singleton<SessionHandler>
 
     public void CompleteLevelWithCutscene(float multiplierLastStep)
     {
+        MetricaManager.SendEvent("arrow_com_(" + DataManager.Instance.GameData.ProgressData.CurrentKnifeFestLevel + ")");
         _winScreen.WinWithReward(multiplierLastStep);
         _isPlayerLose = false;
     }
