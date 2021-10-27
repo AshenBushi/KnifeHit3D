@@ -2,6 +2,7 @@
 using GoogleMobileAds.Api.Mediation.AppLovin;
 using System;
 using System.Collections.Generic;
+using GoogleMobileAds.Api.Mediation.AdColony;
 using UnityEngine;
 
 public class AdManager : Singleton<AdManager>
@@ -19,6 +20,9 @@ public class AdManager : Singleton<AdManager>
         AppLovin.SetHasUserConsent(true);
         AppLovin.SetIsAgeRestrictedUser(true);
         AppLovin.Initialize();
+        
+        AdColonyAppOptions.SetGDPRRequired(true);
+        AdColonyAppOptions.SetGDPRConsentString("1");
 
         MobileAds.Initialize((initStatus) =>
         {
@@ -30,10 +34,10 @@ public class AdManager : Singleton<AdManager>
                 switch (status.InitializationState)
                 {
                     case AdapterState.NotReady:
-                        MonoBehaviour.print("Adapter: " + className + " not ready.");
+                        print("Adapter: " + className + " not ready.");
                         break;
                     case AdapterState.Ready:
-                        MonoBehaviour.print("Adapter: " + className + " is initialized.");
+                        print("Adapter: " + className + " is initialized.");
                         break;
                 }
             }
