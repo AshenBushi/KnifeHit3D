@@ -63,8 +63,6 @@ namespace KnifeFest
                     }
                 }
 
-                Debug.Log(wall.transform.position.z);
-
                 KnifeWeight = wall.ChangeValue(KnifeWeight);
                 OnWeightChanged?.Invoke();
 
@@ -101,11 +99,6 @@ namespace KnifeFest
         public void AllowStartingCutscene()
         {
             _isStartingCutscene = true;
-        }
-
-        public void DisallowStartingCutscene()
-        {
-            _isStartingCutscene = false;
         }
 
         public void WeightDisable()

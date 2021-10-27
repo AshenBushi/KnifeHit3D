@@ -9,14 +9,7 @@ public class SecondLife : AdButton
     {
         _continueScreen.Disable();
         KnifeHandler.Instance.SecondLife();
-        
+
         base.HandleUserEarnReward(sender, e);
-    }
-
-    public override void WatchAd()
-    {
-        MetricaManager.SendEvent("btn_repeat");
-
-        base.WatchAd();
     }
 }

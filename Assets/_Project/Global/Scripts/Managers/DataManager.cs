@@ -51,6 +51,8 @@ public class DataManager : Singleton<DataManager>
     private void FirstPlay()
     {
         GameData = new GameData();
+
+        PlayerPrefs.SetInt("first_level", 1);
         StartCoroutine(SendMetricks());
     }
 
@@ -58,7 +60,7 @@ public class DataManager : Singleton<DataManager>
     {
         yield return new WaitForSeconds(.5f);
 
-        MetricaManager.SendEvent("ev_first_open");
+        MetricaManager.SendEvent("first_open");
     }
 
     public void Save()

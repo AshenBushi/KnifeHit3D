@@ -9,11 +9,4 @@ public class ContinuePlayLottery : AdButton
 
         base.HandleUserEarnReward(sender, e);
     }
-    
-    public override void WatchAd()
-    {
-        MetricaManager.SendEvent("btn_repeat");
-        
-        base.WatchAd();
-    }
 }

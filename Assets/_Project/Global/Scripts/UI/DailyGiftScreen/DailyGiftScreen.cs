@@ -111,7 +111,6 @@ public class DailyGiftScreen : UIScreen
 
 
         CheckGiftsState();
-        MetricaManager.SendEvent("day_gift");
     }
 
     public override void Enable()
