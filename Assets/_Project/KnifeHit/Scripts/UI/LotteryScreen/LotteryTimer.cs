@@ -58,9 +58,11 @@ public class LotteryTimer : Timer
         Clock.Hours = 0;
         Clock.Minutes = 0;
         Clock.Seconds = 0;
-        
+
         ShowTime();
-        
+
+        EnableReady();
+
         IsTimeEnd?.Invoke();
     }
 
@@ -71,9 +73,29 @@ public class LotteryTimer : Timer
         Clock.Minutes = 4;
         Clock.Seconds = 59;
         LastDate = DateTime.UtcNow;
-        
+
+        DisableReady();
+
         ShowTime();
-        
+
         IsTimeStart?.Invoke();
+    }
+
+    private void EnableReady()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
+        _readyObject.SetActive(true);
+    }
+
+    private void DisableReady()
+    {
+        _readyObject.SetActive(false);
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(true);
+        }
     }
 }

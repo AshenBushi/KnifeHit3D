@@ -8,7 +8,6 @@ public class StartScreen : UIScreen
     [SerializeField] private HandlePages _handlerPages;
     [SerializeField] private GameObject _giftNotification;
     [SerializeField] private GameObject _shopNotification;
-    //[SerializeField] private GameObject _settingsNotification;
 
     private void Awake()
     {
@@ -23,7 +22,6 @@ public class StartScreen : UIScreen
     private void OnEnable()
     {
         CheckNotificationStates();
-
     }
 
     private void CheckNotificationStates()
@@ -45,6 +43,7 @@ public class StartScreen : UIScreen
     public void EnableGiftNotification()
     {
         _giftNotification.SetActive(true);
+        GiftTimer.IsReady?.Invoke();
     }
 
     public void EnableShopNotification()
@@ -56,16 +55,12 @@ public class StartScreen : UIScreen
     public void DisableGiftNotification()
     {
         _giftNotification.SetActive(false);
+        GiftTimer.IsNotReady?.Invoke();
     }
 
     public void DisableShopNotification()
     {
         _shopNotification.SetActive(false);
         PlayerPrefs.SetInt("ShopNotification", 0);
-    }
-
-    public void DisablePanelNotification()
-    {
-
     }
 }

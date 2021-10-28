@@ -13,16 +13,18 @@ public struct Clock
 
 public class Timer : MonoBehaviour
 {
+    [SerializeField] protected GameObject _readyObject;
     [SerializeField] private TMP_Text _hours;
     [SerializeField] private TMP_Text _minutes;
     [SerializeField] private TMP_Text _seconds;
+
     [SerializeField] private Clock _timeToCountdown;
-    
+
     private float _timeSpend = 0f;
-    
+
     protected DateTime LastDate;
     protected Clock Clock;
-    
+
     public virtual event UnityAction IsTimeEnd;
 
     private void OnEnable()
@@ -42,10 +44,10 @@ public class Timer : MonoBehaviour
 
     protected virtual void Countdown()
     {
-        _timeSpend = (int) (DateTime.UtcNow - LastDate).TotalSeconds;
+        _timeSpend = (int)(DateTime.UtcNow - LastDate).TotalSeconds;
 
         if (!(_timeSpend >= 1)) return;
-        
+
         Clock.Seconds--;
         LastDate = DateTime.UtcNow;
         CheckTimerForChanges();
@@ -63,7 +65,7 @@ public class Timer : MonoBehaviour
             _minutes.text = Clock.Minutes.ToString();
         else
             _minutes.text = "0" + Clock.Minutes;
-        
+
         if (Clock.Seconds >= 10)
             _seconds.text = Clock.Seconds.ToString();
         else
@@ -86,18 +88,18 @@ public class Timer : MonoBehaviour
             IsTimeEnd?.Invoke();
         }
     }
-    
+
     protected virtual void SaveTimer()
     { }
 
     protected virtual void LoadTimer()
     {
         LastDate = DataManager.Instance.LoadDate();
-        
-        var secondsPassed = (int) (DateTime.UtcNow - LastDate).TotalSeconds;
+
+        var secondsPassed = (int)(DateTime.UtcNow - LastDate).TotalSeconds;
 
         Clock.Seconds -= secondsPassed;
-        
+
         CheckTimerForChanges();
     }
 }

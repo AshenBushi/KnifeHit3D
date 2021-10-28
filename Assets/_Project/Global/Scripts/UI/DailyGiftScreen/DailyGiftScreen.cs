@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DailyGiftScreen : UIScreen
 {
-    [SerializeField] private Timer _timer;
+    [SerializeField] private GiftTimer _timer;
     [SerializeField] private List<DailyGift> _gifts;
     [SerializeField] private StartScreen _startScreen;
     [SerializeField] private DailyGiftArrows _dailyArrows;
@@ -80,6 +80,7 @@ public class DailyGiftScreen : UIScreen
         DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts++;
         DataManager.Instance.Save();
         _startScreen.EnableGiftNotification();
+
         CheckGiftsState();
     }
 
@@ -105,10 +106,10 @@ public class DailyGiftScreen : UIScreen
             DataManager.Instance.GameData.DailyGiftsData.PickedGifts++;
         }
         DataManager.Instance.Save();
+
         if (DataManager.Instance.GameData.DailyGiftsData.PickedGifts == DataManager.Instance.GameData.DailyGiftsData.UnlockedGifts)
             _startScreen.DisableGiftNotification();
-
-
+        _timer.EnableTimer();
 
         CheckGiftsState();
     }
