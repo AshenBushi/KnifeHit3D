@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,6 +7,7 @@ using UnityEngine.Events;
 public class WinScreen : UIScreen
 {
     [SerializeField] private TMP_Text _rewardText;
+    [SerializeField] private GameObject _buttonContinue;
 
     private float _multiplierCutscene;
 
@@ -26,6 +28,8 @@ public class WinScreen : UIScreen
     {
         base.Enable();
         SoundManager.Instance.PlaySound(SoundName.Win);
+
+        StartCoroutine(DelayEnabledContinue());
 
         _rewardText.text = GamemodManager.Instance.CurrentMod == Gamemod.KnifeHit
             ? TargetType switch
@@ -60,6 +64,7 @@ public class WinScreen : UIScreen
     public override void Disable()
     {
         base.Disable();
+        _buttonContinue.SetActive(false);
         IsScreenDisabled?.Invoke(false);
     }
 
@@ -87,5 +92,11 @@ public class WinScreen : UIScreen
         SoundManager.Instance.PlaySound(SoundName.ButtonClick);
 
         Disable();
+    }
+
+    private IEnumerator DelayEnabledContinue()
+    {
+        yield return new WaitForSeconds(4f);
+        _buttonContinue.SetActive(true);
     }
 }
