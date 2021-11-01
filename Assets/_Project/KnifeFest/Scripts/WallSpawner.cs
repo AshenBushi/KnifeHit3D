@@ -1,5 +1,6 @@
 using PathCreation;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace KnifeFest
         [SerializeField] private float _rightX;
 
         private readonly List<Wall> _walls = new List<Wall>();
+        private MeshRenderer _meshRoad;
 
         public List<Wall> Walls => _walls;
 
@@ -40,6 +42,12 @@ namespace KnifeFest
             _path.bezierPath.AddSegmentToEnd(new Vector3(0f, 0f, (greatestZ + 0.5f) * 20f));
 
             FinalCutscene.OnCreatingCurscene?.Invoke();
+            _meshRoad = _road.GetComponent<MeshRenderer>();
+        }
+
+        public void ChangeColorRoad()
+        {
+            _meshRoad.materials[0].color = ColorManager.Instance.CurrentColorPreset.cameraStartColor;
         }
 
         public void TryClearWalls()
