@@ -67,8 +67,16 @@ public class DoubleReward : AdButton
                     _ => 1,
                 };
         }
+    }
 
+    public void DoubleWinReward()
+    {
         WinScreen.Instance.OnWatchedReward(_coefficient);
+    }
+
+    public void DoubleLoseReward()
+    {
+        LoseScreen.Instance.OnWatchedReward(_coefficient);
     }
 
     private void RotateCircle()

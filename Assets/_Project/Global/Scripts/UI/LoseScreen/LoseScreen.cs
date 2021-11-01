@@ -8,12 +8,14 @@ public class LoseScreen : UIScreen
     [SerializeField] private GameObject _continue;
     [SerializeField] private TextMeshProUGUI _textReward;
 
-    private int TargetType => TargetHandler.Instance.CurrentSpawnerIndex;
+    public static LoseScreen Instance;
 
     public event UnityAction<bool> IsScreenDisabled;
 
     private void Awake()
     {
+        Instance = this;
+
         CanvasGroup = GetComponent<CanvasGroup>();
     }
 
@@ -22,18 +24,16 @@ public class LoseScreen : UIScreen
         base.Enable();
         SoundManager.Instance.PlaySound(SoundName.Lose);
 
-        _textReward.text =
-            //GamemodManager.Instance.CurrentMod == Gamemod.KnifeHit
-            //? TargetType switch
-            //{
-            //    0 => (LevelManager.Instance.CurrentMarkLevel.Reward / 3).ToString(),
-            //    1 => (LevelManager.Instance.CurrentCubeLevel.Reward / 3).ToString(),
-            //    2 => (LevelManager.Instance.CurrentFlatLevel.Reward / 3).ToString(),
-            //    _ => (LevelManager.Instance.CurrentMarkLevel.Reward / 3).ToString()
-            //}
-            //:
-                "5";
+        _textReward.text = "10";
 
+        Player.Instance.DepositMoney(Convert.ToInt32(_textReward.text));
+    }
+
+    public void OnWatchedReward(int coefficient)
+    {
+        Player.Instance.WithdrawMoney(Convert.ToInt32(_textReward.text));
+        int reward = Convert.ToInt32(_textReward.text);
+        _textReward.text = (reward * coefficient).ToString();
         Player.Instance.DepositMoney(Convert.ToInt32(_textReward.text));
     }
 
