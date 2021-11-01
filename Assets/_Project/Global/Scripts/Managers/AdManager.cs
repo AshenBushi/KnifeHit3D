@@ -1,8 +1,8 @@
 ﻿using GoogleMobileAds.Api;
+using GoogleMobileAds.Api.Mediation.AdColony;
 using GoogleMobileAds.Api.Mediation.AppLovin;
 using System;
 using System.Collections.Generic;
-using GoogleMobileAds.Api.Mediation.AdColony;
 using UnityEngine;
 
 public class AdManager : Singleton<AdManager>
@@ -12,6 +12,7 @@ public class AdManager : Singleton<AdManager>
     public bool IsInterstitialShowed { get; private set; }
     public InterstitialAd Interstitial { get; private set; }
     public RewardedAd RewardedAd { get; private set; }
+    public BannerView BannerAd { get; private set; }
 
     protected override void Awake()
     {
@@ -20,7 +21,7 @@ public class AdManager : Singleton<AdManager>
         AppLovin.SetHasUserConsent(true);
         AppLovin.SetIsAgeRestrictedUser(true);
         AppLovin.Initialize();
-        
+
         AdColonyAppOptions.SetGDPRRequired(true);
         AdColonyAppOptions.SetGDPRConsentString("1");
 
@@ -45,6 +46,7 @@ public class AdManager : Singleton<AdManager>
 
         InitializeRewarded();
         InitializeInterstitial();
+        InitializeBanner();
     }
 
     private void OnDisable()
@@ -102,6 +104,22 @@ public class AdManager : Singleton<AdManager>
         Interstitial.LoadAd(request);
     }
 
+    private void InitializeBanner()
+    {
+#if UNITY_ANDROID
+        const string bannerId = "ca-app-pub-9672913692313370/4698557718";
+#elif UNITY_IPHONE
+        const string bannerId = "";
+#else
+        const string bannerId = "unexpected_platform";
+#endif
+
+        BannerAd = new BannerView(bannerId, AdSize.Banner, AdPosition.Bottom);
+        var request = new AdRequest.Builder().Build();
+
+        BannerAd.LoadAd(request);
+    }
+
     private void HandleOnAdClosed(object sender, EventArgs e)
     {
         MetricaManager.SendEvent("int_show");
@@ -130,6 +148,16 @@ public class AdManager : Singleton<AdManager>
     private void HandleRewardedAdClosed(object sender, EventArgs e)
     {
         InitializeRewarded();
+    }
+
+    public void ShowBanner()
+    {
+        BannerAd.Show();
+    }
+
+    public void HideBanner()
+    {
+        BannerAd.Hide();
     }
 
     public bool ShowInterstitial()

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 using Watermelon;
 
 public class StartScreen : UIScreen
@@ -21,6 +20,7 @@ public class StartScreen : UIScreen
 
     private void OnEnable()
     {
+        AdManager.Instance.ShowBanner();
         CheckNotificationStates();
     }
 
@@ -35,6 +35,7 @@ public class StartScreen : UIScreen
 
     public override void Disable()
     {
+        AdManager.Instance.HideBanner();
         _settingsPanel.Hide(true);
 
         base.Disable();
