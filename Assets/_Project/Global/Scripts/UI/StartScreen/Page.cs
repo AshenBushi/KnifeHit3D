@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Page : MonoBehaviour
 {
@@ -38,20 +39,19 @@ public class Page : MonoBehaviour
     {
         _currentMovie = currentMovie;
         _animator.SetBool(_currentMovie.ToString(), true);
-        _animator.playbackTime = 0f;
+        _animator.Play("knifehit" + _currentMovie);
     }
 
     public void Activation()
     {
-        _canvasGroup.alpha = 1f;
+        _canvasGroup.DOFade(1f, 0.3f);
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
     }
 
     public void Deactivation()
     {
-        _animator.playbackTime = 0f;
-        _canvasGroup.alpha = 0f;
+        _canvasGroup.DOFade(0f, 0.3f);
         _canvasGroup.interactable = false;
         _canvasGroup.blocksRaycasts = false;
     }

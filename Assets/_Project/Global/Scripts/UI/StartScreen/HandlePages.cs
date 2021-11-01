@@ -7,11 +7,14 @@ public class HandlePages : MonoBehaviour
     [SerializeField] private RectTransform _contentRect;
     [SerializeField] private Page _templatePage;
     [SerializeField] private int _countMods;
-    [SerializeField] private float _offsetX = 1200f;
+    [SerializeField] private float _offsetX = 1100f;
 
     private Page[] _mods;
     private List<Vector2> _modsPos = new List<Vector2>();
+    private Vector2 _contentVector;
     private int _currentIndexPage;
+    private int _indexSelectedMod;
+    private bool _isDrag;
 
     public Page[] Mods => _mods;
 
@@ -33,17 +36,40 @@ public class HandlePages : MonoBehaviour
                 _currentIndexPage = 0;
             else
                 _currentIndexPage = value;
+
             if (_mods[_currentIndexPage] != null)
             {
                 Page aktivesObj = _mods[_currentIndexPage];
                 aktivesObj.Activation();
+                _contentRect.DOAnchorPosX(_modsPos[_currentIndexPage].x, 1f);
             }
         }
     }
 
     private void FixedUpdate()
     {
-        _contentRect.DOAnchorPosX(_modsPos[CurrentIndexPage].x, 1.2f).SetEase(Ease.OutBack);
+        float maxPos = float.MaxValue;
+        for (int i = 0; i < _mods.Length; i++)
+        {
+            float distance = Mathf.Abs(_contentRect.anchoredPosition.x - _modsPos[i].x);
+            if (distance < maxPos)
+            {
+                maxPos = distance;
+                _indexSelectedMod = i;
+            }
+        }
+
+        if (_isDrag) return;
+
+        _contentVector.x = Mathf.SmoothStep(_contentRect.anchoredPosition.x, _modsPos[_indexSelectedMod].x, 10 * Time.fixedDeltaTime);
+        _contentRect.anchoredPosition = _contentVector;
+        _currentIndexPage = _indexSelectedMod;
+        if (_currentIndexPage > 0)
+            _mods[_currentIndexPage - 1].Deactivation();
+        if (_currentIndexPage < _mods.Length - 1)
+            _mods[_currentIndexPage + 1].Deactivation();
+
+        _mods[_currentIndexPage].Activation();
     }
 
     public void Init()
@@ -80,6 +106,11 @@ public class HandlePages : MonoBehaviour
         }
 
         _mods[0].Activation();
+    }
+
+    public void SnapScrolling(bool isDrag)
+    {
+        _isDrag = isDrag;
     }
 
     public void SelectNextMod()
