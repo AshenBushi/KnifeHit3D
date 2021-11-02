@@ -44,6 +44,7 @@ public class Page : MonoBehaviour
 
     public void Activation()
     {
+        _animator.Play("knifehit" + _currentMovie);
         _canvasGroup.DOFade(1f, 0.3f);
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
