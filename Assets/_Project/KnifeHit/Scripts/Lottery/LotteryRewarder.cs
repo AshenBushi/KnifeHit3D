@@ -44,6 +44,5 @@ public class LotteryRewarder : MonoBehaviour
         
         DataManager.Instance.Save();
         SessionHandler.Instance.AllowPlayerLose();
-        SessionHandler.Instance.EndSession();
     }
 }

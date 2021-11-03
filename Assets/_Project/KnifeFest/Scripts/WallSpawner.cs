@@ -8,7 +8,7 @@ namespace KnifeFest
 {
     public class WallSpawner : Singleton<WallSpawner>
     {
-        private const float wallOffset = 30f;
+        private const float wallOffset = 40f;
 
         [SerializeField] private PathCreator _path;
         [SerializeField] private Transform _road;
@@ -43,8 +43,8 @@ namespace KnifeFest
                     greatestZ = _camera.WorldToScreenPoint(Walls[i].transform.position).z;
             }
 
-            _road.localScale = new Vector3(1f, 1f, greatestZ / 17f);
-            _path.bezierPath.AddSegmentToEnd(new Vector3(0f, 0f, (greatestZ / (wallOffset / 1.1f) + 0.5f) * wallOffset));
+            _road.localScale = new Vector3(1f, 1f, greatestZ / 17.5f);
+            _path.bezierPath.AddSegmentToEnd(new Vector3(0f, 0f, (greatestZ / (wallOffset / 1.05f) + 0.5f) * wallOffset));
 
             FinalCutscene.OnCreatingCurscene?.Invoke();
             _meshRoad = _road.GetComponent<MeshRenderer>();

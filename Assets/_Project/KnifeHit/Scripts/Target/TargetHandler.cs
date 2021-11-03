@@ -10,11 +10,14 @@ public class TargetHandler : Singleton<TargetHandler>
     [SerializeField] private List<TargetSpawner> _spawners;
 
     private TargetSpawner _currentSpawner;
+    private int _counterMoney = 0;
 
     public Target CurrentTarget { get; private set; }
     public List<Target> Targets => _currentSpawner.Targets;
 
     public int CurrentSpawnerIndex => _spawners.IndexOf(_currentSpawner);
+
+    public int CounterMoney => _counterMoney;
 
     public event UnityAction IsLevelSpawned;
 
@@ -42,7 +45,8 @@ public class TargetHandler : Singleton<TargetHandler>
 
         if (Targets.Count > 0)
         {
-            Player.Instance.DepositMoney(5);
+            //Player.Instance.DepositMoney(5);
+            _counterMoney += 5;
             _levelProgressDisplayer.NextPoint();
             _targetMover.MoveTargets(Targets);
             SetCurrentTarget();
@@ -56,7 +60,8 @@ public class TargetHandler : Singleton<TargetHandler>
     private void OnEdgePass(int exp, int currentEdge)
     {
         ExperienceHandler.Instance.AddExp(exp);
-        Player.Instance.DepositMoney(5);
+        //Player.Instance.DepositMoney(5);
+        _counterMoney += 5;
         PlayerInput.Instance.DisallowTap();
         _levelProgressDisplayer.NextPoint();
 

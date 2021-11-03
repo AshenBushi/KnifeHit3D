@@ -3,12 +3,14 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class WinScreen : UIScreen
 {
     [SerializeField] private TMP_Text _rewardText;
-    [SerializeField] private GameObject _buttonContinue;
+    [SerializeField] private GameObject _continue;
 
+    private Button _continueButton;
     private float _multiplierCutscene;
 
     private int TargetType => TargetHandler.Instance.CurrentSpawnerIndex;
@@ -22,6 +24,9 @@ public class WinScreen : UIScreen
         Instance = this;
 
         CanvasGroup = GetComponent<CanvasGroup>();
+
+        _continueButton = _continue.GetComponent<Button>();
+        _continueButton.onClick.AddListener(OnClickContinue);
     }
 
     public override void Enable()
@@ -34,7 +39,7 @@ public class WinScreen : UIScreen
         _rewardText.text = GamemodManager.Instance.CurrentMod == Gamemod.KnifeHit
             ? TargetType switch
             {
-                0 => LevelManager.Instance.CurrentMarkLevel.Reward.ToString(),
+                0 => TargetHandler.Instance.CounterMoney.ToString(),
                 1 => LevelManager.Instance.CurrentCubeLevel.Reward.ToString(),
                 2 => LevelManager.Instance.CurrentFlatLevel.Reward.ToString(),
                 _ => LevelManager.Instance.CurrentMarkLevel.Reward.ToString()
@@ -47,8 +52,6 @@ public class WinScreen : UIScreen
             tempReward *= _multiplierCutscene;
             _rewardText.text = tempReward.ToString();
         }
-
-        Player.Instance.DepositMoney(Convert.ToInt32(_rewardText.text));
 
         switch (GamemodManager.Instance.CurrentMod)
         {
@@ -63,8 +66,9 @@ public class WinScreen : UIScreen
 
     public override void Disable()
     {
+        _continueButton.onClick.RemoveListener(OnClickContinue);
         base.Disable();
-        _buttonContinue.SetActive(false);
+        _continue.SetActive(false);
         IsScreenDisabled?.Invoke(false);
     }
 
@@ -87,16 +91,40 @@ public class WinScreen : UIScreen
         Enable();
     }
 
-    public void Continue()
+    private void OnClickContinue()
+    {
+        StartCoroutine(OnClickContinueDelay());
+    }
+
+    private IEnumerator OnClickContinueDelay()
     {
         SoundManager.Instance.PlaySound(SoundName.ButtonClick);
+        _continueButton.interactable = false;
 
-        Disable();
+        var reward = Convert.ToInt32(_rewardText.text);
+        Player.Instance.DepositMoney(reward);
+
+        float timeSec = 0.08f;
+        for (int i = reward; i >= 0; i--)
+        {
+            _rewardText.text = i.ToString();
+            yield return new WaitForSeconds(timeSec);
+
+            if (timeSec > 0.01f)
+                timeSec -= 0.005f;
+        }
+
+        if (reward == 0)
+            yield return new WaitForSeconds(0.1f);
+        else
+            yield return new WaitForSeconds(1.5f);
+
+        _continueButton.GetComponent<AdButton>().WatchAd();
     }
 
     private IEnumerator DelayEnabledContinue()
     {
         yield return new WaitForSeconds(4f);
-        _buttonContinue.SetActive(true);
+        _continue.SetActive(true);
     }
 }
