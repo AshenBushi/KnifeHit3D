@@ -1,9 +1,8 @@
-using System;
+using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 
 public class LotteryScreen : UIScreen
 {
@@ -30,20 +29,33 @@ public class LotteryScreen : UIScreen
 
     private void ShowRewards()
     {
-        for (var i = 0; i < Rewards.Count; i++)
+        for (int i = 0; i < Rewards.Count; i++)
         {
             _rewardsTexts[i].text = Rewards[i] switch
             {
-                RewardName.TenCoins => "10 coins",
-                RewardName.TwentyCoins => "20 coins",
-                RewardName.ThirtyCoins => "30 coins",
-                RewardName.Slow => "Slow",
-                RewardName.LevelPass => "Level Pass",
-                RewardName.SecondChance => "Second Chance",
-                RewardName.Skin => "Skin",
+                RewardName.TenCoins => "10",
+                RewardName.TwentyCoins => "20",
+                RewardName.ThirtyCoins => "30",
+                RewardName.Slow => "",
+                RewardName.LevelPass => "",
+                RewardName.SecondChance => "",
+                RewardName.Skin => "",
                 RewardName.Death => "",
-                _ => throw new ArgumentOutOfRangeException()
+                _ => ""
             };
+
+            for (int j = 0; j < _rewardsTexts[i].transform.childCount; j++)
+            {
+                var rewards = _rewardsTexts[i].transform.GetChild(j).GetComponents<LotteryReward>();
+                for (int l = 0; l < rewards.Length; l++)
+                {
+                    if (Rewards[i] == rewards[l].Type)
+                    {
+                        rewards[l].gameObject.SetActive(true);
+                        break;
+                    }
+                }
+            }
 
             _rewardsTexts[i].GetComponentInParent<Image>().DOFade(1, 0.1f);
         }
