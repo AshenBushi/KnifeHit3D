@@ -66,7 +66,7 @@ public class LotteryScreen : UIScreen
 
             GettingCoinsText(i);
 
-            _rewardsTexts[i].GetComponentInParent<Image>().DOFade(1, 0.1f);
+            _rewardsTexts[i].GetComponentInParent<Image>().DOFade(1, 0.1f).SetLink(gameObject);
         }
     }
 

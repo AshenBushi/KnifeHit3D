@@ -21,8 +21,6 @@ namespace KnifeFest
 
         public float Multiplier => _multiplier;
 
-        public WallCutscene Wall { get => _wall; set => _wall = value; }
-
 
         public void Init()
         {
@@ -56,14 +54,12 @@ namespace KnifeFest
 
         public void SetEndStep()
         {
-            if (_wall == null)
-                _wall = GetComponentInChildren<WallCutscene>();
             _wall.SetEndWall();
         }
 
         public void FadeTextObject()
         {
-            _text.DOFade(0, 0.3f);
+            _text.DOFade(0, 0.3f).SetLink(gameObject);
         }
 
         public void Detonate()
@@ -86,7 +82,7 @@ namespace KnifeFest
 
         private IEnumerator SelfDestruction()
         {
-            _wall.transform.DOScale(new Vector3(0, 0, 0), 0.2f);
+            _wall.transform.DOScale(new Vector3(0, 0, 0), 0.2f).SetLink(gameObject);
             yield return new WaitForSeconds(3f);
             Destroy(_wall);
         }

@@ -19,7 +19,7 @@ public class DailyGiftArrows : MonoBehaviour
         }
 
         DailyGiftScreen.IsScrollDisable?.Invoke();
-        _rectTransform.DOAnchorPosY(yTarget, 0.8f).SetLink(gameObject).OnComplete(DailyGiftScreen.IsScrollEnable.Invoke);
+        _rectTransform.DOAnchorPosY(yTarget, 0.8f).OnComplete(DailyGiftScreen.IsScrollEnable.Invoke).SetLink(gameObject);
     }
 
     public void AllowMove()

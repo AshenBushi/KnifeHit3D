@@ -42,7 +42,7 @@ public class ContinueScreen : UIScreen
     {
         for (int i = 0; i < _textLose.Count; i++)
         {
-            _textLose[i].DOFade(1f, 1.5f);
+            _textLose[i].DOFade(1f, 1.5f).SetLink(gameObject);
             yield return new WaitForSeconds(1.5f);
         }
     }

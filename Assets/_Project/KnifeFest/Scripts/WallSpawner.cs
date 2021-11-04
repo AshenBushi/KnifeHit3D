@@ -22,8 +22,6 @@ namespace KnifeFest
 
         public List<Wall> Walls => _walls;
 
-        public static float WallOffset => wallOffset;
-
         protected override void Awake()
         {
             base.Awake();
@@ -46,8 +44,8 @@ namespace KnifeFest
             _road.localScale = new Vector3(1f, 1f, greatestZ / 17.5f);
             _path.bezierPath.AddSegmentToEnd(new Vector3(0f, 0f, (greatestZ / (wallOffset / 1.05f) + 0.5f) * wallOffset));
 
-            FinalCutscene.OnCreatingCurscene?.Invoke();
             _meshRoad = _road.GetComponent<MeshRenderer>();
+            FinalCutscene.OnCreatingCurscene?.Invoke();
         }
 
         public void ChangeColorRoad()

@@ -10,8 +10,16 @@ namespace KnifeFest
         [SerializeField] private float _offsetZPos = 5.5f;
         private bool _isStartCutscene;
 
+        private Camera _camera;
         private Vector3 _lastTargetPosition;
         private Tweener _tween;
+
+        public Camera Camera => _camera;
+
+        private void Awake()
+        {
+            _camera = GetComponent<Camera>();
+        }
 
         private void Start()
         {
@@ -26,7 +34,7 @@ namespace KnifeFest
 
         public void AllowStartingCutscene()
         {
-            _tween = transform.DOMove(new Vector3(_target.position.x, _target.position.y + _offsetYPos, _target.position.z - _offsetZPos), 0.5f).SetAutoKill(false);
+            _tween = transform.DOMove(new Vector3(_target.position.x, _target.position.y + _offsetYPos, _target.position.z - _offsetZPos), 0.5f).SetAutoKill(false).SetLink(gameObject);
             _offsetYPos = 6.5f;
             _offsetZPos = 7f;
 

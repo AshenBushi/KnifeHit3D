@@ -41,7 +41,7 @@ public class HandlePages : MonoBehaviour
             {
                 Page aktivesObj = _mods[_currentIndexPage];
                 aktivesObj.Activation();
-                _contentRect.DOAnchorPosX(_modsPos[_currentIndexPage].x, 1f);
+                _contentRect.DOAnchorPosX(_modsPos[_currentIndexPage].x, 1f).SetLink(gameObject);
             }
         }
     }

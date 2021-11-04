@@ -76,7 +76,7 @@ namespace KnifeFest
 
         private void StartCutscene()
         {
-            _knifeFollower.GetComponent<Camera>().DOFieldOfView(70, 0.5f);
+            _knifeFollower.Camera.DOFieldOfView(70, 0.5f).SetLink(gameObject);
 
             _pathFollower.Knife.WeightDisable();
 

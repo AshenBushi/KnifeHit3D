@@ -95,6 +95,6 @@ public class MenuSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
         _content.DOLocalMove(new Vector3(-_menuItemTransforms[_currentPage].localPosition.x +
                                          (_menuItemTransforms[_currentPage].sizeDelta.x +
-                                          _layoutGroup.spacing) / 2, 0f, 0f), duration);
+                                          _layoutGroup.spacing) / 2, 0f, 0f), duration).SetLink(gameObject);
     }
 }

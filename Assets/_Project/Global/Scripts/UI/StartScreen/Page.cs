@@ -38,21 +38,22 @@ public class Page : MonoBehaviour
     public void InitMovie(int currentMovie)
     {
         _currentMovie = currentMovie;
-        _animator.SetBool(_currentMovie.ToString(), true);
+        if (_animator.parameterCount < _currentMovie)
+            _animator.SetBool(_currentMovie.ToString(), true);
         _animator.Play("knifehit" + _currentMovie);
     }
 
     public void Activation()
     {
         _animator.Play("knifehit" + _currentMovie);
-        _canvasGroup.DOFade(1f, 0.3f);
+        _canvasGroup.DOFade(1f, 0.3f).SetLink(gameObject);
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
     }
 
     public void Deactivation()
     {
-        _canvasGroup.DOFade(0f, 0.3f);
+        _canvasGroup.DOFade(0f, 0.3f).SetLink(gameObject);
         _canvasGroup.interactable = false;
         _canvasGroup.blocksRaycasts = false;
     }

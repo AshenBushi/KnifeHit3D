@@ -493,7 +493,7 @@ namespace Watermelon
                                 yield return null;
                             }
 
-                            if (www.isNetworkError)
+                            if (www.result == UnityWebRequest.Result.ConnectionError)
                             {
                                 Debug.Log(www.error);
                             }

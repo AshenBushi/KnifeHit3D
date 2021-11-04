@@ -1,5 +1,4 @@
 using GoogleMobileAds.Api;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class WatchAdForReward : AdButton

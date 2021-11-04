@@ -85,6 +85,6 @@ public class DoubleReward : AdButton
         var rotateEuler = new Vector3(0f, 0f, currentDefinition.Angle);
 
         _circleCoefficients.transform.DORotate(_circleCoefficients.transform.eulerAngles + rotateEuler, currentDefinition.Duration, RotateMode.FastBeyond360)
-            .SetEase(currentDefinition.EaseCurve).OnComplete(RotateCircle);
+            .SetEase(currentDefinition.EaseCurve).OnComplete(RotateCircle).SetLink(gameObject);
     }
 }
