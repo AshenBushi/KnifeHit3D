@@ -8,9 +8,8 @@ using UnityEngine.UI;
 public class WinScreen : UIScreen
 {
     [SerializeField] private TMP_Text _rewardText;
-    [SerializeField] private GameObject _continue;
+    [SerializeField] private Button _continue;
 
-    private Button _continueButton;
     private float _multiplierCutscene;
 
     private int TargetType => TargetHandler.Instance.CurrentSpawnerIndex;
@@ -25,8 +24,8 @@ public class WinScreen : UIScreen
 
         CanvasGroup = GetComponent<CanvasGroup>();
 
-        _continueButton = _continue.GetComponent<Button>();
-        _continueButton.onClick.AddListener(OnClickContinue);
+        AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
+        _continue.onClick.AddListener(OnClickContinue);
     }
 
     public override void Enable()
@@ -66,18 +65,17 @@ public class WinScreen : UIScreen
 
     public override void Disable()
     {
-        _continueButton.onClick.RemoveListener(OnClickContinue);
+        _continue.onClick.RemoveListener(OnClickContinue);
+        AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
         base.Disable();
-        _continue.SetActive(false);
+        _continue.gameObject.SetActive(false);
         IsScreenDisabled?.Invoke(false);
     }
 
     public void OnWatchedReward(int coefficient)
     {
-        Player.Instance.WithdrawMoney(Convert.ToInt32(_rewardText.text));
         int reward = Convert.ToInt32(_rewardText.text);
         _rewardText.text = (reward * coefficient).ToString();
-        Player.Instance.DepositMoney(Convert.ToInt32(_rewardText.text));
     }
 
     public void Win()
@@ -99,32 +97,34 @@ public class WinScreen : UIScreen
     private IEnumerator OnClickContinueDelay()
     {
         SoundManager.Instance.PlaySound(SoundName.ButtonClick);
-        _continueButton.interactable = false;
+        _continue.interactable = false;
 
         var reward = Convert.ToInt32(_rewardText.text);
         Player.Instance.DepositMoney(reward);
 
-        float timeSec = 0.08f;
         for (int i = reward; i >= 0; i--)
         {
             _rewardText.text = i.ToString();
-            yield return new WaitForSeconds(timeSec);
-
-            if (timeSec > 0.01f)
-                timeSec -= 0.005f;
+            yield return null;
         }
 
         if (reward == 0)
             yield return new WaitForSeconds(0.1f);
         else
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
 
-        _continueButton.GetComponent<AdButton>().WatchAd();
+        AdManager.Instance.ShowInterstitial();
     }
 
     private IEnumerator DelayEnabledContinue()
     {
         yield return new WaitForSeconds(4f);
-        _continue.SetActive(true);
+        _continue.gameObject.SetActive(true);
+    }
+
+    private void HandleOnAdClosed(object sender, EventArgs e)
+    {
+        MetricaManager.SendEvent("int_show");
+        Disable();
     }
 }

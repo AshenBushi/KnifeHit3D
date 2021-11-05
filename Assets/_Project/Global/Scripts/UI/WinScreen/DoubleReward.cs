@@ -28,22 +28,22 @@ public class DoubleReward : AdButton
 
     protected override void HandleUserEarnReward(object sender, Reward e)
     {
-        if (GamemodManager.Instance.CurrentMod == Gamemod.KnifeHit)
-            switch (TargetType)
-            {
-                case 0:
-                    Player.Instance.DepositMoney(LevelManager.Instance.CurrentMarkLevel.Reward * _coefficient);
-                    break;
-                case 1:
-                    Player.Instance.DepositMoney(LevelManager.Instance.CurrentCubeLevel.Reward * _coefficient);
-                    break;
-                case 2:
-                    Player.Instance.DepositMoney(LevelManager.Instance.CurrentFlatLevel.Reward * _coefficient);
-                    break;
-                default:
-                    Player.Instance.DepositMoney(LevelManager.Instance.CurrentMarkLevel.Reward * _coefficient);
-                    break;
-            }
+        //if (GamemodManager.Instance.CurrentMod == Gamemod.KnifeHit)
+        //    switch (TargetType)
+        //    {
+        //        case 0:
+        //            Player.Instance.DepositMoney(LevelManager.Instance.CurrentMarkLevel.Reward * _coefficient);
+        //            break;
+        //        case 1:
+        //            Player.Instance.DepositMoney(LevelManager.Instance.CurrentCubeLevel.Reward * _coefficient);
+        //            break;
+        //        case 2:
+        //            Player.Instance.DepositMoney(LevelManager.Instance.CurrentFlatLevel.Reward * _coefficient);
+        //            break;
+        //        default:
+        //            Player.Instance.DepositMoney(LevelManager.Instance.CurrentMarkLevel.Reward * _coefficient);
+        //            break;
+        //    }
 
         base.HandleUserEarnReward(sender, e);
         Button.interactable = true;

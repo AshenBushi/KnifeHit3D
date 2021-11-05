@@ -7,6 +7,9 @@ public class LevelColorPreset : ScriptableObject
     public Color startColor = Color.white;
     public Color endColor = Color.white;
 
+    [LineSpacer("Road")]
+    public Color roadColor = Color.white;
+
     [LineSpacer("Background")]
     public Color cameraStartColor = Color.white;
     public Color cameraEndColor = Color.white;

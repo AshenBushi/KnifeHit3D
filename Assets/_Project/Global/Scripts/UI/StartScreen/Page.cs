@@ -38,7 +38,7 @@ public class Page : MonoBehaviour
     public void InitMovie(int currentMovie)
     {
         _currentMovie = currentMovie;
-        if (_animator.parameterCount < _currentMovie)
+        if (_animator.parameterCount < _currentMovie-1)
             _animator.SetBool(_currentMovie.ToString(), true);
         _animator.Play("knifehit" + _currentMovie);
     }

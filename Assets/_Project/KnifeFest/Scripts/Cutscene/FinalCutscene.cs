@@ -41,8 +41,6 @@ namespace KnifeFest
             yield return new WaitForSeconds(0.2f);
             _pathFollower.PathCreator.EditorData.PathModifiedByUndo();
 
-            WallSpawner.Instance.ChangeColorRoad();
-
             for (int i = 0; i < LENGTH_CUTSCENE; i++)
             {
                 if (i == 0)

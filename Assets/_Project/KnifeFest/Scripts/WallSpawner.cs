@@ -25,6 +25,13 @@ namespace KnifeFest
         protected override void Awake()
         {
             base.Awake();
+
+            ColorManager.Instance.IsPresetChanged += ChangeRoadColorPreset;
+        }
+
+        private void OnDisable()
+        {
+            ColorManager.Instance.IsPresetChanged -= ChangeRoadColorPreset;
         }
 
         public void SpawnWalls(Level level)
@@ -48,9 +55,9 @@ namespace KnifeFest
             FinalCutscene.OnCreatingCurscene?.Invoke();
         }
 
-        public void ChangeColorRoad()
+        public void ChangeRoadColorPreset()
         {
-            _meshRoad.materials[0].color = ColorManager.Instance.CurrentColorPreset.cameraStartColor;
+            _meshRoad.materials[0].color = ColorManager.Instance.CurrentColorPreset.roadColor;
         }
 
         public void TryClearWalls()

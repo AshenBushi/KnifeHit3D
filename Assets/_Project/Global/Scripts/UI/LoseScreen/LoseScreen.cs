@@ -7,10 +7,8 @@ using UnityEngine.UI;
 
 public class LoseScreen : UIScreen
 {
-    [SerializeField] private GameObject _continue;
+    [SerializeField] private Button _continue;
     [SerializeField] private TextMeshProUGUI _textReward;
-
-    private Button _continueButton;
 
     public static LoseScreen Instance;
 
@@ -22,8 +20,8 @@ public class LoseScreen : UIScreen
 
         CanvasGroup = GetComponent<CanvasGroup>();
 
-        _continueButton = _continue.GetComponent<Button>();
-        _continueButton.onClick.AddListener(OnClickContinue);
+        AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
+        _continue.onClick.AddListener(OnClickContinue);
     }
 
     public override void Enable()
@@ -40,15 +38,14 @@ public class LoseScreen : UIScreen
 
     public void OnWatchedReward(int coefficient)
     {
-        Player.Instance.WithdrawMoney(Convert.ToInt32(_textReward.text));
         int reward = Convert.ToInt32(_textReward.text);
         _textReward.text = (reward * coefficient).ToString();
-        Player.Instance.DepositMoney(Convert.ToInt32(_textReward.text));
     }
 
     public override void Disable()
     {
-        _continueButton.onClick.RemoveListener(OnClickContinue);
+        _continue.onClick.RemoveListener(OnClickContinue);
+        AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
         base.Disable();
         IsScreenDisabled?.Invoke(false);
     }
@@ -65,19 +62,15 @@ public class LoseScreen : UIScreen
 
     private IEnumerator OnClickContinueDelay()
     {
-        _continueButton.interactable = false;
+        _continue.interactable = false;
 
         var reward = Convert.ToInt32(_textReward.text);
         Player.Instance.DepositMoney(reward);
 
-        float timeSec = 0.08f;
         for (int i = reward; i >= 0; i--)
         {
             _textReward.text = i.ToString();
-            yield return new WaitForSeconds(timeSec);
-
-            if (timeSec > 0.01f)
-                timeSec -= 0.005f;
+            yield return null;
         }
 
         if (reward == 0)
@@ -85,12 +78,18 @@ public class LoseScreen : UIScreen
         else
             yield return new WaitForSeconds(1.5f);
 
-        _continueButton.GetComponent<AdButton>().WatchAd();
+        AdManager.Instance.ShowInterstitial();
     }
 
     private IEnumerator DelayEnabledContinue()
     {
         yield return new WaitForSeconds(4f);
-        _continue.SetActive(true);
+        _continue.gameObject.SetActive(true);
+    }
+
+    private void HandleOnAdClosed(object sender, EventArgs e)
+    {
+        MetricaManager.SendEvent("int_show");
+        Disable();
     }
 }
