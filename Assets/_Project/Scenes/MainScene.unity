@@ -16203,6 +16203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rewardText: {fileID: 784484887}
   _continue: {fileID: 111121204}
+  _particleCup: {fileID: 1446949908}
 --- !u!1001 &1165617970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20295,7 +20296,7 @@ GameObject:
   - component: {fileID: 1446949906}
   - component: {fileID: 1446949905}
   m_Layer: 5
-  m_Name: Snow
+  m_Name: ParticlesCup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26768,7 +26769,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 653
   m_TargetDisplay: 0
 --- !u!224 &1542933175
 RectTransform:
@@ -40249,6 +40250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _continue: {fileID: 1397892354}
   _textReward: {fileID: 34010141}
+  _particleCup: {fileID: 6717245352977126001}
 --- !u!225 &2106876236
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -41906,7 +41908,7 @@ GameObject:
   - component: {fileID: 6717245352977125903}
   - component: {fileID: 6717245352977125900}
   m_Layer: 5
-  m_Name: Snow
+  m_Name: ParticlesCup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

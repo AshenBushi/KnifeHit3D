@@ -9,6 +9,7 @@ public class WinScreen : UIScreen
 {
     [SerializeField] private TMP_Text _rewardText;
     [SerializeField] private Button _continue;
+    [SerializeField] private ParticleSystem _particleCup;
 
     private float _multiplierCutscene;
 
@@ -21,15 +22,15 @@ public class WinScreen : UIScreen
     private void Awake()
     {
         Instance = this;
-
-        CanvasGroup = GetComponent<CanvasGroup>();
-
-        AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
-        _continue.onClick.AddListener(OnClickContinue);
     }
 
     public override void Enable()
     {
+        _particleCup.Play();
+        CanvasGroup = GetComponent<CanvasGroup>();
+        AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
+        _continue.onClick.AddListener(OnClickContinue);
+
         base.Enable();
         SoundManager.Instance.PlaySound(SoundName.Win);
 
@@ -67,8 +68,8 @@ public class WinScreen : UIScreen
     {
         _continue.onClick.RemoveListener(OnClickContinue);
         AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
+
         base.Disable();
-        _continue.gameObject.SetActive(false);
         IsScreenDisabled?.Invoke(false);
     }
 
@@ -109,11 +110,13 @@ public class WinScreen : UIScreen
         }
 
         if (reward == 0)
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
         else
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.7f);
 
         AdManager.Instance.ShowInterstitial();
+        _continue.interactable = true;
+        _continue.gameObject.SetActive(false);
     }
 
     private IEnumerator DelayEnabledContinue()

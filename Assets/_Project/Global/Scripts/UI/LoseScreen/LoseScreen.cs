@@ -9,6 +9,7 @@ public class LoseScreen : UIScreen
 {
     [SerializeField] private Button _continue;
     [SerializeField] private TextMeshProUGUI _textReward;
+    [SerializeField] private ParticleSystem _particleCup;
 
     public static LoseScreen Instance;
 
@@ -17,15 +18,15 @@ public class LoseScreen : UIScreen
     private void Awake()
     {
         Instance = this;
-
-        CanvasGroup = GetComponent<CanvasGroup>();
-
-        AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
-        _continue.onClick.AddListener(OnClickContinue);
     }
 
     public override void Enable()
     {
+        _particleCup.Play();
+        CanvasGroup = GetComponent<CanvasGroup>();
+        AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
+        _continue.onClick.AddListener(OnClickContinue);
+
         base.Enable();
         SoundManager.Instance.PlaySound(SoundName.Lose);
 
@@ -33,7 +34,8 @@ public class LoseScreen : UIScreen
 
         if (GamemodManager.Instance.CurrentMod == Gamemod.KnifeHit)
             _textReward.text = TargetHandler.Instance.CounterMoney.ToString();
-        else _textReward.text = "10";
+        else
+            _textReward.text = "10";
     }
 
     public void OnWatchedReward(int coefficient)
@@ -46,6 +48,7 @@ public class LoseScreen : UIScreen
     {
         _continue.onClick.RemoveListener(OnClickContinue);
         AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
+
         base.Disable();
         IsScreenDisabled?.Invoke(false);
     }
@@ -74,11 +77,14 @@ public class LoseScreen : UIScreen
         }
 
         if (reward == 0)
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
         else
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.7f);
 
         AdManager.Instance.ShowInterstitial();
+
+        _continue.interactable = true;
+        _continue.gameObject.SetActive(false);
     }
 
     private IEnumerator DelayEnabledContinue()

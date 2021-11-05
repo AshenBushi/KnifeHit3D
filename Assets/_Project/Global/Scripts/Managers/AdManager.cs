@@ -162,7 +162,7 @@ public class AdManager : Singleton<AdManager>
 
     public bool ShowInterstitial()
     {
-        if (!Interstitial.IsLoaded() || _timeSpendFromLastInterstitial < 30f) return false;
+        if (!Interstitial.IsLoaded() || _timeSpendFromLastInterstitial < 5f) return false;
 
         MetricaManager.SendEvent("int_start");
         Interstitial.Show();
