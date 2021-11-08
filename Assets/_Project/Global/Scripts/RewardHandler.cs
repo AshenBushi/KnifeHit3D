@@ -13,7 +13,7 @@ public class RewardHandler : Singleton<RewardHandler>
             KnifeStorage.Instance.AddKnife(i);
             _startScreen.EnableShopNotification();
 
-            if (startIndex >= 18 && endIndex <= 35)
+            if (startIndex >= 20 && endIndex <= 35)
                 PlayerPrefs.SetInt("ShopNavigationNotification", 0);
             else if (startIndex >= 0 && endIndex <= 17)
                 PlayerPrefs.SetInt("ShopNavigationNotification", 1);
@@ -25,7 +25,7 @@ public class RewardHandler : Singleton<RewardHandler>
 
     public void GiveExperienceReward()
     {
-        GiveFirstKnifeInRange(18, 35);
+        GiveFirstKnifeInRange(20, 35);
     }
 
     public void GiveLevelCompleteReward()
