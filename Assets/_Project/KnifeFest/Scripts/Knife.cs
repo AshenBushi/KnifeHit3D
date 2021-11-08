@@ -12,6 +12,7 @@ namespace KnifeFest
         [SerializeField] private float _weightChangeSpeed;
 
         private GameObject _knife;
+        private Canvas _cursorTrackerParentCanvas;
         private float _xDelta;
         private float _multiplierLastStepCutscene;
         private bool _isStartingCutscene;
@@ -20,6 +21,11 @@ namespace KnifeFest
         public float MultiplierLastStepCutscene => _multiplierLastStepCutscene;
 
         public event UnityAction OnWeightChanged, OnWeightDisable, OnAddedSpeed;
+
+        private void Awake()
+        {
+            _cursorTrackerParentCanvas = _cursorTracker.GetComponentInParent<Canvas>();
+        }
 
         private void OnEnable()
         {
@@ -143,9 +149,9 @@ namespace KnifeFest
 
             var knifePosition = transform.position;
 
-            if (Math.Abs(knifePosition.x + (_cursorTracker.XDelta / _cursorTracker.GetComponentInParent<Canvas>().scaleFactor) / 400f) >= 1.5f) return;
+            if (Math.Abs(knifePosition.x + (_cursorTracker.XDelta / _cursorTrackerParentCanvas.scaleFactor) / 400f) >= 1.5f) return;
 
-            transform.position = new Vector3(knifePosition.x + (_cursorTracker.XDelta / _cursorTracker.GetComponentInParent<Canvas>().scaleFactor) / 400f, knifePosition.y,
+            transform.position = new Vector3(knifePosition.x + (_cursorTracker.XDelta / _cursorTrackerParentCanvas.scaleFactor) / 400f, knifePosition.y,
                 knifePosition.z);
         }
 

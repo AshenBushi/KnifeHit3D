@@ -7,7 +7,6 @@ namespace KnifeFest
     {
         [SerializeField] private PathCreator _pathCreator;
         [SerializeField] private Knife _knife;
-        [SerializeField] private GameObject _particleConfettiWin;
         [SerializeField] private float _speed = 5;
         [SerializeField] private bool _canMove;
         [SerializeField] private bool _canMoveCutscene;
@@ -15,7 +14,7 @@ namespace KnifeFest
         private float _progress;
         private float _distanceTravelled;
 
-        public PathCreator PathCreator { get => _pathCreator; set => _pathCreator = value; }
+        public PathCreator PathCreator => _pathCreator;
         public Knife Knife => _knife;
 
         private void OnEnable()
@@ -110,7 +109,6 @@ namespace KnifeFest
                     _speed = 0;
                     _canMoveCutscene = false;
                     SessionHandler.Instance.CompleteLevelWithCutscene(_knife.MultiplierLastStepCutscene);
-                    _particleConfettiWin.SetActive(true);
                 }
             }
         }

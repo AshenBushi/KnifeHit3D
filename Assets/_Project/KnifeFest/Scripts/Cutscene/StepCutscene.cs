@@ -10,7 +10,6 @@ namespace KnifeFest
     public class StepCutscene : MonoBehaviour
     {
         [SerializeField] private TMP_Text _text;
-        [SerializeField] private Material _materialBlink;
         [SerializeField] private WallCutscene _wall;
 
         private GameObject _mark;
