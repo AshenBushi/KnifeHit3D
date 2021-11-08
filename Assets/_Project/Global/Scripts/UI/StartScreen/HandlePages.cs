@@ -10,6 +10,7 @@ public class HandlePages : MonoBehaviour
     [SerializeField] private float _offsetX = 1100f;
 
     private Page[] _mods;
+    private RectTransform _templateRectTransform;
     private List<Vector2> _modsPos = new List<Vector2>();
     private Vector2 _contentVector;
     private int _currentIndexPage;
@@ -46,6 +47,11 @@ public class HandlePages : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        _templateRectTransform = _templatePage.GetComponent<RectTransform>();
+    }
+
     private void FixedUpdate()
     {
         float maxPos = float.MaxValue;
@@ -64,6 +70,7 @@ public class HandlePages : MonoBehaviour
         _contentVector.x = Mathf.SmoothStep(_contentRect.anchoredPosition.x, _modsPos[_indexSelectedMod].x, 10 * Time.fixedDeltaTime);
         _contentRect.anchoredPosition = _contentVector;
         _currentIndexPage = _indexSelectedMod;
+
         if (_currentIndexPage > 0)
             _mods[_currentIndexPage - 1].Deactivation();
         if (_currentIndexPage < _mods.Length - 1)
@@ -97,7 +104,7 @@ public class HandlePages : MonoBehaviour
             if (i != 0)
             {
                 _mods[i].Deactivation();
-                _mods[i].transform.localPosition = new Vector2(_mods[i - 1].transform.localPosition.x + _templatePage.GetComponent<RectTransform>().sizeDelta.x + _offsetX, 10f);
+                _mods[i].transform.localPosition = new Vector2(_mods[i - 1].transform.localPosition.x + _templateRectTransform.sizeDelta.x + _offsetX, 10f);
             }
             else
                 _mods[i].transform.localPosition = new Vector2(_templatePage.transform.localPosition.x, 10f);

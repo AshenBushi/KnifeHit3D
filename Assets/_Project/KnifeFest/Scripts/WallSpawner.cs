@@ -1,6 +1,5 @@
 using PathCreation;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,6 +26,7 @@ namespace KnifeFest
             base.Awake();
 
             ColorManager.Instance.IsPresetChanged += ChangeRoadColorPreset;
+            _meshRoad = _road.GetComponent<MeshRenderer>();
         }
 
         private void OnDisable()
@@ -51,7 +51,6 @@ namespace KnifeFest
             _road.localScale = new Vector3(1f, 1f, greatestZ / 17.5f);
             _path.bezierPath.AddSegmentToEnd(new Vector3(0f, 0f, (greatestZ / (wallOffset / 1.05f) + 0.5f) * wallOffset));
 
-            _meshRoad = _road.GetComponent<MeshRenderer>();
             FinalCutscene.OnCreatingCurscene?.Invoke();
         }
 

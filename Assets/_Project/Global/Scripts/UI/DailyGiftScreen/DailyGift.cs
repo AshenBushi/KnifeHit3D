@@ -12,10 +12,16 @@ public class DailyGift : MonoBehaviour
     [SerializeField] private TMP_Text _buttonText;
 
     private DailyGiftArrows _dailyArrows;
+    private Image _buttonImage;
 
     public DailyGiftArrows DailyArrows { get => _dailyArrows; set => _dailyArrows = value; }
 
     public event UnityAction<bool, int> IsGotReward;
+
+    private void Awake()
+    {
+        _buttonImage = GetComponent<Image>();
+    }
 
     public void Unlock()
     {
@@ -53,8 +59,10 @@ public class DailyGift : MonoBehaviour
         else
             _dailyArrows.DisallowMove();
 
-        _dailyArrows.SetParent(_button.gameObject.transform.parent);
+        var _buttonParentRect = _button.gameObject.transform.parent.GetComponent<RectTransform>();
+
+        _dailyArrows.SetParent(_buttonParentRect);
         _dailyArrows.transform.SetAsFirstSibling();
-        _dailyArrows.SetPosition(-(_button.gameObject.transform.parent.GetComponent<RectTransform>().rect.height / 2));
+        _dailyArrows.SetPosition(-(_buttonParentRect.rect.height / 2));
     }
 }

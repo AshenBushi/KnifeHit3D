@@ -18,12 +18,12 @@ public class LoseScreen : UIScreen
     private void Awake()
     {
         Instance = this;
+        CanvasGroup = GetComponent<CanvasGroup>();
     }
 
     public override void Enable()
     {
         _particleCup.Play();
-        CanvasGroup = GetComponent<CanvasGroup>();
         AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
         _continue.onClick.AddListener(OnClickContinue);
 

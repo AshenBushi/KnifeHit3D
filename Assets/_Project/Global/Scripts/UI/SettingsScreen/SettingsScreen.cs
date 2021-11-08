@@ -19,6 +19,8 @@ public class SettingsScreen : UIScreen
     private void Awake()
     {
         CanvasGroup = GetComponent<CanvasGroup>();
+        _soundIcon = _buttonSound.transform.GetChild(0).GetComponent<Image>();
+        _musicIcon = _buttonMusic.transform.GetChild(0).GetComponent<Image>();
     }
 
     private void OnEnable()
@@ -37,8 +39,7 @@ public class SettingsScreen : UIScreen
     {
         SoundManager.Instance.SoundPlayer.volume = DataManager.Instance.GameData.SettingsData.SoundVolume;
         SoundManager.Instance.MusicPlayer.volume = DataManager.Instance.GameData.SettingsData.MusicVolume;
-        _soundIcon = _buttonSound.transform.GetChild(0).GetComponent<Image>();
-        _musicIcon = _buttonMusic.transform.GetChild(0).GetComponent<Image>();
+        
         UpdateButtonImages();
     }
 

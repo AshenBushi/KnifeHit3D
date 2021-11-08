@@ -10,6 +10,7 @@ public class WinScreen : UIScreen
     [SerializeField] private TMP_Text _rewardText;
     [SerializeField] private Button _continue;
     [SerializeField] private ParticleSystem _particleCup;
+    [SerializeField] private CanvasGroup _canvasGroup;
 
     private float _multiplierCutscene;
 
@@ -22,12 +23,12 @@ public class WinScreen : UIScreen
     private void Awake()
     {
         Instance = this;
+        CanvasGroup = GetComponent<CanvasGroup>();
     }
 
     public override void Enable()
     {
         _particleCup.Play();
-        CanvasGroup = GetComponent<CanvasGroup>();
         AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
         _continue.onClick.AddListener(OnClickContinue);
 

@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class DailyGiftArrows : MonoBehaviour
 {
-    private RectTransform _rectTransform;
+    [SerializeField] private RectTransform _rectTransform;
     private float _yTarget;
     private bool _isFirstMoving = true;
 
     public void SetPosition(float yTarget)
     {
-        _rectTransform = GetComponent<RectTransform>();
+        //_rectTransform = GetComponent<RectTransform>();
         _yTarget = yTarget;
 
         if (!_isFirstMoving)
