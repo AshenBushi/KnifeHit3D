@@ -35,6 +35,6 @@ public class RewardHandler : Singleton<RewardHandler>
 
     public void GiveLotteryReward()
     {
-        GiveFirstKnifeInRange(36, 53);
+        GiveFirstKnifeInRange(36, 52);
     }
 }

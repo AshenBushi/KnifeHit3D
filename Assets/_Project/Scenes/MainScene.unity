@@ -3552,7 +3552,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _previewTemplate
       value: 
-      objectReference: {fileID: 7784868374502633510, guid: 0fc3b612d7ac6564299bf731c3dda414,
+      objectReference: {fileID: 8157625822234308299, guid: 0479e644c9327c64d9a8021c31a4ea44,
         type: 3}
     - target: {fileID: 7059949575515722361, guid: 962ea0d42d0e10041b9f0f176541416f,
         type: 3}
@@ -3663,6 +3663,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ShopItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 7059949575515722362, guid: 962ea0d42d0e10041b9f0f176541416f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 962ea0d42d0e10041b9f0f176541416f, type: 3}
@@ -33110,7 +33115,7 @@ PrefabInstance:
     - target: {fileID: 3870626902285419828, guid: 962ea0d42d0e10041b9f0f176541416f,
         type: 3}
       propertyPath: _index
-      value: 53
+      value: 52
       objectReference: {fileID: 0}
     - target: {fileID: 3870626902285419828, guid: 962ea0d42d0e10041b9f0f176541416f,
         type: 3}
@@ -33227,6 +33232,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ShopItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 7059949575515722362, guid: 962ea0d42d0e10041b9f0f176541416f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 962ea0d42d0e10041b9f0f176541416f, type: 3}
