@@ -31,8 +31,8 @@ public class GamemodManager : Singleton<GamemodManager>
 
     public void OnClick()
     {
-        SelectKnifeHitMod(_handlerPages.Mods[_handlerPages.CurrentIndexPage].KnifeMod);
-        SelectMod(_handlerPages.Mods[_handlerPages.CurrentIndexPage].GameMod);
+        SelectKnifeHitMod(_handlerPages.MenuPages[_handlerPages.CurrentPage].KnifeMod);
+        SelectMod(_handlerPages.MenuPages[_handlerPages.CurrentPage].GameMod);
     }
 
     public void ControlSession(bool firstTime)

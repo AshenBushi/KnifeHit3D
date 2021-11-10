@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 
 public class Page : MonoBehaviour
 {
@@ -26,8 +25,7 @@ public class Page : MonoBehaviour
     private void OnEnable()
     {
         _buttonContinue.onClick.AddListener(ButtonClick);
-
-        _animator.SetBool(_currentMovie.ToString(), true);
+        _animator.Play(_currentMovie.ToString());
     }
 
     private void OnDisable()
@@ -38,24 +36,7 @@ public class Page : MonoBehaviour
     public void InitMovie(int currentMovie)
     {
         _currentMovie = currentMovie;
-        if (_animator.parameterCount < _currentMovie-1)
-            _animator.SetBool(_currentMovie.ToString(), true);
-        _animator.Play("knifehit" + _currentMovie);
-    }
-
-    public void Activation()
-    {
-        _animator.Play("knifehit" + _currentMovie);
-        _canvasGroup.DOFade(1f, 0.3f).SetLink(gameObject);
-        _canvasGroup.interactable = true;
-        _canvasGroup.blocksRaycasts = true;
-    }
-
-    public void Deactivation()
-    {
-        _canvasGroup.DOFade(0f, 0.3f).SetLink(gameObject);
-        _canvasGroup.interactable = false;
-        _canvasGroup.blocksRaycasts = false;
+        _animator.Play(_currentMovie.ToString());
     }
 
     public void SetKnifeMod(int knifeMod)

@@ -15,7 +15,7 @@ public class StartScreen : UIScreen
 
     private void Start()
     {
-        _handlerPages.Init();
+        //_handlerPages.Init();
     }
 
     private void OnEnable()

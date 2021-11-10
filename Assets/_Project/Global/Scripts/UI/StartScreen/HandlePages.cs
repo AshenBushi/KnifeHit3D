@@ -1,132 +1,139 @@
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class HandlePages : MonoBehaviour
+public class HandlePages : MonoBehaviour, IDragHandler, IEndDragHandler
 {
-    [SerializeField] private RectTransform _contentRect;
-    [SerializeField] private Page _templatePage;
-    [SerializeField] private int _countMods;
-    [SerializeField] private float _offsetX = 1100f;
+    [SerializeField] private float _duration;
+    [SerializeField] private RectTransform _content;
+    [SerializeField] private List<RectTransform> _menuItems = new List<RectTransform>();
+    [SerializeField] private RectTransform _center;
 
-    private Page[] _mods;
-    private RectTransform _templateRectTransform;
-    private List<Vector2> _modsPos = new List<Vector2>();
-    private Vector2 _contentVector;
-    private int _currentIndexPage;
-    private int _indexSelectedMod;
-    private bool _isDrag;
+    private List<Page> _menuPages = new List<Page>();
+    private HorizontalLayoutGroup _layoutGroup;
+    private Vector3 _stockScalePage;
+    private int _fastScrollIndex = 0;
+    private bool _isFastScroll = false;
 
-    public Page[] Mods => _mods;
-
-    public int CurrentIndexPage
-    {
-        get => _currentIndexPage;
-
-        private set
-        {
-            if (_mods[_currentIndexPage] != null)
-            {
-                Page aktivesObj = _mods[_currentIndexPage];
-                aktivesObj.Deactivation();
-            }
-
-            if (value < 0)
-                _currentIndexPage = _mods.Length - 1;
-            else if (value > _mods.Length - 1)
-                _currentIndexPage = 0;
-            else
-                _currentIndexPage = value;
-
-            if (_mods[_currentIndexPage] != null)
-            {
-                Page aktivesObj = _mods[_currentIndexPage];
-                aktivesObj.Activation();
-                _contentRect.DOAnchorPosX(_modsPos[_currentIndexPage].x, 1f).SetLink(gameObject);
-            }
-        }
-    }
+    public int CurrentPage { get; private set; }
+    public List<Page> MenuPages => _menuPages;
 
     private void Awake()
     {
-        _templateRectTransform = _templatePage.GetComponent<RectTransform>();
-    }
-
-    private void FixedUpdate()
-    {
-        float maxPos = float.MaxValue;
-        for (int i = 0; i < _mods.Length; i++)
+        var indexGameMod = 1;
+        for (var i = 0; i < _menuItems.Count; i++)
         {
-            float distance = Mathf.Abs(_contentRect.anchoredPosition.x - _modsPos[i].x);
-            if (distance < maxPos)
-            {
-                maxPos = distance;
-                _indexSelectedMod = i;
-            }
-        }
-
-        if (_isDrag) return;
-
-        _contentVector.x = Mathf.SmoothStep(_contentRect.anchoredPosition.x, _modsPos[_indexSelectedMod].x, 10 * Time.fixedDeltaTime);
-        _contentRect.anchoredPosition = _contentVector;
-        _currentIndexPage = _indexSelectedMod;
-
-        if (_currentIndexPage > 0)
-            _mods[_currentIndexPage - 1].Deactivation();
-        if (_currentIndexPage < _mods.Length - 1)
-            _mods[_currentIndexPage + 1].Deactivation();
-
-        _mods[_currentIndexPage].Activation();
-    }
-
-    public void Init()
-    {
-        _mods = new Page[_countMods];
-
-        int indexGameMod = 1;
-        for (int i = 0; i < _countMods; i++)
-        {
-            _mods[i] = Instantiate(_templatePage, _contentRect.transform, false);
-            _mods[i].InitMovie(i + 1);
+            _menuPages.Add(_menuItems[i].GetComponent<Page>());
+            _menuPages[i].InitMovie(i+1);
 
             if (i <= GamemodManager.Instance.KnifeHitModsCount)
             {
-                _mods[i].SetKnifeMod(i);
-                _mods[i].SetGameMod(0);
+                _menuPages[i].SetKnifeMod(i);
+                _menuPages[i].SetGameMod(0);
             }
             else
             {
-                _mods[i].SetGameMod(indexGameMod);
+                _menuPages[i].SetGameMod(indexGameMod);
                 if (indexGameMod <= GamemodManager.Instance.GameModCount)
                     indexGameMod++;
             }
-
-            if (i != 0)
-            {
-                _mods[i].Deactivation();
-                _mods[i].transform.localPosition = new Vector2(_mods[i - 1].transform.localPosition.x + _templateRectTransform.sizeDelta.x + _offsetX, 10f);
-            }
-            else
-                _mods[i].transform.localPosition = new Vector2(_templatePage.transform.localPosition.x, 10f);
-
-            _modsPos.Add(-_mods[i].transform.localPosition);
         }
 
-        _mods[0].Activation();
+        _stockScalePage = _menuPages[0].transform.localScale;
     }
 
-    public void SnapScrolling(bool isDrag)
+    private void Start()
     {
-        _isDrag = isDrag;
+        _layoutGroup = _content.GetComponent<HorizontalLayoutGroup>();
+
+        SelectCurrentPage(0f);
     }
 
-    public void SelectNextMod()
+    private void SelectCurrentPage(float duration)
     {
-        CurrentIndexPage++;
+        var endValue = new Vector3(-_menuItems[CurrentPage].localPosition.x +
+                                   (_menuItems[CurrentPage].sizeDelta.x +
+                                    _layoutGroup.spacing * (_layoutGroup.padding.left / (_layoutGroup.spacing / 2))) / 2, 0f, 0f);
+
+        _content.DOLocalMove(endValue, duration);
+
+        for (var i = 0; i < _menuItems.Count; i++)
+        {
+            if (i != CurrentPage)
+                _menuItems[i].transform.DOScale(new Vector3(0.7f, 0.7f, 1f), duration);
+            else
+                _menuItems[i].transform.DOScale(_stockScalePage, duration);
+        }
     }
 
-    public void SelectPrevMod()
+    public void OnDrag(PointerEventData eventData)
     {
-        CurrentIndexPage--;
+        if (Mathf.Abs(eventData.delta.x) > 2)
+        {
+            if (eventData.delta.x < 0)
+                _fastScrollIndex = 1;
+            else
+                _fastScrollIndex = -1;
+
+            _isFastScroll = true;
+        }
+        else
+        {
+            _isFastScroll = false;
+
+            var currentDistance = float.MaxValue;
+
+            for (var i = 0; i < _menuItems.Count; i++)
+            {
+                if (Vector3.Distance(_menuItems[i].position, _center.position) < currentDistance)
+                {
+                    currentDistance = Vector3.Distance(_menuItems[i].position, _center.position);
+
+                    CurrentPage = i;
+                    _menuItems[i].transform.DOScale(_stockScalePage, _duration);
+
+                    for (var k = 0; k < _menuItems.Count; k++)
+                    {
+                        if (k != CurrentPage)
+                            _menuItems[k].transform.DOScale(new Vector3(0.7f, 0.7f, 1f), _duration);
+                    }
+                }
+            }
+        }
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (_isFastScroll)
+        {
+            if (CurrentPage + _fastScrollIndex >= 0 && CurrentPage + _fastScrollIndex < _menuItems.Count)
+            {
+                CurrentPage += _fastScrollIndex;
+            }
+        }
+
+        SelectCurrentPage(_duration);
+    }
+
+    public void SelectNextPage()
+    {
+        if (CurrentPage >= _menuItems.Count - 1)
+            CurrentPage = 0;
+        else
+            CurrentPage++;
+
+        SelectCurrentPage(_duration);
+    }
+
+    public void SelectPreviousPage()
+    {
+        if (CurrentPage <= 0)
+            CurrentPage = _menuItems.Count - 1;
+        else
+            CurrentPage--;
+
+        SelectCurrentPage(_duration);
     }
 }
