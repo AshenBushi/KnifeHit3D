@@ -71,7 +71,6 @@ public class WinScreen : UIScreen
         AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
 
         base.Disable();
-        IsScreenDisabled?.Invoke(false);
     }
 
     public void OnWatchedReward(int coefficient)
@@ -115,9 +114,9 @@ public class WinScreen : UIScreen
         else
             yield return new WaitForSeconds(0.7f);
 
-        AdManager.Instance.ShowInterstitial();
         _continue.interactable = true;
         _continue.gameObject.SetActive(false);
+        IsScreenDisabled?.Invoke(AdManager.Instance.ShowInterstitial());
     }
 
     private IEnumerator DelayEnabledContinue()

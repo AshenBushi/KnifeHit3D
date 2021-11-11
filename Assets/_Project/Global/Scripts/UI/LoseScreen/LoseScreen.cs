@@ -50,7 +50,6 @@ public class LoseScreen : UIScreen
         AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
 
         base.Disable();
-        IsScreenDisabled?.Invoke(false);
     }
 
     public void Lose()
@@ -81,10 +80,9 @@ public class LoseScreen : UIScreen
         else
             yield return new WaitForSeconds(0.7f);
 
-        AdManager.Instance.ShowInterstitial();
-
         _continue.interactable = true;
         _continue.gameObject.SetActive(false);
+        IsScreenDisabled?.Invoke(AdManager.Instance.ShowInterstitial());
     }
 
     private IEnumerator DelayEnabledContinue()

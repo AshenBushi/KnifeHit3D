@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class AdManager : Singleton<AdManager>
 {
-    private float _timeSpendFromLastInterstitial = 30f;
-
     public bool IsInterstitialShowed { get; private set; }
     public InterstitialAd Interstitial { get; private set; }
     public RewardedAd RewardedAd { get; private set; }
@@ -59,12 +57,6 @@ public class AdManager : Singleton<AdManager>
 
         DataManager.Instance.GameData.CanShowStartAd = false;
         DataManager.Instance.Save();
-    }
-
-    private void Update()
-    {
-        if (_timeSpendFromLastInterstitial < 30)
-            _timeSpendFromLastInterstitial += Time.deltaTime;
     }
 
     private void InitializeRewarded()
@@ -162,11 +154,10 @@ public class AdManager : Singleton<AdManager>
 
     public bool ShowInterstitial()
     {
-        if (!Interstitial.IsLoaded() || _timeSpendFromLastInterstitial < 5f) return false;
+        if (!Interstitial.IsLoaded()) return false;
 
         MetricaManager.SendEvent("int_start");
         Interstitial.Show();
-        _timeSpendFromLastInterstitial = 0f;
         IsInterstitialShowed = false;
         return true;
     }
