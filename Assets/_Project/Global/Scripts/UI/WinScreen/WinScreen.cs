@@ -18,8 +18,6 @@ public class WinScreen : UIScreen
 
     public static WinScreen Instance;
 
-    public event UnityAction<bool> IsScreenDisabled;
-
     private void Awake()
     {
         Instance = this;
@@ -71,6 +69,7 @@ public class WinScreen : UIScreen
         AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
 
         base.Disable();
+        SessionHandler.Instance.EndSession();
     }
 
     public void OnWatchedReward(int coefficient)
@@ -116,7 +115,11 @@ public class WinScreen : UIScreen
 
         _continue.interactable = true;
         _continue.gameObject.SetActive(false);
-        IsScreenDisabled?.Invoke(AdManager.Instance.ShowInterstitial());
+
+        var showIntAd = AdManager.Instance.ShowInterstitial();
+        DataManager.Instance.GameData.CanShowStartAd = showIntAd;
+        if (!showIntAd)
+            Disable();
     }
 
     private IEnumerator DelayEnabledContinue()

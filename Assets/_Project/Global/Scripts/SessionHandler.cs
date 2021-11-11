@@ -16,17 +16,9 @@ public class SessionHandler : Singleton<SessionHandler>
     public event UnityAction IsSessionStarted;
     public event UnityAction IsSessionRestarted;
 
-    private void OnEnable()
-    {
-        _winScreen.IsScreenDisabled += OnScreenDisabled;
-        _loseScreen.IsScreenDisabled += OnScreenDisabled;
-    }
-
     private void OnDisable()
     {
         PlayerInput.Instance.IsSessionStart -= OnSessionStart;
-        _winScreen.IsScreenDisabled -= OnScreenDisabled;
-        _loseScreen.IsScreenDisabled -= OnScreenDisabled;
     }
 
     private void Start()
@@ -90,31 +82,5 @@ public class SessionHandler : Singleton<SessionHandler>
         PlayerInput.Instance.DisallowTap();
         _startScreen.Enable();
         IsSessionRestarted?.Invoke();
-    }
-
-    private void OnScreenDisabled(bool isAdShowed)
-    {
-        DataManager.Instance.GameData.CanShowStartAd = isAdShowed;
-
-        if (!isAdShowed)
-        {
-            EndSession();
-            return;
-        }
-
-        StartCoroutine(TryToShowAdRestart());
-    }
-
-    private IEnumerator TryToShowAdRestart()
-    {
-        if (DataManager.Instance.GameData.CanShowStartAd)
-        {
-            if (AdManager.Instance.ShowInterstitial())
-            {
-                yield return new WaitUntil(() => AdManager.Instance.IsInterstitialShowed);
-            }
-        }
-
-        RestartSession();
     }
 }
