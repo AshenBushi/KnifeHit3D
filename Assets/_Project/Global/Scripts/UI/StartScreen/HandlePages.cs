@@ -82,25 +82,6 @@ public class HandlePages : MonoBehaviour, IDragHandler, IEndDragHandler
         else
         {
             _isFastScroll = false;
-
-            var currentDistance = float.MaxValue;
-
-            for (var i = 0; i < _menuItems.Count; i++)
-            {
-                if (Vector3.Distance(_menuItems[i].position, _center.position) < currentDistance)
-                {
-                    currentDistance = Vector3.Distance(_menuItems[i].position, _center.position);
-
-                    CurrentPage = i;
-                    _menuItems[i].transform.DOScale(_stockScalePage, _duration);
-
-                    for (var k = 0; k < _menuItems.Count; k++)
-                    {
-                        if (k != CurrentPage)
-                            _menuItems[k].transform.DOScale(new Vector3(0.7f, 0.7f, 1f), _duration);
-                    }
-                }
-            }
         }
     }
 
@@ -112,6 +93,21 @@ public class HandlePages : MonoBehaviour, IDragHandler, IEndDragHandler
             {
                 CurrentPage += _fastScrollIndex;
             }
+        }
+        else
+        {
+            var currentDistance = float.MaxValue;
+
+            for (var i = 0; i < _menuItems.Count; i++)
+            {
+                if (Vector3.Distance(_menuItems[i].position, _center.position) < currentDistance)
+                {
+                    currentDistance = Vector3.Distance(_menuItems[i].position, _center.position);
+
+                    CurrentPage = i;
+                }
+            }
+
         }
 
         SelectCurrentPage(_duration);
