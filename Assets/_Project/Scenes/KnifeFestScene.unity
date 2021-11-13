@@ -1053,12 +1053,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 615903196}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &615903198 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 3201233700448289327, guid: f34c649582d164840be2cfbaaeedc738,
-    type: 3}
-  m_PrefabInstance: {fileID: 615903196}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &713935263
 GameObject:
   m_ObjectHideFlags: 0
@@ -1426,7 +1420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pathCreator: {fileID: 420820326}
   _knife: {fileID: 1278095598}
-  _speed: 15
+  _speed: 17
   _canMove: 0
   _canMoveCutscene: 0
 --- !u!4 &1015544128
@@ -2353,7 +2347,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf96fc47a84522c43b4857d34ad252aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _particlesBackground: {fileID: 615903198}
 --- !u!114 &1337084223
 MonoBehaviour:
   m_ObjectHideFlags: 0
