@@ -71,10 +71,11 @@ public class GamemodManager : Singleton<GamemodManager>
                 {
                     _skills.AllowSkills();
                 }
+
                 SceneLoader.Instance.LoadGamemodScene(0);
                 break;
             case Gamemod.StackKnife:
-                SceneLoader.Instance.LoadGamemodScene(1);
+                SceneLoader.Instance.LoadGamemodScene(1); 
                 break;
             case Gamemod.KnifeFest:
                 SceneLoader.Instance.LoadGamemodScene(2);

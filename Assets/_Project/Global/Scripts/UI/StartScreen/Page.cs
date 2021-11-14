@@ -60,6 +60,16 @@ public class Page : MonoBehaviour
         }
     }
 
+    public void AllowButton()
+    {
+        _buttonContinue.interactable = true;
+    }
+
+    public void DisallowButton()
+    {
+        _buttonContinue.interactable = false;
+    }
+
     private void ButtonClick()
     {
         if (PlayerPrefs.GetInt("first_level") == 1)

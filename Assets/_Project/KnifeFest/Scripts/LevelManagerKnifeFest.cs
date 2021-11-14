@@ -37,15 +37,15 @@ namespace KnifeFest
                 _knifeFestLevels = JsonUtility.FromJson<KnifeFestLevels>(File.ReadAllText(_path));
                 CurrentLevel = _knifeFestLevels.Levels[DataManager.Instance.GameData.ProgressData.CurrentKnifeFestLevel];
 
-                WallSpawner.Instance.SpawnWalls(CurrentLevel);
+                //WallSpawner.Instance.SpawnWalls(CurrentLevel);
             }
             else
             {
-                StartCoroutine(LoadLevels(_wallParametersUrl, "KnifeFestLevels.json", _knifeFestLevels));
+                StartCoroutine(LoadLevels(_wallParametersUrl, _knifeFestLevels));
             }
         }
 
-        private IEnumerator LoadLevels(string url, string fileName, KnifeFestLevels knifeFestLevels)
+        private IEnumerator LoadLevels(string url, KnifeFestLevels knifeFestLevels)
         {
             var request = UnityWebRequest.Get(url);
 
@@ -62,14 +62,22 @@ namespace KnifeFest
             {
                 knifeFestLevels = JsonUtility.FromJson<KnifeFestLevels>(request.downloadHandler.text);
                 File.WriteAllText(_path, JsonUtility.ToJson(knifeFestLevels));
-            }
 
-            _knifeFestLevels = knifeFestLevels;
-            CurrentLevel = _knifeFestLevels.Levels[0];
+                if (knifeFestLevels != null)
+                {
+                    _knifeFestLevels = knifeFestLevels;
+                    CurrentLevel = _knifeFestLevels.Levels[0];
+                }
+                else
+                {
+                    File.Delete(_path);
+                    HandlePages.Instance.DisallowPageKnifeFest();
+                }
+            }
 
             request.Dispose();
 
-            WallSpawner.Instance.SpawnWalls(CurrentLevel);
+            //WallSpawner.Instance.SpawnWalls(CurrentLevel);
         }
     }
 }

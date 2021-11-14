@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HandlePages : MonoBehaviour, IDragHandler, IEndDragHandler
+public class HandlePages : Singleton<HandlePages>, IDragHandler, IEndDragHandler
 {
     [SerializeField] private float _duration;
     [SerializeField] private RectTransform _content;
@@ -20,13 +20,15 @@ public class HandlePages : MonoBehaviour, IDragHandler, IEndDragHandler
     public int CurrentPage { get; private set; }
     public List<Page> MenuPages => _menuPages;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         var indexGameMod = 1;
         for (var i = 0; i < _menuItems.Count; i++)
         {
             _menuPages.Add(_menuItems[i].GetComponent<Page>());
-            _menuPages[i].InitMovie(i+1);
+            _menuPages[i].InitMovie(i + 1);
 
             if (i <= GamemodManager.Instance.KnifeHitModsCount)
             {
@@ -131,5 +133,17 @@ public class HandlePages : MonoBehaviour, IDragHandler, IEndDragHandler
             CurrentPage--;
 
         SelectCurrentPage(_duration);
+    }
+
+    public void DisallowPageKnifeFest()
+    {
+        for (int i = 0; i < _menuPages.Count; i++)
+        {
+            if (_menuPages[i].GameMod == 2)
+            {
+                _menuPages[i].DisallowButton();
+                break;
+            }
+        }
     }
 }

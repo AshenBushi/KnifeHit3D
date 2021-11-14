@@ -29,12 +29,17 @@ namespace KnifeFest
             _meshRoad = _road.GetComponent<MeshRenderer>();
         }
 
+        private void Start()
+        {
+            SpawnWalls(LevelManagerKnifeFest.Instance.CurrentLevel);
+        }
+
         private void OnDisable()
         {
             ColorManager.Instance.IsPresetChanged -= ChangeRoadColorPreset;
         }
 
-        public void SpawnWalls(Level level)
+        private void SpawnWalls(Level level)
         {
             float greatestZ = 0;
 
