@@ -14,10 +14,11 @@ public class HandlePages : Singleton<HandlePages>, IDragHandler, IEndDragHandler
     private List<Page> _menuPages = new List<Page>();
     private HorizontalLayoutGroup _layoutGroup;
     private Vector3 _stockScalePage;
+    private Vector3 _minimalScalePage = new Vector3(0.7f, 0.7f, 1f);
     private int _fastScrollIndex = 0;
     private bool _isFastScroll = false;
 
-    public int CurrentPage { get; private set; }
+    public int CurrentPage { get; private set; } = 0;
     public List<Page> MenuPages => _menuPages;
 
     protected override void Awake()
@@ -64,7 +65,7 @@ public class HandlePages : Singleton<HandlePages>, IDragHandler, IEndDragHandler
         for (var i = 0; i < _menuItems.Count; i++)
         {
             if (i != CurrentPage)
-                _menuItems[i].transform.DOScale(new Vector3(0.7f, 0.7f, 1f), duration);
+                _menuItems[i].transform.DOScale(_minimalScalePage, duration);
             else
                 _menuItems[i].transform.DOScale(_stockScalePage, duration);
         }

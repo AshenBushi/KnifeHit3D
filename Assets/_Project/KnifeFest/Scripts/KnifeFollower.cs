@@ -47,7 +47,7 @@ namespace KnifeFest
             if (_isStartCutscene)
                 _tween.ChangeEndValue(new Vector3(position.x, position.y + _offsetYPos, position.z - _offsetZPos), true).Restart();
             else
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(position.x, position.y + _offsetYPos, position.z - _offsetZPos), Time.fixedDeltaTime / 0.01f);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(position.x, position.y + _offsetYPos, position.z - _offsetZPos), 2 / Time.deltaTime);
             _lastTargetPosition = position;
         }
     }
