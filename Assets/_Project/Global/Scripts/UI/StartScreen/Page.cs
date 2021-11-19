@@ -5,38 +5,27 @@ using UnityEngine.UI;
 public class Page : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _textNumber;
-    [SerializeField] private Animator _animator;
 
     private Button _buttonContinue;
-    private CanvasGroup _canvasGroup;
     private int _knifeMod;
     private int _gameMod;
-    private int _currentMovie;
 
     public int KnifeMod => _knifeMod;
     public int GameMod => _gameMod;
 
     private void Awake()
     {
-        _canvasGroup = GetComponent<CanvasGroup>();
         _buttonContinue = GetComponentInChildren<Button>();
     }
 
     private void OnEnable()
     {
         _buttonContinue.onClick.AddListener(ButtonClick);
-        _animator.Play(_currentMovie.ToString());
     }
 
     private void OnDisable()
     {
         _buttonContinue.onClick.RemoveListener(ButtonClick);
-    }
-
-    public void InitMovie(int currentMovie)
-    {
-        _currentMovie = currentMovie;
-        _animator.Play(_currentMovie.ToString());
     }
 
     public void SetKnifeMod(int knifeMod)

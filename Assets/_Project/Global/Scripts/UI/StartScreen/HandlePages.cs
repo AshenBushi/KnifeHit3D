@@ -29,7 +29,6 @@ public class HandlePages : Singleton<HandlePages>, IDragHandler, IEndDragHandler
         for (var i = 0; i < _menuItems.Count; i++)
         {
             _menuPages.Add(_menuItems[i].GetComponent<Page>());
-            _menuPages[i].InitMovie(i + 1);
 
             if (i <= GamemodManager.Instance.KnifeHitModsCount)
             {
