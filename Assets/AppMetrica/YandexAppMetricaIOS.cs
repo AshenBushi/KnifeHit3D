@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Version for Unity
  * © 2015-2020 YANDEX
  * You may not use this file except in compliance with the License.
@@ -6,13 +6,11 @@
  * https://yandex.com/legal/appmetrica_sdk_agreement/
  */
 
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System;
 using System.Globalization;
-using YMMJSONUtils;
 
 #if UNITY_IPHONE || UNITY_IOS
 
@@ -22,6 +20,12 @@ public class YandexAppMetricaIOS : BaseYandexAppMetrica
     private static extern void ymm_activateWithConfigurationJSON (string configurationJSON);
 
     [DllImport ("__Internal")]
+    private static extern void ymm_resumeSession ();
+
+    [DllImport ("__Internal")]
+    private static extern void ymm_pauseSession ();
+
+    [DllImport ("__Internal")]
     private static extern void ymm_reportEvent (string message);
 
     [DllImport ("__Internal")]
@@ -29,10 +33,10 @@ public class YandexAppMetricaIOS : BaseYandexAppMetrica
 
     [DllImport ("__Internal")]
     private static extern void ymm_reportError (string condition, string stackTrace);
-    
+
     [DllImport ("__Internal")]
     private static extern void ymm_reportErrorWithIdentifier (string groupIdentifier, string condition, string stackTrace);
-    
+
     [DllImport ("__Internal")]
     private static extern void ymm_reportErrorWithException (string groupIdentifier, string condition, string exceptionJson);
 
@@ -74,8 +78,12 @@ public class YandexAppMetricaIOS : BaseYandexAppMetrica
 
     [DllImport ("__Internal")]
     private static extern void ymm_putErrorEnvironmentValue (string key, string value);
-    
+
+    [DllImport ("__Internal")]
+    private static extern void ymm_requestTrackingAuthorization (YMMRequestTrackingAuthorization callbackDelegate, IntPtr actionPtr);
+
     private delegate void YMMRequestDeviceIDCallbackDelegate (IntPtr actionPtr, string deviceId, string errorString);
+    private delegate void YMMRequestTrackingAuthorization (IntPtr actionPtr, long status);
 
     #region IYandexAppMetrica implementation
 
@@ -87,12 +95,12 @@ public class YandexAppMetricaIOS : BaseYandexAppMetrica
 
     public override void ResumeSession ()
     {
-        // It does nothing for iOS
+        ymm_resumeSession ();
     }
 
     public override void PauseSession ()
     {
-        // It does nothing for iOS
+        ymm_pauseSession ();
     }
 
     public override void ReportEvent (string message)
@@ -100,7 +108,7 @@ public class YandexAppMetricaIOS : BaseYandexAppMetrica
         ymm_reportEvent (message);
     }
 
-    public override void ReportEvent (string message, Dictionary<string, object> parameters)
+    public override void ReportEvent (string message, IDictionary<string, object> parameters)
     {
         ymm_reportEventWithParameters (message, JsonStringFromDictionary (parameters));
     }
@@ -181,7 +189,7 @@ public class YandexAppMetricaIOS : BaseYandexAppMetrica
     {
         ymm_requestAppMetricaDeviceID (RequestDeviceIDCallback, ActionToIntPtr (action));
     }
-    
+
     public override void ReportAppOpen (string deeplink)
     {
         ymm_reportAppOpen (deeplink);
@@ -197,9 +205,14 @@ public class YandexAppMetricaIOS : BaseYandexAppMetrica
         ymm_reportReferralUrl (referralUrl);
     }
 
+    public override void RequestTrackingAuthorization (Action<YandexAppMetricaRequestTrackingStatus> action)
+    {
+        ymm_requestTrackingAuthorization (RequestTrackingAuthorizationCallback, ActionToIntPtr (action));
+    }
+
     #endregion
 
-    private string JsonStringFromDictionary (IDictionary dictionary)
+    private string JsonStringFromDictionary (IEnumerable dictionary)
     {
         return dictionary == null ? null : YMMJSONUtils.JSONEncoder.Encode (dictionary);
     }
@@ -213,7 +226,7 @@ public class YandexAppMetricaIOS : BaseYandexAppMetrica
         return GCHandle.ToIntPtr (GCHandle.Alloc (obj));
     }
 
-    private static Action<string, YandexAppMetricaRequestDeviceIDError?> IntPtrToAction (IntPtr actionPtr)
+    private static Action<string, YandexAppMetricaRequestDeviceIDError?> ActionForRequestAppMetricaDeviceID (IntPtr actionPtr)
     {
         if (IntPtr.Zero.Equals (actionPtr)) {
             return null;
@@ -226,13 +239,13 @@ public class YandexAppMetricaIOS : BaseYandexAppMetrica
     [AOT.MonoPInvokeCallback (typeof (YMMRequestDeviceIDCallbackDelegate))]
     private static void RequestDeviceIDCallback (IntPtr actionPtr, string deviceId, string errorString)
     {
-        Action<string, YandexAppMetricaRequestDeviceIDError?> action = IntPtrToAction (actionPtr);
+        Action<string, YandexAppMetricaRequestDeviceIDError?> action = ActionForRequestAppMetricaDeviceID (actionPtr);
         if (action != null) {
             action.Invoke (deviceId, RequestDeviceIDErrorFromString (errorString));
         }
     }
 
-    private static YandexAppMetricaRequestDeviceIDError? RequestDeviceIDErrorFromString (string errorString) 
+    private static YandexAppMetricaRequestDeviceIDError? RequestDeviceIDErrorFromString (string errorString)
     {
         if (string.IsNullOrEmpty (errorString)) {
             return null;
@@ -242,6 +255,25 @@ public class YandexAppMetricaIOS : BaseYandexAppMetrica
             return (YandexAppMetricaRequestDeviceIDError?) error;
         } catch (ArgumentException) {
             return YandexAppMetricaRequestDeviceIDError.UNKNOWN;
+        }
+    }
+
+    private static Action<YandexAppMetricaRequestTrackingStatus> ActionForRequestTrackingAuthorization (IntPtr actionPtr)
+    {
+        if (IntPtr.Zero.Equals (actionPtr)) {
+            return null;
+        }
+
+        var gcHandle = GCHandle.FromIntPtr (actionPtr);
+        return gcHandle.Target as Action<YandexAppMetricaRequestTrackingStatus>;
+    }
+
+    [AOT.MonoPInvokeCallback (typeof (YMMRequestTrackingAuthorization))]
+    private static void RequestTrackingAuthorizationCallback (IntPtr actionPtr, long status)
+    {
+        Action<YandexAppMetricaRequestTrackingStatus> action = ActionForRequestTrackingAuthorization (actionPtr);
+        if (action != null) {
+            action.Invoke ((YandexAppMetricaRequestTrackingStatus) status);
         }
     }
 }
@@ -292,6 +324,12 @@ public static class YandexAppMetricaExtensionsIOS
         }
         if (self.AppForKids.HasValue) {
             data["AppForKids"] = self.AppForKids.Value;
+        }
+        if (self.UserProfileID != null) {
+            data["UserProfileID"] = self.UserProfileID;
+        }
+        if (self.RevenueAutoTrackingEnabled.HasValue) {
+            data["RevenueAutoTrackingEnabled"] = self.RevenueAutoTrackingEnabled.Value;
         }
 
         return data;
@@ -352,7 +390,7 @@ public static class YandexAppMetricaExtensionsIOS
         }
         return data;
     }
-    
+
     public static Hashtable ToHashtable (this Exception self)
     {
         if (self == null) {

@@ -8,7 +8,16 @@
 
 #import <YandexMobileMetrica/YandexMobileMetrica.h>
 #import <CoreLocation/CoreLocation.h>
+#import <dlfcn.h>
 #import "YMMBridge.h"
+
+typedef NS_ENUM(NSInteger, YMMTrackingStatus) {
+    MMSTrackingStatusUnavailable = -1,
+    MMSTrackingStatusNotDetermined = 0,
+    MMSTrackingStatusRestricted,
+    MMSTrackingStatusDenied,
+    MMSTrackingStatusAuthorized
+};
 
 static NSString *const kYMMUnityExceptionName = @"UnityException";
 
@@ -83,6 +92,12 @@ YMMYandexMetricaConfiguration *ymm_configurationFromDictionary(NSDictionary *con
     if (configDictionary[@"AppForKids"] != nil) {
         config.appForKids = [configDictionary[@"AppForKids"] boolValue];
     }
+    if (configDictionary[@"UserProfileID"] != nil) {
+        config.userProfileID = (NSString *)configDictionary[@"UserProfileID"];
+    }
+    if (configDictionary[@"RevenueAutoTrackingEnabled"] != nil) {
+        config.revenueAutoTrackingEnabled = [configDictionary[@"RevenueAutoTrackingEnabled"] boolValue];
+    }
 
     return config;
 }
@@ -107,6 +122,16 @@ void ymm_activateWithConfigurationJSON(char *configurationJSON)
 bool ymm_isAppMetricaActivated()
 {
     return g_ymm_isAppMetricaActivated;
+}
+
+void ymm_resumeSession()
+{
+    [YMMYandexMetrica resumeSession];
+}
+
+void ymm_pauseSession()
+{
+    [YMMYandexMetrica pauseSession];
 }
 
 void ymm_reportEvent(char *message)
@@ -142,7 +167,7 @@ void ymm_reportError(char *condition, char *stackTrace)
     [YMMYandexMetrica reportError:conditionString exception:exception onFailure:nil];
 }
 
-void ymm_reportErrorWithIdentifier(char *groupIdentifier, char *condition, char *stackTrace) 
+void ymm_reportErrorWithIdentifier(char *groupIdentifier, char *condition, char *stackTrace)
 {
     NSString *groupIdentifierString = ymm_stringFromCString(groupIdentifier);
     NSString *conditionString = ymm_stringFromCString(condition);
@@ -519,4 +544,21 @@ void ymm_reportAppOpen(char *deeplink)
 void ymm_putErrorEnvironmentValue(char *key, char *value)
 {
     [YMMYandexMetrica setErrorEnvironmentValue:ymm_stringFromCString(value) forKey:ymm_stringFromCString(key)];
+}
+
+void ymm_requestTrackingAuthorization(YMMRequestTrackingAuthorization callbackDelegate, YMMAction actionPtr)
+{
+    if (@available(iOS 14, *)) {
+        void *handle = dlopen("AppTrackingTransparency.framework/AppTrackingTransparency", RTLD_LAZY);
+        if (handle != NULL) {
+            Class gMMSTrackingManager = NSClassFromString(@"ATTrackingManager");
+            if ([gMMSTrackingManager respondsToSelector:@selector(requestTrackingAuthorizationWithCompletionHandler:)]) {
+                [gMMSTrackingManager performSelector:@selector(requestTrackingAuthorizationWithCompletionHandler:) withObject:^(YMMTrackingStatus status) {
+                    if (callbackDelegate != nil) {
+                        callbackDelegate(actionPtr, status);
+                    }
+                }];
+            }
+        }
+    }
 }
