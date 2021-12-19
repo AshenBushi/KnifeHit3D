@@ -1,6 +1,9 @@
 ﻿using GoogleMobileAds.Api;
 using GoogleMobileAds.Api.Mediation.AdColony;
 using GoogleMobileAds.Api.Mediation.AppLovin;
+using GoogleMobileAds.Api.Mediation.IronSource;
+using GoogleMobileAds.Api.Mediation.UnityAds;
+using GoogleMobileAds.Api.Mediation.Vungle;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +22,10 @@ public class AdManager : Singleton<AdManager>
         AppLovin.SetHasUserConsent(true);
         AppLovin.SetIsAgeRestrictedUser(true);
         AppLovin.Initialize();
+
+        IronSource.SetConsent(true);
+        UnityAds.SetGDPRConsentMetaData(true);
+        Vungle.UpdateConsentStatus(VungleConsent.ACCEPTED);
 
         AdColonyAppOptions.SetGDPRRequired(true);
         AdColonyAppOptions.SetGDPRConsentString("1");
