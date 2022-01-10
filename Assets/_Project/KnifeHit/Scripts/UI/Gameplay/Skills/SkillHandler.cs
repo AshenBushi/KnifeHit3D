@@ -1,10 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class Skills : MonoBehaviour
+public class SkillHandler : MonoBehaviour
 {
-    [SerializeField] private SlowMode _slowMode;
-    [SerializeField] private SkipTarget _skipTarget;
+    [SerializeField] private SkillSlowMode _slowMode;
+    [SerializeField] private SkillSkipTargetAd _skipTarget;
+    [SerializeField] private SkillLevelPass _levelPass;
+    [SerializeField] private SkillSecondLife _secondChance;
 
     private bool _canEnableSkills = true;
 
@@ -17,32 +19,29 @@ public class Skills : MonoBehaviour
     private void OnDisable()
     {
         SessionHandler.Instance.IsSessionStarted -= OnSessionStarted;
-        SessionHandler.Instance.IsSessionRestarted += OnSessionRestarted;
+        SessionHandler.Instance.IsSessionRestarted -= OnSessionRestarted;
     }
 
     private void OnSessionStarted()
     {
+        if (!_canEnableSkills) return;
+
         StartCoroutine(TryEnableButtons());
     }
-    
+
     private void OnSessionRestarted()
     {
         _skipTarget.gameObject.SetActive(false);
-        _slowMode.gameObject.SetActive(false);
     }
 
     private IEnumerator TryEnableButtons()
     {
         yield return new WaitForSeconds(2f);
 
-        if(!_canEnableSkills) yield break;
-        
-        if (DataManager.Instance.GameData.PlayerData.SlowMode > 0)
-        {
-            _slowMode.gameObject.SetActive(true);
-        }
-
-        _skipTarget.gameObject.SetActive(true);
+        _skipTarget.Show();
+        _slowMode.Show();
+        _secondChance.Show();
+        _levelPass.Show();
     }
 
     public void AllowSkills()

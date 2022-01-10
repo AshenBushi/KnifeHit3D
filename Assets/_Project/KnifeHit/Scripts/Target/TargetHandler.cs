@@ -88,7 +88,7 @@ public class TargetHandler : Singleton<TargetHandler>
         KnifeHandler.Instance.SetKnifeAmount(CurrentTarget.HitToBreak);
     }
 
-    private void CompleteLevel()
+    public void CompleteLevel()
     {
         if ((KnifeHitManager.Instance.CurrentKnifeHitMod % 3) <= 2)
         {

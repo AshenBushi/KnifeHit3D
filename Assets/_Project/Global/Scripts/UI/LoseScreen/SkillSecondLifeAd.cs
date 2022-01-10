@@ -1,7 +1,7 @@
 using GoogleMobileAds.Api;
 using UnityEngine;
 
-public class SecondLife : AdButton
+public class SkillSecondLifeAd : AdButton
 {
     [SerializeField] private ContinueScreen _continueScreen;
 

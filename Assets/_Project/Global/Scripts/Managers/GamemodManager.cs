@@ -10,7 +10,7 @@ public enum Gamemod
 
 public class GamemodManager : Singleton<GamemodManager>
 {
-    [SerializeField] private Skills _skills;
+    [SerializeField] private SkillHandler _skills;
     [SerializeField] private HandlePages _handlerPages;
     [SerializeField] private int _knifeHitModsCount = 5;
     [SerializeField] private int _gameModCount = 2;

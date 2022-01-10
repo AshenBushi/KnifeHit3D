@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class UIScreen : MonoBehaviour
 {
     protected CanvasGroup CanvasGroup;
