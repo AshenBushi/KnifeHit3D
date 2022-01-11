@@ -23,7 +23,7 @@ public class GiftTimer : Timer
     protected override void SaveTimer()
     {
         DataManager.Instance.GameData.DailyGiftsData._clock = Clock;
-        DataManager.Instance.SaveDate(DateTime.UtcNow);
+        DataManager.Instance.GameData.DailyGiftsData.SaveData();
         DataManager.Instance.Save();
     }
 
@@ -38,7 +38,7 @@ public class GiftTimer : Timer
         {
             Clock = DataManager.Instance.GameData.DailyGiftsData._clock;
 
-            LastDate = DataManager.Instance.LoadDate();
+            LastDate = DataManager.Instance.GameData.DailyGiftsData.GetDate();
 
             var secondsPassed = (int)(DateTime.UtcNow - LastDate).TotalSeconds;
 

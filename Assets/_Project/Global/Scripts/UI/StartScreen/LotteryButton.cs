@@ -17,7 +17,7 @@ public class LotteryButton : MonoBehaviour
         _lotteryTimer.IsTimeEnd += EnableButton;
         _lotteryTimer.IsTimeStart += DisableButton;
         
-        _button.interactable = DataManager.Instance.GameData.IsLotteryEnable;
+        _button.interactable = DataManager.Instance.GameData.LotteryData.IsLotteryEnable;
     }
 
     private void OnDisable()

@@ -8,23 +8,23 @@ public class LotteryTimer : Timer
 
     protected override void SaveTimer()
     {
-        DataManager.Instance.GameData._lotteryClock = Clock;
-        DataManager.Instance.SaveDate(DateTime.UtcNow);
+        DataManager.Instance.GameData.LotteryData.Clock = Clock;
+        DataManager.Instance.GameData.LotteryData.SaveData();
         DataManager.Instance.Save();
     }
 
     protected override void LoadTimer()
     {
-        if (DataManager.Instance.GameData.IsLotteryEnable)
+        if (DataManager.Instance.GameData.LotteryData.IsLotteryEnable)
         {
             Clock = new Clock();
             DisableTimer();
         }
         else
         {
-            Clock = DataManager.Instance.GameData._lotteryClock;
+            Clock = DataManager.Instance.GameData.LotteryData.Clock;
 
-            LastDate = DataManager.Instance.LoadDate();
+            LastDate = DataManager.Instance.GameData.LotteryData.GetDate();
 
             var secondsPassed = (int)(DateTime.UtcNow - LastDate).TotalSeconds;
 
@@ -36,7 +36,7 @@ public class LotteryTimer : Timer
 
     protected override void Countdown()
     {
-        if (DataManager.Instance.GameData.IsLotteryEnable) return;
+        if (DataManager.Instance.GameData.LotteryData.IsLotteryEnable) return;
         base.Countdown();
     }
 
@@ -54,7 +54,8 @@ public class LotteryTimer : Timer
 
     private void DisableTimer()
     {
-        DataManager.Instance.GameData.IsLotteryEnable = true;
+        DataManager.Instance.GameData.LotteryData.IsLotteryEnable = true;
+        DataManager.Instance.Save();
         Clock.Hours = 0;
         Clock.Minutes = 0;
         Clock.Seconds = 0;
@@ -68,7 +69,8 @@ public class LotteryTimer : Timer
 
     public void EnableTimer()
     {
-        DataManager.Instance.GameData.IsLotteryEnable = false;
+        DataManager.Instance.GameData.LotteryData.IsLotteryEnable = false;
+        DataManager.Instance.Save();
         Clock.Hours = 0;
         Clock.Minutes = 4;
         Clock.Seconds = 59;

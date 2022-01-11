@@ -18,7 +18,7 @@ public class Timer : MonoBehaviour
     [SerializeField] private TMP_Text _minutes;
     [SerializeField] private TMP_Text _seconds;
 
-    [SerializeField] private Clock _timeToCountdown;
+    [SerializeField] protected Clock _timeToCountdown;
 
     private float _timeSpend = 0f;
 
@@ -54,7 +54,7 @@ public class Timer : MonoBehaviour
         ShowTime();
     }
 
-    protected void ShowTime()
+    protected virtual void ShowTime()
     {
         if (Clock.Hours >= 10)
             _hours.text = Clock.Hours.ToString();
@@ -94,7 +94,7 @@ public class Timer : MonoBehaviour
 
     protected virtual void LoadTimer()
     {
-        LastDate = DataManager.Instance.LoadDate();
+        LastDate = DataManager.Instance.GameData.DailyGiftsData.GetDate();
 
         var secondsPassed = (int)(DateTime.UtcNow - LastDate).TotalSeconds;
 

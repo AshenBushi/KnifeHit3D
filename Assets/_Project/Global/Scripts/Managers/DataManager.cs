@@ -67,23 +67,9 @@ public class DataManager : Singleton<DataManager>
     {
         File.WriteAllText(_path, JsonUtility.ToJson(GameData));
     }
-
-    public void SaveDate(DateTime value)
-    {
-        var convert = value.ToString("u", CultureInfo.InvariantCulture);
-        GameData.DailyGiftsData.Date = convert;
-    }
-
-    public DateTime LoadDate()
-    {
-        var result = GameData.DailyGiftsData.Date != null ? DateTime.ParseExact(GameData.DailyGiftsData.Date, "u", CultureInfo.InvariantCulture) : DateTime.UtcNow;
-
-        return result;
-    }
 }
 
 [Serializable]
-
 public class GameData
 {
     public ShopData ShopData;
@@ -91,8 +77,8 @@ public class GameData
     public ProgressData ProgressData;
     public SettingsData SettingsData;
     public DailyGiftsData DailyGiftsData;
-    public Clock _lotteryClock;
-    public bool IsLotteryEnable;
+    public LotteryData LotteryData;
+    public DisablingAdsData DisablingAds;
     public Gamemod CurrentGamemod;
     public bool CanShowStartAd;
 
@@ -118,8 +104,15 @@ public class GameData
         DailyGiftsData.UnlockedGifts = 1;
         DailyGiftsData.PickedGifts = 0;
 
-        _lotteryClock = new Clock() { Hours = 0, Minutes = 4, Seconds = 59 };
-        IsLotteryEnable = true;
+        LotteryData.Clock = new Clock() { Hours = 0, Minutes = 4, Seconds = 59 };
+        LotteryData.Date = DateTime.UtcNow.ToString("u", CultureInfo.InvariantCulture);
+        LotteryData.IsLotteryEnable = true;
+
+        DisablingAds.Clock = new Clock() { Hours = 23, Minutes = 59, Seconds = 59 };
+        DisablingAds.Date = DateTime.UtcNow.ToString("u", CultureInfo.InvariantCulture);
+        DisablingAds.CounterAdsOff = 0;
+        DisablingAds.IsAdsDisableOneDay = false;
+
         CanShowStartAd = false;
     }
 
@@ -167,4 +160,51 @@ public struct DailyGiftsData
     public string Date;
     public int UnlockedGifts;
     public int PickedGifts;
+
+    public void SaveData()
+    {
+        Date = DateTime.UtcNow.ToString("u", CultureInfo.InvariantCulture);
+    }
+
+    public DateTime GetDate()
+    {
+        return Date != null ? DateTime.ParseExact(Date, "u", CultureInfo.InvariantCulture) : DateTime.UtcNow;
+    }
+}
+
+[Serializable]
+public struct LotteryData
+{
+    public Clock Clock;
+    public string Date;
+    public bool IsLotteryEnable;
+
+    public void SaveData()
+    {
+        Date = DateTime.UtcNow.ToString("u", CultureInfo.InvariantCulture);
+    }
+
+    public DateTime GetDate()
+    {
+        return Date != null ? DateTime.ParseExact(Date, "u", CultureInfo.InvariantCulture) : DateTime.UtcNow;
+    }
+}
+
+[Serializable]
+public struct DisablingAdsData
+{
+    public Clock Clock;
+    public string Date;
+    public int CounterAdsOff;
+    public bool IsAdsDisableOneDay;
+
+    public void SaveData()
+    {
+        Date = DateTime.UtcNow.ToString("u", CultureInfo.InvariantCulture);
+    }
+
+    public DateTime GetDate()
+    {
+        return Date != null ? DateTime.ParseExact(Date, "u", CultureInfo.InvariantCulture) : DateTime.UtcNow;
+    }
 }

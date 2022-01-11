@@ -38,7 +38,7 @@ public class NotificationScreen : Singleton<NotificationScreen>
     public void SetNotifyForSkills(string text)
     {
         _textInfo.text = text;
-        _textLotteryInfo.text = DataManager.Instance.GameData.IsLotteryEnable == true ? "Lottery is available!" : "The lottery is not available yet!";
+        _textLotteryInfo.text = DataManager.Instance.GameData.LotteryData.IsLotteryEnable == true ? "Lottery is available!" : "The lottery is not available yet!";
         Enable();
     }
 }

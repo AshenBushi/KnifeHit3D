@@ -161,7 +161,7 @@ public class AdManager : Singleton<AdManager>
 
     public bool ShowInterstitial()
     {
-        if (!Interstitial.IsLoaded()) return false;
+        if (!Interstitial.IsLoaded() || DataManager.Instance.GameData.DisablingAds.IsAdsDisableOneDay) return false;
 
         MetricaManager.SendEvent("int_start");
         Interstitial.Show();
