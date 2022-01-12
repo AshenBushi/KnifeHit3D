@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 using UnityEngine.Events;
 
 public class DisablingAdsTimer : Timer
@@ -82,11 +81,7 @@ public class DisablingAdsTimer : Timer
         if (!DataManager.Instance.GameData.DisablingAds.IsAdsDisableOneDay) return;
 
         base.Countdown();
-        Debug.Log(Clock.Hours + " " + Clock.Minutes + " " + Clock.Seconds);
     }
 
-    protected override void ShowTime()
-    {
-
-    }
+    protected override void ShowTime() { }
 }
