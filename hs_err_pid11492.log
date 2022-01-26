@@ -1,0 +1,154 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 1048576 bytes for AllocateHeap
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (memory/allocation.inline.hpp:61), pid=11492, tid=0x0000000000003630
+#
+# JRE version:  (8.0) (build )
+# Java VM: OpenJDK 64-Bit Server VM (25.71-b00 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000000002672800):  JavaThread "Unknown thread" [_thread_in_vm, id=13872, stack(0x0000000002570000,0x0000000002670000)]
+
+Stack: [0x0000000002570000,0x0000000002670000]
+[error occurred during error reporting (printing stack bounds), id 0xc0000005]
+
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x0000000002672800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=13872, stack(0x0000000002570000,0x0000000002670000)]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap:
+ PSYoungGen      total 74240K, used 1280K [0x000000076de00000, 0x0000000773080000, 0x00000007c0000000)
+  eden space 64000K, 2% used [0x000000076de00000,0x000000076df40010,0x0000000771c80000)
+  from space 10240K, 0% used [0x0000000772680000,0x0000000772680000,0x0000000773080000)
+  to   space 10240K, 0% used [0x0000000771c80000,0x0000000771c80000,0x0000000772680000)
+ ParOldGen       total 169472K, used 0K [0x00000006c9a00000, 0x00000006d3f80000, 0x000000076de00000)
+  object space 169472K, 0% used [0x00000006c9a00000,0x00000006c9a00000,0x00000006d3f80000)
+ Metaspace       used 777K, capacity 4480K, committed 4480K, reserved 1056768K
+  class space    used 74K, capacity 384K, committed 384K, reserved 1048576K
+
+Card table byte_map: [0x0000000011b30000,0x00000000122f0000] byte_map_base: 0x000000000e4e3000
+
+Marking Bits: (ParMarkBitMap*) 0x000000007657be50
+ Begin Bits: [0x0000000013020000, 0x0000000016db8000)
+ End Bits:   [0x0000000016db8000, 0x000000001ab50000)
+
+Polling page: 0x0000000002420000
+
+CodeCache: size=245760Kb used=327Kb max_used=327Kb free=245432Kb
+ bounds [0x0000000002770000, 0x00000000029e0000, 0x0000000011770000]
+ total_blobs=56 nmethods=0 adapters=38
+ compilation: enabled
+
+Compilation events (0 events):
+No events
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (10 events):
+Event: 0.012 loading class java/lang/Short
+Event: 0.012 loading class java/lang/Short done
+Event: 0.012 loading class java/lang/Integer
+Event: 0.012 loading class java/lang/Integer done
+Event: 0.012 loading class java/lang/Long
+Event: 0.012 loading class java/lang/Long done
+Event: 0.013 loading class java/lang/NullPointerException
+Event: 0.013 loading class java/lang/NullPointerException done
+Event: 0.013 loading class java/lang/ArithmeticException
+Event: 0.013 loading class java/lang/ArithmeticException done
+
+
+Dynamic libraries:
+0x00007ff600b50000 - 0x00007ff600b85000 	C:\Program Files\Unity\2020.3.4f1\Editor\Data\PlaybackEngines\AndroidPlayer\OpenJDK\bin\java.exe
+0x00007ff97d950000 - 0x00007ff97db46000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00007ff97c2a0000 - 0x00007ff97c35d000 	C:\Windows\System32\KERNEL32.DLL
+0x00007ff97b410000 - 0x00007ff97b6d8000 	C:\Windows\System32\KERNELBASE.dll
+0x00007ff97c750000 - 0x00007ff97c7fc000 	C:\Windows\System32\ADVAPI32.dll
+0x00007ff97d870000 - 0x00007ff97d90e000 	C:\Windows\System32\msvcrt.dll
+0x00007ff97cb60000 - 0x00007ff97cbfb000 	C:\Windows\System32\sechost.dll
+0x00007ff97c510000 - 0x00007ff97c634000 	C:\Windows\System32\RPCRT4.dll
+0x00007ff97c8d0000 - 0x00007ff97ca70000 	C:\Windows\System32\USER32.dll
+0x00007ff97b110000 - 0x00007ff97b132000 	C:\Windows\System32\win32u.dll
+0x00007ff97bb10000 - 0x00007ff97bb3a000 	C:\Windows\System32\GDI32.dll
+0x00007ff97b300000 - 0x00007ff97b409000 	C:\Windows\System32\gdi32full.dll
+0x00007ff97b760000 - 0x00007ff97b7fd000 	C:\Windows\System32\msvcp_win.dll
+0x00007ff97b800000 - 0x00007ff97b900000 	C:\Windows\System32\ucrtbase.dll
+0x00007ff962780000 - 0x00007ff962a1b000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.488_none_ca04af081b815d21\COMCTL32.dll
+0x00007ff97cc60000 - 0x00007ff97cc90000 	C:\Windows\System32\IMM32.DLL
+0x0000000077b20000 - 0x0000000077bf2000 	C:\Program Files\Unity\2020.3.4f1\Editor\Data\PlaybackEngines\AndroidPlayer\OpenJDK\jre\bin\msvcr100.dll
+0x0000000075db0000 - 0x00000000765f9000 	C:\Program Files\Unity\2020.3.4f1\Editor\Data\PlaybackEngines\AndroidPlayer\OpenJDK\jre\bin\server\jvm.dll
+0x00007ff97cf40000 - 0x00007ff97cf48000 	C:\Windows\System32\PSAPI.DLL
+0x00007ff972d50000 - 0x00007ff972d5a000 	C:\Windows\SYSTEM32\VERSION.dll
+0x00007ff970240000 - 0x00007ff970267000 	C:\Windows\SYSTEM32\WINMM.dll
+0x00007ff9600e0000 - 0x00007ff9600e9000 	C:\Windows\SYSTEM32\WSOCK32.dll
+0x00007ff97d720000 - 0x00007ff97d78b000 	C:\Windows\System32\WS2_32.dll
+0x00007ff976cb0000 - 0x00007ff976cbf000 	C:\Program Files\Unity\2020.3.4f1\Editor\Data\PlaybackEngines\AndroidPlayer\OpenJDK\jre\bin\verify.dll
+0x00007ff9714e0000 - 0x00007ff971509000 	C:\Program Files\Unity\2020.3.4f1\Editor\Data\PlaybackEngines\AndroidPlayer\OpenJDK\jre\bin\java.dll
+0x00007ff9714c0000 - 0x00007ff9714d6000 	C:\Program Files\Unity\2020.3.4f1\Editor\Data\PlaybackEngines\AndroidPlayer\OpenJDK\jre\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=UTF-8 
+java_command: <unknown>
+java_class_path (initial): .
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:/Program Files/Unity/2020.3.4f1/Editor/Data/PlaybackEngines/AndroidPlayer\OpenJDK
+JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+PATH=C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Users\artem\AppData\Local\Microsoft\WindowsApps;C:\Users\artem\AppData\Local\GitHubDesktop\bin;C:\Users\artem\.dotnet\tools
+USERNAME=artem
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 23 Model 96 Stepping 1, AuthenticAMD
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 10.0 , 64 bit Build 19041 (10.0.19041.546)
+
+CPU:total 8 (initial active 8) (8 cores per cpu, 1 threads per core) family 23 model 96 stepping 1, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, mmxext, 3dnowpref, lzcnt, sse4a, tsc, tscinvbit, tscinv, bmi1
+
+Memory: 4k page, physical 16139760k(3552112k free), swap 17188336k(5840k free)
+
+vm_info: OpenJDK 64-Bit Server VM (25.71-b00) for windows-amd64 JRE (1.8.0-adoptopenjdk-_2018_05_19_00_59-b00), built on May 19 2018 01:02:12 by "jenkins" with MS VC++ 10.0 (VS2010)
+
+time: Wed Jan 26 11:44:03 2022
+elapsed time: 0 seconds (0d 0h 0m 0s)
+

@@ -11,6 +11,8 @@ public class ContinueScreen : UIScreen
     [SerializeField] private GameObject _noThanks;
     [SerializeField] private List<TMP_Text> _textLose = new List<TMP_Text>();
 
+    public bool IsEnable { get; private set; }
+
     private void Awake()
     {
         CanvasGroup = GetComponent<CanvasGroup>();
@@ -19,8 +21,15 @@ public class ContinueScreen : UIScreen
     public override void Enable()
     {
         base.Enable();
+        IsEnable = true;
         StartCoroutine(SetLoseTextEnable());
         StartCoroutine(LoseAnimation());
+    }
+
+    public override void Disable()
+    {
+        base.Disable();
+        IsEnable = false;
     }
 
     public void FailLevel()

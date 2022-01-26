@@ -8390,7 +8390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf96fc47a84522c43b4857d34ad252aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _particlesBackground: {fileID: 1638754525}
 --- !u!222 &1616142113
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8909,12 +8908,6 @@ PrefabInstance:
 --- !u!224 &1638754524 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2234809879535631259, guid: f34c649582d164840be2cfbaaeedc738,
-    type: 3}
-  m_PrefabInstance: {fileID: 1638754523}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &1638754525 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 3201233700448289327, guid: f34c649582d164840be2cfbaaeedc738,
     type: 3}
   m_PrefabInstance: {fileID: 1638754523}
   m_PrefabAsset: {fileID: 0}

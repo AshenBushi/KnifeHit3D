@@ -132,6 +132,7 @@ public struct PlayerData
     public int SlowMode;
     public int LevelPass;
     public int SecondLife;
+    public bool SecondLifeEnabled;
     public int Experience;
 }
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class SkillSkipTargetAd : AdButton
 {
-    [SerializeField] private Image _adIcon;
+    //[SerializeField] private Image _adIcon;
     private Button _button;
 
     private void Awake()
@@ -17,8 +17,8 @@ public class SkillSkipTargetAd : AdButton
     {
         _button.onClick.AddListener(ActivateSkip);
 
-        if (DataManager.Instance.GameData.PlayerData.LevelPass <= 0)
-            _adIcon.gameObject.SetActive(true);
+        //if (DataManager.Instance.GameData.PlayerData.LevelPass <= 0)
+        //    _adIcon.gameObject.SetActive(true);
     }
 
     private void OnDisable()

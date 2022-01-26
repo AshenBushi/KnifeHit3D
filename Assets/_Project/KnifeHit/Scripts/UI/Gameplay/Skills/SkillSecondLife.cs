@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SkillSecondLife : Skill
 {
-    [SerializeField] private ContinueScreen _continueScreen;
+    //[SerializeField] private ContinueScreen _continueScreen;
 
     protected override void OnEnable()
     {
@@ -26,13 +26,14 @@ public class SkillSecondLife : Skill
 
     protected override void ActivateSkill()
     {
+        if (DataManager.Instance.GameData.PlayerData.SecondLifeEnabled) return;
+
         if (DataManager.Instance.GameData.PlayerData.SecondLife > 0)
         {
             DataManager.Instance.GameData.PlayerData.SecondLife--;
-            ChangeButtonSprite();
+            DataManager.Instance.GameData.PlayerData.SecondLifeEnabled = true;
             DataManager.Instance.Save();
-            _continueScreen.Disable();
-            KnifeHandler.Instance.SecondLife();
+            ChangeButtonSprite();
         }
         else
             SetNotificationInfo();

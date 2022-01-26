@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SkillSlowMode : Skill
 {
-    [SerializeField] private TMP_Text _text;
+    [SerializeField] private TMP_Text _textNumCount;
     [SerializeField] private TMP_Text _timer;
 
     protected override void OnEnable()
@@ -15,6 +15,8 @@ public class SkillSlowMode : Skill
 
     protected override void ChangeButtonSprite()
     {
+        _textNumCount.text = DataManager.Instance.GameData.PlayerData.SlowMode.ToString();
+
         if (DataManager.Instance.GameData.PlayerData.SlowMode <= 0)
         {
             _button.image.sprite = _button.spriteState.disabledSprite;
@@ -45,7 +47,7 @@ public class SkillSlowMode : Skill
         TargetHandler.Instance.EnableSlowMode();
 
         var timer = 5f;
-        _text.text = "";
+        _timer.text = "";
 
         while (timer > 0)
         {

@@ -9,7 +9,6 @@ public class KnifeHandler : Singleton<KnifeHandler>
     private Knife _currentKnife;
     private List<Knife> _thrownKnives = new List<Knife>();
     private int _knifeAmount;
-    private bool _isSecondLifeUsed = false;
     private bool _canThrowKnife = true;
 
     public Knife CurrentKnifeTemplate => KnifeStorage.Instance.Knives[DataManager.Instance.GameData.ShopData.CurrentKnifeIndex];
@@ -54,12 +53,12 @@ public class KnifeHandler : Singleton<KnifeHandler>
     {
         InitKnife();
 
-        if (DataManager.Instance.GameData.PlayerData.SecondLife > 0 && !_isSecondLifeUsed)
+        if (DataManager.Instance.GameData.PlayerData.SecondLifeEnabled)
         {
-            DataManager.Instance.GameData.PlayerData.SecondLife--;
+            DataManager.Instance.GameData.PlayerData.SecondLifeEnabled = false;
             DataManager.Instance.Save();
-            _isSecondLifeUsed = true;
             _knifeAmount++;
+            return;
         }
         else
         {
