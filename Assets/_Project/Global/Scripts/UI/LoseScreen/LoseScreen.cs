@@ -4,8 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using AppodealAds.Unity.Api;
+using AppodealAds.Unity.Common;
 
-public class LoseScreen : UIScreen
+public class LoseScreen : UIScreen, IRewardedVideoAdListener
 {
     [SerializeField] private Button _continue;
     [SerializeField] private TextMeshProUGUI _textReward;
@@ -17,6 +19,7 @@ public class LoseScreen : UIScreen
     {
         Instance = this;
         CanvasGroup = GetComponent<CanvasGroup>();
+        AdManager.Instance.OnRewardedCallback += SetCallback;
     }
 
     public override void Enable()
@@ -44,6 +47,7 @@ public class LoseScreen : UIScreen
 
     public override void Disable()
     {
+        AdManager.Instance.OnRewardedCallback -= SetCallback;
         _continue.onClick.RemoveListener(OnClickContinue);
         //AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
 
@@ -82,9 +86,9 @@ public class LoseScreen : UIScreen
         _continue.interactable = true;
         _continue.gameObject.SetActive(false);
 
-        //var showIntAd = AdManager.Instance.ShowInterstitial();
-        //DataManager.Instance.GameData.CanShowStartAd = showIntAd;
-        //if (!showIntAd)
+        var showIntAd = AdManager.Instance.ShowInterstitial();
+        DataManager.Instance.GameData.CanShowStartAd = showIntAd;
+        if (!showIntAd)
             Disable();
     }
 
@@ -94,9 +98,55 @@ public class LoseScreen : UIScreen
         _continue.gameObject.SetActive(true);
     }
 
-    private void HandleOnAdClosed(object sender, EventArgs e)
+    //private void HandleOnAdClosed(object sender, EventArgs e)
+    //{
+    //    MetricaManager.SendEvent("int_show");
+    //    Disable();
+    //}
+
+    private void SetCallback()
+    {
+        Appodeal.setRewardedVideoCallbacks(this);
+    }
+
+    public void onRewardedVideoLoaded(bool precache)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void onRewardedVideoFailedToLoad()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void onRewardedVideoShowFailed()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void onRewardedVideoShown()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void onRewardedVideoFinished(double amount, string name)
     {
         MetricaManager.SendEvent("int_show");
         Disable();
+    }
+
+    public void onRewardedVideoClosed(bool finished)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void onRewardedVideoExpired()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void onRewardedVideoClicked()
+    {
+        throw new NotImplementedException();
     }
 }

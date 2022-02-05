@@ -20,7 +20,7 @@ public class StartScreen : UIScreen
 
     private void OnEnable()
     {
-        //AdManager.Instance.ShowBanner();
+        AdManager.Instance.ShowBanner();
         CheckNotificationStates();
     }
 
@@ -35,7 +35,7 @@ public class StartScreen : UIScreen
 
     public override void Disable()
     {
-        //AdManager.Instance.HideBanner();
+        AdManager.Instance.HideBanner();
         _settingsPanel.Hide(true);
 
         base.Disable();
