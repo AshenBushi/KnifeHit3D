@@ -1,12 +1,12 @@
-using GoogleMobileAds.Api;
+//using GoogleMobileAds.Api;
 using UnityEngine;
 
 public class ContinuePlayLottery : AdButton
 {
-    protected override void HandleUserEarnReward(object sender, Reward e)
-    {
-        LotteryHandler.Instance.ContinuePlay();
+    //protected override void HandleUserEarnReward(object sender, Reward e)
+    //{
+    //    LotteryHandler.Instance.ContinuePlay();
 
-        base.HandleUserEarnReward(sender, e);
-    }
+    //    base.HandleUserEarnReward(sender, e);
+    //}
 }

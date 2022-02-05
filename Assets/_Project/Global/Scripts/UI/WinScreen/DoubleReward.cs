@@ -1,5 +1,5 @@
 using DG.Tweening;
-using GoogleMobileAds.Api;
+//using GoogleMobileAds.Api;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -19,16 +19,16 @@ public class DoubleReward : AdButton
         RotateCircle();
     }
 
-    protected override void HandleFailedToShow(object sender, AdErrorEventArgs e)
-    {
-        base.HandleFailedToShow(sender, e);
-    }
+    //protected override void HandleFailedToShow(object sender, AdErrorEventArgs e)
+    //{
+    //    base.HandleFailedToShow(sender, e);
+    //}
 
-    protected override void HandleUserEarnReward(object sender, Reward e)
-    {
-        base.HandleUserEarnReward(sender, e);
-        Button.interactable = true;
-    }
+    //protected override void HandleUserEarnReward(object sender, Reward e)
+    //{
+    //    base.HandleUserEarnReward(sender, e);
+    //    Button.interactable = true;
+    //}
 
     public void CheckArrowCoefficient()
     {

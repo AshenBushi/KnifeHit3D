@@ -27,7 +27,7 @@ public class WinScreen : UIScreen
     public override void Enable()
     {
         _particleCup.Play();
-        AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
+        //AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
         _continue.onClick.AddListener(OnClickContinue);
 
         base.Enable();
@@ -66,7 +66,7 @@ public class WinScreen : UIScreen
     public override void Disable()
     {
         _continue.onClick.RemoveListener(OnClickContinue);
-        AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
+        //AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
 
         base.Disable();
         SessionHandler.Instance.EndSession();
@@ -116,9 +116,9 @@ public class WinScreen : UIScreen
         _continue.interactable = true;
         _continue.gameObject.SetActive(false);
 
-        var showIntAd = AdManager.Instance.ShowInterstitial();
-        DataManager.Instance.GameData.CanShowStartAd = showIntAd;
-        if (!showIntAd)
+        //var showIntAd = AdManager.Instance.ShowInterstitial();
+        //DataManager.Instance.GameData.CanShowStartAd = showIntAd;
+        //if (!showIntAd)
             Disable();
     }
 

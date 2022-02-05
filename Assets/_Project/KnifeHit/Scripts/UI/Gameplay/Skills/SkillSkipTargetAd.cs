@@ -1,4 +1,4 @@
-using GoogleMobileAds.Api;
+//using GoogleMobileAds.Api;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +15,7 @@ public class SkillSkipTargetAd : AdButton
 
     private void OnEnable()
     {
-        _button.onClick.AddListener(ActivateSkip);
+        //_button.onClick.AddListener(ActivateSkip);
 
         //if (DataManager.Instance.GameData.PlayerData.LevelPass <= 0)
         //    _adIcon.gameObject.SetActive(true);
@@ -23,7 +23,7 @@ public class SkillSkipTargetAd : AdButton
 
     private void OnDisable()
     {
-        _button.onClick.RemoveListener(ActivateSkip);
+        //_button.onClick.RemoveListener(ActivateSkip);
     }
 
     public void Show()
@@ -42,15 +42,15 @@ public class SkillSkipTargetAd : AdButton
         Hide();
     }
 
-    private void ActivateSkip()
-    {
-        WatchAd();
-    }
+    //private void ActivateSkip()
+    //{
+    //    WatchAd();
+    //}
 
-    protected override void HandleUserEarnReward(object sender, Reward e)
-    {
-        Skip();
+    //protected override void HandleUserEarnReward(object sender, Reward e)
+    //{
+    //    Skip();
 
-        base.HandleUserEarnReward(sender, e);
-    }
+    //    base.HandleUserEarnReward(sender, e);
+    //}
 }

@@ -1,4 +1,4 @@
-using GoogleMobileAds.Api;
+//using GoogleMobileAds.Api;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,33 +16,33 @@ public class DisablingAdsViewButton : AdButton
     {
         _progressBar.value = DataManager.Instance.GameData.DisablingAds.CounterAdsOff;
 
-        Button.onClick.AddListener(WatchAd);
+        //Button.onClick.AddListener(WatchAd);
     }
 
     private void OnDisable()
     {
-        Button.onClick.RemoveListener(WatchAd);
+        //Button.onClick.RemoveListener(WatchAd);
     }
 
-    public override void WatchAd()
-    {
-        AdManager.Instance.RewardedAd.OnUserEarnedReward += HandleUserEarnReward;
-        AdManager.Instance.RewardedAd.OnAdFailedToShow += HandleFailedToShow;
-        AdManager.Instance.ShowRewardVideo();
-    }
+    //public override void WatchAd()
+    //{
+    //    AdManager.Instance.RewardedAd.OnUserEarnedReward += HandleUserEarnReward;
+    //    AdManager.Instance.RewardedAd.OnAdFailedToShow += HandleFailedToShow;
+    //    AdManager.Instance.ShowRewardVideo();
+    //}
 
-    protected override void HandleUserEarnReward(object sender, Reward e)
-    {
-        DataManager.Instance.GameData.DisablingAds.CounterAdsOff++;
-        DataManager.Instance.Save();
+    //protected override void HandleUserEarnReward(object sender, Reward e)
+    //{
+    //    DataManager.Instance.GameData.DisablingAds.CounterAdsOff++;
+    //    DataManager.Instance.Save();
 
-        _progressBar.value = DataManager.Instance.GameData.DisablingAds.CounterAdsOff;
+    //    _progressBar.value = DataManager.Instance.GameData.DisablingAds.CounterAdsOff;
 
-        if (DataManager.Instance.GameData.DisablingAds.CounterAdsOff >= 2)
-        {
-            _disablingAdsTimer.EnableTimer();
-        }
+    //    if (DataManager.Instance.GameData.DisablingAds.CounterAdsOff >= 2)
+    //    {
+    //        _disablingAdsTimer.EnableTimer();
+    //    }
 
-        base.HandleUserEarnReward(sender, e);
-    }
+    //    base.HandleUserEarnReward(sender, e);
+    //}
 }
