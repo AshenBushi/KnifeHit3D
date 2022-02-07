@@ -1,23 +1,32 @@
-//using GoogleMobileAds.Api;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class WatchAdForReward : AdButton
+[RequireComponent(typeof(Button))]
+public class WatchAdForReward : MonoBehaviour
 {
-    private int _moneyReward;
+    [SerializeField] private int _moneyReward = 100;
 
-    //protected override void HandleUserEarnReward(object sender, Reward e)
-    //{
-    //    Player.Instance.DepositMoney(_moneyReward);
+    private Button _button;
 
-    //    base.HandleUserEarnReward(sender, e);
-    //}
+    private void Awake()
+    {
+        _button = GetComponent<Button>();
+    }
 
-    //public void WatchAd(int value)
-    //{
-    //    _moneyReward = value;
+    private void OnEnable()
+    {
+        _button.onClick.AddListener(WatchAd);
+    }
 
-    //    WatchAd();
+    private void OnDisable()
+    {
+        _button.onClick.RemoveListener(WatchAd);
+    }
 
-    //    Button.interactable = true;
-    //}
+    private void WatchAd()
+    {
+        AdManager.Instance.ShowRewardVideo();
+
+        Player.Instance.DepositMoney(_moneyReward);
+    }
 }

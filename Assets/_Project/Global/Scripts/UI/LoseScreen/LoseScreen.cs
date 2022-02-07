@@ -2,12 +2,9 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
-using AppodealAds.Unity.Api;
-using AppodealAds.Unity.Common;
 
-public class LoseScreen : UIScreen, IRewardedVideoAdListener
+public class LoseScreen : UIScreen
 {
     [SerializeField] private Button _continue;
     [SerializeField] private TextMeshProUGUI _textReward;
@@ -19,13 +16,12 @@ public class LoseScreen : UIScreen, IRewardedVideoAdListener
     {
         Instance = this;
         CanvasGroup = GetComponent<CanvasGroup>();
-        AdManager.Instance.OnRewardedCallback += SetCallback;
     }
 
     public override void Enable()
     {
         _particleCup.Play();
-        //AdManager.Instance.Interstitial.OnAdClosed += HandleOnAdClosed;
+
         _continue.onClick.AddListener(OnClickContinue);
 
         base.Enable();
@@ -47,9 +43,7 @@ public class LoseScreen : UIScreen, IRewardedVideoAdListener
 
     public override void Disable()
     {
-        AdManager.Instance.OnRewardedCallback -= SetCallback;
         _continue.onClick.RemoveListener(OnClickContinue);
-        //AdManager.Instance.Interstitial.OnAdClosed -= HandleOnAdClosed;
 
         base.Disable();
         SessionHandler.Instance.EndSession();
@@ -86,67 +80,13 @@ public class LoseScreen : UIScreen, IRewardedVideoAdListener
         _continue.interactable = true;
         _continue.gameObject.SetActive(false);
 
-        var showIntAd = AdManager.Instance.ShowInterstitial();
-        DataManager.Instance.GameData.CanShowStartAd = showIntAd;
-        if (!showIntAd)
-            Disable();
+        Disable();
+        AdManager.Instance.ShowInterstitial();
     }
 
     private IEnumerator DelayEnabledContinue()
     {
         yield return new WaitForSeconds(4f);
         _continue.gameObject.SetActive(true);
-    }
-
-    //private void HandleOnAdClosed(object sender, EventArgs e)
-    //{
-    //    MetricaManager.SendEvent("int_show");
-    //    Disable();
-    //}
-
-    private void SetCallback()
-    {
-        Appodeal.setRewardedVideoCallbacks(this);
-    }
-
-    public void onRewardedVideoLoaded(bool precache)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void onRewardedVideoFailedToLoad()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void onRewardedVideoShowFailed()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void onRewardedVideoShown()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void onRewardedVideoFinished(double amount, string name)
-    {
-        MetricaManager.SendEvent("int_show");
-        Disable();
-    }
-
-    public void onRewardedVideoClosed(bool finished)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void onRewardedVideoExpired()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void onRewardedVideoClicked()
-    {
-        throw new NotImplementedException();
     }
 }

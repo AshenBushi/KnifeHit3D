@@ -13,14 +13,10 @@ public class StartScreen : UIScreen
         CanvasGroup = GetComponent<CanvasGroup>();
     }
 
-    private void Start()
-    {
-        //_handlerPages.Init();
-    }
-
     private void OnEnable()
     {
         AdManager.Instance.ShowBanner();
+
         CheckNotificationStates();
     }
 
@@ -36,6 +32,7 @@ public class StartScreen : UIScreen
     public override void Disable()
     {
         AdManager.Instance.HideBanner();
+
         _settingsPanel.Hide(true);
 
         base.Disable();

@@ -1,34 +1,36 @@
 using DG.Tweening;
-//using GoogleMobileAds.Api;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class DoubleReward : AdButton
+[RequireComponent(typeof(Button))]
+public class DoubleReward : MonoBehaviour
 {
     [SerializeField] private GameObject _circleCoefficients;
     [SerializeField] private TMP_Text _text;
     [SerializeField] private GameObject _arrow;
     [SerializeField] private List<RotateDefinition> _definitions;
 
+    private Button _button;
     private int _coefficient = 1;
+
+    private void Awake()
+    {
+        _button = GetComponent<Button>();
+    }
 
     private void OnEnable()
     {
         RotateCircle();
     }
 
-    //protected override void HandleFailedToShow(object sender, AdErrorEventArgs e)
-    //{
-    //    base.HandleFailedToShow(sender, e);
-    //}
-
-    //protected override void HandleUserEarnReward(object sender, Reward e)
-    //{
-    //    base.HandleUserEarnReward(sender, e);
-    //    Button.interactable = true;
-    //}
+    public void WatchAd()
+    {
+        AdManager.Instance.ShowRewardVideo();
+        _button.interactable = false;
+    }
 
     public void CheckArrowCoefficient()
     {

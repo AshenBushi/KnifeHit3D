@@ -1,15 +1,33 @@
-//using GoogleMobileAds.Api;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SkillSecondLifeAd : AdButton
+[RequireComponent(typeof(Button))]
+public class SkillSecondLifeAd : MonoBehaviour
 {
     [SerializeField] private ContinueScreen _continueScreen;
 
-    //protected override void HandleUserEarnReward(object sender, Reward e)
-    //{
-    //    _continueScreen.Disable();
-    //    KnifeHandler.Instance.SecondLife();
+    private Button _button;
 
-    //    base.HandleUserEarnReward(sender, e);
-    //}
+    private void Awake()
+    {
+        _button = GetComponent<Button>();
+    }
+
+    private void OnEnable()
+    {
+        _button.onClick.AddListener(WatchAd);
+    }
+
+    private void OnDisable()
+    {
+        _button.onClick.RemoveListener(WatchAd);
+    }
+
+    private void WatchAd()
+    {
+        AdManager.Instance.ShowRewardVideo();
+
+        _continueScreen.Disable();
+        KnifeHandler.Instance.SecondLife();
+    }
 }
