@@ -16,7 +16,6 @@ public class StartScreen : UIScreen
     private void OnEnable()
     {
         AdManager.Instance.ShowBanner();
-
         CheckNotificationStates();
     }
 
