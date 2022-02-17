@@ -90,41 +90,32 @@ public class TargetHandler : Singleton<TargetHandler>
 
     public void CompleteLevel()
     {
-        if ((KnifeHitManager.Instance.CurrentKnifeHitMod % 3) <= 2)
+        switch (CurrentSpawnerIndex)
         {
-            switch (CurrentSpawnerIndex)
-            {
-                case 0:
-                    MetricaManager.SendEvent("target_com_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
-                    LevelManager.Instance.NextMarkLevel();
-                    break;
-                case 1:
-                    MetricaManager.SendEvent("cube_com_(" + DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + ")");
-                    LevelManager.Instance.NextCubeLevel();
-                    break;
-                case 2:
-                    MetricaManager.SendEvent("disk_com_(" + DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + ")");
-                    LevelManager.Instance.NextFlatLevel();
-                    break;
-            }
-        }
-        else
-        {
-            switch (CurrentSpawnerIndex)
-            {
-                case 0:
-                    MetricaManager.SendEvent("target2_com_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
-                    LevelManager.Instance.NextMarkLevel();
-                    break;
-                case 1:
-                    MetricaManager.SendEvent("cube2_com_(" + DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + ")");
-                    LevelManager.Instance.NextCubeLevel();
-                    break;
-                case 2:
-                    MetricaManager.SendEvent("disk2_com_(" + DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + ")");
-                    LevelManager.Instance.NextFlatLevel();
-                    break;
-            }
+            case 0:
+                MetricaManager.SendEvent("target_com_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
+                LevelManager.Instance.NextMarkLevel();
+                break;
+            case 1:
+                MetricaManager.SendEvent("cube_com_(" + DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + ")");
+                LevelManager.Instance.NextCubeLevel();
+                break;
+            case 2:
+                MetricaManager.SendEvent("disk_com_(" + DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + ")");
+                LevelManager.Instance.NextFlatLevel();
+                break;
+            case 3:
+                MetricaManager.SendEvent("target_com_(" + DataManager.Instance.GameData.ProgressData.CurrentMark2Level + ")");
+                LevelManager.Instance.NextMark2Level();
+                break;
+            case 4:
+                MetricaManager.SendEvent("cube_com_(" + DataManager.Instance.GameData.ProgressData.CurrentCube2Level + ")");
+                LevelManager.Instance.NextCube2Level();
+                break;
+            case 5:
+                MetricaManager.SendEvent("disk_com_(" + DataManager.Instance.GameData.ProgressData.CurrentFlat2Level + ")");
+                LevelManager.Instance.NextFlat2Level();
+                break;
         }
 
         RewardHandler.Instance.GiveLevelCompleteReward();

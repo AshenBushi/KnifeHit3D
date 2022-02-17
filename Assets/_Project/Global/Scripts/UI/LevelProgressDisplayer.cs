@@ -21,7 +21,10 @@ public class LevelProgressDisplayer : MonoBehaviour
             0 => (DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + 1).ToString(),
             1 => (DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + 1).ToString(),
             2 => (DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + 1).ToString(),
-            _ => (DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + 1).ToString()
+            3 => (DataManager.Instance.GameData.ProgressData.CurrentMark2Level + 1).ToString(),
+            4 => (DataManager.Instance.GameData.ProgressData.CurrentCube2Level + 1).ToString(),
+            5 => (DataManager.Instance.GameData.ProgressData.CurrentFlat2Level + 1).ToString(),
+            _ => " "
         };
 
         if (_points.Count > 0)
@@ -30,10 +33,10 @@ public class LevelProgressDisplayer : MonoBehaviour
             {
                 Destroy(point.gameObject);
             }
-            
+
             _points.Clear();
         }
-        
+
         if (TargetHandler.Instance.CurrentSpawnerIndex == 1)
         {
             for (var i = 0; i < 5; i++)
@@ -48,7 +51,7 @@ public class LevelProgressDisplayer : MonoBehaviour
                 _points.Add(Instantiate(_pointTemplate, _container));
             }
         }
-        
+
         _points.Add(Instantiate(_bossTemplate, _container));
         _currentPoint = 0;
         NextPoint();

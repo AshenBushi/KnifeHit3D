@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-public class MarkSpawner : TargetSpawner
+public class Mark2Spawner : TargetSpawner
 {
     public override void SpawnLevel()
     {
-        var level = LevelManager.Instance.CurrentMarkLevel;
+        var level = LevelManager.Instance.CurrentMark2Level;
         var colorPreset = ColorManager.Instance.CurrentColorPreset;
-        
+
         TryCleanTargets();
 
         for (var i = 0; i < level.Marks.Count; i++)

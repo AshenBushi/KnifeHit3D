@@ -33,8 +33,13 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private List<FlatLevel> _flatLevels;
 
     public MarkLevel CurrentMarkLevel { get; private set; }
+    public MarkLevel CurrentMark2Level { get; private set; }
+
     public CubeLevel CurrentCubeLevel { get; private set; }
+    public CubeLevel CurrentCube2Level { get; private set; }
+
     public FlatLevel CurrentFlatLevel { get; private set; }
+    public FlatLevel CurrentFlat2Level { get; private set; }
 
     private void Start()
     {
@@ -46,6 +51,9 @@ public class LevelManager : Singleton<LevelManager>
         CurrentMarkLevel = _markLevels[DataManager.Instance.GameData.ProgressData.CurrentMarkLevel];
         CurrentCubeLevel = _cubeLevels[DataManager.Instance.GameData.ProgressData.CurrentCubeLevel];
         CurrentFlatLevel = _flatLevels[DataManager.Instance.GameData.ProgressData.CurrentFlatLevel];
+        CurrentMark2Level = _markLevels[DataManager.Instance.GameData.ProgressData.CurrentMark2Level];
+        CurrentCube2Level = _cubeLevels[DataManager.Instance.GameData.ProgressData.CurrentCube2Level];
+        CurrentFlat2Level = _flatLevels[DataManager.Instance.GameData.ProgressData.CurrentFlat2Level];
     }
 
     public void NextMarkLevel()
@@ -68,6 +76,30 @@ public class LevelManager : Singleton<LevelManager>
     {
         if (DataManager.Instance.GameData.ProgressData.CurrentFlatLevel == _flatLevels.Count - 1) return;
         DataManager.Instance.GameData.ProgressData.CurrentFlatLevel++;
+        DataManager.Instance.Save();
+        LoadLevel();
+    }
+
+    public void NextMark2Level()
+    {
+        if (DataManager.Instance.GameData.ProgressData.CurrentMark2Level == _markLevels.Count - 1) return;
+        DataManager.Instance.GameData.ProgressData.CurrentMark2Level++;
+        DataManager.Instance.Save();
+        LoadLevel();
+    }
+
+    public void NextCube2Level()
+    {
+        if (DataManager.Instance.GameData.ProgressData.CurrentCube2Level == _cubeLevels.Count - 1) return;
+        DataManager.Instance.GameData.ProgressData.CurrentCube2Level++;
+        DataManager.Instance.Save();
+        LoadLevel();
+    }
+
+    public void NextFlat2Level()
+    {
+        if (DataManager.Instance.GameData.ProgressData.CurrentFlat2Level == _flatLevels.Count - 1) return;
+        DataManager.Instance.GameData.ProgressData.CurrentFlat2Level++;
         DataManager.Instance.Save();
         LoadLevel();
     }

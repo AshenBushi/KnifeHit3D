@@ -94,7 +94,10 @@ public class GameData
 
         ProgressData.CurrentMarkLevel = 0;
         ProgressData.CurrentCubeLevel = 0;
-        ProgressData.CurrentCubeLevel = 0;
+        ProgressData.CurrentFlatLevel = 0;
+        ProgressData.CurrentMark2Level = 0;
+        ProgressData.CurrentCube2Level = 0;
+        ProgressData.CurrentFlat2Level = 0;
 
         SettingsData.SoundVolume = 1;
         SettingsData.MusicVolume = 1;
@@ -143,6 +146,9 @@ public struct ProgressData
     public int CurrentMarkLevel;
     public int CurrentCubeLevel;
     public int CurrentFlatLevel;
+    public int CurrentMark2Level;
+    public int CurrentCube2Level;
+    public int CurrentFlat2Level;
     public int CurrentKnifeFestLevel;
     public int CurrentStackKnifeLevel;
 }
