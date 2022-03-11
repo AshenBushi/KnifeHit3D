@@ -17,6 +17,9 @@ public class TargetRotator : MonoBehaviour
             0 => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle),
             1 => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle),
             2 => new Vector3(0f, _rotateDefinitions[_currentIndex].Angle, 0f),
+            3 => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle),
+            4 => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle),
+            5 => new Vector3(0f, _rotateDefinitions[_currentIndex].Angle, 0f),
             _ => new Vector3(0f, 0f, _rotateDefinitions[_currentIndex].Angle)
         };
 

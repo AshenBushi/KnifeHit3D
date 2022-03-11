@@ -22,7 +22,7 @@ public class KnifeHitManager : Singleton<KnifeHitManager>
             return;
         }
 
-        var targetIndex = CurrentKnifeHitMod % 3;
+        var targetIndex = CurrentKnifeHitMod;
         var cameraPositionIndex = CurrentKnifeHitMod / 3;
 
         TargetHandler.Instance.SpawnLevel(targetIndex);

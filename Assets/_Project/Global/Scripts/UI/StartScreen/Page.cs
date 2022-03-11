@@ -61,6 +61,7 @@ public class Page : MonoBehaviour
 
     private void ButtonClick()
     {
+        Debug.Log(_knifeMod + " - KnifeModPage");
         if (PlayerPrefs.GetInt("first_level") == 1)
         {
             switch (_gameMod)
@@ -100,11 +101,14 @@ public class Page : MonoBehaviour
 
     private void SetTextNumKnifeHit()
     {
-        _textNumber.text = (_knifeMod % 3) switch
+        _textNumber.text = _knifeMod switch
         {
             0 => (DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + 1).ToString(),
             1 => (DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + 1).ToString(),
             2 => (DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + 1).ToString(),
+            3 => (DataManager.Instance.GameData.ProgressData.CurrentMark2Level + 1).ToString(),
+            4 => (DataManager.Instance.GameData.ProgressData.CurrentCube2Level + 1).ToString(),
+            5 => (DataManager.Instance.GameData.ProgressData.CurrentFlat2Level + 1).ToString(),
             _ => throw new System.NotImplementedException(),
         };
     }

@@ -101,35 +101,26 @@ public class KnifeHandler : Singleton<KnifeHandler>
 
     private void FailLevel()
     {
-        if ((KnifeHitManager.Instance.CurrentKnifeHitMod % 3) <= 2)
+        switch (TargetHandler.Instance.CurrentSpawnerIndex)
         {
-            switch (TargetHandler.Instance.CurrentSpawnerIndex)
-            {
-                case 0:
-                    MetricaManager.SendEvent("target_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
-                    break;
-                case 1:
-                    MetricaManager.SendEvent("cube_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + ")");
-                    break;
-                case 2:
-                    MetricaManager.SendEvent("disk_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + ")");
-                    break;
-            }
-        }
-        else
-        {
-            switch (TargetHandler.Instance.CurrentSpawnerIndex)
-            {
-                case 0:
-                    MetricaManager.SendEvent("target2_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
-                    break;
-                case 1:
-                    MetricaManager.SendEvent("cube2_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + ")");
-                    break;
-                case 2:
-                    MetricaManager.SendEvent("disk2_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + ")");
-                    break;
-            }
+            case 0:
+                MetricaManager.SendEvent("target_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentMarkLevel + ")");
+                break;
+            case 1:
+                MetricaManager.SendEvent("cube_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentCubeLevel + ")");
+                break;
+            case 2:
+                MetricaManager.SendEvent("disk_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentFlatLevel + ")");
+                break;
+            case 3:
+                MetricaManager.SendEvent("target_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentMark2Level + ")");
+                break;
+            case 4:
+                MetricaManager.SendEvent("cube_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentCube2Level + ")");
+                break;
+            case 5:
+                MetricaManager.SendEvent("disk_fail_(" + DataManager.Instance.GameData.ProgressData.CurrentFlat2Level + ")");
+                break;
         }
 
         SessionHandler.Instance.FailLevel();
