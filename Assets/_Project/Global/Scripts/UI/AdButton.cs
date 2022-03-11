@@ -51,7 +51,7 @@ public class AdButton : MonoBehaviour
         AdManager.Instance.RewardedAd.OnUserEarnedReward += HandleUserEarnReward;
         AdManager.Instance.RewardedAd.OnAdFailedToShow += HandleFailedToShow;
         AdManager.Instance.ShowRewardVideo();
-        Button.interactable = false;
+        //Button.interactable = false;
     }
     
 }
