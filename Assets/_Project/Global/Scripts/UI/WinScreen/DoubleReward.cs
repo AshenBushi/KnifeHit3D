@@ -27,7 +27,7 @@ public class DoubleReward : AdButton
     protected override void HandleUserEarnReward(object sender, Reward e)
     {
         base.HandleUserEarnReward(sender, e);
-        Button.interactable = true;
+        Button.interactable = false;
     }
 
     public void CheckArrowCoefficient()
