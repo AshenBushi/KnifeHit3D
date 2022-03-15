@@ -4,18 +4,11 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public abstract class Skill : MonoBehaviour
 {
-    [SerializeField] protected SpriteState _disableState;
-
-    protected SpriteState _defaultState;
-    protected Sprite _normalSprite;
     protected Button _button;
 
     protected virtual void Awake()
     {
         _button = GetComponent<Button>();
-
-        _normalSprite = _button.image.sprite;
-        _defaultState = _button.spriteState;
     }
 
     protected virtual void OnEnable()
@@ -31,11 +24,6 @@ public abstract class Skill : MonoBehaviour
     public virtual void Show()
     {
         gameObject.SetActive(true);
-    }
-
-    public virtual void Hide()
-    {
-        gameObject.SetActive(false);
     }
 
     protected virtual void ChangeButtonSprite() { }

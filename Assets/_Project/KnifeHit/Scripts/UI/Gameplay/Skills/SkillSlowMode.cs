@@ -19,13 +19,13 @@ public class SkillSlowMode : Skill
 
         if (DataManager.Instance.GameData.PlayerData.SlowMode <= 0)
         {
-            _button.image.sprite = _button.spriteState.disabledSprite;
-            _button.spriteState = _disableState;
+            _button.interactable = false;
+            _button.image.color = Color.grey;
         }
         else
         {
-            _button.image.sprite = _normalSprite;
-            _button.spriteState = _defaultState;
+            _button.interactable = true;
+            _button.image.color = Color.white;
         }
     }
 
@@ -35,6 +35,8 @@ public class SkillSlowMode : Skill
         {
             DataManager.Instance.GameData.PlayerData.SlowMode--;
             DataManager.Instance.Save();
+            _button.interactable = false;
+            _button.image.color = Color.grey;
             StartCoroutine(SlowGame());
         }
         else
@@ -52,10 +54,20 @@ public class SkillSlowMode : Skill
         while (timer > 0)
         {
             timer -= Time.deltaTime;
+
+            if (timer < 0)
+            {
+                timer = 0f;
+                _timer.text = timer.ToString("#.##");
+                break;
+            }
+
             _timer.text = timer.ToString("#.##");
             yield return null;
         }
 
+        _button.interactable = true;
+        _button.image.color = Color.white;
         TargetHandler.Instance.DisableSlowMode();
         ChangeButtonSprite();
     }

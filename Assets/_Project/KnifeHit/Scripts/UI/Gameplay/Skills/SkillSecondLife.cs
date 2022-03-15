@@ -14,13 +14,13 @@ public class SkillSecondLife : Skill
     {
         if (DataManager.Instance.GameData.PlayerData.SecondLife <= 0)
         {
-            _button.image.sprite = _button.spriteState.disabledSprite;
-            _button.spriteState = _disableState;
+            _button.interactable = false;
+            _button.image.color = Color.grey;
         }
         else
         {
-            _button.image.sprite = _normalSprite;
-            _button.spriteState = _defaultState;
+            _button.interactable = true;
+            _button.image.color = Color.white;
         }
     }
 

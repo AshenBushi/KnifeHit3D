@@ -5,7 +5,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class SkillSkipTargetAd : AdButton
 {
-    //[SerializeField] private Image _adIcon;
     private Button _button;
 
     private void Awake()
@@ -16,9 +15,6 @@ public class SkillSkipTargetAd : AdButton
     private void OnEnable()
     {
         _button.onClick.AddListener(ActivateSkip);
-
-        //if (DataManager.Instance.GameData.PlayerData.LevelPass <= 0)
-        //    _adIcon.gameObject.SetActive(true);
     }
 
     private void OnDisable()
@@ -29,11 +25,14 @@ public class SkillSkipTargetAd : AdButton
     public void Show()
     {
         gameObject.SetActive(true);
+        _button.interactable = true;
+        _button.image.color = Color.white;
     }
 
     public void Hide()
     {
-        gameObject.SetActive(false);
+        _button.interactable = false;
+        _button.image.color = Color.grey;
     }
 
     private void Skip()
