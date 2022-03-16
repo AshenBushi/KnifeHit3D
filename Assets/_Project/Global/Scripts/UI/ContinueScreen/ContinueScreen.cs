@@ -7,7 +7,6 @@ using UnityEngine;
 public class ContinueScreen : UIScreen
 {
     [SerializeField] private LoseScreen _loseScreen;
-    [SerializeField] private GameObject _continue;
     [SerializeField] private GameObject _noThanks;
     [SerializeField] private List<TMP_Text> _textLose = new List<TMP_Text>();
 

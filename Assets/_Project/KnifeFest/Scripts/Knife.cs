@@ -15,6 +15,7 @@ namespace KnifeFest
         private Canvas _cursorTrackerParentCanvas;
         private float _xDelta;
         private float _multiplierLastStepCutscene;
+        private Vector3 _targetChangedScale;
         private bool _isStartingCutscene;
 
         public int KnifeWeight { get; private set; } = 10;
@@ -77,7 +78,7 @@ namespace KnifeFest
 
             if (other.TryGetComponent(out WallCutscene wallCutscene))
             {
-                var step = wallCutscene.GetComponentInParent<StepCutscene>();
+                var step = wallCutscene.ParentStep;
 
                 KnifeWeight -= wallCutscene.MultiplierWeight;
                 OnWeightDisable?.Invoke();
@@ -86,13 +87,17 @@ namespace KnifeFest
 
                 _multiplierLastStepCutscene = step.Multiplier;
 
+                if (KnifeWeight <= 0)
+                    KnifeWeight = 1;
+
                 if (!wallCutscene.IsEndWall)
                 {
                     step.Detonate();
                     step.FadeTextObject();
                     OnAddedSpeed?.Invoke();
                 }
-                else StopKnife();
+                else
+                    StopKnife();
             }
         }
 
@@ -121,6 +126,7 @@ namespace KnifeFest
 
             _knife = Instantiate(KnifeStorage.Instance.GetSimpleKnife(), transform.position, Quaternion.Euler(90, 0, 0), transform);
             _knife.transform.localScale = _defaultScale;
+            _targetChangedScale = _defaultScale * 2;
             OnWeightChanged?.Invoke();
         }
 
@@ -129,9 +135,11 @@ namespace KnifeFest
             Vector3 targetScale;
 
             if (1 + KnifeWeight / 100 > 2)
-                targetScale = _defaultScale * 2;
+                targetScale = _targetChangedScale;
             else
                 targetScale = _defaultScale * (1 + (float)KnifeWeight / 100);
+
+            yield return null;
 
             while (_knife.transform.localScale != targetScale)
             {
@@ -157,7 +165,7 @@ namespace KnifeFest
 
         private void StopKnife()
         {
-            KnifeWeight = 0;
+            KnifeWeight = 1;
         }
     }
 }

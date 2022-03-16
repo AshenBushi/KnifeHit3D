@@ -6,7 +6,6 @@ using GoogleMobileAds.Api.Mediation.UnityAds;
 using GoogleMobileAds.Api.Mediation.Vungle;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class AdManager : Singleton<AdManager>
 {
@@ -15,10 +14,8 @@ public class AdManager : Singleton<AdManager>
     public RewardedAd RewardedAd { get; private set; }
     public BannerView BannerAd { get; private set; }
 
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-
         AppLovin.SetHasUserConsent(true);
         AppLovin.SetIsAgeRestrictedUser(true);
         AppLovin.Initialize();

@@ -61,7 +61,6 @@ public class Page : MonoBehaviour
 
     private void ButtonClick()
     {
-        Debug.Log(_knifeMod + " - KnifeModPage");
         if (PlayerPrefs.GetInt("first_level") == 1)
         {
             switch (_gameMod)

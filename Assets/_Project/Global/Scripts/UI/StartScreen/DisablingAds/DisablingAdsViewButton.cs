@@ -24,13 +24,6 @@ public class DisablingAdsViewButton : AdButton
         Button.onClick.RemoveListener(WatchAd);
     }
 
-    public override void WatchAd()
-    {
-        AdManager.Instance.RewardedAd.OnUserEarnedReward += HandleUserEarnReward;
-        AdManager.Instance.RewardedAd.OnAdFailedToShow += HandleFailedToShow;
-        AdManager.Instance.ShowRewardVideo();
-    }
-
     protected override void HandleUserEarnReward(object sender, Reward e)
     {
         DataManager.Instance.GameData.DisablingAds.CounterAdsOff++;

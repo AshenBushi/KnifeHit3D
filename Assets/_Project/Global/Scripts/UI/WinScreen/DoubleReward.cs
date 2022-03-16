@@ -27,7 +27,6 @@ public class DoubleReward : AdButton
     protected override void HandleUserEarnReward(object sender, Reward e)
     {
         base.HandleUserEarnReward(sender, e);
-        Button.interactable = false;
     }
 
     public void CheckArrowCoefficient()
@@ -52,11 +51,13 @@ public class DoubleReward : AdButton
 
     public void DoubleWinReward()
     {
+        if (IsAdFailed) return;
         WinScreen.Instance.OnWatchedReward(_coefficient);
     }
 
     public void DoubleLoseReward()
     {
+        if (IsAdFailed) return;
         LoseScreen.Instance.OnWatchedReward(_coefficient);
     }
 

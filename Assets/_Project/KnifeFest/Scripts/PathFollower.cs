@@ -104,7 +104,7 @@ namespace KnifeFest
             }
             else
             {
-                if (_knife.KnifeWeight <= 0)
+                if (_knife.KnifeWeight == 1)
                 {
                     _speed = 0;
                     _canMoveCutscene = false;
