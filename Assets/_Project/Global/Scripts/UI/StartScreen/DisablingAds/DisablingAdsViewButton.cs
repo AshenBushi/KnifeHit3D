@@ -9,19 +9,19 @@ public class DisablingAdsViewButton : AdButton
 
     private void Awake()
     {
-        Button = GetComponent<Button>();
+        _button = GetComponent<Button>();
     }
 
     private void OnEnable()
     {
         _progressBar.value = DataManager.Instance.GameData.DisablingAds.CounterAdsOff;
 
-        Button.onClick.AddListener(WatchAd);
+        _button.onClick.AddListener(WatchAd);
     }
 
     private void OnDisable()
     {
-        Button.onClick.RemoveListener(WatchAd);
+        _button.onClick.RemoveListener(WatchAd);
     }
 
     protected override void HandleUserEarnReward(object sender, Reward e)

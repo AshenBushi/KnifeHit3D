@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class AdButton : MonoBehaviour
 {
-    protected Button Button;
+    protected Button _button;
     protected bool IsAdFailed = false;
 
     private void Awake()
     {
-        Button = GetComponent<Button>();
+        _button = GetComponent<Button>();
     }
 
     private void Update()
@@ -27,13 +27,13 @@ public class AdButton : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         AdManager.Instance.RewardedAd.OnAdFailedToLoad += HandleFailedToLoad;
         AdManager.Instance.RewardedAd.OnAdLoaded += HandleAdLoaded;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         AdManager.Instance.RewardedAd.OnAdFailedToLoad -= HandleFailedToLoad;
         AdManager.Instance.RewardedAd.OnAdLoaded -= HandleAdLoaded;
@@ -41,12 +41,12 @@ public class AdButton : MonoBehaviour
 
     private void HandleAdLoaded(object sender, EventArgs e)
     {
-        Button.interactable = true;
+        _button.interactable = true;
     }
 
     private void HandleFailedToLoad(object sender, AdFailedToLoadEventArgs adFailedToLoadEventArgs)
     {
-        Button.interactable = false;
+        _button.interactable = false;
     }
 
     protected virtual void HandleFailedToShow(object sender, AdErrorEventArgs e)

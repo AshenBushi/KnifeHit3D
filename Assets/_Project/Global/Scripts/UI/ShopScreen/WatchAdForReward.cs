@@ -1,9 +1,21 @@
 using GoogleMobileAds.Api;
-using UnityEngine.UI;
+using UnityEngine;
 
 public class WatchAdForReward : AdButton
 {
-    private int _moneyReward;
+    [SerializeField] private int _moneyReward = 100;
+
+    protected override void OnEnable()
+    {
+        _button.onClick.AddListener(OnClick);
+        base.OnEnable();
+    }
+
+    protected override void OnDisable()
+    {
+        _button.onClick.RemoveListener(OnClick);
+        base.OnDisable();
+    }
 
     protected override void HandleUserEarnReward(object sender, Reward e)
     {
@@ -12,12 +24,12 @@ public class WatchAdForReward : AdButton
         base.HandleUserEarnReward(sender, e);
     }
 
-    public void WatchAd(int value)
+    public void OnClick()
     {
-        _moneyReward = value;
-
         WatchAd();
 
-        Button.interactable = true;
+        if (IsAdFailed) return;
+
+        _button.interactable = true;
     }
 }
