@@ -1,17 +1,29 @@
-﻿using UnityEngine;
+﻿using Firebase;
+using Firebase.Analytics;
+using UnityEngine;
 
 public class MetricaManager : MonoBehaviour
 {
-    //private static IYandexAppMetrica _metrica;
-    
-    //private void Awake()
-    //{
-    //    _metrica = AppMetrica.Instance;
-    //}
+    DependencyStatus dependencyStatus = DependencyStatus.UnavailableOther;
+    private void Start()
+    {
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        {
+            dependencyStatus = task.Result;
+            if (dependencyStatus == DependencyStatus.Available)
+            {
+                FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
+            }
+            else
+            {
+                Debug.LogError(System.String.Format(
+                  "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+            }
+        });
+    }
 
     public static void SendEvent(string eventName)
     {
-        //_metrica.ReportEvent(eventName);
-        //_metrica.SendEventsBuffer();
+        FirebaseAnalytics.LogEvent(eventName);
     }
 }
